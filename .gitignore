@@ -9,10 +9,8 @@ var/
 .idea/
 .vscode/
 .vs/
+.cahce/
 **.DS_Store
 *.pyc
 
-cmake-build-debug/
-experiments/
-!benchmarking-darth/experiments/
 .venv
