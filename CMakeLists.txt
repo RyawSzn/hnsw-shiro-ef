@@ -80,12 +80,68 @@ target_link_libraries(run_lid PRIVATE
     ${HDF5_LIBRARIES}
 )
 
-add_executable(research research/reader.cpp)
-target_include_directories(research PRIVATE ${HDF5_INCLUDE_DIRS})
-target_link_libraries(research PRIVATE
+add_executable(reader research/reader.cpp)
+target_include_directories(reader PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(reader PRIVATE
     hnswlib
     Eigen3::Eigen
     Boost::boost
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+add_executable(corr research/corr.cpp)
+target_include_directories(corr PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(corr PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+
+)
+
+
+add_executable(lookup_5x10 research/lookup_5x10.cpp)
+target_include_directories(lookup_5x10 PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(lookup_5x10 PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+add_executable(compare research/compare.cpp)
+target_include_directories(compare PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(compare PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+add_executable(compare_M research/compare_M.cpp)
+target_include_directories(compare_M PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(compare_M PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+add_executable(lookup_RC research/lookup_RC.cpp)
+target_include_directories(lookup_RC PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(lookup_RC PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+add_executable(lookup_RC_10x10 research/lookup_RC_10x10.cpp)
+target_include_directories(lookup_RC_10x10 PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(lookup_RC_10x10 PRIVATE
+    hnswlib
+    Eigen3::Eigen
     ${HDF5_CXX_LIBRARIES}
     ${HDF5_LIBRARIES}
 )
