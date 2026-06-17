@@ -2,16 +2,17 @@ hnswlib.egg-info/
 build/
 dist/
 tmp/
+graphify-out/cache/
 python_bindings/tests/__pycache__/
 *.pyd
 hnswlib.cpython*.so
 var/
 .idea/
-.github/
-.vscode/
 .vs/
 .cache/
+.opencode/
 **.DS_Store
 *.pyc
 
 .venv
+graphify-out/cost.json
