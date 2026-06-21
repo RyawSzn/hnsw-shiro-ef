@@ -85,41 +85,23 @@ public:
         }
     }
 
-    /**
-     * @brief Maps computed RC and RV metrics to the optimal `ef`.
-     * @param rc The calculated Relative Contrast.
-     * @param rv The calculated Topological Rank Entrapment.
-     * @return The dynamically assigned `ef` parameter.
-     */
     int get_ef(float rc, float rv) const {
         if (bins.empty()) return default_ef;
 
-        for (const auto& bin : bins) {
-            // Check containment within half-open interval (lower, upper]
-            // We additionally handle the exact 0 bottom bound to ensure inclusivity.
-            bool rc_match = (rc > bin.RC_lower && rc <= bin.RC_upper) ||
-                            (rc <= bin.RC_lower && bin.RC_lower == 0.0f) ||
-                            (rc >= bin.RC_upper && bin.RC_upper >= 1e5f);
-
-            bool rv_match = (rv > bin.RV_lower && rv <= bin.RV_upper) ||
-                            (rv <= bin.RV_lower && bin.RV_lower == 0.0f) ||
-                            (rv >= bin.RV_upper && bin.RV_upper >= 1e5f);
-
-            if (rc_match && rv_match) {
-                return bin.ef;
-            }
-        }
-
-        // Fallback constraint: If a point falls exactly outside binned edges,
-        // calculate the Euclidean distance to the nearest bin center and use its ef.
-        float best_dist = 1e9f;
+        float best_dist = std::numeric_limits<float>::max();
         int best_ef = default_ef;
+
         for (const auto& bin : bins) {
-            float rc_c = (bin.RC_lower + bin.RC_upper) / 2.0f;
-            float rv_c = (bin.RV_lower + bin.RV_upper) / 2.0f;
+            bool rc_match = (rc > bin.RC_lower && rc <= bin.RC_upper);
+            bool rv_match = (rv > bin.RV_lower && rv <= bin.RV_upper);
+
+            if (rc_match && rv_match) return bin.ef;
+
+            float rc_c = (bin.RC_lower + bin.RC_upper) * 0.5f;
+            float rv_c = (bin.RV_lower + bin.RV_upper) * 0.5f;
             float dr = rc - rc_c;
             float dv = rv - rv_c;
-            float dist = dr*dr + dv*dv;
+            float dist = dr * dr + dv * dv;
             if (dist < best_dist) {
                 best_dist = dist;
                 best_ef = bin.ef;

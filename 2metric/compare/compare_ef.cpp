@@ -24,25 +24,25 @@ std::pair<int, float> find_true_ef_for_query(HierarchicalNSW<float>* alg_hnsw, c
     float best_recall = 0.0f;
     size_t k_val = ground_truth.cols();
     if (k_val > 10) k_val = 10;
-    
+
     for (int ef = 50; ef <= max_ef; ef += 50) {
         alg_hnsw->setEf(ef);
         auto sres = alg_hnsw->searchKnn(query, k_val);
         int hits = 0;
-        
+
         std::vector<size_t> res(sres.size());
         int count = sres.size();
         while (!sres.empty()) {
             res[--count] = sres.top().second;
             sres.pop();
         }
-        
+
         for (size_t r : res) {
             for (size_t c = 0; c < k_val; c++) {
                 if (ground_truth(original_idx, c) == (int)r) { hits++; break; }
             }
         }
-        
+
         float recall = (float)hits / k_val;
         best_ef = ef;
         best_recall = recall;
@@ -55,11 +55,11 @@ int main() {
     std::string dataset = "glove-100-angular";
     float target_recall = 0.95f;
     int max_ef = 5000;
-    int sample_size = 500;
+    int sample_size = 5000;
 
     const char* root_env = std::getenv("EXPERIMENTS_ROOT");
     fs::path root = root_env ? fs::path(root_env) : fs::current_path();
-    
+
     std::string hdf5_path = (root / "data" / (dataset + ".hdf5")).string();
     if (!fs::exists(hdf5_path)) {
         hdf5_path = "/home/ryawszn/experiments/data/" + dataset + ".hdf5";
@@ -69,9 +69,9 @@ int main() {
     hnswdis::MatrixXf full_data, query_vectors;
     hnswdis::MatrixXi ground_truth;
     load_hdf5(hdf5_path, query_vectors, full_data, ground_truth);
-    
+
     if (dataset.find("angular") != std::string::npos) {
-        normalize_matrix(full_data); 
+        normalize_matrix(full_data);
         normalize_matrix(query_vectors);
     }
 
@@ -88,16 +88,16 @@ int main() {
         space = new InnerProductSpace(full_data.cols());
     }
     auto* alg_hnsw = new HierarchicalNSW<float>(space, index_path, false, full_data.rows());
-    
+
     // --- ADA-EF Setup ---
     std::cout << "Setting up Ada-EF dependencies...\n";
-    size_t ada_k = 100;
-    
+    size_t ada_k = 50;
+
     std::string estimator_path = (root / "statistics" / (dataset + "-estimator--k-" + std::to_string(ada_k) + ".bin")).string();
     if (!fs::exists(estimator_path)) {
         estimator_path = "/home/ryawszn/experiments/statistics/" + dataset + "-estimator--k-" + std::to_string(ada_k) + ".bin";
     }
-    
+
     std::string ef_adaptor_path = (root / "estimation_table" / (dataset + "-ef_adaptor--k" + std::to_string(ada_k) + "-ef.bin")).string();
     if (!fs::exists(ef_adaptor_path)) {
         ef_adaptor_path = "/home/ryawszn/experiments/estimation_table/" + dataset + "-ef_adaptor--k" + std::to_string(ada_k) + "-ef.bin";
@@ -105,7 +105,7 @@ int main() {
 
     std::shared_ptr<hnswdis::Estimator> ada_estimator = hnswdis::load_estimator_from_file(estimator_path);
     hnswdis::ApproximatedScoreCalculator score_cal(ada_estimator, 1e-3);
-    
+
     hnswdis::EfAdapter ef_adapter(ef_adaptor_path);
     auto ef_adapter_ptr = std::make_shared<hnswdis::EfAdapter>(ef_adapter);
     hnswdis::Sketch sketch(ef_adapter_ptr->get_ef_recall_estimators(), target_recall);
@@ -118,7 +118,7 @@ int main() {
     if (!fs::exists(lookup_csv)) {
         lookup_csv = "/home/ryawszn/experiments/2metric/lookup/lookup_table_" + dataset + "_20x20.csv";
     }
-    LookupTable2D lookup(lookup_csv, 100);
+    LookupTable2D lookup(lookup_csv, 50);
 
     // Random sample of queries
     std::vector<int> q_idx(query_vectors.rows());
@@ -144,7 +144,7 @@ int main() {
     for (int i = 0; i < sample_size; i++) {
         int idx = q_idx[i];
         Eigen::RowVectorXf q = query_vectors.row(idx);
-        
+
         // 1. True EF
         auto [true_ef, recall] = find_true_ef_for_query(alg_hnsw, q.data(), ground_truth, idx, target_recall, max_ef);
 

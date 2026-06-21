@@ -118,15 +118,24 @@ int main(int argc, char** argv) {
     std::cout << "Starting 2metric adaptive search...\n";
     auto start_time = std::chrono::high_resolution_clock::now();
 
+    float running_ef_sum = 0.0f;
+
     for (int i = 0; i < nq; ++i) {
         Eigen::RowVectorXf q = query_vectors.row(i);
 
         auto est = Estimator2Metric::probe_query(alg_hnsw, q.data(), global_mean, 50, 15.0f);
 
         int dyn_ef = lookup.get_ef(est.RC, est.RV_rank);
-        if (dyn_ef < k) dyn_ef = k;
+        if (i > 0) {
+            int avg_ef = static_cast<int>(running_ef_sum / i);
+            dyn_ef = std::max(dyn_ef, avg_ef);
+        }
+
+        if (dyn_ef < static_cast<int>(k)) dyn_ef = static_cast<int>(k);
         if (dyn_ef > max_ef) dyn_ef = max_ef;
         efs_used[i] = dyn_ef;
+
+        running_ef_sum += dyn_ef;
 
         alg_hnsw->setEf(dyn_ef);
         auto pq = alg_hnsw->searchKnn(q.data(), k);

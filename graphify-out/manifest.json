@@ -2825,9 +2825,9 @@
     "semantic_hash": "91376ca56333857763b844a522d9879a"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/experiments_driver/run.cpp": {
-    "mtime": 1781332284.326839,
-    "ast_hash": "4e8f963285092968f01af5d6c59d3e62",
-    "semantic_hash": "4e8f963285092968f01af5d6c59d3e62"
+    "mtime": 1782029621.6148055,
+    "ast_hash": "be6fe92fdfda4ac87a614542c8a0ef93",
+    "semantic_hash": "be6fe92fdfda4ac87a614542c8a0ef93"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/experiments_driver/run_lid.cpp": {
     "mtime": 1781273197.5731506,
@@ -2860,7 +2860,7 @@
     "semantic_hash": "619755df91712b45c3a810b7916cd566"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/hnswlib/hnsw_lid_search.h": {
-    "mtime": 1781327354.8581622,
+    "mtime": 1782029621.6148055,
     "ast_hash": "831045d7c87cc7bb8da332746d30321d",
     "semantic_hash": "831045d7c87cc7bb8da332746d30321d"
   },
@@ -2880,7 +2880,7 @@
     "semantic_hash": "d20057664fcaa78d05b1a04d24c83fb1"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/hnswlib/lid_2d_table.h": {
-    "mtime": 1781329562.0420825,
+    "mtime": 1782029621.6148055,
     "ast_hash": "71040bb1e7c312210dcfda7ac5814eed",
     "semantic_hash": "71040bb1e7c312210dcfda7ac5814eed"
   },
@@ -2935,7 +2935,7 @@
     "semantic_hash": "f8fb8b3b2e3a1261dde0b2e38b02a864"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/python_bindings/setup.py": {
-    "mtime": 1780316731.732359,
+    "mtime": 1782029743.4509497,
     "ast_hash": "ae10a226952081d67ba6c69c5371bfbd",
     "semantic_hash": "ae10a226952081d67ba6c69c5371bfbd"
   },
@@ -2945,9 +2945,9 @@
     "semantic_hash": "fb6fcf13cced9a71fad3098e8878fee4"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/lookup_dynamic.cpp": {
-    "mtime": 1781513449.1478946,
-    "ast_hash": "6e8191a334e2412f02323a4f0ce42a35",
-    "semantic_hash": "6e8191a334e2412f02323a4f0ce42a35"
+    "mtime": 1782029621.6364055,
+    "ast_hash": "43abc11968d95a00c59163efe3f0a5ed",
+    "semantic_hash": "43abc11968d95a00c59163efe3f0a5ed"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/reader.cpp": {
     "mtime": 1781328954.9754286,
@@ -2955,9 +2955,9 @@
     "semantic_hash": "05d65b8265683a8017e774bf5de73b0f"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/visualize_dynamic_lookup.py": {
-    "mtime": 1781526688.888746,
-    "ast_hash": "1a4c7abeb6e5b2556c1fd3beaefe1c4b",
-    "semantic_hash": "1a4c7abeb6e5b2556c1fd3beaefe1c4b"
+    "mtime": 1782029621.6364055,
+    "ast_hash": "b2727006fb945f18df7778af64a882f6",
+    "semantic_hash": "b2727006fb945f18df7778af64a882f6"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/visualize_reader.py": {
     "mtime": 1781254732.758949,
@@ -2965,14 +2965,14 @@
     "semantic_hash": "65371f4351de550d3ee25259baf85b68"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/setup.py": {
-    "mtime": 1780316731.732359,
+    "mtime": 1782029743.4509497,
     "ast_hash": "ae10a226952081d67ba6c69c5371bfbd",
     "semantic_hash": "ae10a226952081d67ba6c69c5371bfbd"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/setup.sh": {
-    "mtime": 1781362989.2737644,
-    "ast_hash": "ca4cc83958f65a42841890301d3931aa",
-    "semantic_hash": "ca4cc83958f65a42841890301d3931aa"
+    "mtime": 1782029621.6364055,
+    "ast_hash": "27e18eaf012e5647cbceb9ef6b61b1b9",
+    "semantic_hash": "27e18eaf012e5647cbceb9ef6b61b1b9"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/AGENTS.md": {
     "mtime": 1781702180.9071188,
@@ -2985,9 +2985,9 @@
     "semantic_hash": "54cb6908e11e985b9eb693abd3f956a8"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/CMakeLists.txt": {
-    "mtime": 1781527220.6923819,
-    "ast_hash": "7403ea1d74c4799d917b39817fede9d2",
-    "semantic_hash": "7403ea1d74c4799d917b39817fede9d2"
+    "mtime": 1782029621.6076055,
+    "ast_hash": "ef101e66361502415fc867b22abbee2a",
+    "semantic_hash": "ef101e66361502415fc867b22abbee2a"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/TESTING_RECALL.md": {
     "mtime": 1780316731.695696,
@@ -3275,12 +3275,12 @@
     "semantic_hash": "47305cfb70ac9ff358c23c09f290fd8c"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/figures/lookup_ef_heatmap_20x20.png": {
-    "mtime": 1781526695.9734433,
-    "ast_hash": "a3be86fb4b3e57134b39324754639393",
-    "semantic_hash": "a3be86fb4b3e57134b39324754639393"
+    "mtime": 1782029621.6256053,
+    "ast_hash": "e46a9d4895e30fbf076afe2d709892c3",
+    "semantic_hash": "e46a9d4895e30fbf076afe2d709892c3"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/figures/recall_20x20_heatmap_abs_corr.png": {
-    "mtime": 1781430457.6861277,
+    "mtime": 1782028693.5951161,
     "ast_hash": "5e4768219b02b831498fb7ad0d56a070",
     "semantic_hash": "5e4768219b02b831498fb7ad0d56a070"
   },
@@ -3295,8 +3295,163 @@
     "semantic_hash": "352c025091a88bf7ea82c946e0b6cb74"
   },
   "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/hardness_diagnostic.cpp": {
-    "mtime": 1781709234.8680549,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+    "mtime": 1782029621.6328053,
+    "ast_hash": "7df27ac5fd2a35bcb7dbdca01614ce89",
+    "semantic_hash": "7df27ac5fd2a35bcb7dbdca01614ce89"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/2metric/compare/compare_ef.cpp": {
+    "mtime": 1782029621.6076055,
+    "ast_hash": "2397309385f3818c9c921779a698c5da",
+    "semantic_hash": "2397309385f3818c9c921779a698c5da"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/2metric/estimator.h": {
+    "mtime": 1782029621.6076055,
+    "ast_hash": "0eac0c7002453a021a3c6865b6226ad9",
+    "semantic_hash": "0eac0c7002453a021a3c6865b6226ad9"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/2metric/lookuptable.h": {
+    "mtime": 1782029621.6076055,
+    "ast_hash": "3624f043bcc03ddb284e73775d18d9a5",
+    "semantic_hash": "3624f043bcc03ddb284e73775d18d9a5"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/2metric/run_2metric.cpp": {
+    "mtime": 1782029621.6076055,
+    "ast_hash": "99165ca091cd940b696f9d27d7e01a10",
+    "semantic_hash": "99165ca091cd940b696f9d27d7e01a10"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/2metric/statistics.h": {
+    "mtime": 1782029621.6076055,
+    "ast_hash": "022134c9fad32b3a9f027f2045b734c6",
+    "semantic_hash": "022134c9fad32b3a9f027f2045b734c6"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/2metric/table_generator.h": {
+    "mtime": 1782029621.6076055,
+    "ast_hash": "fe4a7fb75692892d02f230d4efc78cdd",
+    "semantic_hash": "fe4a7fb75692892d02f230d4efc78cdd"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/2metric/visualize_lookup.py": {
+    "mtime": 1782029621.6076055,
+    "ast_hash": "7168af406e7af16c7fa819599b032a83",
+    "semantic_hash": "7168af406e7af16c7fa819599b032a83"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_best_rv.py": {
+    "mtime": 1781769787.4939756,
+    "ast_hash": "9d4420af8fc74bf6b5e58d3bed937f2c",
+    "semantic_hash": "9d4420af8fc74bf6b5e58d3bed937f2c"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_final_rank.py": {
+    "mtime": 1781772698.3999045,
+    "ast_hash": "3a82a43228230f6a182d689a59485c88",
+    "semantic_hash": "3a82a43228230f6a182d689a59485c88"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_final_rv.py": {
+    "mtime": 1781771757.8947222,
+    "ast_hash": "a1af5ee9ba7c6d0500c5eea7c6676e6f",
+    "semantic_hash": "a1af5ee9ba7c6d0500c5eea7c6676e6f"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_finished.py": {
+    "mtime": 1781769114.5765464,
+    "ast_hash": "a923a24fa1074602de8f26e7b4fb975e",
+    "semantic_hash": "a923a24fa1074602de8f26e7b4fb975e"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_gamma.py": {
+    "mtime": 1781766169.944763,
+    "ast_hash": "2c0fad056b4b82222994e3d4abbbf897",
+    "semantic_hash": "2c0fad056b4b82222994e3d4abbbf897"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_hardness.py": {
+    "mtime": 1781715860.0142124,
+    "ast_hash": "7c3e23e6246b8429f0ec6989ae6f00ba",
+    "semantic_hash": "7c3e23e6246b8429f0ec6989ae6f00ba"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_hubness.py": {
+    "mtime": 1781771068.9658384,
+    "ast_hash": "4af7c1d1a579cba19328c3aeb5204663",
+    "semantic_hash": "4af7c1d1a579cba19328c3aeb5204663"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_log_all.py": {
+    "mtime": 1781769225.9831588,
+    "ast_hash": "a61d1098ae1021331a8aa6cba894df3b",
+    "semantic_hash": "a61d1098ae1021331a8aa6cba894df3b"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_rank.py": {
+    "mtime": 1781770853.391055,
+    "ast_hash": "d02e69c4d1fa1c2cc45e1c3b0d825839",
+    "semantic_hash": "d02e69c4d1fa1c2cc45e1c3b0d825839"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_sweep_rank.py": {
+    "mtime": 1781773461.196473,
+    "ast_hash": "16b686bebc39bd2b414733cc06142897",
+    "semantic_hash": "16b686bebc39bd2b414733cc06142897"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/analyze_unw.py": {
+    "mtime": 1781770172.2721107,
+    "ast_hash": "899a0b760ce4b05e22eb4cef123804be",
+    "semantic_hash": "899a0b760ce4b05e22eb4cef123804be"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/simulate_2d_table.py": {
+    "mtime": 1781713587.7928035,
+    "ast_hash": "df58fbec94be3ebe1aad1a43be3406d7",
+    "semantic_hash": "df58fbec94be3ebe1aad1a43be3406d7"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_all_datasets.py": {
+    "mtime": 1781768606.573804,
+    "ast_hash": "ea2a661f32af9ab50bd678788705af89",
+    "semantic_hash": "ea2a661f32af9ab50bd678788705af89"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_all_rv.cpp": {
+    "mtime": 1781771918.3402872,
+    "ast_hash": "53c423cd4f5a063e88dd2e22e46fb2a3",
+    "semantic_hash": "53c423cd4f5a063e88dd2e22e46fb2a3"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_best_rv.cpp": {
+    "mtime": 1781769765.040774,
+    "ast_hash": "194ad3caa7041f36fddb77aab1926183",
+    "semantic_hash": "194ad3caa7041f36fddb77aab1926183"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_final_rank.cpp": {
+    "mtime": 1781772672.411767,
+    "ast_hash": "9533982f9fd619ff54f720ed4e31c00b",
+    "semantic_hash": "9533982f9fd619ff54f720ed4e31c00b"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_hubness.cpp": {
+    "mtime": 1781771039.4614356,
+    "ast_hash": "d568e4b04cf4db7f5a1676863737a326",
+    "semantic_hash": "d568e4b04cf4db7f5a1676863737a326"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_log_datasets.cpp": {
+    "mtime": 1781769521.9862306,
+    "ast_hash": "5d2a3b25f800f6dd3dd5392dc06a2afb",
+    "semantic_hash": "5d2a3b25f800f6dd3dd5392dc06a2afb"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_rank_weight.cpp": {
+    "mtime": 1781770830.7397742,
+    "ast_hash": "b00a1a148c41a5cbb1d0681b1bc900f3",
+    "semantic_hash": "b00a1a148c41a5cbb1d0681b1bc900f3"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/test_unweighted.cpp": {
+    "mtime": 1781770549.5123193,
+    "ast_hash": "bf4f220b02c85f5f27f6ab69ef8e99ab",
+    "semantic_hash": "bf4f220b02c85f5f27f6ab69ef8e99ab"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/tune_gamma.cpp": {
+    "mtime": 1781768575.4760554,
+    "ast_hash": "f951ce4843c522eedb8f48d29de6168c",
+    "semantic_hash": "f951ce4843c522eedb8f48d29de6168c"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/figures/hardness_diagnostic_scatter.png": {
+    "mtime": 1781712263.6686485,
+    "ast_hash": "faf77aae84a0f6d5d29ca28cfb243cbc",
+    "semantic_hash": "faf77aae84a0f6d5d29ca28cfb243cbc"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/figures/lookup_ef_heatmap_10x10.png": {
+    "mtime": 1782029621.6184053,
+    "ast_hash": "b97801678994c384dc890a1e91df152c",
+    "semantic_hash": "b97801678994c384dc890a1e91df152c"
+  },
+  "/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/figures/old_lookup_ef_heatmap_20x20.png": {
+    "mtime": 1782029621.6328053,
+    "ast_hash": "a3be86fb4b3e57134b39324754639393",
+    "semantic_hash": "a3be86fb4b3e57134b39324754639393"
   }
 }
