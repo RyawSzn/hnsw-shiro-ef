@@ -1413,37 +1413,32 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             std::vector<std::pair<dist_t, tableint>>,
             std::greater<std::pair<dist_t, tableint>>
         > probe_frontier,
-        std::vector<bool> probe_visited,
+        VisitedList* probe_vl,
+        vl_type probe_vl_tag,
         const void* query_data,
         size_t k,
         size_t ef_lookup
     ) const {
         std::priority_queue<std::pair<dist_t, labeltype>> result;
-        if (cur_element_count == 0) return result;
+        if (cur_element_count == 0) {
+            visited_list_pool_->releaseVisitedList(probe_vl);
+            return result;
+        }
 
-        // ef_lookup must be at least k and at least the probe cap already reached.
         if (ef_lookup < k) ef_lookup = k;
 
-        // ---- Initialise working sets from probe state ----
-
-        // top_candidates (W): probe already filled this to ef_probe_cap.
-        // If ef_lookup > ef_probe_cap we keep all of W; trimming is not needed
-        // because the loop below will naturally expand the set.
-        // If ef_lookup <= current size (edge case: same ef), trim to ef_lookup.
-        std::priority_queue<std::pair<dist_t, tableint>, std::vector<std::pair<dist_t, tableint>>, CompareByFirst> top_candidates;
-        {
-            // Drain probe_top (max-heap by dist, std::less) into a temp vector,
-            // then push into top_candidates (CompareByFirst = same ordering).
-            std::vector<std::pair<dist_t, tableint>> tmp;
-            tmp.reserve(probe_top.size());
-            while (!probe_top.empty()) {
-                tmp.push_back(probe_top.top());
-                probe_top.pop();
-            }
-            for (auto& p : tmp) top_candidates.push(p);
-            // Trim if ef_lookup is smaller than what the probe already collected.
-            while (top_candidates.size() > ef_lookup) top_candidates.pop();
+        // std::less<pair<dist_t,tableint>> and CompareByFirst are identical orderings,
+        // so the underlying heap vector from probe_top is valid as-is for top_candidates.
+        std::vector<std::pair<dist_t, tableint>> tc_storage;
+        tc_storage.reserve(probe_top.size());
+        while (!probe_top.empty()) {
+            tc_storage.push_back(std::move(const_cast<std::pair<dist_t,tableint>&>(probe_top.top())));
+            probe_top.pop();
         }
+        std::priority_queue<std::pair<dist_t, tableint>, std::vector<std::pair<dist_t, tableint>>, CompareByFirst>
+            top_candidates(CompareByFirst{}, std::move(tc_storage));
+
+        while (top_candidates.size() > ef_lookup) top_candidates.pop();
 
         dist_t lowerBound = top_candidates.empty()
             ? std::numeric_limits<dist_t>::max()
@@ -1458,10 +1453,9 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             std::greater<std::pair<dist_t, tableint>>
         > candidate_set = std::move(probe_frontier);
 
-        // visited bitvector — reuse from probe, no re-allocation needed.
-        std::vector<bool>& visited = probe_visited;
+        vl_type* visited_array = probe_vl->mass;
+        vl_type visited_tag    = probe_vl_tag;
 
-        // ---- Standard HNSW Layer-0 greedy loop ----
         while (!candidate_set.empty()) {
             std::pair<dist_t, tableint> current_node_pair = candidate_set.top();
             dist_t candidate_dist = current_node_pair.first;
@@ -1475,8 +1469,8 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
 
             for (size_t j = 1; j <= size; j++) {
                 int candidate_id = *(data + j);
-                if (visited[candidate_id]) continue;
-                visited[candidate_id] = true;
+                if (visited_array[candidate_id] == visited_tag) continue;
+                visited_array[candidate_id] = visited_tag;
 
                 char* currObj1 = getDataByInternalId(candidate_id);
                 dist_t dist = fstdistfunc_(query_data, currObj1, dist_func_param_);
@@ -1492,6 +1486,8 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                 }
             }
         }
+
+        visited_list_pool_->releaseVisitedList(probe_vl);
 
         while (top_candidates.size() > k) top_candidates.pop();
         while (!top_candidates.empty()) {

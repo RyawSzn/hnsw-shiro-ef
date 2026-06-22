@@ -20,7 +20,8 @@ struct EstimatorResult {
 //
 //   top_candidates    = W   (max-heap: top() is farthest, size <= ef_probe_cap)
 //   candidate_frontier = W_d (min-heap: nodes queued but not expanded when probe stopped)
-//   visited           = bitvector of every node whose dist was computed
+//   vl / vl_tag       = VisitedList borrowed from alg_hnsw's pool; caller MUST pass
+//                       it back to searchKnnFromProbeState so the pool can reclaim it.
 struct ProbeState {
     float entry_point_dist;
     float revisit_rank;
@@ -33,7 +34,9 @@ struct ProbeState {
         std::greater<std::pair<float, hnswlib::tableint>>
     > candidate_frontier;
 
-    std::vector<bool> visited;
+    // Borrowed from visited_list_pool_. Ownership transfers to searchKnnFromProbeState.
+    hnswlib::VisitedList* vl{nullptr};
+    hnswlib::vl_type vl_tag{0};
 };
 
 class Estimator2Metric {
@@ -134,9 +137,10 @@ public:
     }
 
     // Stateful variant: same computation as probe_query but returns ProbeState
-    // (W, W_d frontier, visited) so searchKnnFromProbeState can resume without
-    // redoing the greedy descent or re-computing the probe neighborhood.
-    // Thread-safe: each call owns its visited vector; alg_hnsw must be read-only.
+    // (W, W_d frontier, VisitedList from pool) so searchKnnFromProbeState can resume
+    // without redoing greedy descent or the probe neighborhood.
+    // NOT thread-safe for parallel calls on the same alg_hnsw (pool mutex serializes,
+    // but the returned vl* must be consumed before the next probe on the same alg_hnsw).
     static ProbeState probe_with_state(
         hnswlib::HierarchicalNSW<float>* alg_hnsw,
         const float* query,
@@ -164,8 +168,10 @@ public:
             }
         }
 
-        const size_t max_elements = alg_hnsw->max_elements_;
-        std::vector<bool> visited(max_elements, false);
+        // Borrow a VisitedList from the pool — O(1) reset, no memset per query.
+        hnswlib::VisitedList* vl = alg_hnsw->visited_list_pool_->getFreeVisitedList();
+        hnswlib::vl_type* visited_array = vl->mass;
+        hnswlib::vl_type tag = vl->curV;
 
         // W: max-heap, top() is farthest (worst) among the best ef_probe_cap seen
         std::priority_queue<std::pair<float, hnswlib::tableint>> top_candidates;
@@ -176,7 +182,7 @@ public:
             std::greater<std::pair<float, hnswlib::tableint>>
         > candidate_set;
 
-        visited[currObj] = true;
+        visited_array[currObj] = tag;
         candidate_set.emplace(curdist, currObj);
         top_candidates.emplace(curdist, currObj);
         float lower_bound = curdist;
@@ -197,11 +203,11 @@ public:
                 hnswlib::tableint cand = nbrs[j];
                 float d = alg_hnsw->fstdistfunc_(query, alg_hnsw->getDataByInternalId(cand), alg_hnsw->dist_func_param_);
 
-                bool is_revisit = visited[cand];
+                bool is_revisit = (visited_array[cand] == tag);
                 edges.emplace_back(d, is_revisit);
 
                 if (!is_revisit) {
-                    visited[cand] = true;
+                    visited_array[cand] = tag;
                     if ((int)top_candidates.size() < ef_probe_cap || lower_bound > d) {
                         candidate_set.emplace(d, cand);
                         top_candidates.emplace(d, cand);
@@ -230,7 +236,8 @@ public:
         state.revisit_rank       = sum_vis / std::max(1e-5f, sum_tot);
         state.top_candidates     = std::move(top_candidates);
         state.candidate_frontier = std::move(candidate_set);
-        state.visited            = std::move(visited);
+        state.vl                 = vl;
+        state.vl_tag             = tag;
         return state;
     }
 };

@@ -132,7 +132,8 @@ int main(int argc, char** argv) {
         auto pq = alg_hnsw->searchKnnFromProbeState(
             std::move(state.top_candidates),
             std::move(state.candidate_frontier),
-            std::move(state.visited),
+            state.vl,
+            state.vl_tag,
             q_ptr, k, static_cast<size_t>(dyn_ef)
         );
 
