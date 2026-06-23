@@ -56,13 +56,13 @@ endif()
 # ------------------------------------------------------------------
 
 # 3. Setup your custom run executable
-add_executable(run experiments_driver/run.cpp)
+add_executable(run_ada experiments_driver/run_ada.cpp)
 
 # Add HDF5 include directories (found automatically by find_package)
-target_include_directories(run PRIVATE ${HDF5_INCLUDE_DIRS})
+target_include_directories(run_ada PRIVATE ${HDF5_INCLUDE_DIRS})
 
 # 4. Link everything together correctly
-target_link_libraries(run PRIVATE
+target_link_libraries(run_ada PRIVATE
     hnswlib                 # Link your hnswlib library (you forgot this in your script!)
     Eigen3::Eigen           # Link Eigen
     Boost::boost            # Link Boost
