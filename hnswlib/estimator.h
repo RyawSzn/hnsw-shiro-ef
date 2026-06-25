@@ -1,4 +1,6 @@
 // ada-ef
+
+// remove some reducdant codes and variables like covariance matrices, distance matrices, etc. that are not used in the estimation process, or like some useless timings while keeping the current logic unchanged
 #pragma once
 
 #include <Eigen/Core>
@@ -221,7 +223,7 @@ namespace hnswdis
                 sum_w += w;
             }
 
-            float r_v = 100 * sum_wv / std::max(1e-6f, sum_w);
+            float r_v = 100 * sum_wv / std::max(1e-5f, sum_w);
             return r_v;
         }
 
