@@ -498,8 +498,6 @@ namespace hnswdis
         std::vector<float> threshold_z;
         std::vector<float> bin_weight;
 
-        std::shared_ptr<Estimator> estimator;
-
     public:
         enum class WeightDecayType
         {
@@ -582,92 +580,54 @@ namespace hnswdis
             const void *dist_list, const size_t n,
             const float mean, const float var) const
         {
+            // Cast dist_list to std::pair<float, bool>*
+            using edge_t = std::pair<float, bool>;
+            const edge_t *edges = static_cast<const edge_t *>(dist_list);
 
-            float std = std::sqrt(var);
+            // Copy and sort the edges ascending by distance
+            std::vector<edge_t> E(edges, edges + n);
+            std::sort(E.begin(), E.end(), [](const edge_t &a, const edge_t &b) {
+                return a.first < b.first;
+            });
 
-            // Calculate bin intervals
-            float bin_thresholds[num_bins];
-            for (int i = 0; i < num_bins; ++i)
+            // Compute Revisit Rank (R_v)
+            float gamma = 16.0f;
+            float sum_wv = 0.0f;
+            float sum_w = 0.0f;
+
+            for (size_t i = 0; i < n; ++i)
             {
-                bin_thresholds[i] = mean + threshold_z[i] * std;
-            }
-
-            int cnt[num_bins] = {};
-
-            if (isTopBased)
-            {
-                for (size_t j = 0; j < n; ++j)
+                float w = std::exp(-gamma * static_cast<float>(i + 1) / static_cast<float>(n));
+                if (E[i].second) // if v_i == 1
                 {
-                    float dist = ((float *)dist_list)[j];
-                    for (int i = num_bins - 1; i >= 0; --i)
-                    {
-                        if (dist > bin_thresholds[i])
-                        {
-                            ++cnt[i];
-                            break;
-                        }
-                    }
+                    sum_wv += w;
                 }
-            }
-            else
-            { // not top based
-                for (size_t j = 0; j < n; ++j)
-                {
-                    float dist = ((float *)dist_list)[j];
-                    for (int i = 0; i < num_bins; ++i)
-                    {
-                        if (dist < bin_thresholds[i])
-                        {
-                            ++cnt[i];
-                            break;
-                        }
-                    }
-                }
+                sum_w += w;
             }
 
-            float score = 0.0;
-            for (size_t i = 0; i < num_bins; ++i)
-            {
-                score += (float)cnt[i] / (float)n * bin_weight[i];
-            }
-
-            return score;
+            float r_v = 100 * sum_wv / std::max(1e-6f, sum_w);
+            return r_v;
         }
 
     public:
         ApproximatedScoreCalculator(
-            std::shared_ptr<Estimator> estimator,
             float quantile_step,
             WeightDecayType decay_type = WeightDecayType::Exponential,
             int num_bins = 5
             // number of bins is 5 by default because we use exponential decay function as default which decays quickly and the weights for more than 5 bins are very small;
-            // but for decay ablation study, we test other kinds of decay functions and set the number of bins to a larger value, i.e., 1/quantile_step
-
-            ) : estimator(estimator), quantile_step(quantile_step), num_bins(num_bins), decay_type(decay_type)
+        ) : quantile_step(quantile_step), decay_type(decay_type), num_bins(num_bins)
         {
-            // Check if the estimator is top-based
-            // top based is the case where the higher the score, the better the similarity. in this case, score is calculated using top bins, e.g., 0.995, ..., 0.999
-            // bottom based is the case where the lower the score, the better the similarity. in this case, score is calculated using bottom bins, e.g., 0.001, ..., 0.005
-            isTopBased = false;
-            if (estimator->get_name() == "InnerProductEstimator" || estimator->get_name() == "CosineSimilarityEstimator")
-            {
-                isTopBased = true;
-            }
             std::cout << "Start creating ApproximatedScoreCalculator" << std::endl;
 
-            initialize_threshold_z();
-            initialize_bin_weight();
-
+            // Old distribution init removed
+            
             std::cout << "ApproximatedScoreCalculator created" << std::endl;
         }
 
         float compute_score(const void *q, const size_t q_size,
                             const void *dist_list, const size_t dist_list_size) const
         {
-            Eigen::Map<const hnswdis::RowVectorXf> q_vec((float *)q, q_size);
-            auto [mean, var] = estimator->get_practical_distribution(q_vec);
-
-            return calculate_score(dist_list, dist_list_size, mean, var);
+            return calculate_score(dist_list, dist_list_size, 0.0f, 0.0f);
         }
     };
 

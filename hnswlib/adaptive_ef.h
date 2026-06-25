@@ -55,7 +55,7 @@ namespace hnswdis
     {
 
         std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::init_estimator(metric, data_vectors);
-        hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+        hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
 
         return hnsw_search_and_score(alg_hnsw, query_vectors, data_vectors, score_cal, k, statics_length);
     }
@@ -925,7 +925,7 @@ namespace hnswdis
             MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
 
             std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::init_estimator(metric, *data_vectors);
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
 
             init(alg_hnsw,
                  data_vectors,
@@ -1177,33 +1177,14 @@ namespace hnswdis
                   const size_t statics_length,
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-                  const std::string &estimator_path,
-                  const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type,
-                  const int num_bins = 5
-                )
-        {
-            std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(estimator_path);
-            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, query_vectors, ground_truth_ptr, estimator, weight_decay_type, num_bins);
-        }
-
-        void init(const std::shared_ptr<hnswlib::HierarchicalNSW<float>> alg_hnsw,
-                  const std::shared_ptr<hnswdis::MatrixXf> data_vectors,
-                  const size_t k,
-                  const std::string metric,
-                  const float quantile_step,
-                  const size_t statics_length,
-                  const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
-                  const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-                  const std::shared_ptr<hnswdis::Estimator> estimator,
                   const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type,
                   const int num_bins
                 )
         {
             auto start = std::chrono::high_resolution_clock::now();
 
-            // std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(estimator_path);
 
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step, weight_decay_type, num_bins);
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step, weight_decay_type, num_bins);
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
             std::cout << "Estimator initialized in " << duration.count() << " ms" << std::endl;
@@ -1412,7 +1393,6 @@ namespace hnswdis
             const float quantile_step,
             const size_t statics_length,
             const std::string &samplings_filename,
-            const std::string &estimator_filename,
             int ef_upper_bound = 5000,
             const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type = hnswdis::ApproximatedScoreCalculator::WeightDecayType::Exponential,
             const int num_bins = 5
@@ -1447,7 +1427,7 @@ namespace hnswdis
                 sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
             }
 
-            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, estimator_filename, weight_decay_type, num_bins);
+            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, weight_decay_type, num_bins);
         }
 
         EfAdapter(
@@ -1460,30 +1440,11 @@ namespace hnswdis
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            const std::string &estimator_filename,
             int ef_upper_bound = 5000,
             const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type = hnswdis::ApproximatedScoreCalculator::WeightDecayType::Exponential,
             const int num_bins = 5) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
-            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, query_vectors, ground_truth_ptr, estimator_filename, weight_decay_type, num_bins);
-        }
-
-        EfAdapter(
-            std::shared_ptr<hnswlib::HierarchicalNSW<float>> alg_hnsw,
-            std::shared_ptr<hnswdis::MatrixXf> data_vectors,
-            const size_t k,
-            const std::string metric,
-            const float expected_recall,
-            const float quantile_step,
-            const size_t statics_length,
-            const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
-            const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            const std::shared_ptr<hnswdis::Estimator> estimator,
-            int ef_upper_bound = 5000,
-            const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type = hnswdis::ApproximatedScoreCalculator::WeightDecayType::Exponential,
-            const int num_bins = 5) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
-        {
-            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, query_vectors, ground_truth_ptr, estimator, weight_decay_type, num_bins);
+            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, query_vectors, ground_truth_ptr, weight_decay_type, num_bins);
         }
 
         EfAdapter(
@@ -1526,7 +1487,7 @@ namespace hnswdis
 
             // Serialize ef_recall_estimators
             size_t estimators_size = ef_recall_estimators.size();
-            hnswlib::writeBinaryPOD(out, estimators_size); // status size
+            hnswlib::writeBinaryPOD(out, estimators_size);
             for (const auto &entry : ef_recall_estimators)
             {
                 hnswlib::writeBinaryPOD(out, entry.first); // score

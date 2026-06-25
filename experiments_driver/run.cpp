@@ -102,20 +102,16 @@ void online_exp()
         // the followings are for adaptive ef experiments
         std::string ef_adaptor_path = (root / "estimation_table" / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
         std::string samplings_path = (root / "sampling" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
-        std::string estimator_path = (root / "statistics" / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();           // path for statistics of datasets (mean, variance, covaraince matrix)
 
         if (dataset == "laion_text")
         {
-            estimator_path = (root / "statistics" / ("laion_image-estimator--k-" + std::to_string(k) + ".bin")).string();
         }
 
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        std::shared_ptr<hnswdis::Estimator> estimator;
-        estimator = hnswdis::load_estimator_from_file(estimator_path);
-        hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+        hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
 
         // 2. load ef_adaptor
         std::shared_ptr<hnswdis::EfAdapter> ef_adapter_ptr;
@@ -217,7 +213,6 @@ void offline_laion_text2image()
     }
 
     std::shared_ptr<hnswdis::MatrixXf> data = std::make_shared<hnswdis::MatrixXf>(image_data);
-    std::string estimator_path = (root / ("statistics/laion_image-estimator--k-" + std::to_string(k) + ".bin")).string(); // path for statistics of datasets (mean, variance, covaraince matrix)
 
     // 3. compute ef_adaptor
     for (int i = 0; i < repeat; i++)
@@ -225,7 +220,7 @@ void offline_laion_text2image()
         start = std::chrono::high_resolution_clock::now();
         std::ifstream ef_adaptor_file(ef_adaptor_path);
         hnswdis::EfAdapter ef_adapter(
-            hnsw, data, k, "cd", expected_recall, quantile_step, statics_length, samplings_path, estimator_path, ef_upper_bound);
+            hnsw, data, k, "cd", expected_recall, quantile_step, statics_length, samplings_path, ef_upper_bound);
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
         std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -286,7 +281,6 @@ void offline_exp()
 
         std::string ef_adaptor_path = (root / ("estimation_table/" + dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
         std::string samplings_path = (root / ("sampling/" + dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
-        std::string estimator_path = (root / ("statistics/" + dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();           // path for statistics of datasets (mean, variance, covaraince matrix)
 
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
@@ -298,12 +292,9 @@ void offline_exp()
         for (size_t i = 0; i < repeat; i++)
         {
             start = std::chrono::high_resolution_clock::now();
-            std::shared_ptr<hnswdis::Estimator> estimator;
-            estimator = hnswdis::init_estimator(metric, *data);
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "Dataset statistics computing time: " << duration << " ms" << std::endl;
-            hnswdis::save_estimator_to_file(*estimator, estimator_path);
         }
 
         // 2. Sample data and compute ground truth
@@ -322,7 +313,7 @@ void offline_exp()
         {
             start = std::chrono::high_resolution_clock::now();
             std::ifstream ef_adaptor_file(ef_adaptor_path);
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, estimator_path, ef_upper_bound);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, ef_upper_bound);
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -376,7 +367,6 @@ void sensitivity_analysis()
 
         // samplings and estimators are k agnostic and can be reused across different k values; they are also expected recall agnostic and can be reused across different expected recall values
         std::string samplings_path = (root / ("sampling/" + dataset + "-samplings-" + "-k1000-ef.bin")).string(); // path for sampling (queries and ground truth)
-        std::string estimator_path = (root / ("statistics/" + dataset + "-estimator-" + "-k-1000.bin")).string(); // path for statistics of datasets (mean, variance, covaraince matrix)
 
         std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
         std::string index_path = (root / ("index/" + dataset + "-M16-efc-500-parallel.hnsw")).string();
@@ -384,7 +374,6 @@ void sensitivity_analysis()
         if (dataset == "deep-image-96-angular1000")
         {
             index_path = (root / "index/deep-image-96-angular-M16-efc-500-parallel.hnsw").string();     // reuse the index of deep-image-96-angular
-            estimator_path = (root / "statistics/deep-image-96-angular-estimator--k-100.bin").string(); // reuse the estimator of deep-image-96-angular
             // sampling will recomputed on the fly for deep image because it requires a larger k value, i.e., 1000, and the existing sampling is for k=100
             // in the case of vese versa, i.e., reusing a sampling with larger k for a smaller k, it is safe to do so
         }
@@ -420,7 +409,7 @@ void sensitivity_analysis()
                     << "Expected recall: " << expected_recall << std::endl;
 
                 start = std::chrono::high_resolution_clock::now();
-                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, estimator_path, ef_upper_bound);
+                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, ef_upper_bound);
                 end = std::chrono::high_resolution_clock::now();
                 duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
                 std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -433,9 +422,7 @@ void sensitivity_analysis()
                 const float wae = ef_adapter_ptr->get_wae();
                 std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-                std::shared_ptr<hnswdis::Estimator> estimator;
-                estimator = hnswdis::load_estimator_from_file(estimator_path);
-                hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+                hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
 
                 size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
 
@@ -482,15 +469,11 @@ void insert_exp_setup(
     alg_hnsw->saveIndex(index_path);
 
     // compute estimator
-    std::string estimator_path = (root / "incremental_update" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();
 
     start = std::chrono::high_resolution_clock::now();
-    std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::init_estimator(metric, before_updates_data);
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "Estimator building time: " << duration.count() << " ms" << std::endl;
     // save the estimator to disk
-    hnswdis::save_estimator_to_file(*estimator, estimator_path);
 
     // compute samplings
     std::string samplings_path = (root / "incremental_update" / batch_type / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();
@@ -512,7 +495,7 @@ void insert_exp_setup(
     size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
     start = std::chrono::high_resolution_clock::now();
-    hnswdis::EfAdapter ef_adapter(alg_hnsw, before_data_ptr, k, metric, expected_recall, quantile_step, statics_length, samplings_path, estimator_path, ef_upper_bound);
+    hnswdis::EfAdapter ef_adapter(alg_hnsw, before_data_ptr, k, metric, expected_recall, quantile_step, statics_length, samplings_path, ef_upper_bound);
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
@@ -578,9 +561,6 @@ void insert_exp_adaef_update(
     for (size_t i = 0; i < 3; i++)
     {
         // load stale estimator
-        std::string estimator_path = (root / "incremental_update" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();
-        std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(estimator_path);
-        std::cout << "Estimator loaded" << std::endl;
 
         // load stale samplings
         std::string samplings_path = (root / "incremental_update" / batch_type / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();
@@ -592,12 +572,8 @@ void insert_exp_adaef_update(
 
         // update estimator
         auto start = std::chrono::high_resolution_clock::now();
-        estimator->add_points(updates_data, before_updates);
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        std::cout << "Estimator updated in " << duration.count() << " ms" << std::endl;
-        std::string updated_estimator_path = (root / "incremental_update" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + "-updated.bin")).string();
-        hnswdis::save_estimator_to_file(*estimator, updated_estimator_path);
 
         // update samplings
         start = std::chrono::high_resolution_clock::now();
@@ -620,7 +596,7 @@ void insert_exp_adaef_update(
 
         start = std::chrono::high_resolution_clock::now();
         hnswdis::EfAdapter ef_adapter(
-            alg_hnsw, full_data_ptr, k, metric, expected_recall, quantile_step, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, estimator, ef_upper_bound);
+            alg_hnsw, full_data_ptr, k, metric, expected_recall, quantile_step, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_upper_bound);
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
@@ -696,9 +672,6 @@ void insert_exp(bool setup = false)
             std::cout << "\n\nStale performance: use stale (unupdated) estimator, samplings, and adaptor to do search\n\n"
                       << std::endl;
             // load estimator
-            std::string estimator_path = (root / "incremental_update" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();
-            std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(estimator_path);
-            std::cout << "Estimator loaded" << std::endl;
 
             // load samplings
             std::string samplings_path = (root / "incremental_update" / batch_type / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();
@@ -719,7 +692,7 @@ void insert_exp(bool setup = false)
                 expected_recall);
             const float wae = ef_adapter_ptr->get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             adaptive_search(dataset, repeat, *alg_hnsw, query_vectors, full_data, ground_truth, score_cal, k, sketch, statics_length, expected_recall);
@@ -731,8 +704,6 @@ void insert_exp(bool setup = false)
                       << std::endl;
 
             // load updated estimator
-            std::string updated_estimator_path = (root / "incremental_update" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + "-updated.bin")).string();
-            std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(updated_estimator_path);
             std::cout << "Updated estimator loaded" << std::endl;
 
             // load the updated adaptor
@@ -747,7 +718,7 @@ void insert_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with updated estimator, samplings, and adaptor
@@ -799,14 +770,10 @@ void delete_exp_setup(
         std::cout << "Updated index loaded" << std::endl;
 
         // compute estimator
-        std::string estimator_path = (root / "incremental_deletion" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + "-recomp.bin")).string();
         auto start = std::chrono::high_resolution_clock::now();
-        std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::init_estimator(metric, after_updates_data);
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        std::cout << "Estimator building time: " << duration.count() << " ms" << std::endl;
         // save the estimator to disk
-        hnswdis::save_estimator_to_file(*estimator, estimator_path);
 
         // compute samplings
         std::string samplings_path = (root / "incremental_deletion" / batch_type / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef-recomp.bin")).string();
@@ -830,7 +797,7 @@ void delete_exp_setup(
         std::shared_ptr<hnswdis::MatrixXf> after_updates_data_ptr = std::make_shared<hnswdis::MatrixXf>(after_updates_data);
         std::shared_ptr<hnswdis::MatrixXi> sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
         start = std::chrono::high_resolution_clock::now();
-        hnswdis::EfAdapter ef_adapter(alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, quantile_step, statics_length, sample_query_vectors, sample_ground_truth_ptr, estimator, ef_upper_bound);
+        hnswdis::EfAdapter ef_adapter(alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, quantile_step, statics_length, sample_query_vectors, sample_ground_truth_ptr, ef_upper_bound);
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
@@ -859,9 +826,6 @@ void delete_exp_adaef_update(
     std::cout << "Updated index loaded" << std::endl;
 
     // load stale estimator: in this case, the stale estimator is full estimater before deletions
-    std::string estimator_path = (root / "statistics" / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();
-    std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(estimator_path);
-    std::cout << "Estimator loaded" << std::endl;
 
     // load stale sampling: in this case, the stale sampling is full samplings ground truth before deletions, computed by deletion_exp_setup()
     std::string full_ground_truth_path = (root / "incremental_deletion" / batch_type / (dataset + "-full-ground-truth-samplings-" + "-k-" + std::to_string(k) + ".bin")).string();
@@ -870,12 +834,8 @@ void delete_exp_adaef_update(
 
     // update estimator
     auto start = std::chrono::high_resolution_clock::now();
-    estimator->delete_points(updates_data, full_data_rows); // key functions
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "Estimator updated in " << duration.count() << " ms" << std::endl;
-    std::string updated_estimator_path = (root / "incremental_deletion" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + "-updated.bin")).string();
-    hnswdis::save_estimator_to_file(*estimator, updated_estimator_path);
 
     // update samplings
     hnswdis::MatrixXi sample_ground_truth;      // create ground truth vectors
@@ -907,7 +867,7 @@ void delete_exp_adaef_update(
     std::shared_ptr<hnswdis::MatrixXi> sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
     start = std::chrono::high_resolution_clock::now();
     hnswdis::EfAdapter ef_adapter(
-        alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, quantile_step, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, estimator, ef_upper_bound);
+        alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, quantile_step, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_upper_bound);
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
@@ -990,11 +950,8 @@ void delete_exp(bool setup = false)
 
             std::string ef_adaptor_path = (root / "estimation_table" / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
             std::string samplings_path = (root / "sampling" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
-            std::string estimator_path = (root / "statistics" / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();
 
             // load estimator
-            std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(estimator_path);
-            std::cout << "Estimator loaded" << std::endl;
 
             // load samplings
             hnswdis::MatrixXf sample_query_vectors;
@@ -1013,7 +970,7 @@ void delete_exp(bool setup = false)
                 expected_recall);
             const float wae = ef_adapter_ptr->get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             adaptive_search(dataset, repeat, *alg_hnsw, query_vectors, after_updates_data, ground_truth, score_cal, k, sketch, statics_length, expected_recall);
@@ -1025,8 +982,6 @@ void delete_exp(bool setup = false)
                       << std::endl;
 
             // load updated estimator
-            std::string updated_estimator_path = (root / "incremental_deletion" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + "-updated.bin")).string();
-            std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(updated_estimator_path);
             std::cout << "Updated estimator loaded" << std::endl;
 
             // load the updated adaptor
@@ -1041,7 +996,7 @@ void delete_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with updated estimator, samplings, and adaptor
@@ -1054,8 +1009,6 @@ void delete_exp(bool setup = false)
                       << std::endl;
 
             // load recomputed estimator
-            std::string recomp_estimator_path = (root / "incremental_deletion" / batch_type / (dataset + "-estimator-" + "-k-" + std::to_string(k) + "-recomp.bin")).string();
-            std::shared_ptr<hnswdis::Estimator> estimator = hnswdis::load_estimator_from_file(recomp_estimator_path);
             std::cout << "Recomputed estimator loaded" << std::endl;
 
             // load the recomputed adaptor
@@ -1070,7 +1023,7 @@ void delete_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with recomputed estimator, samplings, and adaptor
@@ -1122,15 +1075,12 @@ void ablation_study_distance_list_size()
 
         // the followings are for adaptive ef experiments
         std::string samplings_path = (root / "sampling" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for sampling (queries and ground truth)
-        std::string estimator_path = (root / "statistics" / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string(); // path for statistics of datasets (mean, variance, covaraince matrix)
 
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        std::shared_ptr<hnswdis::Estimator> estimator;
-        estimator = hnswdis::load_estimator_from_file(estimator_path);
-        hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+        hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
 
         // 2. load samplings
         hnswdis::MatrixXf sample_query_vectors;
@@ -1147,7 +1097,7 @@ void ablation_study_distance_list_size()
             std::string ef_adaptor_path = (root / "ablation_distance_size" / (dataset + "-D-" + std::to_string(statics_length) + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
 
             auto start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, estimator_path, ef_upper_bound);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, ef_upper_bound);
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -1212,10 +1162,7 @@ void ablation_study_sampling_size()
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         // 1. load estimator
-        std::string estimator_path = (root / "statistics" / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string(); // path for statistics of datasets (mean, variance, covaraince matrix)
-        std::shared_ptr<hnswdis::Estimator> estimator;
-        estimator = hnswdis::load_estimator_from_file(estimator_path);
-        hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+        hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
 
         for (const auto samplings : sampling_size)
         {
@@ -1233,7 +1180,7 @@ void ablation_study_sampling_size()
             hnswdis::serialize_samplings(samplings_path, pair.first, pair.second);
 
             start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, estimator_path, ef_upper_bound);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, ef_upper_bound);
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -1293,14 +1240,11 @@ void ablation_study_weighted_decay_function()
         space = std::get<4>(tuple);
 
         std::string samplings_path = (root / "sampling" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for sampling (queries and ground truth)
-        std::string estimator_path = (root / "statistics" / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string(); // path for statistics of datasets (mean, variance, covaraince matrix)
 
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        std::shared_ptr<hnswdis::Estimator> estimator;
-        estimator = hnswdis::load_estimator_from_file(estimator_path);
 
         // 2. load samplings
         hnswdis::MatrixXf sample_query_vectors;
@@ -1315,12 +1259,12 @@ void ablation_study_weighted_decay_function()
             std::cout << "\n\nDecay function type: " << decay_type_str << "\n\n"
                       << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step, decay_type, 999); // for experiments with decay functions, set num_bins to be 1000
+            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step, decay_type, 999); // for experiments with decay functions, set num_bins to be 1000
 
             std::string ef_adaptor_path = (root / "ablation_decay_func" / (dataset + "-decayfunc-" + decay_type_str + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
 
             auto start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, estimator_path, ef_upper_bound, decay_type, 999); // for experiments with decay functions, set num_bins to be 1000
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, quantile_step, statics_length, samplings_path, ef_upper_bound, decay_type, 999); // for experiments with decay functions, set num_bins to be 1000
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -1394,20 +1338,16 @@ void per_query_result_exp()
         // the followings are for adaptive ef experiments
         std::string ef_adaptor_path = (root / "estimation_table_o3" / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
         // std::string samplings_path = (root / "sampling_o3" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
-        std::string estimator_path = (root / "statistics_o3" / (dataset + "-estimator-" + "-k-" + std::to_string(k) + ".bin")).string();           // path for statistics of datasets (mean, variance, covaraince matrix)
 
         if (dataset == "laion_text")
         {
-            estimator_path = (root / "statistics_o3" / ("laion_image-estimator--k-" + std::to_string(k) + ".bin")).string();
         }
 
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        std::shared_ptr<hnswdis::Estimator> estimator;
-        estimator = hnswdis::load_estimator_from_file(estimator_path);
-        hnswdis::ApproximatedScoreCalculator score_cal(estimator, quantile_step);
+        hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
 
         // 2. load ef_adaptor
         std::shared_ptr<hnswdis::EfAdapter> ef_adapter_ptr;
@@ -1449,7 +1389,7 @@ int main()
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    // offline_exp();          // offline computation of estimator, samplings, and ef-adaptor
+    offline_exp();          // offline computation of estimator, samplings, and ef-adaptor
     online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 

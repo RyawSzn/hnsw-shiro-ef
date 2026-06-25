@@ -1415,8 +1415,8 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
         ef = std::numeric_limits<size_t>::max();
         bool flag_collect_statistics = true;
         size_t statics_limit = statics_length;
-        dist_t distances[statics_limit];
-        size_t size_distances = 0;
+        std::vector<std::pair<dist_t, bool>> edge_evals;
+        edge_evals.reserve(statics_limit);
         float score = 0.0;
         // change === end
 
@@ -1437,8 +1437,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             top_candidates.emplace(dist, ep_id);
             // change === start
             if (flag_collect_statistics){
-                distances[size_distances] = dist;
-                ++size_distances;
+                edge_evals.push_back({dist, false});
             }
             // change === start
 
@@ -1496,71 +1495,65 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                 _mm_prefetch(data_level0_memory_ + (*(data + j + 1)) * size_data_per_element_ + offsetData_,
                                 _MM_HINT_T0);  ////////////
 #endif
-                if (!(visited_array[candidate_id] == visited_array_tag)) {
+                bool is_visited = (visited_array[candidate_id] == visited_array_tag);
+                dist_t dist;
+                char *currObj1 = nullptr;
+                bool dist_computed = false;
+
+                if (flag_collect_statistics) {
+                    currObj1 = (getDataByInternalId(candidate_id));
+                    dist = fstdistfunc_(data_point, currObj1, dist_func_param_);
+                    dist_computed = true;
+                    edge_evals.push_back({dist, is_visited});
+
+                    if (edge_evals.size() == statics_limit) {
+                        flag_collect_statistics = false;
+                        score = score_calculator.compute_score(data_point, *((size_t *) dist_func_param_), edge_evals.data(), edge_evals.size());
+                        if (sketch) {
+                            ef = sketch->estimate_ef2(score); // used for estimating ef
+                            if (ef < ef_copy) {
+                                ef = ef_copy;
+                            }
+                        } else {
+                            ef = ef_copy;
+                        }
+                        if (print_ef) std::cout << ef << ",";
+                        while (top_candidates.size() > ef) {
+                            top_candidates.pop();
+                        }
+                        if (!top_candidates.empty()) {
+                            lowerBound = top_candidates.top().first;
+                        }
+                    }
+                }
+
+                if (!is_visited) {
                     visited_array[candidate_id] = visited_array_tag;
 
-                    char *currObj1 = (getDataByInternalId(candidate_id));
-                    dist_t dist = fstdistfunc_(data_point, currObj1, dist_func_param_);
+                    if (!dist_computed) {
+                        currObj1 = (getDataByInternalId(candidate_id));
+                        dist = fstdistfunc_(data_point, currObj1, dist_func_param_);
+                    }
 
                     bool flag_consider_candidate;
                     if (!bare_bone_search && stop_condition) {
                         flag_consider_candidate = stop_condition->should_consider_candidate(dist, lowerBound);
                     } else {
-
-                        // change === start
-                        if (flag_collect_statistics){
+                        if (dist_computed && edge_evals.size() <= statics_limit) {
                             flag_consider_candidate = true;
-                            if (size_distances == statics_limit){ // let the search run for statics_limit iterations
-                                flag_collect_statistics = false;
-                                score = score_calculator.compute_score(data_point, *((size_t *) dist_func_param_), distances, size_distances);
-                                if (sketch){
-                                    ef = sketch->estimate_ef2(score); // used for estimating ef
-                                    if (ef < ef_copy){
-                                        ef = ef_copy;
-                                    }
-                                } else {
-                                    ef = ef_copy;
-                                }
-
-                                // print ef: for ef distribution analysis
-                                if (print_ef){
-                                    std::cout << ef << ",";
-                                }
-
-                                // shrinking top_candidates to ef in case it is larger
-                                while(top_candidates.size() > ef){
-                                    top_candidates.pop();
-                                }
-                                if (!top_candidates.empty()){
-                                    lowerBound = top_candidates.top().first;
-                                }
-                            }
                         } else {
-                        // change === end
                             flag_consider_candidate = top_candidates.size() < ef || lowerBound > dist;
                         }
-
                     }
 
                     if (flag_consider_candidate) {
                         candidate_set.emplace(-dist, candidate_id);
 #ifdef USE_SSE
-                        _mm_prefetch(data_level0_memory_ + candidate_set.top().second * size_data_per_element_ +
-                                        offsetLevel0_,  ///////////
-                                        _MM_HINT_T0);  ////////////////////////
+                        _mm_prefetch(data_level0_memory_ + candidate_set.top().second * size_data_per_element_ + offsetLevel0_, _MM_HINT_T0);
 #endif
 
-                        if (bare_bone_search ||
-                            (!isMarkedDeleted(candidate_id) && ((!isIdAllowed) || (*isIdAllowed)(getExternalLabel(candidate_id))))) {
-
+                        if (bare_bone_search || (!isMarkedDeleted(candidate_id) && ((!isIdAllowed) || (*isIdAllowed)(getExternalLabel(candidate_id))))) {
                             top_candidates.emplace(dist, candidate_id);
-                            // change === start
-                            if (flag_collect_statistics){
-                                distances[size_distances] = dist;
-                                ++size_distances;
-                            }
-                            // change === end
-
                             if (!bare_bone_search && stop_condition) {
                                 stop_condition->add_point_to_result(getExternalLabel(candidate_id), currObj1, dist);
                             }
@@ -1681,8 +1674,8 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
         ef = std::numeric_limits<size_t>::max();
         bool flag_collect_statistics = true;
         size_t statics_limit = statics_length;
-        dist_t distances[statics_limit];
-        size_t size_distances = 0;
+        std::vector<std::pair<dist_t, bool>> edge_evals;
+        edge_evals.reserve(statics_limit);
         float score = 0.0;
         // change === end
 
@@ -1703,8 +1696,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             top_candidates.emplace(dist, ep_id);
             // change === start
             if (flag_collect_statistics){
-                distances[size_distances] = dist;
-                ++size_distances;
+                edge_evals.push_back({dist, false});
             }
             // change === start
 
@@ -1762,67 +1754,64 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                 _mm_prefetch(data_level0_memory_ + (*(data + j + 1)) * size_data_per_element_ + offsetData_,
                                 _MM_HINT_T0);  ////////////
 #endif
-                if (!(visited_array[candidate_id] == visited_array_tag)) {
+                bool is_visited = (visited_array[candidate_id] == visited_array_tag);
+                dist_t dist;
+                char *currObj1 = nullptr;
+                bool dist_computed = false;
+
+                if (flag_collect_statistics) {
+                    currObj1 = (getDataByInternalId(candidate_id));
+                    dist = fstdistfunc_(data_point, currObj1, dist_func_param_);
+                    dist_computed = true;
+                    edge_evals.push_back({dist, is_visited});
+
+                    if (edge_evals.size() == statics_limit) {
+                        flag_collect_statistics = false;
+                        score = score_calculator.compute_score(data_point, *((size_t *) dist_func_param_), edge_evals.data(), edge_evals.size());
+                        if (sketch) {
+                            ef = sketch->estimate_ef2(score);  // get estimated ef
+                            if (ef < ef_copy) {
+                                ef = ef_copy;
+                            }
+                        } else {
+                            ef = ef_copy;
+                        }
+                        while (top_candidates.size() > ef) {
+                            top_candidates.pop();
+                        }
+                        if (!top_candidates.empty()) {
+                            lowerBound = top_candidates.top().first;
+                        }
+                    }
+                }
+
+                if (!is_visited) {
                     visited_array[candidate_id] = visited_array_tag;
 
-                    char *currObj1 = (getDataByInternalId(candidate_id));
-                    dist_t dist = fstdistfunc_(data_point, currObj1, dist_func_param_);
+                    if (!dist_computed) {
+                        currObj1 = (getDataByInternalId(candidate_id));
+                        dist = fstdistfunc_(data_point, currObj1, dist_func_param_);
+                    }
 
                     bool flag_consider_candidate;
                     if (!bare_bone_search && stop_condition) {
                         flag_consider_candidate = stop_condition->should_consider_candidate(dist, lowerBound);
                     } else {
-
-                        // change === start
-                        if (flag_collect_statistics){
+                        if (dist_computed && edge_evals.size() <= statics_limit) {
                             flag_consider_candidate = true;
-                            if (size_distances == statics_limit){ // let the search run for statics_limit iterations
-                                flag_collect_statistics = false;
-                                score = score_calculator.compute_score(data_point, *((size_t *) dist_func_param_), distances, size_distances);
-                                if (sketch){
-                                    ef = sketch->estimate_ef2(score);  // get estimated ef
-                                    if (ef < ef_copy){
-                                        ef = ef_copy;
-                                    }
-                                } else {
-                                    ef = ef_copy;
-                                }
-
-                                // shrinking top_candidates to ef in case it is larger
-                                while(top_candidates.size() > ef){
-                                    top_candidates.pop();
-                                }
-
-                                if (!top_candidates.empty()){
-                                    lowerBound = top_candidates.top().first;
-                                }
-                            }
                         } else {
-                        // change === end
                             flag_consider_candidate = top_candidates.size() < ef || lowerBound > dist;
                         }
-
                     }
 
                     if (flag_consider_candidate) {
                         candidate_set.emplace(-dist, candidate_id);
 #ifdef USE_SSE
-                        _mm_prefetch(data_level0_memory_ + candidate_set.top().second * size_data_per_element_ +
-                                        offsetLevel0_,  ///////////
-                                        _MM_HINT_T0);  ////////////////////////
+                        _mm_prefetch(data_level0_memory_ + candidate_set.top().second * size_data_per_element_ + offsetLevel0_, _MM_HINT_T0);
 #endif
 
-                        if (bare_bone_search ||
-                            (!isMarkedDeleted(candidate_id) && ((!isIdAllowed) || (*isIdAllowed)(getExternalLabel(candidate_id))))) {
-
+                        if (bare_bone_search || (!isMarkedDeleted(candidate_id) && ((!isIdAllowed) || (*isIdAllowed)(getExternalLabel(candidate_id))))) {
                             top_candidates.emplace(dist, candidate_id);
-                            // change === start
-                            if (flag_collect_statistics){
-                                distances[size_distances] = dist;
-                                ++size_distances;
-                            }
-                            // change === end
-
                             if (!bare_bone_search && stop_condition) {
                                 stop_condition->add_point_to_result(getExternalLabel(candidate_id), currObj1, dist);
                             }
