@@ -1511,7 +1511,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                         flag_collect_statistics = false;
                         score = score_calculator.compute_score(data_point, *((size_t *) dist_func_param_), edge_evals.data(), edge_evals.size());
                         if (sketch) {
-                            ef = sketch->estimate_ef2(score, d_ep); // used for estimating ef
+                            ef = sketch->estimate_ef2(score, d_ep - lowerBound); // used for estimating ef
                             if (ef < ef_copy) {
                                 ef = ef_copy;
                             }
