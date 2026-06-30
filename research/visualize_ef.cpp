@@ -45,35 +45,55 @@ int main(int argc, char** argv) {
     cout << "Loading estimation table from: " << bin_path << endl;
     try {
         hnswdis::EfAdapter adapter(bin_path);
-        const auto& estimators = adapter.get_ef_recall_estimators();
         
-        cout << "Loaded " << estimators.size() << " score groups." << endl;
         cout << "Target Recall: " << target_recall << endl;
         cout << "Original expected recall in file: " << adapter.get_expected_recall() << endl;
         cout << string(50, '-') << endl;
-        
-        cout << left << setw(10) << "Score" 
-             << setw(15) << "Estimated EF" 
-             << "Available (EF, Recall) distribution in group" << endl;
-        cout << string(80, '-') << endl;
 
-        for (const auto& group : estimators) {
-            int score = group.first;
-            size_t estimated_ef = estimate_ef_for_target(estimators, score, target_recall);
+        if (adapter.has_dep_tables()) {
+            const auto& dep_tables = adapter.get_all_tables();
+            const auto& dep_thresholds = adapter.get_dep_thresholds();
+            cout << "Found 2D Lookup Table with " << dep_tables.size() << " d_ep buckets." << endl;
             
-            cout << left << setw(10) << score << setw(15) << estimated_ef;
-            
-            // "give me 50 per group" might mean printing up to 50 items from the distribution
-            int count = 0;
-            for (const auto& ef_rec : group.second) {
-                if (count >= 50) {
-                    cout << "...";
-                    break;
+            for (size_t t = 0; t < dep_tables.size(); ++t) {
+                float lower_bound = (t == 0) ? 0.0f : dep_thresholds[t-1];
+                float upper_bound = (t == dep_thresholds.size()) ? std::numeric_limits<float>::infinity() : dep_thresholds[t];
+                
+                cout << "\n=== Bucket " << t << " | d_ep range: [" << lower_bound << ", " << upper_bound << ") ===" << endl;
+                cout << left << setw(10) << "Score" << setw(15) << "Estimated EF" << "Available (EF, Recall) distribution in group" << endl;
+                cout << string(80, '-') << endl;
+                
+                for (const auto& group : dep_tables[t]) {
+                    int score = group.first;
+                    size_t estimated_ef = estimate_ef_for_target(dep_tables[t], score, target_recall);
+                    cout << left << setw(10) << score << setw(15) << estimated_ef;
+                    int count = 0;
+                    for (const auto& ef_rec : group.second) {
+                        if (count >= 50) { cout << "..."; break; }
+                        cout << "[" << ef_rec.first << ":" << fixed << setprecision(3) << ef_rec.second << "] ";
+                        count++;
+                    }
+                    cout << endl;
                 }
-                cout << "[" << ef_rec.first << ":" << fixed << setprecision(3) << ef_rec.second << "] ";
-                count++;
             }
-            cout << endl;
+        } else {
+            const auto& estimators = adapter.get_ef_recall_estimators();
+            cout << "Loaded 1D Lookup Table with " << estimators.size() << " score groups." << endl;
+            cout << left << setw(10) << "Score" << setw(15) << "Estimated EF" << "Available (EF, Recall) distribution in group" << endl;
+            cout << string(80, '-') << endl;
+
+            for (const auto& group : estimators) {
+                int score = group.first;
+                size_t estimated_ef = estimate_ef_for_target(estimators, score, target_recall);
+                cout << left << setw(10) << score << setw(15) << estimated_ef;
+                int count = 0;
+                for (const auto& ef_rec : group.second) {
+                    if (count >= 50) { cout << "..."; break; }
+                    cout << "[" << ef_rec.first << ":" << fixed << setprecision(3) << ef_rec.second << "] ";
+                    count++;
+                }
+                cout << endl;
+            }
         }
     } catch (const exception& e) {
         cerr << "Error: " << e.what() << endl;
