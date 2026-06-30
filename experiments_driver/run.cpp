@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <cstdlib>
 
-static constexpr int N_DEP_TABLES = 20;
+static constexpr int N_DEP_TABLES = 10;
 
 static hnswdis::Sketch make_sketch(const hnswdis::EfAdapter &adapter, float expected_recall)
 {
@@ -210,7 +210,7 @@ void offline_laion_text2image()
 
     float expected_recall = 0.95;
     float quantile_step = 1e-3;
-    int sampling_size = 5000;
+    int sampling_size = 2000;
     int ef_upper_bound = 5000;
     int k = 1000;
     size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
@@ -300,7 +300,7 @@ void offline_exp()
         auto [hnsw, query, data, ground_truth, space] = load_index_and_data(hdf5_path, index_path, metric);
 
         float expected_recall = 0.95;
-        int sampling_size = 5000;
+        int sampling_size = 2000;
         int ef_upper_bound = 5000;
         size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
@@ -531,7 +531,7 @@ void insert_exp_setup(
     // compute ef_adaptor
     std::string ef_adaptor_path = (root / "incremental_update" / batch_type / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string();
     float expected_recall = 0.95;
-    int sampling_size = 5000;
+    int sampling_size = 2000;
     int ef_upper_bound = 5000;
     float quantile_step = 1e-3;
     size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
@@ -835,7 +835,7 @@ void delete_exp_setup(
         // compute ef_adaptor
         std::string ef_adaptor_path = (root / "incremental_deletion" / batch_type / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef-recomp.bin")).string();
         float expected_recall = 0.95;
-        int sampling_size = 5000;
+        int sampling_size = 2000;
         int ef_upper_bound = 5000;
         float quantile_step = 1e-3;
         size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
