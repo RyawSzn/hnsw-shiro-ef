@@ -46,10 +46,10 @@ namespace hnswdis
         const hnswdis::MatrixXf &data_vectors,
         const std::string &metric,
         const size_t k,
-        const float quantile_step,
+        const float truncation_ratio,
         const size_t statics_length)
     {
-        hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
+        hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
 
         return hnsw_search_and_score(alg_hnsw, query_vectors, data_vectors, score_cal, k, statics_length);
     }
@@ -885,13 +885,13 @@ namespace hnswdis
             size_t k,
             const std::string &metric,
             const size_t ef,
-            const float quantile_step,
+            const float truncation_ratio,
             const size_t statics_length)
         {
             std::shared_ptr<hnswdis::MatrixXf> query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
             MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
 
-            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
+            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
 
             init(alg_hnsw,
                  data_vectors,
@@ -1133,7 +1133,7 @@ namespace hnswdis
         EfRecallTable ef_recall_estimators;
 
         std::vector<EfRecallTable> dep_tables;
-        std::vector<float>         dep_thresholds;
+        std::vector<float>         dep_centers;
 
         float expected_recall;
         float wae;
@@ -1155,15 +1155,13 @@ namespace hnswdis
                   const std::shared_ptr<hnswdis::MatrixXf> data_vectors,
                   const size_t k,
                   const std::string metric,
-                  const float quantile_step,
+                  const float truncation_ratio,
                   const size_t statics_length,
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-                  const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type,
-                  const int num_bins,
                   EfRecallTable &out_table)
         {
-            hnswdis::ApproximatedScoreCalculator score_cal(quantile_step, weight_decay_type, num_bins);
+            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
 
             size_t first_ef = k;
             size_t second_ef = static_cast<size_t>(1.5 * first_ef);
@@ -1339,12 +1337,10 @@ namespace hnswdis
             const size_t k,
             const std::string metric,
             const float expected_recall,
-            const float quantile_step,
+            const float truncation_ratio,
             const size_t statics_length,
             const std::string &samplings_filename,
-            int ef_upper_bound = 5000,
-            const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type = hnswdis::ApproximatedScoreCalculator::WeightDecayType::Exponential,
-            const int num_bins = 5
+            int ef_upper_bound = 5000
         ) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
 
@@ -1376,7 +1372,7 @@ namespace hnswdis
                 sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
             }
 
-            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, weight_decay_type, num_bins, ef_recall_estimators);
+            init(alg_hnsw, data_vectors, k, metric, truncation_ratio, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_recall_estimators);
         }
 
         EfAdapter(
@@ -1385,15 +1381,13 @@ namespace hnswdis
             const size_t k,
             const std::string metric,
             const float expected_recall,
-            const float quantile_step,
+            const float truncation_ratio,
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            int ef_upper_bound = 5000,
-            const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type = hnswdis::ApproximatedScoreCalculator::WeightDecayType::Exponential,
-            const int num_bins = 5) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
+            int ef_upper_bound = 5000) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
-            init(alg_hnsw, data_vectors, k, metric, quantile_step, statics_length, query_vectors, ground_truth_ptr, weight_decay_type, num_bins, ef_recall_estimators);
+            init(alg_hnsw, data_vectors, k, metric, truncation_ratio, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators);
         }
 
         EfAdapter(
@@ -1407,12 +1401,10 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> data_vectors,
             const size_t k,
             const std::string metric,
-            const float quantile_step,
+            const float truncation_ratio,
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            const hnswdis::ApproximatedScoreCalculator::WeightDecayType weight_decay_type,
-            const int num_bins,
             const int n_dep_tables)
         {
             const int n = query_vectors->rows();
@@ -1426,9 +1418,12 @@ namespace hnswdis
             int actual_n_dep_tables = std::max(1, n_dep_tables);
             int chunk = n / actual_n_dep_tables;
 
-            dep_thresholds.clear();
-            for (int t = 1; t < actual_n_dep_tables; ++t)
-                dep_thresholds.push_back(deps[order[t * chunk]]);
+            dep_centers.clear();
+            for (int t = 0; t < actual_n_dep_tables; ++t) {
+                int lo = t * chunk;
+                int hi = (t == actual_n_dep_tables - 1) ? n : (t + 1) * chunk;
+                dep_centers.push_back(deps[order[(lo + hi) / 2]]);
+            }
 
             dep_tables.resize(actual_n_dep_tables);
 
@@ -1454,10 +1449,9 @@ namespace hnswdis
 
                 init(alg_hnsw,
                      data_vectors,
-                     k, metric, quantile_step, statics_length,
+                     k, metric, truncation_ratio, statics_length,
                      std::make_shared<MatrixXf>(bucket_queries),
                      std::make_shared<MatrixXi>(bucket_gt),
-                     weight_decay_type, num_bins,
                      dep_tables[t]);
                 
                 accumulated_wae += wae * ((float)bucket_size / n);
@@ -1541,9 +1535,9 @@ namespace hnswdis
             for (const auto &t : dep_tables)
                 write_table(out, t);
 
-            size_t n_thresh = dep_thresholds.size();
+            size_t n_thresh = dep_centers.size();
             hnswlib::writeBinaryPOD(out, n_thresh);
-            for (float v : dep_thresholds)
+            for (float v : dep_centers)
                 hnswlib::writeBinaryPOD(out, v);
 
             out.close();
@@ -1568,8 +1562,8 @@ namespace hnswdis
 
             size_t n_thresh;
             hnswlib::readBinaryPOD(in, n_thresh);
-            dep_thresholds.resize(n_thresh);
-            for (float &v : dep_thresholds)
+            dep_centers.resize(n_thresh);
+            for (float &v : dep_centers)
                 hnswlib::readBinaryPOD(in, v);
 
             in.close();
@@ -1589,7 +1583,7 @@ namespace hnswdis
 
         const std::vector<EfRecallTable> &get_all_tables() const { return dep_tables; }
 
-        const std::vector<float> &get_dep_thresholds() const { return dep_thresholds; }
+        const std::vector<float> &get_dep_centers() const { return dep_centers; }
 
         bool has_dep_tables() const { return !dep_tables.empty(); }
 

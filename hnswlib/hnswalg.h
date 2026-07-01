@@ -18,6 +18,18 @@ namespace hnswlib {
 typedef unsigned int tableint;
 typedef unsigned int linklistsizeint;
 
+
+template <class ADAPTER>
+const typename ADAPTER::container_type & get_container(const ADAPTER &a)
+{
+    struct hack : ADAPTER {
+        static const typename ADAPTER::container_type & get(const ADAPTER &a) {
+            return a.*&hack::c;
+        }
+    };
+    return hack::get(a);
+}
+
 template<typename dist_t>
 class HierarchicalNSW : public AlgorithmInterface<dist_t> {
  public:
@@ -1295,6 +1307,11 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                     tableint cand = datal[i];
                     if (cand < 0 || cand > max_elements_)
                         throw std::runtime_error("cand error");
+#ifdef USE_SSE
+                    if (i + 1 < size) {
+                        _mm_prefetch(getDataByInternalId(datal[i + 1]), _MM_HINT_T0);
+                    }
+#endif
                     dist_t d = fstdistfunc_(query_data, getDataByInternalId(cand), dist_func_param_);
 
                     if (d < curdist) {
@@ -1359,6 +1376,11 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                     tableint cand = datal[i];
                     if (cand < 0 || cand > max_elements_)
                         throw std::runtime_error("cand error");
+#ifdef USE_SSE
+                    if (i + 1 < size) {
+                        _mm_prefetch(getDataByInternalId(datal[i + 1]), _MM_HINT_T0);
+                    }
+#endif
                     dist_t d = fstdistfunc_(query_data, getDataByInternalId(cand), dist_func_param_);
 
                     if (d < curdist) {
@@ -1621,6 +1643,11 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                     tableint cand = datal[i];
                     if (cand < 0 || cand > max_elements_)
                         throw std::runtime_error("cand error");
+#ifdef USE_SSE
+                    if (i + 1 < size) {
+                        _mm_prefetch(getDataByInternalId(datal[i + 1]), _MM_HINT_T0);
+                    }
+#endif
                     dist_t d = fstdistfunc_(query_data, getDataByInternalId(cand), dist_func_param_);
 
                     if (d < curdist) {
@@ -1875,6 +1902,11 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                     tableint cand = datal[i];
                     if (cand < 0 || cand > max_elements_)
                         throw std::runtime_error("cand error");
+#ifdef USE_SSE
+                    if (i + 1 < size) {
+                        _mm_prefetch(getDataByInternalId(datal[i + 1]), _MM_HINT_T0);
+                    }
+#endif
                     dist_t d = fstdistfunc_(query_data, getDataByInternalId(cand), dist_func_param_);
 
                     if (d < curdist) {
@@ -1947,7 +1979,9 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
         // variables for Patience in Proximity (start)
         int stable_counter = 0;
         std::vector<tableint> prev_topk_ids;
-        prev_topk_ids.reserve(k);  // assuming you know 'k' externally
+        prev_topk_ids.reserve(k);
+        std::vector<tableint> current_topk_ids;
+        current_topk_ids.reserve(k);
         // variables for Patience in Proximity (end)
 
         while (!candidate_set.empty()) {
@@ -2047,33 +2081,45 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
 
             // Patience in Proximity logic (start)
             if (top_candidates.size() >= k) {
-                // make a deep copy of priority queue to extract top-k elements
-                auto tmp = top_candidates;
-
-                // Discard the worst until only k elements remain
-                while (tmp.size() > k) {
-                    tmp.pop();
+                // 1. Extract the current top-k subset from top_candidates
+                const auto& underlying = get_container(top_candidates);
+                current_topk_ids.clear();
+                
+                // underlying contains up to ef elements
+                // We want the k elements with smallest distance.
+                // top_candidates uses CompareByFirst, which is max-heap, so smaller distance means smaller in compare logic.
+                // We copy the vector.
+                std::vector<std::pair<dist_t, tableint>> tmp(underlying.begin(), underlying.end());
+                
+                if (tmp.size() > k) {
+                    std::nth_element(tmp.begin(), tmp.begin() + k, tmp.end(), CompareByFirst());
+                    tmp.resize(k);
                 }
-
-                // 1. Extract the current top-k subset from top_candidates (size ef)
-                std::vector<tableint> current_topk_ids;
-                current_topk_ids.reserve(k);
-                while (!tmp.empty()) {
-                    current_topk_ids.push_back(tmp.top().second);
-                    tmp.pop();
+                
+                for (size_t i = 0; i < tmp.size(); i++) {
+                    current_topk_ids.push_back(tmp[i].second);
                 }
-
+                std::sort(current_topk_ids.begin(), current_topk_ids.end());
 
                 // 2. Compute intersection between previous and current top-k sets
                 int intersection = 0;
                 if (!prev_topk_ids.empty()) {
-                    std::unordered_set<tableint> prev_set(prev_topk_ids.begin(), prev_topk_ids.end());
-                    for (auto id : current_topk_ids)
-                        if (prev_set.count(id))
+                    auto it1 = prev_topk_ids.begin();
+                    auto it2 = current_topk_ids.begin();
+                    while (it1 != prev_topk_ids.end() && it2 != current_topk_ids.end()) {
+                        if (*it1 < *it2) {
+                            ++it1;
+                        } else if (*it2 < *it1) {
+                            ++it2;
+                        } else {
                             intersection++;
+                            ++it1;
+                            ++it2;
+                        }
+                    }
                 }
 
-                // 3. Compute φ = |intersection| / k
+                // 3. Compute \phi = |intersection| / k
                 float phi = current_topk_ids.empty() ? 0.0f : (float)intersection / (float) k;
 
                 // 4. Update patience counter
@@ -2084,16 +2130,15 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
 
                 // 5. Early stop if saturation holds for Δ consecutive iterations
                 if (stable_counter >= patience) {
-                    // std::cout << "[PatienceInProximity] Early stop after " << iteration_count << " iterations\n";
                     break;
                 }
 
                 // 6. Update previous top-k set
-                prev_topk_ids = std::move(current_topk_ids);
+                prev_topk_ids = current_topk_ids;
             }
         }
 
-        visited_list_pool_->releaseVisitedList(vl);
+                visited_list_pool_->releaseVisitedList(vl);
         return top_candidates;
     }
 
@@ -2124,6 +2169,11 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                     tableint cand = datal[i];
                     if (cand < 0 || cand > max_elements_)
                         throw std::runtime_error("cand error");
+#ifdef USE_SSE
+                    if (i + 1 < size) {
+                        _mm_prefetch(getDataByInternalId(datal[i + 1]), _MM_HINT_T0);
+                    }
+#endif
                     dist_t d = fstdistfunc_(query_data, getDataByInternalId(cand), dist_func_param_);
 
                     if (d < curdist) {

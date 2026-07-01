@@ -15,9 +15,9 @@ namespace hnswdis
         const EfRecallTable *ef_recall_estimators_single{nullptr};
 
         const std::vector<EfRecallTable> *tables_{nullptr};
-        // dep_thresholds_[i] is the upper boundary of bucket i (d_ep < threshold[i] → bucket i).
+        // dep_centers_[i] is the upper boundary of bucket i (d_ep < threshold[i] → bucket i).
         // size == tables_.size() - 1; last bucket has no upper bound.
-        const std::vector<float>         *dep_thresholds_{nullptr};
+        const std::vector<float>         *dep_centers_{nullptr};
 
         const float expected_recall;
 
@@ -64,10 +64,10 @@ namespace hnswdis
 
         int dep_bucket(float d_ep) const
         {
-            for (int i = 0; i < (int)dep_thresholds_->size(); ++i)
-                if (d_ep < (*dep_thresholds_)[i])
+            for (int i = 0; i < (int)dep_centers_->size(); ++i)
+                if (d_ep < (*dep_centers_)[i])
                     return i;
-            return static_cast<int>(dep_thresholds_->size());
+            return static_cast<int>(dep_centers_->size());
         }
 
         size_t smoothed_ef(const EfRecallTable &table,
@@ -90,10 +90,10 @@ namespace hnswdis
         }
 
         Sketch(const std::vector<EfRecallTable> &tables,
-               const std::vector<float>         &dep_thresholds,
+               const std::vector<float>         &dep_centers,
                float expected_recall)
             : tables_(&tables),
-              dep_thresholds_(&dep_thresholds),
+              dep_centers_(&dep_centers),
               expected_recall(expected_recall)
         {
             all_links.reserve(tables.size());
@@ -146,9 +146,9 @@ namespace hnswdis
             {
                 for (int i = 0; i < (int)tables_->size(); ++i)
                 {
-                    float lo = (i == 0) ? 0.0f : (*dep_thresholds_)[i - 1];
-                    float hi = (i < (int)dep_thresholds_->size())
-                                   ? (*dep_thresholds_)[i]
+                    float lo = (i == 0) ? 0.0f : (*dep_centers_)[i - 1];
+                    float hi = (i < (int)dep_centers_->size())
+                                   ? (*dep_centers_)[i]
                                    : std::numeric_limits<float>::infinity();
                     std::cout << "=== d_ep bucket " << i
                               << " [" << lo << ", " << hi << ") ===" << std::endl;
