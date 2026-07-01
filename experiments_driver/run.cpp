@@ -83,8 +83,8 @@ void online_exp()
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in ada-ef offline computation
 
     std::vector<std::tuple<std::string, std::string, float, int>> dataset_metrics = {
-        {"deep-image-96-angular", "cd", 0.75f, 100},
-        // {"glove-100-angular", "cd", 0.75f, 100},
+        // {"deep-image-96-angular", "cd", 0.75f, 100},
+        {"glove-100-angular", "cd", 0.75f, 100},
         // {"sift-128-euclidean", "l2", 0.75f, 100},
         // {"msmarco", "cd", 0.75f, 1000},
         // {"cohere", "cd", 0.75f, 1000},
@@ -269,8 +269,8 @@ void offline_exp()
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 of all available threads
 
     std::vector<std::tuple<std::string, std::string, float>> dataset_metrics = {
-        {"deep-image-96-angular", "cd", 0.75f},
-        // {"glove-100-angular", "cd", 0.75f},
+        // {"deep-image-96-angular", "cd", 0.75f},
+        {"glove-100-angular", "cd", 0.75f},
         // {"sift-128-euclidean", "l2", 0.75f},
         // {"msmarco", "cd", 0.75f},
         // {"cohere", "cd", 0.75f},

@@ -9,5 +9,5 @@ pip install numpy matplotlib
 
 ## Usage
 ```bash
-python3 visualize_ef_map.py /path/to/ef_adaptor.bin output_heatmap.png
+python3 python3 ./research/visualize_ef_map.py /home/ryawszn/experiments/2metric/estimation_table/<dataset_name>-ef_adaptor--k100-ef.bin ./research/output_heatmap.png
 ```
