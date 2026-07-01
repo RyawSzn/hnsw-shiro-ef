@@ -62,14 +62,6 @@ namespace hnswdis
             return ef_recalls.back().first;
         }
 
-        int dep_bucket(float d_ep) const
-        {
-            for (int i = 0; i < (int)dep_centers_->size(); ++i)
-                if (d_ep < (*dep_centers_)[i])
-                    return i;
-            return static_cast<int>(dep_centers_->size());
-        }
-
         size_t smoothed_ef(const EfRecallTable &table,
                            const std::vector<int> &links,
                            float score) const
@@ -101,15 +93,40 @@ namespace hnswdis
                 all_links.push_back(build_links(t));
         }
 
-        size_t estimate_ef2(float score, float d_ep = 0) const
+                size_t estimate_ef2(float score, float d_ep = 0) const
         {
-            if (tables_ != nullptr)
+            if (tables_ != nullptr && dep_centers_->size() == tables_->size())
             {
-                int bucket = dep_bucket(d_ep);
-                return smoothed_ef((*tables_)[bucket], all_links[bucket], score);
+                int n_centers = dep_centers_->size();
+                if (n_centers == 1) {
+                    return smoothed_ef((*tables_)[0], all_links[0], score);
+                }
+
+                if (d_ep <= (*dep_centers_)[0]) {
+                    return smoothed_ef((*tables_)[0], all_links[0], score);
+                }
+                if (d_ep >= (*dep_centers_)[n_centers - 1]) {
+                    return smoothed_ef((*tables_)[n_centers - 1], all_links[n_centers - 1], score);
+                }
+
+                int idx = 0;
+                while (idx < n_centers - 1 && d_ep > (*dep_centers_)[idx + 1]) {
+                    idx++;
+                }
+
+                float c0 = (*dep_centers_)[idx];
+                float c1 = (*dep_centers_)[idx + 1];
+                float w = (d_ep - c0) / (c1 - c0);
+                
+                size_t ef0 = smoothed_ef((*tables_)[idx], all_links[idx], score);
+                size_t ef1 = smoothed_ef((*tables_)[idx + 1], all_links[idx + 1], score);
+
+                return static_cast<size_t>(ef0 * (1.0f - w) + ef1 * w + 0.5f);
             }
             return smoothed_ef(*ef_recall_estimators_single, all_links[0], score);
         }
+
+
 
         size_t estimate_ef(float score) const
         {

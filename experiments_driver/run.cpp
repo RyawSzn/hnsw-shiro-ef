@@ -8,7 +8,7 @@ static constexpr int N_DEP_TABLES = 10;
 static hnswdis::Sketch make_sketch(const hnswdis::EfAdapter &adapter, float expected_recall)
 {
     if (adapter.has_dep_tables())
-        return hnswdis::Sketch(adapter.get_all_tables(), adapter.get_dep_thresholds(), expected_recall);
+        return hnswdis::Sketch(adapter.get_all_tables(), adapter.get_dep_centers(), expected_recall);
     return hnswdis::Sketch(adapter.get_ef_recall_estimators(), expected_recall);
 }
 
