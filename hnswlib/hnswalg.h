@@ -1552,7 +1552,8 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                         }
                         if (out_cv) *out_cv = cv;
                         if (sketch) {
-                            ef = sketch->estimate_ef2(score, cv); // used for estimating ef
+                            int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 100.0f)));
+                            ef = sketch->estimate_ef2(cv_score, score); // mapped CV as X axis, RV as Y axis (bucket)
                             if (ef < ef_copy) {
                                 ef = ef_copy;
                             }
@@ -1839,7 +1840,8 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                         }
                         if (out_cv) *out_cv = cv;
                         if (sketch) {
-                            ef = sketch->estimate_ef2(score, cv);  // get estimated ef
+                            int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 100.0f)));
+                            ef = sketch->estimate_ef2(cv_score, score);  // mapped CV as X axis, RV as Y axis (bucket)
                             if (ef < ef_copy) {
                                 ef = ef_copy;
                             }

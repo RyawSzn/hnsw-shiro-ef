@@ -1398,21 +1398,23 @@ void dump_glove_score_recall() {
     hnsw->setEf(ef);
     hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
 
-    std::vector<std::pair<std::vector<size_t>, float>> search_score_result = hnswdis::hnsw_search_and_score(*hnsw, *query, *data, score_cal, k, statics_length);
+    std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
     std::vector<std::vector<size_t>> result;
     std::vector<float> scores;
+    std::vector<float> cvs;
     for (const auto &r : search_score_result) {
-        result.push_back(std::move(r.first));
-        scores.push_back(r.second);
+        result.push_back(std::move(std::get<0>(r)));
+        scores.push_back(std::get<1>(r));
+        cvs.push_back(std::get<2>(r));
     }
 
     auto recalls = hnswdis::compute_recall(*ground_truth, result, k, false);
 
     std::ofstream out("/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/glove_score_recall.csv");
-    out << "query_id,score,recall\n";
+    out << "query_id,score,cv,recall\n";
     for (size_t i = 0; i < recalls.size(); ++i) {
-        out << i << "," << scores[i] << "," << recalls[i] << "\n";
+        out << i << "," << scores[i] << "," << cvs[i] << "," << recalls[i] << "\n";
     }
     out.close();
     std::cout << "Saved scores and recalls to research/glove_score_recall.csv" << std::endl;
@@ -1440,21 +1442,23 @@ void dump_sift_score_recall() {
     hnsw->setEf(ef);
     hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
 
-    std::vector<std::pair<std::vector<size_t>, float>> search_score_result = hnswdis::hnsw_search_and_score(*hnsw, *query, *data, score_cal, k, statics_length);
+    std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
     std::vector<std::vector<size_t>> result;
     std::vector<float> scores;
+    std::vector<float> cvs;
     for (const auto &r : search_score_result) {
-        result.push_back(std::move(r.first));
-        scores.push_back(r.second);
+        result.push_back(std::move(std::get<0>(r)));
+        scores.push_back(std::get<1>(r));
+        cvs.push_back(std::get<2>(r));
     }
 
     auto recalls = hnswdis::compute_recall(*ground_truth, result, k, false);
 
     std::ofstream out("/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/sift_score_recall.csv");
-    out << "query_id,score,recall\n";
+    out << "query_id,score,cv,recall\n";
     for (size_t i = 0; i < recalls.size(); ++i) {
-        out << i << "," << scores[i] << "," << recalls[i] << "\n";
+        out << i << "," << scores[i] << "," << cvs[i] << "," << recalls[i] << "\n";
     }
     out.close();
     std::cout << "Saved scores and recalls to research/sift_score_recall.csv" << std::endl;
@@ -1481,21 +1485,23 @@ void dump_deep_score_recall() {
     hnsw->setEf(ef);
     hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
 
-    std::vector<std::pair<std::vector<size_t>, float>> search_score_result = hnswdis::hnsw_search_and_score(*hnsw, *query, *data, score_cal, k, statics_length);
+    std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
     std::vector<std::vector<size_t>> result;
     std::vector<float> scores;
+    std::vector<float> cvs;
     for (const auto &r : search_score_result) {
-        result.push_back(std::move(r.first));
-        scores.push_back(r.second);
+        result.push_back(std::move(std::get<0>(r)));
+        scores.push_back(std::get<1>(r));
+        cvs.push_back(std::get<2>(r));
     }
 
     auto recalls = hnswdis::compute_recall(*ground_truth, result, k, false);
 
     std::ofstream out("/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/deep_score_recall.csv");
-    out << "query_id,score,recall\n";
+    out << "query_id,score,cv,recall\n";
     for (size_t i = 0; i < recalls.size(); ++i) {
-        out << i << "," << scores[i] << "," << recalls[i] << "\n";
+        out << i << "," << scores[i] << "," << cvs[i] << "," << recalls[i] << "\n";
     }
     out.close();
     std::cout << "Saved scores and recalls to research/deep_score_recall.csv" << std::endl;
@@ -1518,9 +1524,9 @@ int main() {
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    // dump_deepIm_recall();
     // dump_glove_score_recall();
     // dump_sift_score_recall();
+    // dump_deep_score_recall();
     offline_exp();          // offline computation of estimator, samplings, and ef-adaptor
     online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target

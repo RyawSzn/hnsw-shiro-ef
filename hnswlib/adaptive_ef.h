@@ -9,6 +9,37 @@
 
 namespace hnswdis
 {
+    std::vector<std::tuple<std::vector<size_t>, float, float>> hnsw_search_score_and_cv(
+        const hnswlib::HierarchicalNSW<float> &alg_hnsw,
+        const hnswdis::MatrixXf &query_vectors,
+        const hnswdis::MatrixXf &data_vectors,
+        const hnswdis::ApproximatedScoreCalculator &score_cal,
+        const size_t k,
+        const size_t statics_length)
+    {
+        std::vector<std::tuple<std::vector<size_t>, float, float>> result;
+        result.reserve(query_vectors.rows());
+
+        for (int i = 0; i < query_vectors.rows(); ++i)
+        {
+            float cv = 0.0f;
+            auto ret = alg_hnsw.adaptiveSearchKnn(
+                query_vectors.row(i).data(), k, statics_length, score_cal, nullptr, &cv);
+
+            auto &pq = ret.first;
+            size_t count = pq.size();
+            std::vector<size_t> labels(count);
+            while (!pq.empty())
+            {
+                labels[--count] = pq.top().second;
+                pq.pop();
+            }
+            result.emplace_back(std::move(labels), std::move(ret.second), cv);
+        }
+
+        return result;
+    }
+
     std::vector<std::pair<std::vector<size_t>, float>> hnsw_search_and_score(
         const hnswlib::HierarchicalNSW<float> &alg_hnsw,
         const hnswdis::MatrixXf &query_vectors,
@@ -795,7 +826,7 @@ namespace hnswdis
         {
             alg_hnsw->setEf(ef);
 
-            std::vector<std::pair<std::vector<size_t>, float>> search_score_result = hnsw_search_and_score(*alg_hnsw, *query_vectors, *data_vectors, score_cal, k, statics_length);
+            std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnsw_search_score_and_cv(*alg_hnsw, *query_vectors, *data_vectors, score_cal, k, statics_length);
 
             std::vector<float> score_list;
             score_list.reserve(query_vectors->rows());
@@ -803,10 +834,12 @@ namespace hnswdis
             std::vector<std::vector<size_t>> labels;
             labels.reserve(query_vectors->rows());
 
-            for (const auto &r : search_score_result)
+            for (auto &r : search_score_result)
             {
-                labels.push_back(std::move(r.first));
-                score_list.push_back(r.second);
+                labels.push_back(std::move(std::get<0>(r)));
+                float raw_cv = std::get<2>(r);
+                int cv_score = std::max(0, std::min(100, static_cast<int>(raw_cv * 100.0f)));
+                score_list.push_back(static_cast<float>(cv_score));
             }
 
             std::vector<float> recalls_ori = compute_recall(*ground_truth, labels, k, false);
@@ -1152,8 +1185,8 @@ namespace hnswdis
             cvs.reserve(query_vectors.rows());
             for (int i = 0; i < query_vectors.rows(); ++i) {
                 float cv = 0.0f;
-                alg_hnsw.adaptiveSearchKnn(query_vectors.row(i).data(), k, statics_length, score_cal, nullptr, &cv);
-                cvs.push_back(cv);
+                auto ret = alg_hnsw.adaptiveSearchKnn(query_vectors.row(i).data(), k, statics_length, score_cal, nullptr, &cv);
+                cvs.push_back(ret.second); // We now push back RV for bucketing
             }
             return cvs;
         }
