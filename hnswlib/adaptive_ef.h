@@ -1324,9 +1324,9 @@ namespace hnswdis
                 }
             }
 
-            // 3. Compute weighted averages for discrete regions
-            float left_sum_ef = 0, right_sum_ef = 0;
-            size_t left_sum_cnt = 0, right_sum_cnt = 0;
+            // 3. Compute weighted averages for discrete regions and the continuous block
+            float left_sum_ef = 0, right_sum_ef = 0, cont_sum_ef = 0;
+            size_t left_sum_cnt = 0, right_sum_cnt = 0, cont_sum_cnt = 0;
 
             for (auto const& [score, ef] : score_to_ef) {
                 size_t cnt = score_to_cnt[score];
@@ -1336,11 +1336,20 @@ namespace hnswdis
                 } else if (score > cont_end_score) {
                     right_sum_ef += ef * cnt;
                     right_sum_cnt += cnt;
+                } else {
+                    cont_sum_ef += ef * cnt;
+                    cont_sum_cnt += cnt;
                 }
             }
 
+            size_t cont_avg_ef = cont_sum_cnt > 0 ? std::round(cont_sum_ef / cont_sum_cnt) : 0;
             size_t left_avg_ef = left_sum_cnt > 0 ? std::round(left_sum_ef / left_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.begin()->second);
             size_t right_avg_ef = right_sum_cnt > 0 ? std::round(right_sum_ef / right_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.rbegin()->second);
+
+            if (cont_sum_cnt > 0) {
+                left_avg_ef = std::max(left_avg_ef, cont_avg_ef); // Harder queries should need >= average ef.
+                right_avg_ef = std::min(right_avg_ef, cont_avg_ef); // Easier queries should need <= average ef.
+            }
 
             // 4. Build smoothed table and calculate new weighted average EF
             EfRecallTable smoothed_table;
@@ -1552,7 +1561,7 @@ namespace hnswdis
                      std::make_shared<MatrixXf>(bucket_queries),
                      std::make_shared<MatrixXi>(bucket_gt),
                      cv_tables[t]);
-                
+
                 accumulated_wae += wae * ((float)bucket_size / n);
             }
             wae = accumulated_wae;
