@@ -1335,8 +1335,172 @@ void per_query_result_exp()
     }
 }
 
-int main()
-{
+
+void dump_deepIm_recall() {
+    std::cout << "Dumping recall distribution for deepIm at fixed ef=250..." << std::endl;
+    std::string dataset = "deep-image-96-angular";
+    std::string metric = "cd";
+    int k = 100;
+    int ef = 50;
+
+    std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
+    std::string index_path = (root / ("index/" + dataset + "-M16-efc-500-parallel.hnsw")).string();
+
+    auto tuple_res = load_index_and_data(hdf5_path, index_path, metric);
+    auto hnsw = std::get<0>(tuple_res);
+    auto query = std::get<1>(tuple_res);
+    auto data = std::get<2>(tuple_res);
+    auto ground_truth = std::get<3>(tuple_res);
+
+    hnsw->setEf(ef);
+    
+    std::vector<std::vector<size_t>> result;
+    for (int j = 0; j < query->rows(); ++j) {
+        result.push_back(std::vector<size_t>(k, 0));
+        auto pq = hnsw->searchKnn(query->row(j).data(), k);
+        size_t count = pq.size();
+        while (!pq.empty()) {
+            result[j][--count] = pq.top().second;
+            pq.pop();
+        }
+    }
+
+    auto recalls = hnswdis::compute_recall(*ground_truth, result, k, false);
+
+    std::ofstream out("/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/deepIm_recalls.csv");
+    out << "query_id,recall\n";
+    for (size_t i = 0; i < recalls.size(); ++i) {
+        out << i << "," << recalls[i] << "\n";
+    }
+    out.close();
+    std::cout << "Saved recalls to research/deepIm_recalls.csv" << std::endl;
+}
+
+
+void dump_glove_score_recall() {
+    std::cout << "Dumping score and recall for glove at fixed ef=50..." << std::endl;
+    std::string dataset = "glove-100-angular";
+    std::string metric = "cd";
+    int k = 50;
+    int ef = 50;
+    float truncation_ratio = 0.25f;
+    size_t statics_length = 1 + 32 + 31 * 32;
+
+    std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
+    std::string index_path = (root / ("index/" + dataset + "-M16-efc-500-parallel.hnsw")).string();
+
+    auto tuple_res = load_index_and_data(hdf5_path, index_path, metric);
+    auto hnsw = std::get<0>(tuple_res);
+    auto query = std::get<1>(tuple_res);
+    auto data = std::get<2>(tuple_res);
+    auto ground_truth = std::get<3>(tuple_res);
+
+    hnsw->setEf(ef);
+    hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+
+    std::vector<std::pair<std::vector<size_t>, float>> search_score_result = hnswdis::hnsw_search_and_score(*hnsw, *query, *data, score_cal, k, statics_length);
+
+    std::vector<std::vector<size_t>> result;
+    std::vector<float> scores;
+    for (const auto &r : search_score_result) {
+        result.push_back(std::move(r.first));
+        scores.push_back(r.second);
+    }
+
+    auto recalls = hnswdis::compute_recall(*ground_truth, result, k, false);
+
+    std::ofstream out("/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/glove_score_recall.csv");
+    out << "query_id,score,recall\n";
+    for (size_t i = 0; i < recalls.size(); ++i) {
+        out << i << "," << scores[i] << "," << recalls[i] << "\n";
+    }
+    out.close();
+    std::cout << "Saved scores and recalls to research/glove_score_recall.csv" << std::endl;
+}
+
+
+void dump_sift_score_recall() {
+    std::cout << "Dumping score and recall for SIFT at fixed ef=10..." << std::endl;
+    std::string dataset = "sift-128-euclidean";
+    std::string metric = "l2";
+    int k = 10;
+    int ef = 10;
+    float truncation_ratio = 0.25f;
+    size_t statics_length = 1 + 32 + 31 * 32;
+
+    std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
+    std::string index_path = (root / ("index/" + dataset + "-M16-efc-500-parallel.hnsw")).string();
+
+    auto tuple_res = load_index_and_data(hdf5_path, index_path, metric);
+    auto hnsw = std::get<0>(tuple_res);
+    auto query = std::get<1>(tuple_res);
+    auto data = std::get<2>(tuple_res);
+    auto ground_truth = std::get<3>(tuple_res);
+
+    hnsw->setEf(ef);
+    hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+
+    std::vector<std::pair<std::vector<size_t>, float>> search_score_result = hnswdis::hnsw_search_and_score(*hnsw, *query, *data, score_cal, k, statics_length);
+
+    std::vector<std::vector<size_t>> result;
+    std::vector<float> scores;
+    for (const auto &r : search_score_result) {
+        result.push_back(std::move(r.first));
+        scores.push_back(r.second);
+    }
+
+    auto recalls = hnswdis::compute_recall(*ground_truth, result, k, false);
+
+    std::ofstream out("/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/sift_score_recall.csv");
+    out << "query_id,score,recall\n";
+    for (size_t i = 0; i < recalls.size(); ++i) {
+        out << i << "," << scores[i] << "," << recalls[i] << "\n";
+    }
+    out.close();
+    std::cout << "Saved scores and recalls to research/sift_score_recall.csv" << std::endl;
+}
+
+void dump_deep_score_recall() {
+    std::cout << "Dumping score(RV) and recall for deep-image at fixed ef=50..." << std::endl;
+    std::string dataset = "deep-image-96-angular";
+    std::string metric = "cd";
+    int k = 100;
+    int ef = 50;
+    float truncation_ratio = 0.25f;
+    size_t statics_length = 1 + 32 + 31 * 32;
+
+    std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
+    std::string index_path = (root / ("index/" + dataset + "-M16-efc-500-parallel.hnsw")).string();
+
+    auto tuple_res = load_index_and_data(hdf5_path, index_path, metric);
+    auto hnsw = std::get<0>(tuple_res);
+    auto query = std::get<1>(tuple_res);
+    auto data = std::get<2>(tuple_res);
+    auto ground_truth = std::get<3>(tuple_res);
+
+    hnsw->setEf(ef);
+    hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+
+    std::vector<std::pair<std::vector<size_t>, float>> search_score_result = hnswdis::hnsw_search_and_score(*hnsw, *query, *data, score_cal, k, statics_length);
+
+    std::vector<std::vector<size_t>> result;
+    std::vector<float> scores;
+    for (const auto &r : search_score_result) {
+        result.push_back(std::move(r.first));
+        scores.push_back(r.second);
+    }
+
+    auto recalls = hnswdis::compute_recall(*ground_truth, result, k, false);
+
+    std::ofstream out("/home/ryawszn/dev/cpp/hnsw-2metric-ef/research/deep_score_recall.csv");
+    out << "query_id,score,recall\n";
+    for (size_t i = 0; i < recalls.size(); ++i) {
+        out << i << "," << scores[i] << "," << recalls[i] << "\n";
+    }
+    out.close();
+    std::cout << "Saved scores and recalls to research/deep_score_recall.csv" << std::endl;
+}
+int main() {
     std::cout << "Starting experiments for Ada-ef hnswdis library...\n\n"
               << std::endl;
     // print the root path
@@ -1354,6 +1518,9 @@ int main()
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
+    // dump_deepIm_recall();
+    // dump_glove_score_recall();
+    // dump_sift_score_recall();
     offline_exp();          // offline computation of estimator, samplings, and ef-adaptor
     online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
