@@ -78,10 +78,10 @@ namespace hnswdis
         const hnswdis::MatrixXf &data_vectors,
         const std::string &metric,
         const size_t k,
-        const float truncation_ratio,
+        const float alpha, const float gamma,
         const size_t statics_length)
     {
-        hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
         return hnsw_search_and_score(alg_hnsw, query_vectors, data_vectors, score_cal, k, statics_length);
     }
@@ -919,13 +919,13 @@ namespace hnswdis
             size_t k,
             const std::string &metric,
             const size_t ef,
-            const float truncation_ratio,
+            const float alpha, const float gamma,
             const size_t statics_length)
         {
             std::shared_ptr<hnswdis::MatrixXf> query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
             MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
 
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
             init(alg_hnsw,
                  data_vectors,
@@ -1195,13 +1195,13 @@ namespace hnswdis
                   const std::shared_ptr<hnswdis::MatrixXf> data_vectors,
                   const size_t k,
                   const std::string metric,
-                  const float truncation_ratio,
+                  const float alpha, const float gamma,
                   const size_t statics_length,
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
                   EfRecallTable &out_table)
         {
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
             size_t first_ef = k;
             size_t second_ef = static_cast<size_t>(1.5 * first_ef);
@@ -1477,7 +1477,7 @@ namespace hnswdis
             const size_t k,
             const std::string metric,
             const float expected_recall,
-            const float truncation_ratio,
+            const float alpha, const float gamma,
             const size_t statics_length,
             const std::string &samplings_filename,
             int ef_upper_bound = 5000
@@ -1512,7 +1512,7 @@ namespace hnswdis
                 sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
             }
 
-            init(alg_hnsw, data_vectors, k, metric, truncation_ratio, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_recall_estimators);
+            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_recall_estimators);
         }
 
         EfAdapter(
@@ -1521,13 +1521,13 @@ namespace hnswdis
             const size_t k,
             const std::string metric,
             const float expected_recall,
-            const float truncation_ratio,
+            const float alpha, const float gamma,
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             int ef_upper_bound = 5000) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
-            init(alg_hnsw, data_vectors, k, metric, truncation_ratio, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators);
+            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators);
         }
 
         EfAdapter(
@@ -1541,7 +1541,7 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> data_vectors,
             const size_t k,
             const std::string metric,
-            const float truncation_ratio,
+            const float alpha, const float gamma,
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
@@ -1549,7 +1549,7 @@ namespace hnswdis
         {
             const int n = query_vectors->rows();
 
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             std::vector<float> cvs = collect_cv(*alg_hnsw, *query_vectors, score_cal, k, statics_length);
 
             std::vector<int> order(n);
@@ -1590,7 +1590,7 @@ namespace hnswdis
 
                 init(alg_hnsw,
                      data_vectors,
-                     k, metric, truncation_ratio, statics_length,
+                     k, metric, alpha, gamma, statics_length,
                      std::make_shared<MatrixXf>(bucket_queries),
                      std::make_shared<MatrixXi>(bucket_gt),
                      cv_tables[t]);

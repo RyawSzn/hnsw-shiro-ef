@@ -25,12 +25,14 @@ namespace hnswdis
     class ApproximatedScoreCalculator
     {
     private:
-        float truncation_ratio;
+        float alpha;
+        float gamma;
 
     public:
         ApproximatedScoreCalculator(
-            float truncation_ratio = 0.25f
-        ) : truncation_ratio(truncation_ratio)
+            float alpha = 0.25f,
+            float gamma = 16.0f
+        ) : alpha(alpha), gamma(gamma)
         {
         }
 
@@ -57,11 +59,10 @@ namespace hnswdis
             });
 
             // Implement Truncation
-            size_t top_n = static_cast<size_t>(n * truncation_ratio);
+            size_t top_n = static_cast<size_t>(n * alpha);
             if (top_n == 0) top_n = 1;
 
             // Compute Revisit Rank (R_v)
-            float gamma = 16.0f;
             float factor = std::exp(-gamma / static_cast<float>(top_n));
             float w = factor;
             float sum_wv = 0.0f;

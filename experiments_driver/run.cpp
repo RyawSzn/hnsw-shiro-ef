@@ -3,6 +3,35 @@
 #include <filesystem>
 #include <cstdlib>
 
+// ============================================================================
+// GLOBAL CONFIGURATION
+// Easily configure parameters here instead of modifying them in each function.
+// ============================================================================
+struct ExperimentConfig {
+    std::string dataset;
+    std::string metric;
+    size_t k;
+    float alpha;
+    float gamma;
+    float expected_recall;
+    int ef_upper_bound;
+    int repeat;
+};
+
+static std::vector<ExperimentConfig> g_experiments = {
+    // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat
+    // {"deep-image-96-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 1},
+    {"glove-100-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 1},
+    // {"sift-128-euclidean", "l2", 100, 0.25f, 16.0f, 0.95f, 5000, 1},
+    // {"msmarco", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
+    // {"cohere", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
+    // {"laion_image", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
+    // {"laion_text", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
+    // {"cluster_mg_uniform_100d", "cd", 1000, 0.251f, 16.0f, 0.95f, 5000, 1},
+    // {"cluster_mg_zipf_100d", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1}
+};
+// ============================================================================
+
 static constexpr int N_DEP_TABLES = 10;
 
 static hnswdis::Sketch make_sketch(const hnswdis::EfAdapter &adapter, float expected_recall)
@@ -18,14 +47,15 @@ static void train_cv_buckets(
     const std::shared_ptr<hnswdis::MatrixXf> data,
     const size_t k,
     const std::string &metric,
-    const float truncation_ratio,
+    const float alpha,
+    const float gamma,
     const size_t statics_length,
     const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
     const std::shared_ptr<hnswdis::MatrixXi> ground_truth,
     const int ef_upper_bound)
 {
     adapter.init_with_cv_buckets(
-        hnsw, data, k, metric, truncation_ratio, statics_length,
+        hnsw, data, k, metric, alpha, gamma, statics_length,
         query_vectors, ground_truth,
         N_DEP_TABLES);
 }
@@ -82,27 +112,20 @@ void online_exp()
               << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in ada-ef offline computation
 
-    std::vector<std::tuple<std::string, std::string, float, int>> dataset_metrics = {
-        // {"deep-image-96-angular", "cd", 0.25f, 100},
-        {"glove-100-angular", "cd", 0.25f, 100},
-        // {"sift-128-euclidean", "l2", 0.25f, 100},
-        // {"msmarco", "cd", 0.25f, 1000},
-        // {"cohere", "cd", 0.25f, 1000},
-        // {"laion_image", "cd", 0.25f, 1000}, // image to image retrieval
-        // {"laion_text", "cd", 0.25f, 1000},  // text to image retrieval
-        // {"cluster_mg_uniform_100d", "cd", 0.251f, 1000},
-        // {"cluster_mg_zipf_100d", "cd", 0.25f, 1000}
-    };
-
-    for (const auto [dataset, metric, truncation_ratio, k] : dataset_metrics)
+    for (const auto& conf : g_experiments)
     {
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+        float alpha = conf.alpha;
+        size_t k = conf.k;
+        float expected_recall = conf.expected_recall;
+        int ef_upper_bound = conf.ef_upper_bound;
+        float gamma = conf.gamma;
+        int repeat = conf.repeat;
+
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
-                  << "Quantile step: " << truncation_ratio << std::endl;
-
-        float expected_recall = 0.95;
-        int ef_upper_bound = 5000;
-        int repeat = 1;
+                  << "Truncation ratio: " << alpha << std::endl;
 
         std::shared_ptr<hnswlib::HierarchicalNSW<float>> hnsw;
         std::shared_ptr<hnswdis::MatrixXf> query;
@@ -138,7 +161,7 @@ void online_exp()
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
 
         // 2. load ef_adaptor
         std::shared_ptr<hnswdis::EfAdapter> ef_adapter_ptr;
@@ -161,19 +184,11 @@ void online_exp()
 
 void indexing_exp()
 {
-    std::vector<std::pair<std::string, std::string>> dataset_metrics = {
-        {"deep-image-96-angular", "cd"},
-        {"glove-100-angular", "cd"},
-        {"sift-128-euclidean", "l2"},
-        // {"msmarco", "cd"},
-        // {"cohere", "cd"},
-        // {"laion_image", "cd"},
-        // {"cluster_mg_uniform_100d", "cd"},
-        // {"cluster_mg_zipf_100d", "cd"}
-    };
-
-    for (const auto [dataset, metric] : dataset_metrics)
+    for (const auto& conf : g_experiments)
     {
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+
         std::cout << "Dataset: " << dataset << std::endl;
         std::string hdf5_path = (root / "data" / (dataset + ".hdf5")).string();
         std::string index_path = (root / "index" / (dataset + "-M16-efc-500-parallel.hnsw")).string();
@@ -208,7 +223,8 @@ void offline_laion_text2image()
     std::cout << "Data size of space:" << space->get_data_size() << std::endl;
 
     float expected_recall = 0.95;
-    float truncation_ratio = 0.25f;
+    float alpha = 0.25f;
+    float gamma = 16.0f;
     int sampling_size = 2000;
     int ef_upper_bound = 5000;
     int k = 1000;
@@ -245,7 +261,7 @@ void offline_laion_text2image()
         start = std::chrono::high_resolution_clock::now();
         std::ifstream ef_adaptor_file(ef_adaptor_path);
         hnswdis::EfAdapter ef_adapter(
-            hnsw, data, k, "cd", expected_recall, truncation_ratio, statics_length, samplings_path, ef_upper_bound);
+            hnsw, data, k, "cd", expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound);
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
         std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -253,7 +269,7 @@ void offline_laion_text2image()
             hnswdis::MatrixXf _sq; hnswdis::MatrixXi _sgt;
             hnswdis::deserialize_samplings(samplings_path, _sq, _sgt);
             train_cv_buckets(ef_adapter, hnsw, data,
-                k, "cd", truncation_ratio, statics_length,
+                k, "cd", alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(_sq),
                 std::make_shared<hnswdis::MatrixXi>(_sgt),
                 ef_upper_bound);
@@ -268,24 +284,19 @@ void offline_exp()
               << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 of all available threads
 
-    std::vector<std::tuple<std::string, std::string, float>> dataset_metrics = {
-        // {"deep-image-96-angular", "cd", 0.25f},
-        {"glove-100-angular", "cd", 0.25f},
-        // {"sift-128-euclidean", "l2", 0.25f},
-        // {"msmarco", "cd", 0.25f},
-        // {"cohere", "cd", 0.25f},
-        // {"laion_image", "cd", 0.25f},
-        // {"laion_text", "cd", 0.25f},
-        // {"cluster_mg_uniform_100d", "cd", 0.25f},
-        // {"cluster_mg_zipf_100d", "cd", 0.25f}
-    };
-
-    for (const auto [dataset, metric, truncation_ratio] : dataset_metrics)
+    for (const auto& conf : g_experiments)
     {
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+        float alpha = conf.alpha;
+        float expected_recall = conf.expected_recall;
+        int ef_upper_bound = conf.ef_upper_bound;
+        size_t k = conf.k;
+        float gamma = conf.gamma;
 
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
-                  << "Quantile step: " << truncation_ratio << std::endl;
+                  << "Truncation ratio: " << alpha << std::endl;
 
         if (dataset == "laion_text")
         {
@@ -298,20 +309,8 @@ void offline_exp()
 
         auto [hnsw, query, data, ground_truth, space] = load_index_and_data(hdf5_path, index_path, metric);
 
-        float expected_recall = 0.95;
         int sampling_size = 2000;
-        int ef_upper_bound = 5000;
         size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
-
-        int k = 100;
-        if (dataset == "msmarco" ||
-            dataset == "cohere" ||
-            dataset == "laion_image" ||
-            dataset == "cluster_mg_uniform_100d" ||
-            dataset == "cluster_mg_zipf_100d")
-        {
-            k = 1000;
-        }
 
         std::string ef_adaptor_path = (root / ("estimation_table/" + dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
         std::string samplings_path = (root / ("sampling/" + dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
@@ -347,7 +346,7 @@ void offline_exp()
         {
             start = std::chrono::high_resolution_clock::now();
             std::ifstream ef_adaptor_file(ef_adaptor_path);
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, truncation_ratio, statics_length, samplings_path, ef_upper_bound);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound);
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -355,7 +354,7 @@ void offline_exp()
                 hnswdis::MatrixXf _sq; hnswdis::MatrixXi _sgt;
                 hnswdis::deserialize_samplings(samplings_path, _sq, _sgt);
                 train_cv_buckets(ef_adapter, hnsw, data,
-                    k, metric, truncation_ratio, statics_length,
+                    k, metric, alpha, gamma, statics_length,
                     std::make_shared<hnswdis::MatrixXf>(_sq),
                     std::make_shared<hnswdis::MatrixXi>(_sgt),
                     ef_upper_bound);
@@ -402,7 +401,8 @@ void sensitivity_analysis()
     for (const std::string &dataset : datasets)
     {
         std::string metric = "cd";
-        float truncation_ratio = 0.25f;
+        float alpha = 0.25f;
+        float gamma = 16.0f;
         std::vector<int> list_k = {1000, 100, 50}; // in descending order so that we can reuse samplings and estimators more effectively
         std::vector<float> expected_recalls = {0.95, 0.97, 0.99};
         int ef_upper_bound = 5000;
@@ -440,7 +440,7 @@ void sensitivity_analysis()
 
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
-                  << "Quantile step: " << truncation_ratio << std::endl;
+                  << "Truncation ratio: " << alpha << std::endl;
 
         for (const auto k : list_k)
         {
@@ -452,7 +452,7 @@ void sensitivity_analysis()
                     << "Expected recall: " << expected_recall << std::endl;
 
                 start = std::chrono::high_resolution_clock::now();
-                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, truncation_ratio, statics_length, samplings_path, ef_upper_bound);
+                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound);
                 end = std::chrono::high_resolution_clock::now();
                 duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
                 std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -463,7 +463,7 @@ void sensitivity_analysis()
                 const float wae = ef_adapter_ptr->get_wae();
                 std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-                hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+                hnswdis::ApproximatedScoreCalculator score_cal(alpha);
 
                 size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
 
@@ -532,16 +532,17 @@ void insert_exp_setup(
     float expected_recall = 0.95;
     int sampling_size = 2000;
     int ef_upper_bound = 5000;
-    float truncation_ratio = 0.25f;
+    float alpha = 0.25f;
+    float gamma = 16.0f;
     size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
     start = std::chrono::high_resolution_clock::now();
-    hnswdis::EfAdapter ef_adapter(alg_hnsw, before_data_ptr, k, metric, expected_recall, truncation_ratio, statics_length, samplings_path, ef_upper_bound);
+    hnswdis::EfAdapter ef_adapter(alg_hnsw, before_data_ptr, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound);
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
     train_cv_buckets(ef_adapter, alg_hnsw, before_data_ptr,
-        k, metric, truncation_ratio, statics_length,
+        k, metric, alpha, gamma, statics_length,
         sample_query_vectors, std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
         ef_upper_bound);
     ef_adapter.serialize(ef_adaptor_path);
@@ -588,7 +589,8 @@ void insert_exp_adaef_update(
     const hnswdis::MatrixXf &updates_data,
     const size_t k,
     const float expected_recall,
-    const float truncation_ratio,
+    const float alpha,
+    const float gamma,
     const size_t statics_length,
     const int ef_upper_bound,
     const int before_updates,
@@ -641,13 +643,13 @@ void insert_exp_adaef_update(
 
         start = std::chrono::high_resolution_clock::now();
         hnswdis::EfAdapter ef_adapter(
-            alg_hnsw, full_data_ptr, k, metric, expected_recall, truncation_ratio, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_upper_bound);
+            alg_hnsw, full_data_ptr, k, metric, expected_recall, alpha, gamma, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_upper_bound);
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
         std::string updated_ef_adaptor_path = (root / "incremental_update" / batch_type / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef-updated.bin")).string();
         train_cv_buckets(ef_adapter, alg_hnsw, full_data_ptr,
-            k, metric, truncation_ratio, statics_length,
+            k, metric, alpha, gamma, statics_length,
             sample_query_vectors_ptr, sample_ground_truth_ptr,
             ef_upper_bound);
         ef_adapter.serialize(updated_ef_adaptor_path);
@@ -668,7 +670,8 @@ void insert_exp(bool setup = false)
     };
 
     const float expected_recall = 0.95;
-    const float truncation_ratio = 0.25f;
+    const float alpha = 0.25f;
+    const float gamma = 16.0f;
     const int ef_upper_bound = 5000;
     size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
@@ -704,7 +707,7 @@ void insert_exp(bool setup = false)
         {
             insert_exp_setup(dataset, metric, before_updates_data, full_data.rows(), k, batch_type);
             insert_exp_index_update(dataset, metric, full_data, before_updates_data, num_updates, batch_type);
-            insert_exp_adaef_update(dataset, metric, full_data, before_updates_data, updates_data, k, expected_recall, truncation_ratio, statics_length, ef_upper_bound, before_updates, batch_type);
+            insert_exp_adaef_update(dataset, metric, full_data, before_updates_data, updates_data, k, expected_recall, alpha, gamma, statics_length, ef_upper_bound, before_updates, batch_type);
         }
 
         int repeat = 6;
@@ -739,7 +742,7 @@ void insert_exp(bool setup = false)
             hnswdis::Sketch sketch = make_sketch(*ef_adapter_ptr, expected_recall);
             const float wae = ef_adapter_ptr->get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             adaptive_search(dataset, repeat, *alg_hnsw, query_vectors, full_data, ground_truth, score_cal, k, sketch, statics_length, expected_recall);
@@ -763,7 +766,7 @@ void insert_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with updated estimator, samplings, and adaptor
@@ -835,19 +838,21 @@ void delete_exp_setup(
         std::string ef_adaptor_path = (root / "incremental_deletion" / batch_type / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef-recomp.bin")).string();
         float expected_recall = 0.95;
         int sampling_size = 2000;
-        int ef_upper_bound = 5000;
-        float truncation_ratio = 0.25f;
-        size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
+    int ef_upper_bound = 5000;
+    float alpha = 0.25f;
+    float gamma = 16.0f;
+    int k = 1000;
+    size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
         std::shared_ptr<hnswdis::MatrixXf> after_updates_data_ptr = std::make_shared<hnswdis::MatrixXf>(after_updates_data);
         std::shared_ptr<hnswdis::MatrixXi> sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
         start = std::chrono::high_resolution_clock::now();
-        hnswdis::EfAdapter ef_adapter(alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, truncation_ratio, statics_length, sample_query_vectors, sample_ground_truth_ptr, ef_upper_bound);
+        hnswdis::EfAdapter ef_adapter(alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, alpha, gamma, statics_length, sample_query_vectors, sample_ground_truth_ptr, ef_upper_bound);
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
         train_cv_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
-            k, metric, truncation_ratio, statics_length,
+            k, metric, alpha, gamma, statics_length,
             sample_query_vectors, sample_ground_truth_ptr,
             ef_upper_bound);
         ef_adapter.serialize(ef_adaptor_path);
@@ -863,7 +868,8 @@ void delete_exp_adaef_update(
     const hnswdis::MatrixXf &query_vectors,
     const size_t k,
     const float expected_recall,
-    const float truncation_ratio,
+    const float alpha,
+    const float gamma,
     const size_t statics_length,
     const int ef_upper_bound,
     const std::string &batch_type)
@@ -916,13 +922,13 @@ void delete_exp_adaef_update(
     std::shared_ptr<hnswdis::MatrixXi> sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
     start = std::chrono::high_resolution_clock::now();
     hnswdis::EfAdapter ef_adapter(
-        alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, truncation_ratio, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_upper_bound);
+        alg_hnsw, after_updates_data_ptr, k, metric, expected_recall, alpha, gamma, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_upper_bound);
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
     std::string updated_ef_adaptor_path = (root / "incremental_deletion" / batch_type / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef-updated.bin")).string();
     train_cv_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
-        k, metric, truncation_ratio, statics_length,
+        k, metric, alpha, gamma, statics_length,
         sample_query_vectors_ptr, sample_ground_truth_ptr,
         ef_upper_bound);
     ef_adapter.serialize(updated_ef_adaptor_path);
@@ -941,7 +947,8 @@ void delete_exp(bool setup = false)
     };
 
     const float expected_recall = 0.95;
-    const float truncation_ratio = 0.25f;
+    const float alpha = 0.25f;
+    const float gamma = 16.0f;
     const int ef_upper_bound = 5000;
     size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
@@ -976,7 +983,7 @@ void delete_exp(bool setup = false)
         if (setup)
         {
             delete_exp_setup(dataset, metric, after_updates_data, full_data, query_vectors, k, batch_type);
-            delete_exp_adaef_update(dataset, metric, full_data.rows(), after_updates_data, updates_data, query_vectors, k, expected_recall, truncation_ratio, statics_length, ef_upper_bound, batch_type);
+            delete_exp_adaef_update(dataset, metric, full_data.rows(), after_updates_data, updates_data, query_vectors, k, expected_recall, alpha, gamma, statics_length, ef_upper_bound, batch_type);
         }
 
         // get the ground truth after deletions
@@ -1021,7 +1028,7 @@ void delete_exp(bool setup = false)
             hnswdis::Sketch sketch = make_sketch(*ef_adapter_ptr, expected_recall);
             const float wae = ef_adapter_ptr->get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             adaptive_search(dataset, repeat, *alg_hnsw, query_vectors, after_updates_data, ground_truth, score_cal, k, sketch, statics_length, expected_recall);
@@ -1045,7 +1052,7 @@ void delete_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with updated estimator, samplings, and adaptor
@@ -1070,7 +1077,7 @@ void delete_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with recomputed estimator, samplings, and adaptor
@@ -1085,25 +1092,26 @@ void ablation_study_distance_list_size()
               << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in ada-ef offline computation
 
-    std::vector<std::tuple<std::string, std::string, float, int>> dataset_metrics = {
-        {"deep-image-96-angular", "cd", 0.25f, 100},
-        {"cohere", "cd", 0.25f, 1000}};
-
     std::vector<int> distance_list_sizes = {
         1 + 32,                          // 1-hop neighbors on the base layer: M = 16
         1 + 32 + 31 * 32,                // 2-hop neighbors on the base layer: M = 16
         1 + 32 + 31 * 32 + 31 * 32 * 32, // 3-hop neighbors on the base layer: M = 16
     };
 
-    for (const auto [dataset, metric, truncation_ratio, k] : dataset_metrics)
+    for (const auto& conf : g_experiments)
     {
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+        float alpha = conf.alpha;
+        size_t k = conf.k;
+        float expected_recall = conf.expected_recall;
+        int ef_upper_bound = conf.ef_upper_bound;
+        float gamma = conf.gamma;
+        int repeat = 3;
+
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
-                  << "Quantile step: " << truncation_ratio << std::endl;
-
-        float expected_recall = 0.95;
-        int ef_upper_bound = 5000;
-        int repeat = 3;
+                  << "Truncation ratio: " << alpha << std::endl;
 
         std::shared_ptr<hnswlib::HierarchicalNSW<float>> hnsw;
         std::shared_ptr<hnswdis::MatrixXf> query;
@@ -1127,7 +1135,7 @@ void ablation_study_distance_list_size()
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
 
         // 2. load samplings
         hnswdis::MatrixXf sample_query_vectors;
@@ -1144,12 +1152,12 @@ void ablation_study_distance_list_size()
             std::string ef_adaptor_path = (root / "ablation_distance_size" / (dataset + "-D-" + std::to_string(statics_length) + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
 
             auto start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, truncation_ratio, statics_length, samplings_path, ef_upper_bound);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound);
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
             train_cv_buckets(ef_adapter, hnsw, data,
-                k, metric, truncation_ratio, statics_length,
+                k, metric, alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
                 ef_upper_bound);
             ef_adapter.serialize(ef_adaptor_path);
@@ -1169,10 +1177,6 @@ void ablation_study_sampling_size()
               << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in ada-ef offline computation
 
-    std::vector<std::tuple<std::string, std::string, float, int>> dataset_metrics = {
-        {"deep-image-96-angular", "cd", 0.25f, 100},
-        {"cohere", "cd", 0.25f, 1000}};
-
     std::vector<int> sampling_size = {
         // from larger to smaller, reuse samplings for experiments
         5000,
@@ -1180,16 +1184,20 @@ void ablation_study_sampling_size()
         200,
     };
 
-    for (const auto [dataset, metric, truncation_ratio, k] : dataset_metrics)
+    for (const auto& conf : g_experiments)
     {
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+        float alpha = conf.alpha;
+        size_t k = conf.k;
+        float expected_recall = conf.expected_recall;
+        int ef_upper_bound = conf.ef_upper_bound;
+        float gamma = conf.gamma;
+        int repeat = 3;
+
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
-                  << "Quantile step: " << truncation_ratio << std::endl;
-
-        float expected_recall = 0.95;
-        int ef_upper_bound = 5000;
-        int repeat = 3;
-        int statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
+                  << "Truncation ratio: " << alpha << std::endl;
 
         std::shared_ptr<hnswlib::HierarchicalNSW<float>> hnsw;
         std::shared_ptr<hnswdis::MatrixXf> query;
@@ -1211,7 +1219,8 @@ void ablation_study_sampling_size()
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+        size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
         for (const auto samplings : sampling_size)
         {
@@ -1229,12 +1238,12 @@ void ablation_study_sampling_size()
             hnswdis::serialize_samplings(samplings_path, pair.first, pair.second);
 
             start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, truncation_ratio, statics_length, samplings_path, ef_upper_bound);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound);
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
             train_cv_buckets(ef_adapter, hnsw, data,
-                k, metric, truncation_ratio, statics_length,
+                k, metric, alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(pair.first), std::make_shared<hnswdis::MatrixXi>(pair.second),
                 ef_upper_bound);
             ef_adapter.serialize(ef_adaptor_path);
@@ -1258,26 +1267,20 @@ void per_query_result_exp()
 
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in ada-ef offline computation
 
-    std::vector<std::tuple<std::string, std::string, float, int>> dataset_metrics = {
-        {"deep-image-96-angular", "cd", 0.25f, 100},
-        {"glove-100-angular", "cd", 0.25f, 100},
-        {"sift-128-euclidean", "l2", 0.25f, 100},
-        // {"msmarco", "cd", 0.25f, 1000},
-        // {"cohere", "cd", 0.25f, 1000},
-        // {"laion_image", "cd", 0.25f, 1000}, // image to image retrieval
-        // {"laion_text", "cd", 0.25f, 1000},  // text to image retrieval
-        // {"cluster_mg_uniform_100d", "cd", 0.25f, 1000},
-        // {"cluster_mg_zipf_100d", "cd", 0.25f, 1000}
-    };
-
-    for (const auto [dataset, metric, truncation_ratio, k] : dataset_metrics)
+    for (const auto& conf : g_experiments)
     {
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+        float alpha = conf.alpha;
+        size_t k = conf.k;
+        float expected_recall = conf.expected_recall;
+        int ef_upper_bound = conf.ef_upper_bound;
+        float gamma = conf.gamma;
+
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
-                  << "Quantile step: " << truncation_ratio << std::endl;
+                  << "Quantile step: " << alpha << std::endl;
 
-        float expected_recall = 0.95;
-        int ef_upper_bound = 5000;
         int repeat = 3;
 
         std::shared_ptr<hnswlib::HierarchicalNSW<float>> hnsw;
@@ -1314,7 +1317,7 @@ void per_query_result_exp()
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
 
         // 2. load ef_adaptor
         std::shared_ptr<hnswdis::EfAdapter> ef_adapter_ptr;
@@ -1383,7 +1386,7 @@ void dump_glove_score_recall() {
     std::string metric = "cd";
     int k = 50;
     int ef = 50;
-    float truncation_ratio = 0.25f;
+    float alpha = 0.25f;
     size_t statics_length = 1 + 32 + 31 * 32;
 
     std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
@@ -1396,7 +1399,7 @@ void dump_glove_score_recall() {
     auto ground_truth = std::get<3>(tuple_res);
 
     hnsw->setEf(ef);
-    hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+    hnswdis::ApproximatedScoreCalculator score_cal(alpha);
 
     std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
@@ -1427,7 +1430,7 @@ void dump_sift_score_recall() {
     std::string metric = "l2";
     int k = 10;
     int ef = 10;
-    float truncation_ratio = 0.25f;
+    float alpha = 0.25f;
     size_t statics_length = 1 + 32 + 31 * 32;
 
     std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
@@ -1440,7 +1443,7 @@ void dump_sift_score_recall() {
     auto ground_truth = std::get<3>(tuple_res);
 
     hnsw->setEf(ef);
-    hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+    hnswdis::ApproximatedScoreCalculator score_cal(alpha);
 
     std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
@@ -1470,7 +1473,7 @@ void dump_deep_score_recall() {
     std::string metric = "cd";
     int k = 100;
     int ef = 50;
-    float truncation_ratio = 0.25f;
+    float alpha = 0.25f;
     size_t statics_length = 1 + 32 + 31 * 32;
 
     std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
@@ -1483,7 +1486,7 @@ void dump_deep_score_recall() {
     auto ground_truth = std::get<3>(tuple_res);
 
     hnsw->setEf(ef);
-    hnswdis::ApproximatedScoreCalculator score_cal(truncation_ratio);
+    hnswdis::ApproximatedScoreCalculator score_cal(alpha);
 
     std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
