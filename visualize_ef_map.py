@@ -78,15 +78,10 @@ def estimate_ef2(tables_dicts, dep_centers, score, d_ep, expected_recall):
 
     c0 = dep_centers[idx]
     c1 = dep_centers[idx + 1]
-    w = (d_ep - c0) / (c1 - c0) if c1 != c0 else 0
-
-    ef0 = lookup_ef(tables_dicts[idx], score, expected_recall)
-    ef1 = lookup_ef(tables_dicts[idx + 1], score, expected_recall)
-
-    if np.isnan(ef0) or np.isnan(ef1):
-        return np.nan
-
-    return ef0 * (1.0 - w) + ef1 * w
+    if abs(d_ep - c0) <= abs(d_ep - c1):
+        return lookup_ef(tables_dicts[idx], score, expected_recall)
+    else:
+        return lookup_ef(tables_dicts[idx + 1], score, expected_recall)
 
 
 def plot_heatmap(filename, output_png):
@@ -121,7 +116,7 @@ def plot_heatmap(filename, output_png):
     plt.figure(figsize=(10, 8))
     cmap = plt.get_cmap("viridis").copy()
     cmap.set_bad(color="white")
-    plt.contourf(X, Y, Z, levels=50, cmap=cmap)
+    plt.pcolormesh(X, Y, Z, cmap=cmap, shading='nearest')
     plt.colorbar(label="Estimated ef")
 
     for c in dep_centers:
