@@ -20,15 +20,15 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat
-    // {"deep-image-96-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 1},
-    {"glove-100-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 1},
-    // {"sift-128-euclidean", "l2", 100, 0.25f, 16.0f, 0.95f, 5000, 1},
-    // {"msmarco", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
-    // {"cohere", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
-    // {"laion_image", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
-    // {"laion_text", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1},
-    // {"cluster_mg_uniform_100d", "cd", 1000, 0.251f, 16.0f, 0.95f, 5000, 1},
-    // {"cluster_mg_zipf_100d", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 1}
+    {"deep-image-96-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 3},
+    {"glove-100-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 3},
+    {"sift-128-euclidean", "l2", 100, 0.25f, 16.0f, 0.95f, 500, 3},
+    // {"msmarco", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
+    // {"cohere", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
+    // {"laion_image", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
+    // {"laion_text", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
+    // {"cluster_mg_uniform_100d", "cd", 1000, 0.251f, 16.0f, 0.95f, 5000, 3},
+    // {"cluster_mg_zipf_100d", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3}
 };
 // ============================================================================
 
