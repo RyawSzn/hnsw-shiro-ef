@@ -1530,7 +1530,7 @@ int main() {
     // dump_glove_score_recall();
     // dump_sift_score_recall();
     // dump_deep_score_recall();
-    offline_exp();          // offline computation of estimator, samplings, and ef-adaptor
+    // offline_exp();          // offline computation of estimator, samplings, and ef-adaptor
     online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
