@@ -1583,7 +1583,7 @@ namespace hnswdis
                     bucket_gt.row(r)      = ground_truth_ptr->row(order[lo + r]);
                 }
 
-                std::cout << "Training cv-bucket " << t
+                std::cout << "Training rv-bucket " << t
                           << " [" << cvs[order[lo]] << ", "
                           << (t < actual_n_cv_tables - 1 ? cvs[order[hi]] : std::numeric_limits<float>::infinity())
                           << ") with " << bucket_size << " queries." << std::endl;

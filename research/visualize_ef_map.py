@@ -1,7 +1,9 @@
 import struct
 import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 def read_pod(f, fmt):
     sz = struct.calcsize(fmt)
@@ -10,40 +12,44 @@ def read_pod(f, fmt):
         raise EOFError
     return struct.unpack(fmt, data)[0]
 
+
 def read_table(f):
-    sz = read_pod(f, 'Q')
+    sz = read_pod(f, "Q")
     table = []
     for _ in range(sz):
-        score = read_pod(f, 'i')
-        recall_size = read_pod(f, 'Q')
+        score = read_pod(f, "i")
+        recall_size = read_pod(f, "Q")
         recalls = []
         for _ in range(recall_size):
-            ef = read_pod(f, 'i')
-            recall = read_pod(f, 'f')
+            ef = read_pod(f, "i")
+            recall = read_pod(f, "f")
             recalls.append((ef, recall))
         table.append((score, recalls))
     return table
 
+
 def deserialize(filename):
-    with open(filename, 'rb') as f:
+    with open(filename, "rb") as f:
         ef_recall_estimators = read_table(f)
-        expected_recall = read_pod(f, 'f')
-        wae = read_pod(f, 'f')
-        
-        n_dep = read_pod(f, 'Q')
+        expected_recall = read_pod(f, "f")
+        wae = read_pod(f, "f")
+
+        n_dep = read_pod(f, "Q")
         dep_tables = []
         for _ in range(n_dep):
             dep_tables.append(read_table(f))
-            
-        n_thresh = read_pod(f, 'Q')
+
+        n_thresh = read_pod(f, "Q")
         dep_centers = []
         for _ in range(n_thresh):
-            dep_centers.append(read_pod(f, 'f'))
-            
+            dep_centers.append(read_pod(f, "f"))
+
     return ef_recall_estimators, expected_recall, wae, dep_tables, dep_centers
+
 
 def table_to_dict(table):
     return {score: ef_recalls for score, ef_recalls in table}
+
 
 def lookup_ef(table_dict, score, expected_recall):
     clamped = max(0, min(100, int(score)))
@@ -54,6 +60,7 @@ def lookup_ef(table_dict, score, expected_recall):
         if recall >= expected_recall:
             return ef
     return ef_recalls[-1][0]
+
 
 def estimate_ef2(tables_dicts, dep_centers, score, d_ep, expected_recall):
     n_centers = len(dep_centers)
@@ -80,6 +87,7 @@ def estimate_ef2(tables_dicts, dep_centers, score, d_ep, expected_recall):
         return np.nan
 
     return ef0 * (1.0 - w) + ef1 * w
+
 
 def plot_heatmap(filename, output_png):
     _, expected_recall, _, dep_tables, dep_centers = deserialize(filename)
@@ -114,21 +122,28 @@ def plot_heatmap(filename, output_png):
     cmap = plt.get_cmap("viridis").copy()
     cmap.set_bad(color="white")
     plt.contourf(X, Y, Z, levels=50, cmap=cmap)
-    plt.colorbar(label='Estimated ef')
+    plt.colorbar(label="Estimated ef")
 
     for c in dep_centers:
         plt.axhline(
-            y=c, color="r", linestyle="--", alpha=0.5, label="Center" if c == dep_centers[0] else ""
+            y=c,
+            color="r",
+            linestyle="--",
+            alpha=0.5,
+            label="Center" if c == dep_centers[0] else "",
         )
 
     plt.xlabel("Coefficient of Variation (CV Score)")
-    plt.ylabel("Revisit Rank (RV Score)")
-    plt.title(f"Estimated ef mapped on CV / RV Coordinate Plane\nExpected Recall: {expected_recall}")
+    plt.ylabel("Revisit-Order (Convergence Score)")
+    plt.title(
+        f"Estimated ef mapped on CV / Convergence Coordinate Plane\nExpected Recall: {expected_recall}"
+    )
     plt.legend()
     plt.savefig(output_png)
     print(f"Heatmap saved to {output_png}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     if len(sys.argv) < 3:
         print(f"Usage: {sys.argv[0]} <ef_adaptor.bin> <output.png>")
         sys.exit(1)
