@@ -30,8 +30,8 @@ namespace hnswdis
 
     public:
         ApproximatedScoreCalculator(
-            float alpha = 0.25f,
-            float gamma = 16.0f
+            float alpha,
+            float gamma
         ) : alpha(alpha), gamma(gamma)
         {
         }

@@ -1480,7 +1480,7 @@ namespace hnswdis
             const float alpha, const float gamma,
             const size_t statics_length,
             const std::string &samplings_filename,
-            int ef_upper_bound = 5000
+            int ef_upper_bound
         ) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
 
@@ -1525,7 +1525,7 @@ namespace hnswdis
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            int ef_upper_bound = 5000) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
+            int ef_upper_bound) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
             init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators);
         }

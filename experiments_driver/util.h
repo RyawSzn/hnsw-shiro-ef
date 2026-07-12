@@ -414,7 +414,7 @@ void search_and_score(
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
     std::cout << "Search time: " << duration.count() << " ms" << std::endl;
 
-    hnswdis::ApproximatedScoreCalculator score_cal(quantile_step);
+    hnswdis::ApproximatedScoreCalculator score_cal(quantile_step, 16.0f);
     std::vector<float> score_list;
     start_time = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < query_vectors.rows(); i++)

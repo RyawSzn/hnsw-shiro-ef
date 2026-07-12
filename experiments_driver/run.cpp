@@ -20,9 +20,9 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat
-    {"deep-image-96-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 4000, 3},
-    {"glove-100-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 4000, 3},
-    {"sift-128-euclidean", "l2", 100, 0.25f, 16.0f, 0.95f, 250, 3},
+    {"deep-image-96-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 3},
+    {"glove-100-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 5000, 3},
+    {"sift-128-euclidean", "l2", 100, 0.25f, 16.0f, 0.95f, 350, 3},
     // {"msmarco", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
     // {"cohere", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
     // {"laion_image", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
@@ -161,7 +161,7 @@ void online_exp()
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
         // 2. load ef_adaptor
         std::shared_ptr<hnswdis::EfAdapter> ef_adapter_ptr;
@@ -463,7 +463,7 @@ void sensitivity_analysis()
                 const float wae = ef_adapter_ptr->get_wae();
                 std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-                hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+                hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
                 size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
 
@@ -742,7 +742,7 @@ void insert_exp(bool setup = false)
             hnswdis::Sketch sketch = make_sketch(*ef_adapter_ptr, expected_recall);
             const float wae = ef_adapter_ptr->get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
-            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             adaptive_search(dataset, repeat, *alg_hnsw, query_vectors, full_data, ground_truth, score_cal, k, sketch, statics_length, expected_recall);
@@ -766,7 +766,7 @@ void insert_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with updated estimator, samplings, and adaptor
@@ -1028,7 +1028,7 @@ void delete_exp(bool setup = false)
             hnswdis::Sketch sketch = make_sketch(*ef_adapter_ptr, expected_recall);
             const float wae = ef_adapter_ptr->get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
-            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             adaptive_search(dataset, repeat, *alg_hnsw, query_vectors, after_updates_data, ground_truth, score_cal, k, sketch, statics_length, expected_recall);
@@ -1052,7 +1052,7 @@ void delete_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with updated estimator, samplings, and adaptor
@@ -1077,7 +1077,7 @@ void delete_exp(bool setup = false)
             const float wae = ef_adapter.get_wae();
             std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
 
-            hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
             alg_hnsw->setEf(wae);
             // ada-ef search with recomputed estimator, samplings, and adaptor
@@ -1135,7 +1135,7 @@ void ablation_study_distance_list_size()
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
         // 2. load samplings
         hnswdis::MatrixXf sample_query_vectors;
@@ -1219,7 +1219,7 @@ void ablation_study_sampling_size()
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
         size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer: M = 16
 
         for (const auto samplings : sampling_size)
@@ -1317,7 +1317,7 @@ void per_query_result_exp()
         auto end = std::chrono::high_resolution_clock::now();
 
         // 1. load estimator
-        hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
         // 2. load ef_adaptor
         std::shared_ptr<hnswdis::EfAdapter> ef_adapter_ptr;
@@ -1387,6 +1387,7 @@ void dump_glove_score_recall() {
     int k = 50;
     int ef = 50;
     float alpha = 0.25f;
+    float gamma = 16.0f;
     size_t statics_length = 1 + 32 + 31 * 32;
 
     std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
@@ -1399,7 +1400,7 @@ void dump_glove_score_recall() {
     auto ground_truth = std::get<3>(tuple_res);
 
     hnsw->setEf(ef);
-    hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+    hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
     std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
@@ -1431,6 +1432,7 @@ void dump_sift_score_recall() {
     int k = 10;
     int ef = 10;
     float alpha = 0.25f;
+    float gamma = 16.0f;
     size_t statics_length = 1 + 32 + 31 * 32;
 
     std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
@@ -1443,7 +1445,7 @@ void dump_sift_score_recall() {
     auto ground_truth = std::get<3>(tuple_res);
 
     hnsw->setEf(ef);
-    hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+    hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
     std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
@@ -1474,6 +1476,7 @@ void dump_deep_score_recall() {
     int k = 100;
     int ef = 50;
     float alpha = 0.25f;
+    float gamma = 16.0f;
     size_t statics_length = 1 + 32 + 31 * 32;
 
     std::string hdf5_path = (root / ("data/" + dataset + ".hdf5")).string();
@@ -1486,7 +1489,7 @@ void dump_deep_score_recall() {
     auto ground_truth = std::get<3>(tuple_res);
 
     hnsw->setEf(ef);
-    hnswdis::ApproximatedScoreCalculator score_cal(alpha);
+    hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
     std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnswdis::hnsw_search_score_and_cv(*hnsw, *query, *data, score_cal, k, statics_length);
 
