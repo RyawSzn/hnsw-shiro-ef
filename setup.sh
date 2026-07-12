@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-EXPERIMENTS_ROOT="/home/ryawszn/experiments/2metric"
+EXPERIMENTS_ROOT="/home/ryawszn/experiments/shiro-ef"
 
 mkdir -p "$EXPERIMENTS_ROOT"
 

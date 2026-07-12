@@ -22,7 +22,7 @@ static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat
     {"deep-image-96-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 4000, 3},
     {"glove-100-angular", "cd", 100, 0.25f, 16.0f, 0.95f, 4000, 3},
-    {"sift-128-euclidean", "l2", 100, 0.25f, 16.0f, 0.95f, 350, 3},
+    {"sift-128-euclidean", "l2", 100, 0.25f, 16.0f, 0.95f, 250, 3},
     // {"msmarco", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
     // {"cohere", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},
     // {"laion_image", "cd", 1000, 0.25f, 16.0f, 0.95f, 5000, 3},

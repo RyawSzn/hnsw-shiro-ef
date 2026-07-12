@@ -58,6 +58,9 @@ endif()
 # 3. Setup your custom run executable
 add_executable(run experiments_driver/run.cpp)
 
+# ef_sweep: sweeps ef_max 50..4000 and logs latency + recall per dataset
+add_executable(ef_sweep research/ef_sweep.cpp)
+
 # Add HDF5 include directories (found automatically by find_package)
 target_include_directories(run PRIVATE ${HDF5_INCLUDE_DIRS})
 
@@ -68,4 +71,48 @@ target_link_libraries(run PRIVATE
     Boost::boost            # Link Boost
     ${HDF5_CXX_LIBRARIES}   # Link libhdf5_cpp.so
     ${HDF5_LIBRARIES}       # Link libhdf5.so
+)
+
+# ef_sweep shares the same deps as run
+target_include_directories(ef_sweep PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(ef_sweep PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    Boost::boost
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+# gamma_sweep: sweeps the gamma (decay constant) across all 3 datasets and logs
+# structured [GAMMA_SWEEP] lines that visualize_gamma_sweep.py can plot.
+add_executable(gamma_sweep research/gamma_sweep.cpp)
+target_include_directories(gamma_sweep PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(gamma_sweep PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    Boost::boost
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+# gamma_correlation: outputs RV vs Recall CSV for different gamma values
+add_executable(gamma_correlation research/gamma_correlation.cpp)
+target_include_directories(gamma_correlation PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(gamma_correlation PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    Boost::boost
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
+# gamma_buckets: exports the EfAdapter lookup table mapping (Score -> EF)
+add_executable(gamma_buckets research/gamma_buckets.cpp)
+target_include_directories(gamma_buckets PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(gamma_buckets PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    Boost::boost
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
 )

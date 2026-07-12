@@ -1,9 +1,0 @@
-Loading dataset: deep-image-96-angular
-Normalize the data vectors
-Data vectors dimensions: 9990000 x 96
-Query vectors dimensions: 10000 x 96
-Neighbors dimensions: 10000 x 100
-Using AVX512 Inner Product distance
-Index loaded
-Dimension of space:96
-Data size of space:384

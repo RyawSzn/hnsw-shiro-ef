@@ -1,0 +1,3154 @@
+EXPERIMENTS_ROOT: "/home/ryawszn/experiments/shiro-ef"
+
+[GAMMA_SWEEP_HEADER] dataset,gamma,avg_recall,p5_recall,p1_recall,median_time_ms,wae
+
+======================================================
+Dataset: deep-image-96-angular
+  k=100  alpha=0.25  expected_recall=0.95  ef_upper_bound=4000
+======================================================
+Normalize the data vectors
+Data vectors dimensions: 9990000 x 96
+Query vectors dimensions: 10000 x 96
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:96
+Data size of space:384
+  Samplings loaded: 2000 queries
+
+--- gamma=1 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [18.5643, 30.494) with 200 queries.
+Average Recall: 0.6994
+Initial average recall with ef=100: 0.6994
+Average Recall: 0.77345
+Initial average recall with ef=150: 0.77345
+Weighted average ef: 657.35
+Training rv-bucket 1 [30.494, 35.0387) with 200 queries.
+Average Recall: 0.7881
+Initial average recall with ef=100: 0.7881
+Average Recall: 0.85575
+Initial average recall with ef=150: 0.85575
+Weighted average ef: 407.585
+Training rv-bucket 2 [35.0387, 38.3486) with 200 queries.
+Average Recall: 0.83475
+Initial average recall with ef=100: 0.83475
+Average Recall: 0.8946
+Initial average recall with ef=150: 0.8946
+Recall diff is too small, break.
+Weighted average ef: 278.895
+Training rv-bucket 3 [38.3486, 42.3933) with 200 queries.
+Average Recall: 0.8633
+Initial average recall with ef=100: 0.8633
+Average Recall: 0.91705
+Initial average recall with ef=150: 0.91705
+Weighted average ef: 233.85
+Training rv-bucket 4 [42.3933, 46.2967) with 200 queries.
+Average Recall: 0.90085
+Initial average recall with ef=100: 0.90085
+Average Recall: 0.94495
+Initial average recall with ef=150: 0.94495
+Recall diff is too small, break.
+Weighted average ef: 189.025
+Training rv-bucket 5 [46.2967, 49.7539) with 200 queries.
+Average Recall: 0.91935
+Initial average recall with ef=100: 0.91935
+Average Recall: 0.9563
+Initial average recall with ef=150: 0.9563
+Weighted average ef: 174.16
+Training rv-bucket 6 [49.7539, 54.0861) with 200 queries.
+Average Recall: 0.93805
+Initial average recall with ef=100: 0.93805
+Average Recall: 0.9686
+Initial average recall with ef=150: 0.9686
+Weighted average ef: 135.61
+Training rv-bucket 7 [54.0861, 59.1786) with 200 queries.
+Average Recall: 0.95835
+Initial average recall with ef=100: 0.95835
+Average Recall: 0.98035
+Initial average recall with ef=150: 0.98035
+Weighted average ef: 112.815
+Training rv-bucket 8 [59.1786, 66.5308) with 200 queries.
+Average Recall: 0.9678
+Initial average recall with ef=100: 0.9678
+Average Recall: 0.98655
+Initial average recall with ef=150: 0.98655
+Weighted average ef: 109.61
+Training rv-bucket 9 [66.5308, inf) with 200 queries.
+Average Recall: 0.99105
+Initial average recall with ef=100: 0.99105
+Average Recall: 0.9971
+Initial average recall with ef=150: 0.9971
+Weighted average ef: 100
+  WAE (weighted avg ef): 239
+  avg_recall=0.977535  p5_recall=0.93  p1_recall=0.89  median_time=8843 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=1 avg_recall=0.977535 p5_recall=0.93 p1_recall=0.89 median_time_ms=8843 wae=239
+
+--- gamma=2 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [23.2405, 35.8358) with 200 queries.
+Average Recall: 0.69835
+Initial average recall with ef=100: 0.69835
+Average Recall: 0.7733
+Initial average recall with ef=150: 0.7733
+Weighted average ef: 658.74
+Training rv-bucket 1 [35.8358, 40.403) with 200 queries.
+Average Recall: 0.7921
+Initial average recall with ef=100: 0.7921
+Average Recall: 0.8581
+Initial average recall with ef=150: 0.8581
+Weighted average ef: 388.495
+Training rv-bucket 2 [40.403, 43.8307) with 200 queries.
+Average Recall: 0.83435
+Initial average recall with ef=100: 0.83435
+Average Recall: 0.8944
+Initial average recall with ef=150: 0.8944
+Weighted average ef: 295.055
+Training rv-bucket 3 [43.8307, 47.4776) with 200 queries.
+Average Recall: 0.8616
+Initial average recall with ef=100: 0.8616
+Average Recall: 0.91685
+Initial average recall with ef=150: 0.91685
+Weighted average ef: 237.695
+Training rv-bucket 4 [47.4776, 51.3292) with 200 queries.
+Average Recall: 0.90445
+Initial average recall with ef=100: 0.90445
+Average Recall: 0.94735
+Initial average recall with ef=150: 0.94735
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 186.15
+Training rv-bucket 5 [51.3292, 54.5831) with 200 queries.
+Average Recall: 0.9156
+Initial average recall with ef=100: 0.9156
+Average Recall: 0.9523
+Initial average recall with ef=150: 0.9523
+Weighted average ef: 181.62
+Training rv-bucket 6 [54.5831, 58.7454) with 200 queries.
+Average Recall: 0.9399
+Initial average recall with ef=100: 0.9399
+Average Recall: 0.9706
+Initial average recall with ef=150: 0.9706
+Weighted average ef: 135.76
+Training rv-bucket 7 [58.7454, 63.3121) with 200 queries.
+Average Recall: 0.955701
+Initial average recall with ef=100: 0.9557
+Average Recall: 0.9777
+Initial average recall with ef=150: 0.9777
+Weighted average ef: 116.61
+Training rv-bucket 8 [63.3121, 70.1465) with 200 queries.
+Average Recall: 0.9689
+Initial average recall with ef=100: 0.9689
+Average Recall: 0.9876
+Initial average recall with ef=150: 0.9876
+Recall diff is too small, break.
+Weighted average ef: 106.96
+Training rv-bucket 9 [70.1465, inf) with 200 queries.
+Average Recall: 0.99005
+Initial average recall with ef=100: 0.99005
+Average Recall: 0.9965
+Initial average recall with ef=150: 0.9965
+Weighted average ef: 101.75
+  WAE (weighted avg ef): 240
+  avg_recall=0.978177  p5_recall=0.93  p1_recall=0.89  median_time=8999 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=2 avg_recall=0.978177 p5_recall=0.93 p1_recall=0.89 median_time_ms=8999 wae=240
+
+--- gamma=4 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [30.3993, 45.2618) with 200 queries.
+Average Recall: 0.70265
+Initial average recall with ef=100: 0.70265
+Average Recall: 0.7797
+Initial average recall with ef=150: 0.7797
+Weighted average ef: 639.745
+Training rv-bucket 1 [45.2618, 49.9448) with 200 queries.
+Average Recall: 0.79715
+Initial average recall with ef=100: 0.79715
+Average Recall: 0.8603
+Initial average recall with ef=150: 0.8603
+Weighted average ef: 392.74
+Training rv-bucket 2 [49.9448, 53.1354) with 200 queries.
+Average Recall: 0.83475
+Initial average recall with ef=100: 0.83475
+Average Recall: 0.8926
+Initial average recall with ef=150: 0.8926
+Weighted average ef: 300.61
+Training rv-bucket 3 [53.1354, 56.2319) with 200 queries.
+Average Recall: 0.864
+Initial average recall with ef=100: 0.864
+Average Recall: 0.9187
+Initial average recall with ef=150: 0.9187
+Recall diff is too small, break.
+Weighted average ef: 230.565
+Training rv-bucket 4 [56.2319, 59.7878) with 200 queries.
+Average Recall: 0.89585
+Initial average recall with ef=100: 0.89585
+Average Recall: 0.94195
+Initial average recall with ef=150: 0.94195
+Recall diff is too small, break.
+Weighted average ef: 195.75
+Training rv-bucket 5 [59.7878, 62.6772) with 200 queries.
+Average Recall: 0.91895
+Initial average recall with ef=100: 0.91895
+Average Recall: 0.954251
+Initial average recall with ef=150: 0.95425
+Recall diff is too small, break.
+Weighted average ef: 176.905
+Training rv-bucket 6 [62.6772, 66.1797) with 200 queries.
+Average Recall: 0.9398
+Initial average recall with ef=100: 0.9398
+Average Recall: 0.9685
+Initial average recall with ef=150: 0.9685
+Weighted average ef: 129.88
+Training rv-bucket 7 [66.1797, 70.1573) with 200 queries.
+Average Recall: 0.95195
+Initial average recall with ef=100: 0.95195
+Average Recall: 0.97585
+Initial average recall with ef=150: 0.97585
+Weighted average ef: 122.015
+Training rv-bucket 8 [70.1573, 75.7746) with 200 queries.
+Average Recall: 0.9658
+Initial average recall with ef=100: 0.9658
+Average Recall: 0.98635
+Initial average recall with ef=150: 0.98635
+Recall diff is too small, break.
+Weighted average ef: 106.97
+Training rv-bucket 9 [75.7746, inf) with 200 queries.
+Average Recall: 0.990101
+Initial average recall with ef=100: 0.9901
+Average Recall: 0.9965
+Initial average recall with ef=150: 0.9965
+Weighted average ef: 100.75
+  WAE (weighted avg ef): 239
+  avg_recall=0.979671  p5_recall=0.93  p1_recall=0.89  median_time=9197 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=4 avg_recall=0.979671 p5_recall=0.93 p1_recall=0.89 median_time_ms=9197 wae=239
+
+--- gamma=8 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [36.8954, 58.1133) with 200 queries.
+Average Recall: 0.7164
+Initial average recall with ef=100: 0.7164
+Average Recall: 0.7921
+Initial average recall with ef=150: 0.7921
+Weighted average ef: 612.805
+Training rv-bucket 1 [58.1133, 62.1106) with 200 queries.
+Average Recall: 0.80005
+Initial average recall with ef=100: 0.80005
+Average Recall: 0.86395
+Initial average recall with ef=150: 0.86395
+Weighted average ef: 371.89
+Training rv-bucket 2 [62.1106, 65.3604) with 200 queries.
+Average Recall: 0.8469
+Initial average recall with ef=100: 0.8469
+Average Recall: 0.90145
+Initial average recall with ef=150: 0.90145
+Recall diff is too small, break.
+Weighted average ef: 301.04
+Training rv-bucket 3 [65.3604, 67.7744) with 200 queries.
+Average Recall: 0.86085
+Initial average recall with ef=100: 0.86085
+Average Recall: 0.9133
+Initial average recall with ef=150: 0.9133
+Weighted average ef: 255.44
+Training rv-bucket 4 [67.7744, 70.326) with 200 queries.
+Average Recall: 0.88445
+Initial average recall with ef=100: 0.88445
+Average Recall: 0.9313
+Initial average recall with ef=150: 0.9313
+Weighted average ef: 203.375
+Training rv-bucket 5 [70.326, 72.6282) with 200 queries.
+Average Recall: 0.9218
+Initial average recall with ef=100: 0.9218
+Average Recall: 0.9567
+Initial average recall with ef=150: 0.9567
+Recall diff is too small, break.
+Weighted average ef: 164.25
+Training rv-bucket 6 [72.6282, 75.2152) with 200 queries.
+Average Recall: 0.9344
+Initial average recall with ef=100: 0.9344
+Average Recall: 0.96395
+Initial average recall with ef=150: 0.96395
+Weighted average ef: 153.025
+Training rv-bucket 7 [75.2152, 78.0226) with 200 queries.
+Average Recall: 0.94855
+Initial average recall with ef=100: 0.94855
+Average Recall: 0.97555
+Initial average recall with ef=150: 0.97555
+Weighted average ef: 129.375
+Training rv-bucket 8 [78.0226, 81.8698) with 200 queries.
+Average Recall: 0.9624
+Initial average recall with ef=100: 0.9624
+Average Recall: 0.9833
+Initial average recall with ef=150: 0.9833
+Weighted average ef: 109.17
+Training rv-bucket 9 [81.8698, inf) with 200 queries.
+Average Recall: 0.9852
+Initial average recall with ef=100: 0.9852
+Average Recall: 0.9931
+Initial average recall with ef=150: 0.9931
+Weighted average ef: 107.59
+  WAE (weighted avg ef): 240
+  avg_recall=0.981121  p5_recall=0.94  p1_recall=0.89  median_time=9483 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=8 avg_recall=0.981121 p5_recall=0.94 p1_recall=0.89 median_time_ms=9483 wae=240
+
+--- gamma=12 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [39.6747, 64.8189) with 200 queries.
+Average Recall: 0.7292
+Initial average recall with ef=100: 0.7292
+Average Recall: 0.80515
+Initial average recall with ef=150: 0.80515
+Weighted average ef: 570.24
+Training rv-bucket 1 [64.8189, 69.2383) with 200 queries.
+Average Recall: 0.8123
+Initial average recall with ef=100: 0.8123
+Average Recall: 0.8721
+Initial average recall with ef=150: 0.8721
+Weighted average ef: 378.34
+Training rv-bucket 2 [69.2383, 71.8026) with 200 queries.
+Average Recall: 0.84615
+Initial average recall with ef=100: 0.84615
+Average Recall: 0.9018
+Initial average recall with ef=150: 0.9018
+Recall diff is too small, break.
+Weighted average ef: 295.87
+Training rv-bucket 3 [71.8026, 74.1964) with 200 queries.
+Average Recall: 0.86675
+Initial average recall with ef=100: 0.86675
+Average Recall: 0.9151
+Initial average recall with ef=150: 0.9151
+Weighted average ef: 267.515
+Training rv-bucket 4 [74.1964, 76.1509) with 200 queries.
+Average Recall: 0.891
+Initial average recall with ef=100: 0.891
+Average Recall: 0.93365
+Initial average recall with ef=150: 0.93365
+Weighted average ef: 211.75
+Training rv-bucket 5 [76.1509, 77.9538) with 200 queries.
+Average Recall: 0.90615
+Initial average recall with ef=100: 0.90615
+Average Recall: 0.94495
+Initial average recall with ef=150: 0.94495
+Recall diff is too small, break.
+Weighted average ef: 197.265
+Training rv-bucket 6 [77.9538, 80.0961) with 200 queries.
+Average Recall: 0.928251
+Initial average recall with ef=100: 0.92825
+Average Recall: 0.96015
+Initial average recall with ef=150: 0.96015
+Weighted average ef: 160.465
+Training rv-bucket 7 [80.0961, 82.2965) with 200 queries.
+Average Recall: 0.94505
+Initial average recall with ef=100: 0.94505
+Average Recall: 0.9723
+Initial average recall with ef=150: 0.9723
+Weighted average ef: 141.51
+Training rv-bucket 8 [82.2965, 85.045) with 200 queries.
+Average Recall: 0.95695
+Initial average recall with ef=100: 0.95695
+Average Recall: 0.97925
+Initial average recall with ef=150: 0.97925
+Weighted average ef: 127.865
+Training rv-bucket 9 [85.045, inf) with 200 queries.
+Average Recall: 0.9792
+Initial average recall with ef=100: 0.9792
+Average Recall: 0.99025
+Initial average recall with ef=150: 0.99025
+Weighted average ef: 111.09
+  WAE (weighted avg ef): 246
+  avg_recall=0.981296  p5_recall=0.93  p1_recall=0.89  median_time=9591 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=12 avg_recall=0.981296 p5_recall=0.93 p1_recall=0.89 median_time_ms=9591 wae=246
+
+--- gamma=16 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [41.5531, 68.9977) with 200 queries.
+Average Recall: 0.74535
+Initial average recall with ef=100: 0.74535
+Average Recall: 0.81985
+Initial average recall with ef=150: 0.81985
+Weighted average ef: 524.94
+Training rv-bucket 1 [68.9977, 73.2323) with 200 queries.
+Average Recall: 0.8234
+Initial average recall with ef=100: 0.8234
+Average Recall: 0.88015
+Initial average recall with ef=150: 0.88015
+Weighted average ef: 350.745
+Training rv-bucket 2 [73.2323, 76.038) with 200 queries.
+Average Recall: 0.84325
+Initial average recall with ef=100: 0.84325
+Average Recall: 0.8982
+Initial average recall with ef=150: 0.8982
+Weighted average ef: 314.65
+Training rv-bucket 3 [76.038, 78.1057) with 200 queries.
+Average Recall: 0.8731
+Initial average recall with ef=100: 0.8731
+Average Recall: 0.92135
+Initial average recall with ef=150: 0.92135
+Weighted average ef: 237.035
+Training rv-bucket 4 [78.1057, 79.7886) with 200 queries.
+Average Recall: 0.8952
+Initial average recall with ef=100: 0.8952
+Average Recall: 0.93345
+Initial average recall with ef=150: 0.93345
+Weighted average ef: 220.8
+Training rv-bucket 5 [79.7886, 81.4336) with 200 queries.
+Average Recall: 0.90885
+Initial average recall with ef=100: 0.90885
+Average Recall: 0.94485
+Initial average recall with ef=150: 0.94485
+Weighted average ef: 191.66
+Training rv-bucket 6 [81.4336, 83.0667) with 200 queries.
+Average Recall: 0.91495
+Initial average recall with ef=100: 0.91495
+Average Recall: 0.9501
+Initial average recall with ef=150: 0.9501
+Weighted average ef: 181.91
+Training rv-bucket 7 [83.0667, 84.9777) with 200 queries.
+Average Recall: 0.932
+Initial average recall with ef=100: 0.932
+Average Recall: 0.96455
+Initial average recall with ef=150: 0.96455
+Weighted average ef: 153.615
+Training rv-bucket 8 [84.9777, 86.99) with 200 queries.
+Average Recall: 0.95865
+Initial average recall with ef=100: 0.95865
+Average Recall: 0.9794
+Initial average recall with ef=150: 0.9794
+Weighted average ef: 128.53
+Training rv-bucket 9 [86.99, inf) with 200 queries.
+Average Recall: 0.96625
+Initial average recall with ef=100: 0.96625
+Average Recall: 0.9828
+Initial average recall with ef=150: 0.9828
+Weighted average ef: 122.63
+  WAE (weighted avg ef): 242
+  avg_recall=0.979282  p5_recall=0.93  p1_recall=0.89  median_time=9034 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=16 avg_recall=0.979282 p5_recall=0.93 p1_recall=0.89 median_time_ms=9034 wae=242
+
+--- gamma=24 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [38.9628, 74.0376) with 200 queries.
+Average Recall: 0.77265
+Initial average recall with ef=100: 0.77265
+Average Recall: 0.8406
+Initial average recall with ef=150: 0.8406
+Weighted average ef: 437.43
+Training rv-bucket 1 [74.0376, 78.0153) with 200 queries.
+Average Recall: 0.83865
+Initial average recall with ef=100: 0.83865
+Average Recall: 0.8945
+Initial average recall with ef=150: 0.8945
+Weighted average ef: 340.875
+Training rv-bucket 2 [78.0153, 80.882) with 200 queries.
+Average Recall: 0.8656
+Initial average recall with ef=100: 0.8656
+Average Recall: 0.9141
+Initial average recall with ef=150: 0.9141
+Weighted average ef: 260.835
+Training rv-bucket 3 [80.882, 82.5555) with 200 queries.
+Average Recall: 0.87505
+Initial average recall with ef=100: 0.87505
+Average Recall: 0.9192
+Initial average recall with ef=150: 0.9192
+Weighted average ef: 265.875
+Training rv-bucket 4 [82.5555, 84.0377) with 200 queries.
+Average Recall: 0.8865
+Initial average recall with ef=100: 0.8865
+Average Recall: 0.9277
+Initial average recall with ef=150: 0.9277
+Weighted average ef: 236.685
+Training rv-bucket 5 [84.0377, 85.3617) with 200 queries.
+Average Recall: 0.9098
+Initial average recall with ef=100: 0.9098
+Average Recall: 0.9427
+Initial average recall with ef=150: 0.9427
+Recall diff is too small, break.
+Weighted average ef: 200.04
+Training rv-bucket 6 [85.3617, 86.8121) with 200 queries.
+Average Recall: 0.920451
+Initial average recall with ef=100: 0.92045
+Average Recall: 0.95315
+Initial average recall with ef=150: 0.95315
+Weighted average ef: 186.72
+Training rv-bucket 7 [86.8121, 88.267) with 200 queries.
+Average Recall: 0.92295
+Initial average recall with ef=100: 0.92295
+Average Recall: 0.95695
+Initial average recall with ef=150: 0.95695
+Weighted average ef: 170.715
+Training rv-bucket 8 [88.267, 90.1986) with 200 queries.
+Average Recall: 0.9238
+Initial average recall with ef=100: 0.9238
+Average Recall: 0.95545
+Initial average recall with ef=150: 0.95545
+Weighted average ef: 177.77
+Training rv-bucket 9 [90.1986, inf) with 200 queries.
+Average Recall: 0.94555
+Initial average recall with ef=100: 0.94555
+Average Recall: 0.97035
+Initial average recall with ef=150: 0.97035
+Weighted average ef: 150.205
+  WAE (weighted avg ef): 242
+  avg_recall=0.976189  p5_recall=0.92  p1_recall=0.88  median_time=8449 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=24 avg_recall=0.976189 p5_recall=0.92 p1_recall=0.88 median_time_ms=8449 wae=242
+
+--- gamma=32 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [33.2789, 76.4387) with 200 queries.
+Average Recall: 0.78825
+Initial average recall with ef=100: 0.78825
+Average Recall: 0.8533
+Initial average recall with ef=150: 0.8533
+Weighted average ef: 422.105
+Training rv-bucket 1 [76.4387, 80.5491) with 200 queries.
+Average Recall: 0.8623
+Initial average recall with ef=100: 0.8623
+Average Recall: 0.9112
+Initial average recall with ef=150: 0.9112
+Recall diff is too small, break.
+Weighted average ef: 279.265
+Training rv-bucket 2 [80.5491, 82.9783) with 200 queries.
+Average Recall: 0.8732
+Initial average recall with ef=100: 0.8732
+Average Recall: 0.91995
+Initial average recall with ef=150: 0.91995
+Recall diff is too small, break.
+Weighted average ef: 262.35
+Training rv-bucket 3 [82.9783, 84.6738) with 200 queries.
+Average Recall: 0.8924
+Initial average recall with ef=100: 0.8924
+Average Recall: 0.93235
+Initial average recall with ef=150: 0.93235
+Weighted average ef: 218.645
+Training rv-bucket 4 [84.6738, 86.1426) with 200 queries.
+Average Recall: 0.8854
+Initial average recall with ef=100: 0.8854
+Average Recall: 0.9252
+Initial average recall with ef=150: 0.9252
+Weighted average ef: 248.845
+Training rv-bucket 5 [86.1426, 87.6493) with 200 queries.
+Average Recall: 0.908
+Initial average recall with ef=100: 0.908
+Average Recall: 0.9424
+Initial average recall with ef=150: 0.9424
+Weighted average ef: 206.13
+Training rv-bucket 6 [87.6493, 89.0846) with 200 queries.
+Average Recall: 0.90705
+Initial average recall with ef=100: 0.90705
+Average Recall: 0.94195
+Initial average recall with ef=150: 0.94195
+Weighted average ef: 212.705
+Training rv-bucket 7 [89.0846, 90.8271) with 200 queries.
+Average Recall: 0.9109
+Initial average recall with ef=100: 0.9109
+Average Recall: 0.94695
+Initial average recall with ef=150: 0.94695
+Weighted average ef: 187.245
+Training rv-bucket 8 [90.8271, 92.7216) with 200 queries.
+Average Recall: 0.90775
+Initial average recall with ef=100: 0.90775
+Average Recall: 0.94275
+Initial average recall with ef=150: 0.94275
+Weighted average ef: 209.675
+Training rv-bucket 9 [92.7216, inf) with 200 queries.
+Average Recall: 0.92575
+Initial average recall with ef=100: 0.92575
+Average Recall: 0.95865
+Initial average recall with ef=150: 0.95865
+Recall diff is too small, break.
+Weighted average ef: 165.86
+  WAE (weighted avg ef): 241
+  avg_recall=0.976024  p5_recall=0.92  p1_recall=0.87  median_time=8555 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=32 avg_recall=0.976024 p5_recall=0.92 p1_recall=0.87 median_time_ms=8555 wae=241
+
+--- gamma=48 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [23.57, 78.0987) with 200 queries.
+Average Recall: 0.82505
+Initial average recall with ef=100: 0.82505
+Average Recall: 0.88135
+Initial average recall with ef=150: 0.88135
+Weighted average ef: 342.53
+Training rv-bucket 1 [78.0987, 81.6035) with 200 queries.
+Average Recall: 0.87885
+Initial average recall with ef=100: 0.87885
+Average Recall: 0.92235
+Initial average recall with ef=150: 0.92235
+Weighted average ef: 253.535
+Training rv-bucket 2 [81.6035, 84.1643) with 200 queries.
+Average Recall: 0.88965
+Initial average recall with ef=100: 0.88965
+Average Recall: 0.93035
+Initial average recall with ef=150: 0.93035
+Recall diff is too small, break.
+Weighted average ef: 221.55
+Training rv-bucket 3 [84.1643, 86.5914) with 200 queries.
+Average Recall: 0.89
+Initial average recall with ef=100: 0.89
+Average Recall: 0.9281
+Initial average recall with ef=150: 0.9281
+Weighted average ef: 243.08
+Training rv-bucket 4 [86.5914, 88.7116) with 200 queries.
+Average Recall: 0.8906
+Initial average recall with ef=100: 0.8906
+Average Recall: 0.93185
+Initial average recall with ef=150: 0.93185
+Recall diff is too small, break.
+Weighted average ef: 241.95
+Training rv-bucket 5 [88.7116, 90.6958) with 200 queries.
+Average Recall: 0.890501
+Initial average recall with ef=100: 0.8905
+Average Recall: 0.93085
+Initial average recall with ef=150: 0.93085
+Weighted average ef: 223.495
+Training rv-bucket 6 [90.6958, 92.4698) with 200 queries.
+Average Recall: 0.89995
+Initial average recall with ef=100: 0.89995
+Average Recall: 0.9365
+Initial average recall with ef=150: 0.9365
+Weighted average ef: 221.95
+Training rv-bucket 7 [92.4698, 94.2805) with 200 queries.
+Average Recall: 0.89245
+Initial average recall with ef=100: 0.89245
+Average Recall: 0.9334
+Initial average recall with ef=150: 0.9334
+Weighted average ef: 227.13
+Training rv-bucket 8 [94.2805, 96.1261) with 200 queries.
+Average Recall: 0.895
+Initial average recall with ef=100: 0.895
+Average Recall: 0.9337
+Initial average recall with ef=150: 0.9337
+Weighted average ef: 227.1
+Training rv-bucket 9 [96.1261, inf) with 200 queries.
+Average Recall: 0.90895
+Initial average recall with ef=100: 0.90895
+Average Recall: 0.94625
+Initial average recall with ef=150: 0.94625
+Weighted average ef: 195.94
+  WAE (weighted avg ef): 239
+  avg_recall=0.973476  p5_recall=0.91  p1_recall=0.86  median_time=8202 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=48 avg_recall=0.973476 p5_recall=0.91 p1_recall=0.86 median_time_ms=8202 wae=239
+
+--- gamma=64 ---
+Average Recall: 0.886096
+Initial average recall with ef=100: 0.8861
+Average Recall: 0.927466
+Initial average recall with ef=150: 0.92747
+Weighted average ef: 230.583
+Training rv-bucket 0 [16.7488, 76.5818) with 200 queries.
+Average Recall: 0.8418
+Initial average recall with ef=100: 0.8418
+Average Recall: 0.89365
+Initial average recall with ef=150: 0.89365
+Weighted average ef: 313.67
+Training rv-bucket 1 [76.5818, 81.1184) with 200 queries.
+Average Recall: 0.8893
+Initial average recall with ef=100: 0.8893
+Average Recall: 0.9301
+Initial average recall with ef=150: 0.9301
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 231.295
+Training rv-bucket 2 [81.1184, 84.5872) with 200 queries.
+Average Recall: 0.8888
+Initial average recall with ef=100: 0.8888
+Average Recall: 0.93
+Initial average recall with ef=150: 0.93
+Recall diff is too small, break.
+Weighted average ef: 219.79
+Training rv-bucket 3 [84.5872, 88.0276) with 200 queries.
+Average Recall: 0.8867
+Initial average recall with ef=100: 0.8867
+Average Recall: 0.92595
+Initial average recall with ef=150: 0.92595
+Recall diff is too small, break.
+Weighted average ef: 235.795
+Training rv-bucket 4 [88.0276, 90.7176) with 200 queries.
+Average Recall: 0.8963
+Initial average recall with ef=100: 0.8963
+Average Recall: 0.93475
+Initial average recall with ef=150: 0.93475
+Recall diff is too small, break.
+Weighted average ef: 228.585
+Training rv-bucket 5 [90.7176, 92.8912) with 200 queries.
+Average Recall: 0.8793
+Initial average recall with ef=100: 0.8793
+Average Recall: 0.92245
+Initial average recall with ef=150: 0.92245
+Recall diff is too small, break.
+Weighted average ef: 260.85
+Training rv-bucket 6 [92.8912, 94.7312) with 200 queries.
+Average Recall: 0.90115
+Initial average recall with ef=100: 0.90115
+Average Recall: 0.93815
+Initial average recall with ef=150: 0.93815
+Weighted average ef: 201.525
+Training rv-bucket 7 [94.7312, 96.3633) with 200 queries.
+Average Recall: 0.89115
+Initial average recall with ef=100: 0.89115
+Average Recall: 0.93155
+Initial average recall with ef=150: 0.93155
+Weighted average ef: 245.21
+Training rv-bucket 8 [96.3633, 97.8844) with 200 queries.
+Average Recall: 0.8872
+Initial average recall with ef=100: 0.8872
+Average Recall: 0.9297
+Initial average recall with ef=150: 0.9297
+Weighted average ef: 236.58
+Training rv-bucket 9 [97.8844, inf) with 200 queries.
+Average Recall: 0.8993
+Initial average recall with ef=100: 0.8993
+Average Recall: 0.9384
+Initial average recall with ef=150: 0.9384
+Weighted average ef: 216.65
+  WAE (weighted avg ef): 238
+  avg_recall=0.973705  p5_recall=0.91  p1_recall=0.86  median_time=8118 ms
+[GAMMA_SWEEP] dataset=deep-image-96-angular gamma=64 avg_recall=0.973705 p5_recall=0.91 p1_recall=0.86 median_time_ms=8118 wae=238
+
+======================================================
+Dataset: glove-100-angular
+  k=100  alpha=0.25  expected_recall=0.95  ef_upper_bound=4000
+======================================================
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+  Samplings loaded: 2000 queries
+
+--- gamma=1 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [13.176, 20.7952) with 200 queries.
+Average Recall: 0.46285
+Initial average recall with ef=100: 0.46285
+Average Recall: 0.5239
+Initial average recall with ef=150: 0.5239
+Recall diff is too small, break.
+Weighted average ef: 3384.91
+Training rv-bucket 1 [20.7952, 24.0601) with 200 queries.
+Average Recall: 0.5079
+Initial average recall with ef=100: 0.5079
+Average Recall: 0.5666
+Initial average recall with ef=150: 0.5666
+Weighted average ef: 3028.32
+Training rv-bucket 2 [24.0601, 27.7361) with 200 queries.
+Average Recall: 0.582714
+Initial average recall with ef=100: 0.5798
+Average Recall: 0.64196
+Initial average recall with ef=150: 0.63875
+Weighted average ef: 2521.7
+Training rv-bucket 3 [27.7361, 32.4584) with 200 queries.
+Average Recall: 0.67695
+Initial average recall with ef=100: 0.67695
+Average Recall: 0.7341
+Initial average recall with ef=150: 0.7341
+Weighted average ef: 1515.03
+Training rv-bucket 4 [32.4584, 36.9534) with 200 queries.
+Average Recall: 0.73965
+Initial average recall with ef=100: 0.73965
+Average Recall: 0.79425
+Initial average recall with ef=150: 0.79425
+Weighted average ef: 1204.36
+Training rv-bucket 5 [36.9534, 43.0571) with 200 queries.
+Average Recall: 0.7722
+Initial average recall with ef=100: 0.7722
+Average Recall: 0.8291
+Initial average recall with ef=150: 0.8291
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 971.61
+Training rv-bucket 6 [43.0571, 50.0571) with 200 queries.
+Average Recall: 0.873
+Initial average recall with ef=100: 0.873
+Average Recall: 0.91235
+Initial average recall with ef=150: 0.91235
+Weighted average ef: 365.4
+Training rv-bucket 7 [50.0571, 58.0419) with 200 queries.
+Average Recall: 0.9151
+Initial average recall with ef=100: 0.9151
+Average Recall: 0.94185
+Initial average recall with ef=150: 0.94185
+Recall diff is too small, break.
+Weighted average ef: 308.195
+Training rv-bucket 8 [58.0419, 65.9592) with 200 queries.
+Average Recall: 0.953901
+Initial average recall with ef=100: 0.9539
+Average Recall: 0.9726
+Initial average recall with ef=150: 0.9726
+Weighted average ef: 160.93
+Training rv-bucket 9 [65.9592, inf) with 200 queries.
+Average Recall: 0.980551
+Initial average recall with ef=100: 0.98055
+Average Recall: 0.99
+Initial average recall with ef=150: 0.99
+Weighted average ef: 121.02
+  WAE (weighted avg ef): 1358
+  avg_recall=0.973817  p5_recall=0.89  p1_recall=0.84  median_time=41014 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=1 avg_recall=0.973817 p5_recall=0.89 p1_recall=0.84 median_time_ms=41014 wae=1358
+
+--- gamma=2 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [14.8809, 25.0437) with 200 queries.
+Average Recall: 0.46915
+Initial average recall with ef=100: 0.46915
+Average Recall: 0.52845
+Initial average recall with ef=150: 0.52845
+Recall diff is too small, break.
+Weighted average ef: 3349.98
+Training rv-bucket 1 [25.0437, 28.6302) with 200 queries.
+Average Recall: 0.5131
+Initial average recall with ef=100: 0.5131
+Average Recall: 0.57175
+Initial average recall with ef=150: 0.57175
+Recall diff is too small, break.
+Weighted average ef: 3039.46
+Training rv-bucket 2 [28.6302, 32.6061) with 200 queries.
+Average Recall: 0.576583
+Initial average recall with ef=100: 0.5737
+Average Recall: 0.637186
+Initial average recall with ef=150: 0.634
+Recall diff is too small, break.
+Weighted average ef: 2403.98
+Training rv-bucket 3 [32.6061, 37.4759) with 200 queries.
+Average Recall: 0.67305
+Initial average recall with ef=100: 0.67305
+Average Recall: 0.73105
+Initial average recall with ef=150: 0.73105
+Weighted average ef: 1639.79
+Training rv-bucket 4 [37.4759, 42.0204) with 200 queries.
+Average Recall: 0.73615
+Initial average recall with ef=100: 0.73615
+Average Recall: 0.79555
+Initial average recall with ef=150: 0.79555
+Weighted average ef: 1211.98
+Training rv-bucket 5 [42.0204, 48.1057) with 200 queries.
+Average Recall: 0.7779
+Initial average recall with ef=100: 0.7779
+Average Recall: 0.82885
+Initial average recall with ef=150: 0.82885
+Recall diff is too small, break.
+Weighted average ef: 998.695
+Training rv-bucket 6 [48.1057, 55.0199) with 200 queries.
+Average Recall: 0.8732
+Initial average recall with ef=100: 0.8732
+Average Recall: 0.911901
+Initial average recall with ef=150: 0.9119
+Weighted average ef: 362.635
+Training rv-bucket 7 [55.0199, 62.5266) with 200 queries.
+Average Recall: 0.9118
+Initial average recall with ef=100: 0.9118
+Average Recall: 0.93955
+Initial average recall with ef=150: 0.93955
+Recall diff is too small, break.
+Weighted average ef: 310.315
+Training rv-bucket 8 [62.5266, 69.6286) with 200 queries.
+Average Recall: 0.9551
+Initial average recall with ef=100: 0.9551
+Average Recall: 0.97375
+Initial average recall with ef=150: 0.97375
+Weighted average ef: 158.465
+Training rv-bucket 9 [69.6286, inf) with 200 queries.
+Average Recall: 0.978751
+Initial average recall with ef=100: 0.97875
+Average Recall: 0.98865
+Initial average recall with ef=150: 0.98865
+Weighted average ef: 138.07
+  WAE (weighted avg ef): 1361
+  avg_recall=0.974617  p5_recall=0.9  p1_recall=0.85  median_time=41793 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=2 avg_recall=0.974617 p5_recall=0.9 p1_recall=0.85 median_time_ms=41793 wae=1361
+
+--- gamma=4 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [19.2607, 32.6108) with 200 queries.
+Average Recall: 0.48605
+Initial average recall with ef=100: 0.48605
+Average Recall: 0.54215
+Initial average recall with ef=150: 0.54215
+Weighted average ef: 3323.17
+Training rv-bucket 1 [32.6108, 36.9703) with 200 queries.
+Average Recall: 0.5083
+Initial average recall with ef=100: 0.5083
+Average Recall: 0.569
+Initial average recall with ef=150: 0.569
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 3039.57
+Training rv-bucket 2 [36.9703, 41.542) with 200 queries.
+Average Recall: 0.574573
+Initial average recall with ef=100: 0.5717
+Average Recall: 0.634824
+Initial average recall with ef=150: 0.63165
+Weighted average ef: 2402.17
+Training rv-bucket 3 [41.542, 46.8902) with 200 queries.
+Average Recall: 0.6713
+Initial average recall with ef=100: 0.6713
+Average Recall: 0.73425
+Initial average recall with ef=150: 0.73425
+Weighted average ef: 1698.04
+Training rv-bucket 4 [46.8902, 51.4653) with 200 queries.
+Average Recall: 0.7299
+Initial average recall with ef=100: 0.7299
+Average Recall: 0.786
+Initial average recall with ef=150: 0.786
+Recall diff is too small, break.
+Weighted average ef: 1188.2
+Training rv-bucket 5 [51.4653, 56.8692) with 200 queries.
+Average Recall: 0.7936
+Initial average recall with ef=100: 0.7936
+Average Recall: 0.84275
+Initial average recall with ef=150: 0.84275
+Weighted average ef: 933.275
+Training rv-bucket 6 [56.8692, 63.4098) with 200 queries.
+Average Recall: 0.8657
+Initial average recall with ef=100: 0.8657
+Average Recall: 0.90435
+Initial average recall with ef=150: 0.90435
+Recall diff is too small, break.
+Weighted average ef: 437.215
+Training rv-bucket 7 [63.4098, 68.963) with 200 queries.
+Average Recall: 0.9078
+Initial average recall with ef=100: 0.9078
+Average Recall: 0.93585
+Initial average recall with ef=150: 0.93585
+Weighted average ef: 323.67
+Training rv-bucket 8 [68.963, 75.3634) with 200 queries.
+Average Recall: 0.9524
+Initial average recall with ef=100: 0.9524
+Average Recall: 0.972
+Initial average recall with ef=150: 0.972
+Weighted average ef: 176.335
+Training rv-bucket 9 [75.3634, inf) with 200 queries.
+Average Recall: 0.97515
+Initial average recall with ef=100: 0.97515
+Average Recall: 0.9855
+Initial average recall with ef=150: 0.9855
+Weighted average ef: 173.32
+  WAE (weighted avg ef): 1369
+  avg_recall=0.975018  p5_recall=0.9  p1_recall=0.85  median_time=42066 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=4 avg_recall=0.975018 p5_recall=0.9 p1_recall=0.85 median_time_ms=42066 wae=1369
+
+--- gamma=8 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [17.9335, 42.2648) with 200 queries.
+Average Recall: 0.4994
+Initial average recall with ef=100: 0.4994
+Average Recall: 0.5546
+Initial average recall with ef=150: 0.5546
+Weighted average ef: 3286.38
+Training rv-bucket 1 [42.2648, 49.1718) with 200 queries.
+Average Recall: 0.512914
+Initial average recall with ef=100: 0.51035
+Average Recall: 0.572613
+Initial average recall with ef=150: 0.56975
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 3122.72
+Training rv-bucket 2 [49.1718, 54.7669) with 200 queries.
+Average Recall: 0.57735
+Initial average recall with ef=100: 0.57735
+Average Recall: 0.64165
+Initial average recall with ef=150: 0.64165
+Recall diff is too small, break.
+Weighted average ef: 2404.55
+Training rv-bucket 3 [54.7669, 59.5794) with 200 queries.
+Average Recall: 0.67505
+Initial average recall with ef=100: 0.67505
+Average Recall: 0.73305
+Initial average recall with ef=150: 0.73305
+Recall diff is too small, break.
+Weighted average ef: 1562.86
+Training rv-bucket 4 [59.5794, 63.9229) with 200 queries.
+Average Recall: 0.73775
+Initial average recall with ef=100: 0.73775
+Average Recall: 0.79415
+Initial average recall with ef=150: 0.79415
+Recall diff is too small, break.
+Weighted average ef: 1202.39
+Training rv-bucket 5 [63.9229, 68.4493) with 200 queries.
+Average Recall: 0.7874
+Initial average recall with ef=100: 0.7874
+Average Recall: 0.836
+Initial average recall with ef=150: 0.836
+Weighted average ef: 929.07
+Training rv-bucket 6 [68.4493, 73.411) with 200 queries.
+Average Recall: 0.86325
+Initial average recall with ef=100: 0.86325
+Average Recall: 0.89925
+Initial average recall with ef=150: 0.89925
+Weighted average ef: 555.36
+Training rv-bucket 7 [73.411, 77.3274) with 200 queries.
+Average Recall: 0.90155
+Initial average recall with ef=100: 0.90155
+Average Recall: 0.9305
+Initial average recall with ef=150: 0.9305
+Recall diff is too small, break.
+Weighted average ef: 325.035
+Training rv-bucket 8 [77.3274, 81.4654) with 200 queries.
+Average Recall: 0.9376
+Initial average recall with ef=100: 0.9376
+Average Recall: 0.96125
+Initial average recall with ef=150: 0.96125
+Weighted average ef: 235.435
+Training rv-bucket 9 [81.4654, inf) with 200 queries.
+Average Recall: 0.9722
+Initial average recall with ef=100: 0.9722
+Average Recall: 0.9833
+Initial average recall with ef=150: 0.9833
+Recall diff is too small, break.
+Weighted average ef: 160.065
+  WAE (weighted avg ef): 1378
+  avg_recall=0.975578  p5_recall=0.9  p1_recall=0.85  median_time=43092 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=8 avg_recall=0.975578 p5_recall=0.9 p1_recall=0.85 median_time_ms=43092 wae=1378
+
+--- gamma=12 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [16.0745, 47.3517) with 200 queries.
+Average Recall: 0.49905
+Initial average recall with ef=100: 0.49905
+Average Recall: 0.55385
+Initial average recall with ef=150: 0.55385
+Weighted average ef: 3378.35
+Training rv-bucket 1 [47.3517, 55.9934) with 200 queries.
+Average Recall: 0.52201
+Initial average recall with ef=100: 0.5194
+Average Recall: 0.581105
+Initial average recall with ef=150: 0.5782
+Recall diff is too small, break.
+Weighted average ef: 2982.89
+Training rv-bucket 2 [55.9934, 62.4932) with 200 queries.
+Average Recall: 0.60015
+Initial average recall with ef=100: 0.60015
+Average Recall: 0.66355
+Initial average recall with ef=150: 0.66355
+Weighted average ef: 2198.69
+Training rv-bucket 3 [62.4932, 67.05) with 200 queries.
+Average Recall: 0.67405
+Initial average recall with ef=100: 0.67405
+Average Recall: 0.7321
+Initial average recall with ef=150: 0.7321
+Recall diff is too small, break.
+Weighted average ef: 1635.13
+Training rv-bucket 4 [67.05, 71.3741) with 200 queries.
+Average Recall: 0.7417
+Initial average recall with ef=100: 0.7417
+Average Recall: 0.79415
+Initial average recall with ef=150: 0.79415
+Weighted average ef: 1245.28
+Training rv-bucket 5 [71.3741, 74.993) with 200 queries.
+Average Recall: 0.79155
+Initial average recall with ef=100: 0.79155
+Average Recall: 0.84115
+Initial average recall with ef=150: 0.84115
+Weighted average ef: 830.01
+Training rv-bucket 6 [74.993, 78.5331) with 200 queries.
+Average Recall: 0.85785
+Initial average recall with ef=100: 0.85785
+Average Recall: 0.89335
+Initial average recall with ef=150: 0.89335
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 607.86
+Training rv-bucket 7 [78.5331, 81.3854) with 200 queries.
+Average Recall: 0.88225
+Initial average recall with ef=100: 0.88225
+Average Recall: 0.91365
+Initial average recall with ef=150: 0.91365
+Recall diff is too small, break.
+Weighted average ef: 479.92
+Training rv-bucket 8 [81.3854, 84.3554) with 200 queries.
+Average Recall: 0.93185
+Initial average recall with ef=100: 0.93185
+Average Recall: 0.9551
+Initial average recall with ef=150: 0.9551
+Weighted average ef: 245.165
+Training rv-bucket 9 [84.3554, inf) with 200 queries.
+Average Recall: 0.96405
+Initial average recall with ef=100: 0.96405
+Average Recall: 0.9784
+Initial average recall with ef=150: 0.9784
+Weighted average ef: 154.67
+  WAE (weighted avg ef): 1375
+  avg_recall=0.975467  p5_recall=0.9  p1_recall=0.85  median_time=43009 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=12 avg_recall=0.975467 p5_recall=0.9 p1_recall=0.85 median_time_ms=43009 wae=1375
+
+--- gamma=16 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [14.7163, 50.8823) with 200 queries.
+Average Recall: 0.498895
+Initial average recall with ef=100: 0.4964
+Average Recall: 0.554271
+Initial average recall with ef=150: 0.5515
+Weighted average ef: 3385.38
+Training rv-bucket 1 [50.8823, 61.2628) with 200 queries.
+Average Recall: 0.53345
+Initial average recall with ef=100: 0.53345
+Average Recall: 0.5951
+Initial average recall with ef=150: 0.5951
+Weighted average ef: 2826.97
+Training rv-bucket 2 [61.2628, 67.8174) with 200 queries.
+Average Recall: 0.61525
+Initial average recall with ef=100: 0.61525
+Average Recall: 0.6754
+Initial average recall with ef=150: 0.6754
+Weighted average ef: 2143.19
+Training rv-bucket 3 [67.8174, 72.2333) with 200 queries.
+Average Recall: 0.69535
+Initial average recall with ef=100: 0.69535
+Average Recall: 0.7507
+Initial average recall with ef=150: 0.7507
+Weighted average ef: 1515.11
+Training rv-bucket 4 [72.2333, 75.8934) with 200 queries.
+Average Recall: 0.73695
+Initial average recall with ef=100: 0.73695
+Average Recall: 0.7868
+Initial average recall with ef=150: 0.7868
+Weighted average ef: 1314.52
+Training rv-bucket 5 [75.8934, 79.1776) with 200 queries.
+Average Recall: 0.80595
+Initial average recall with ef=100: 0.80595
+Average Recall: 0.8497
+Initial average recall with ef=150: 0.8497
+Weighted average ef: 830.49
+Training rv-bucket 6 [79.1776, 81.8242) with 200 queries.
+Average Recall: 0.8348
+Initial average recall with ef=100: 0.8348
+Average Recall: 0.87515
+Initial average recall with ef=150: 0.87515
+Weighted average ef: 700.75
+Training rv-bucket 7 [81.8242, 83.9321) with 200 queries.
+Average Recall: 0.8828
+Initial average recall with ef=100: 0.8828
+Average Recall: 0.9158
+Initial average recall with ef=150: 0.9158
+Weighted average ef: 482.025
+Training rv-bucket 8 [83.9321, 86.2486) with 200 queries.
+Average Recall: 0.91035
+Initial average recall with ef=100: 0.91035
+Average Recall: 0.9359
+Initial average recall with ef=150: 0.9359
+Weighted average ef: 367.77
+Training rv-bucket 9 [86.2486, inf) with 200 queries.
+Average Recall: 0.9506
+Initial average recall with ef=100: 0.9506
+Average Recall: 0.96745
+Initial average recall with ef=150: 0.96745
+Recall diff is too small, break.
+Weighted average ef: 187.515
+  WAE (weighted avg ef): 1375
+  avg_recall=0.975665  p5_recall=0.9  p1_recall=0.85  median_time=42975 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=16 avg_recall=0.975665 p5_recall=0.9 p1_recall=0.85 median_time_ms=42975 wae=1375
+
+--- gamma=24 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [11.852, 55.4696) with 200 queries.
+Average Recall: 0.498291
+Initial average recall with ef=100: 0.4958
+Average Recall: 0.553869
+Initial average recall with ef=150: 0.5511
+Recall diff is too small, break.
+Weighted average ef: 3333.54
+Training rv-bucket 1 [55.4696, 67.6684) with 200 queries.
+Average Recall: 0.5542
+Initial average recall with ef=100: 0.5542
+Average Recall: 0.61625
+Initial average recall with ef=150: 0.61625
+Weighted average ef: 2626.76
+Training rv-bucket 2 [67.6684, 74.692) with 200 queries.
+Average Recall: 0.6548
+Initial average recall with ef=100: 0.6548
+Average Recall: 0.7115
+Initial average recall with ef=150: 0.7115
+Weighted average ef: 1853.15
+Training rv-bucket 3 [74.692, 78.4874) with 200 queries.
+Average Recall: 0.7134
+Initial average recall with ef=100: 0.7134
+Average Recall: 0.76085
+Initial average recall with ef=150: 0.76085
+Recall diff is too small, break.
+Weighted average ef: 1518.46
+Training rv-bucket 4 [78.4874, 81.2263) with 200 queries.
+Average Recall: 0.773
+Initial average recall with ef=100: 0.773
+Average Recall: 0.8193
+Initial average recall with ef=150: 0.8193
+Weighted average ef: 1112.06
+Training rv-bucket 5 [81.2263, 83.6554) with 200 queries.
+Average Recall: 0.7891
+Initial average recall with ef=100: 0.7891
+Average Recall: 0.83005
+Initial average recall with ef=150: 0.83005
+Weighted average ef: 1071.85
+Training rv-bucket 6 [83.6554, 85.4142) with 200 queries.
+Average Recall: 0.855751
+Initial average recall with ef=100: 0.85575
+Average Recall: 0.8924
+Initial average recall with ef=150: 0.8924
+Recall diff is too small, break.
+Weighted average ef: 553.27
+Training rv-bucket 7 [85.4142, 87.1682) with 200 queries.
+Average Recall: 0.8528
+Initial average recall with ef=100: 0.8528
+Average Recall: 0.8906
+Initial average recall with ef=150: 0.8906
+Weighted average ef: 658.09
+Training rv-bucket 8 [87.1682, 89.2411) with 200 queries.
+Average Recall: 0.87225
+Initial average recall with ef=100: 0.87225
+Average Recall: 0.903751
+Initial average recall with ef=150: 0.90375
+Weighted average ef: 551.34
+Training rv-bucket 9 [89.2411, inf) with 200 queries.
+Average Recall: 0.9008
+Initial average recall with ef=100: 0.9008
+Average Recall: 0.9277
+Initial average recall with ef=150: 0.9277
+Weighted average ef: 379.77
+  WAE (weighted avg ef): 1365
+  avg_recall=0.975012  p5_recall=0.9  p1_recall=0.85  median_time=42192 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=24 avg_recall=0.975012 p5_recall=0.9 p1_recall=0.85 median_time_ms=42192 wae=1365
+
+--- gamma=32 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [7.89434, 58.0409) with 200 queries.
+Average Recall: 0.498593
+Initial average recall with ef=100: 0.4961
+Average Recall: 0.552864
+Initial average recall with ef=150: 0.5501
+Recall diff is too small, break.
+Weighted average ef: 3359.36
+Training rv-bucket 1 [58.0409, 71.7435) with 200 queries.
+Average Recall: 0.57915
+Initial average recall with ef=100: 0.57915
+Average Recall: 0.64315
+Initial average recall with ef=150: 0.64315
+Weighted average ef: 2417.29
+Training rv-bucket 2 [71.7435, 78.1856) with 200 queries.
+Average Recall: 0.69025
+Initial average recall with ef=100: 0.69025
+Average Recall: 0.7418
+Initial average recall with ef=150: 0.7418
+Weighted average ef: 1592.88
+Training rv-bucket 3 [78.1856, 81.523) with 200 queries.
+Average Recall: 0.76255
+Initial average recall with ef=100: 0.76255
+Average Recall: 0.80475
+Initial average recall with ef=150: 0.80475
+Weighted average ef: 1262.4
+Training rv-bucket 4 [81.523, 83.8364) with 200 queries.
+Average Recall: 0.7709
+Initial average recall with ef=100: 0.7709
+Average Recall: 0.8121
+Initial average recall with ef=150: 0.8121
+Weighted average ef: 1271.65
+Training rv-bucket 5 [83.8364, 85.8585) with 200 queries.
+Average Recall: 0.82235
+Initial average recall with ef=100: 0.82235
+Average Recall: 0.86025
+Initial average recall with ef=150: 0.86025
+Weighted average ef: 809.365
+Training rv-bucket 6 [85.8585, 87.7562) with 200 queries.
+Average Recall: 0.80855
+Initial average recall with ef=100: 0.80855
+Average Recall: 0.84925
+Initial average recall with ef=150: 0.84925
+Recall diff is too small, break.
+Weighted average ef: 935.96
+Training rv-bucket 7 [87.7562, 89.5159) with 200 queries.
+Average Recall: 0.84915
+Initial average recall with ef=100: 0.84915
+Average Recall: 0.8874
+Initial average recall with ef=150: 0.8874
+Weighted average ef: 635.405
+Training rv-bucket 8 [89.5159, 91.8133) with 200 queries.
+Average Recall: 0.83315
+Initial average recall with ef=100: 0.83315
+Average Recall: 0.8706
+Initial average recall with ef=150: 0.8706
+Weighted average ef: 718.315
+Training rv-bucket 9 [91.8133, inf) with 200 queries.
+Average Recall: 0.84975
+Initial average recall with ef=100: 0.84975
+Average Recall: 0.8841
+Initial average recall with ef=150: 0.8841
+Weighted average ef: 662.84
+  WAE (weighted avg ef): 1366
+  avg_recall=0.974855  p5_recall=0.9  p1_recall=0.85  median_time=41946 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=32 avg_recall=0.974855 p5_recall=0.9 p1_recall=0.85 median_time_ms=41946 wae=1366
+
+--- gamma=48 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [3.53197, 61.327) with 200 queries.
+Average Recall: 0.496834
+Initial average recall with ef=100: 0.49435
+Average Recall: 0.550955
+Initial average recall with ef=150: 0.5482
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 3402.3
+Training rv-bucket 1 [61.327, 75.6164) with 200 queries.
+Average Recall: 0.61685
+Initial average recall with ef=100: 0.61685
+Average Recall: 0.67725
+Initial average recall with ef=150: 0.67725
+Weighted average ef: 2218.93
+Training rv-bucket 2 [75.6164, 80.6634) with 200 queries.
+Average Recall: 0.7449
+Initial average recall with ef=100: 0.7449
+Average Recall: 0.78805
+Initial average recall with ef=150: 0.78805
+Weighted average ef: 1252.31
+Training rv-bucket 3 [80.6634, 83.5024) with 200 queries.
+Average Recall: 0.7973
+Initial average recall with ef=100: 0.7973
+Average Recall: 0.8365
+Initial average recall with ef=150: 0.8365
+Weighted average ef: 1058.64
+Training rv-bucket 4 [83.5024, 86.0337) with 200 queries.
+Average Recall: 0.80605
+Initial average recall with ef=100: 0.80605
+Average Recall: 0.8474
+Initial average recall with ef=150: 0.8474
+Weighted average ef: 871.665
+Training rv-bucket 5 [86.0337, 88.7661) with 200 queries.
+Average Recall: 0.78885
+Initial average recall with ef=100: 0.78885
+Average Recall: 0.82915
+Initial average recall with ef=150: 0.82915
+Recall diff is too small, break.
+Weighted average ef: 1128.95
+Training rv-bucket 6 [88.7661, 91.1229) with 200 queries.
+Average Recall: 0.8257
+Initial average recall with ef=100: 0.8257
+Average Recall: 0.86165
+Initial average recall with ef=150: 0.86165
+Recall diff is too small, break.
+Weighted average ef: 898.74
+Training rv-bucket 7 [91.1229, 93.3668) with 200 queries.
+Average Recall: 0.7935
+Initial average recall with ef=100: 0.7935
+Average Recall: 0.836
+Initial average recall with ef=150: 0.836
+Weighted average ef: 952.82
+Training rv-bucket 8 [93.3668, 95.409) with 200 queries.
+Average Recall: 0.79885
+Initial average recall with ef=100: 0.79885
+Average Recall: 0.84165
+Initial average recall with ef=150: 0.84165
+Weighted average ef: 898.095
+Training rv-bucket 9 [95.409, inf) with 200 queries.
+Average Recall: 0.79555
+Initial average recall with ef=100: 0.79555
+Average Recall: 0.83765
+Initial average recall with ef=150: 0.83765
+Weighted average ef: 907.54
+  WAE (weighted avg ef): 1359
+  avg_recall=0.975018  p5_recall=0.9  p1_recall=0.85  median_time=42674 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=48 avg_recall=0.975018 p5_recall=0.9 p1_recall=0.85 median_time_ms=42674 wae=1359
+
+--- gamma=64 ---
+Average Recall: 0.746562
+Initial average recall with ef=100: 0.74619
+Average Recall: 0.790744
+Initial average recall with ef=150: 0.79035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 969.65
+Training rv-bucket 0 [1.60831, 63.2881) with 200 queries.
+Average Recall: 0.498693
+Initial average recall with ef=100: 0.4962
+Average Recall: 0.552613
+Initial average recall with ef=150: 0.54985
+Weighted average ef: 3384.2
+Training rv-bucket 1 [63.2881, 75.5103) with 200 queries.
+Average Recall: 0.6575
+Initial average recall with ef=100: 0.6575
+Average Recall: 0.7149
+Initial average recall with ef=150: 0.7149
+Weighted average ef: 1932.67
+Training rv-bucket 2 [75.5103, 80.336) with 200 queries.
+Average Recall: 0.77795
+Initial average recall with ef=100: 0.77795
+Average Recall: 0.81735
+Initial average recall with ef=150: 0.81735
+Weighted average ef: 1150.94
+Training rv-bucket 3 [80.336, 84.7557) with 200 queries.
+Average Recall: 0.77675
+Initial average recall with ef=100: 0.77675
+Average Recall: 0.8165
+Initial average recall with ef=150: 0.8165
+Weighted average ef: 1186.34
+Training rv-bucket 4 [84.7557, 87.8062) with 200 queries.
+Average Recall: 0.79335
+Initial average recall with ef=100: 0.79335
+Average Recall: 0.8359
+Initial average recall with ef=150: 0.8359
+Weighted average ef: 1040.7
+Training rv-bucket 5 [87.8062, 90.9418) with 200 queries.
+Average Recall: 0.80655
+Initial average recall with ef=100: 0.80655
+Average Recall: 0.8466
+Initial average recall with ef=150: 0.8466
+Weighted average ef: 923.185
+Training rv-bucket 6 [90.9418, 93.3076) with 200 queries.
+Average Recall: 0.80805
+Initial average recall with ef=100: 0.80805
+Average Recall: 0.84635
+Initial average recall with ef=150: 0.84635
+Weighted average ef: 1003.66
+Training rv-bucket 7 [93.3076, 95.7536) with 200 queries.
+Average Recall: 0.78115
+Initial average recall with ef=100: 0.78115
+Average Recall: 0.8242
+Initial average recall with ef=150: 0.8242
+Weighted average ef: 1043.74
+Training rv-bucket 8 [95.7536, 97.5088) with 200 queries.
+Average Recall: 0.7848
+Initial average recall with ef=100: 0.7848
+Average Recall: 0.82815
+Initial average recall with ef=150: 0.82815
+Weighted average ef: 1013.29
+Training rv-bucket 9 [97.5088, inf) with 200 queries.
+Average Recall: 0.7796
+Initial average recall with ef=100: 0.7796
+Average Recall: 0.8237
+Initial average recall with ef=150: 0.8237
+Weighted average ef: 1025.46
+  WAE (weighted avg ef): 1370
+  avg_recall=0.97498  p5_recall=0.9  p1_recall=0.85  median_time=41820 ms
+[GAMMA_SWEEP] dataset=glove-100-angular gamma=64 avg_recall=0.97498 p5_recall=0.9 p1_recall=0.85 median_time_ms=41820 wae=1370
+
+======================================================
+Dataset: sift-128-euclidean
+  k=100  alpha=0.25  expected_recall=0.95  ef_upper_bound=350
+======================================================
+Data vectors dimensions: 1000000 x 128
+Query vectors dimensions: 10000 x 128
+Neighbors dimensions: 10000 x 100
+Index loaded
+Dimension of space:128
+Data size of space:512
+  Samplings loaded: 2000 queries
+
+--- gamma=1 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [25.3632, 41.4091) with 200 queries.
+Average Recall: 0.8494
+Initial average recall with ef=100: 0.8494
+Average Recall: 0.89765
+Initial average recall with ef=150: 0.89765
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 348.75
+Training rv-bucket 1 [41.4091, 45.4909) with 200 queries.
+Average Recall: 0.885
+Initial average recall with ef=100: 0.885
+Average Recall: 0.92035
+Initial average recall with ef=150: 0.92035
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 346.98
+Training rv-bucket 2 [45.4909, 49.1501) with 200 queries.
+Average Recall: 0.9065
+Initial average recall with ef=100: 0.9065
+Average Recall: 0.9321
+Initial average recall with ef=150: 0.9321
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 292.125
+Training rv-bucket 3 [49.1501, 51.9587) with 200 queries.
+Average Recall: 0.91515
+Initial average recall with ef=100: 0.91515
+Average Recall: 0.9373
+Initial average recall with ef=150: 0.9373
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 292.55
+Training rv-bucket 4 [51.9587, 55.1977) with 200 queries.
+Average Recall: 0.9221
+Initial average recall with ef=100: 0.9221
+Average Recall: 0.9421
+Initial average recall with ef=150: 0.9421
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 260.77
+Training rv-bucket 5 [55.1977, 58.0935) with 200 queries.
+Average Recall: 0.93375
+Initial average recall with ef=100: 0.93375
+Average Recall: 0.94775
+Initial average recall with ef=150: 0.94775
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 208.995
+Training rv-bucket 6 [58.0935, 62.1017) with 200 queries.
+Average Recall: 0.9359
+Initial average recall with ef=100: 0.9359
+Average Recall: 0.9481
+Initial average recall with ef=150: 0.9481
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 209.295
+Training rv-bucket 7 [62.1017, 66.4706) with 200 queries.
+Average Recall: 0.9439
+Initial average recall with ef=100: 0.9439
+Average Recall: 0.9511
+Initial average recall with ef=150: 0.9511
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 166.765
+Training rv-bucket 8 [66.4706, 73.1197) with 200 queries.
+Average Recall: 0.94365
+Initial average recall with ef=100: 0.94365
+Average Recall: 0.948101
+Initial average recall with ef=150: 0.9481
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 190.98
+Training rv-bucket 9 [73.1197, inf) with 200 queries.
+Average Recall: 0.94845
+Initial average recall with ef=100: 0.94845
+Average Recall: 0.94975
+Initial average recall with ef=150: 0.94975
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 147.15
+  WAE (weighted avg ef): 246
+  avg_recall=0.992712  p5_recall=0.97  p1_recall=0.94  median_time=6373 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=1 avg_recall=0.992712 p5_recall=0.97 p1_recall=0.94 median_time_ms=6373 wae=246
+
+--- gamma=2 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [28.7881, 46.6489) with 200 queries.
+Average Recall: 0.8502
+Initial average recall with ef=100: 0.8502
+Average Recall: 0.8979
+Initial average recall with ef=150: 0.8979
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 349.25
+Training rv-bucket 1 [46.6489, 50.6362) with 200 queries.
+Average Recall: 0.88505
+Initial average recall with ef=100: 0.88505
+Average Recall: 0.9208
+Initial average recall with ef=150: 0.9208
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 334.74
+Training rv-bucket 2 [50.6362, 54.2586) with 200 queries.
+Average Recall: 0.9056
+Initial average recall with ef=100: 0.9056
+Average Recall: 0.931
+Initial average recall with ef=150: 0.931
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 305.63
+Training rv-bucket 3 [54.2586, 56.8797) with 200 queries.
+Average Recall: 0.91685
+Initial average recall with ef=100: 0.91685
+Average Recall: 0.938
+Initial average recall with ef=150: 0.938
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 279.8
+Training rv-bucket 4 [56.8797, 59.7632) with 200 queries.
+Average Recall: 0.9224
+Initial average recall with ef=100: 0.9224
+Average Recall: 0.9425
+Initial average recall with ef=150: 0.9425
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 259.45
+Training rv-bucket 5 [59.7632, 62.6247) with 200 queries.
+Average Recall: 0.93165
+Initial average recall with ef=100: 0.93165
+Average Recall: 0.946
+Initial average recall with ef=150: 0.946
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 233.52
+Training rv-bucket 6 [62.6247, 66.3254) with 200 queries.
+Average Recall: 0.9364
+Initial average recall with ef=100: 0.9364
+Average Recall: 0.9492
+Initial average recall with ef=150: 0.9492
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 183.325
+Training rv-bucket 7 [66.3254, 69.9699) with 200 queries.
+Average Recall: 0.9418
+Initial average recall with ef=100: 0.9418
+Average Recall: 0.9492
+Initial average recall with ef=150: 0.9492
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 184.9
+Training rv-bucket 8 [69.9699, 75.5422) with 200 queries.
+Average Recall: 0.9453
+Initial average recall with ef=100: 0.9453
+Average Recall: 0.949551
+Initial average recall with ef=150: 0.94955
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 160.565
+Training rv-bucket 9 [75.5422, inf) with 200 queries.
+Average Recall: 0.94855
+Initial average recall with ef=100: 0.94855
+Average Recall: 0.95015
+Initial average recall with ef=150: 0.95015
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 148.32
+  WAE (weighted avg ef): 243
+  avg_recall=0.992677  p5_recall=0.97  p1_recall=0.94  median_time=6309 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=2 avg_recall=0.992677 p5_recall=0.97 p1_recall=0.94 median_time_ms=6309 wae=243
+
+--- gamma=4 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [35.6875, 55.6369) with 200 queries.
+Average Recall: 0.8514
+Initial average recall with ef=100: 0.8514
+Average Recall: 0.89865
+Initial average recall with ef=150: 0.89865
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 348.75
+Training rv-bucket 1 [55.6369, 59.491) with 200 queries.
+Average Recall: 0.88635
+Initial average recall with ef=100: 0.88635
+Average Recall: 0.921099
+Initial average recall with ef=150: 0.9211
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 344.7
+Training rv-bucket 2 [59.491, 62.5608) with 200 queries.
+Average Recall: 0.90505
+Initial average recall with ef=100: 0.90505
+Average Recall: 0.92985
+Initial average recall with ef=150: 0.92985
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 331.99
+Training rv-bucket 3 [62.5608, 65.219) with 200 queries.
+Average Recall: 0.91665
+Initial average recall with ef=100: 0.91665
+Average Recall: 0.9388
+Initial average recall with ef=150: 0.9388
+Recall diff is too small, break.
+Weighted average ef: 267.35
+Training rv-bucket 4 [65.219, 67.6188) with 200 queries.
+Average Recall: 0.9251
+Initial average recall with ef=100: 0.9251
+Average Recall: 0.943
+Initial average recall with ef=150: 0.943
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 240
+Training rv-bucket 5 [67.6188, 69.7914) with 200 queries.
+Average Recall: 0.92735
+Initial average recall with ef=100: 0.92735
+Average Recall: 0.9441
+Initial average recall with ef=150: 0.9441
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 211.46
+Training rv-bucket 6 [69.7914, 72.7124) with 200 queries.
+Average Recall: 0.93525
+Initial average recall with ef=100: 0.93525
+Average Recall: 0.9475
+Initial average recall with ef=150: 0.9475
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 212.365
+Training rv-bucket 7 [72.7124, 75.422) with 200 queries.
+Average Recall: 0.94255
+Initial average recall with ef=100: 0.94255
+Average Recall: 0.9509
+Initial average recall with ef=150: 0.9509
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 203.075
+Training rv-bucket 8 [75.422, 79.7395) with 200 queries.
+Average Recall: 0.9447
+Initial average recall with ef=100: 0.9447
+Average Recall: 0.9488
+Initial average recall with ef=150: 0.9488
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 177.04
+Training rv-bucket 9 [79.7395, inf) with 200 queries.
+Average Recall: 0.9494
+Initial average recall with ef=100: 0.9494
+Average Recall: 0.9516
+Initial average recall with ef=150: 0.9516
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 152.42
+  WAE (weighted avg ef): 248
+  avg_recall=0.993078  p5_recall=0.97  p1_recall=0.94  median_time=6478 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=4 avg_recall=0.993078 p5_recall=0.97 p1_recall=0.94 median_time_ms=6478 wae=248
+
+--- gamma=8 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [46.9649, 67.2426) with 200 queries.
+Average Recall: 0.8606
+Initial average recall with ef=100: 0.8606
+Average Recall: 0.90255
+Initial average recall with ef=150: 0.90255
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 348.75
+Training rv-bucket 1 [67.2426, 70.2457) with 200 queries.
+Average Recall: 0.8866
+Initial average recall with ef=100: 0.8866
+Average Recall: 0.9207
+Initial average recall with ef=150: 0.9207
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 348.48
+Training rv-bucket 2 [70.2457, 72.6566) with 200 queries.
+Average Recall: 0.90055
+Initial average recall with ef=100: 0.90055
+Average Recall: 0.9284
+Initial average recall with ef=150: 0.9284
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 314.39
+Training rv-bucket 3 [72.6566, 74.4611) with 200 queries.
+Average Recall: 0.91825
+Initial average recall with ef=100: 0.91825
+Average Recall: 0.9388
+Initial average recall with ef=150: 0.9388
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 253.65
+Training rv-bucket 4 [74.4611, 76.4442) with 200 queries.
+Average Recall: 0.9208
+Initial average recall with ef=100: 0.9208
+Average Recall: 0.9391
+Initial average recall with ef=150: 0.9391
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 287.395
+Training rv-bucket 5 [76.4442, 78.1798) with 200 queries.
+Average Recall: 0.93
+Initial average recall with ef=100: 0.93
+Average Recall: 0.9445
+Initial average recall with ef=150: 0.9445
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 251.66
+Training rv-bucket 6 [78.1798, 79.8448) with 200 queries.
+Average Recall: 0.9312
+Initial average recall with ef=100: 0.9312
+Average Recall: 0.94545
+Initial average recall with ef=150: 0.94545
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 190.9
+Training rv-bucket 7 [79.8448, 81.5248) with 200 queries.
+Average Recall: 0.93925
+Initial average recall with ef=100: 0.93925
+Average Recall: 0.9501
+Initial average recall with ef=150: 0.9501
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 163.365
+Training rv-bucket 8 [81.5248, 84.0012) with 200 queries.
+Average Recall: 0.9454
+Initial average recall with ef=100: 0.9454
+Average Recall: 0.95015
+Initial average recall with ef=150: 0.95015
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 167.43
+Training rv-bucket 9 [84.0012, inf) with 200 queries.
+Average Recall: 0.95115
+Initial average recall with ef=100: 0.95115
+Average Recall: 0.954551
+Initial average recall with ef=150: 0.95455
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 136.2
+  WAE (weighted avg ef): 246
+  avg_recall=0.993479  p5_recall=0.97  p1_recall=0.94  median_time=6609 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=8 avg_recall=0.993479 p5_recall=0.97 p1_recall=0.94 median_time_ms=6609 wae=246
+
+--- gamma=12 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [54.9409, 72.9352) with 200 queries.
+Average Recall: 0.86565
+Initial average recall with ef=100: 0.86565
+Average Recall: 0.90445
+Initial average recall with ef=150: 0.90445
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 349.25
+Training rv-bucket 1 [72.9352, 75.6892) with 200 queries.
+Average Recall: 0.8909
+Initial average recall with ef=100: 0.8909
+Average Recall: 0.9226
+Initial average recall with ef=150: 0.9226
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 341.415
+Training rv-bucket 2 [75.6892, 77.601) with 200 queries.
+Average Recall: 0.89965
+Initial average recall with ef=100: 0.89965
+Average Recall: 0.92805
+Initial average recall with ef=150: 0.92805
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 336.75
+Training rv-bucket 3 [77.601, 79.1329) with 200 queries.
+Average Recall: 0.91605
+Initial average recall with ef=100: 0.91605
+Average Recall: 0.93495
+Initial average recall with ef=150: 0.93495
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 285.54
+Training rv-bucket 4 [79.1329, 80.724) with 200 queries.
+Average Recall: 0.9218
+Initial average recall with ef=100: 0.9218
+Average Recall: 0.941
+Initial average recall with ef=150: 0.941
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 246
+Training rv-bucket 5 [80.724, 82.0337) with 200 queries.
+Average Recall: 0.92745
+Initial average recall with ef=100: 0.92745
+Average Recall: 0.943
+Initial average recall with ef=150: 0.943
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 237
+Training rv-bucket 6 [82.0337, 83.2382) with 200 queries.
+Average Recall: 0.9342
+Initial average recall with ef=100: 0.9342
+Average Recall: 0.94635
+Initial average recall with ef=150: 0.94635
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 180.41
+Training rv-bucket 7 [83.2382, 84.532) with 200 queries.
+Average Recall: 0.93575
+Initial average recall with ef=100: 0.93575
+Average Recall: 0.94835
+Initial average recall with ef=150: 0.94835
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 173.125
+Training rv-bucket 8 [84.532, 86.3291) with 200 queries.
+Average Recall: 0.94115
+Initial average recall with ef=100: 0.94115
+Average Recall: 0.94935
+Initial average recall with ef=150: 0.94935
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 174.73
+Training rv-bucket 9 [86.3291, inf) with 200 queries.
+Average Recall: 0.9512
+Initial average recall with ef=100: 0.9512
+Average Recall: 0.9562
+Initial average recall with ef=150: 0.9562
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 116.4
+  WAE (weighted avg ef): 244
+  avg_recall=0.993727  p5_recall=0.97  p1_recall=0.94  median_time=6821 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=12 avg_recall=0.993727 p5_recall=0.97 p1_recall=0.94 median_time_ms=6821 wae=244
+
+--- gamma=16 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [60.6861, 76.2845) with 200 queries.
+Average Recall: 0.8716
+Initial average recall with ef=100: 0.8716
+Average Recall: 0.90835
+Initial average recall with ef=150: 0.90835
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 347.97
+Training rv-bucket 1 [76.2845, 78.7062) with 200 queries.
+Average Recall: 0.8958
+Initial average recall with ef=100: 0.8958
+Average Recall: 0.92355
+Initial average recall with ef=150: 0.92355
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 333.73
+Training rv-bucket 2 [78.7062, 80.5727) with 200 queries.
+Average Recall: 0.9026
+Initial average recall with ef=100: 0.9026
+Average Recall: 0.93015
+Initial average recall with ef=150: 0.93015
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 319
+Training rv-bucket 3 [80.5727, 81.9246) with 200 queries.
+Average Recall: 0.9138
+Initial average recall with ef=100: 0.9138
+Average Recall: 0.93295
+Initial average recall with ef=150: 0.93295
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 315.825
+Training rv-bucket 4 [81.9246, 83.1296) with 200 queries.
+Average Recall: 0.9222
+Initial average recall with ef=100: 0.9222
+Average Recall: 0.9406
+Initial average recall with ef=150: 0.9406
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 242.405
+Training rv-bucket 5 [83.1296, 84.1757) with 200 queries.
+Average Recall: 0.92805
+Initial average recall with ef=100: 0.92805
+Average Recall: 0.9433
+Initial average recall with ef=150: 0.9433
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 230.595
+Training rv-bucket 6 [84.1757, 85.3167) with 200 queries.
+Average Recall: 0.92915
+Initial average recall with ef=100: 0.92915
+Average Recall: 0.9447
+Initial average recall with ef=150: 0.9447
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 190.5
+Training rv-bucket 7 [85.3167, 86.4898) with 200 queries.
+Average Recall: 0.93555
+Initial average recall with ef=100: 0.93555
+Average Recall: 0.9464
+Initial average recall with ef=150: 0.9464
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 190.25
+Training rv-bucket 8 [86.4898, 88.028) with 200 queries.
+Average Recall: 0.93775
+Initial average recall with ef=100: 0.93775
+Average Recall: 0.9488
+Initial average recall with ef=150: 0.9488
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 174.13
+Training rv-bucket 9 [88.028, inf) with 200 queries.
+Average Recall: 0.9473
+Initial average recall with ef=100: 0.9473
+Average Recall: 0.955501
+Initial average recall with ef=150: 0.9555
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 140.15
+  WAE (weighted avg ef): 248
+  avg_recall=0.993746  p5_recall=0.97  p1_recall=0.94  median_time=6865 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=16 avg_recall=0.993746 p5_recall=0.97 p1_recall=0.94 median_time_ms=6865 wae=248
+
+--- gamma=24 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [67.6401, 79.4024) with 200 queries.
+Average Recall: 0.87985
+Initial average recall with ef=100: 0.87985
+Average Recall: 0.91285
+Initial average recall with ef=150: 0.91285
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 342.245
+Training rv-bucket 1 [79.4024, 81.9901) with 200 queries.
+Average Recall: 0.9068
+Initial average recall with ef=100: 0.9068
+Average Recall: 0.9283
+Initial average recall with ef=150: 0.9283
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 326.25
+Training rv-bucket 2 [81.9901, 83.5674) with 200 queries.
+Average Recall: 0.9122
+Initial average recall with ef=100: 0.9122
+Average Recall: 0.9336
+Initial average recall with ef=150: 0.9336
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 279.77
+Training rv-bucket 3 [83.5674, 84.7564) with 200 queries.
+Average Recall: 0.9139
+Initial average recall with ef=100: 0.9139
+Average Recall: 0.9353
+Initial average recall with ef=150: 0.9353
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 270.685
+Training rv-bucket 4 [84.7564, 85.7792) with 200 queries.
+Average Recall: 0.9208
+Initial average recall with ef=100: 0.9208
+Average Recall: 0.9386
+Initial average recall with ef=150: 0.9386
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 247.975
+Training rv-bucket 5 [85.7792, 86.8038) with 200 queries.
+Average Recall: 0.92965
+Initial average recall with ef=100: 0.92965
+Average Recall: 0.9451
+Initial average recall with ef=150: 0.9451
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 227.52
+Training rv-bucket 6 [86.8038, 87.856) with 200 queries.
+Average Recall: 0.92255
+Initial average recall with ef=100: 0.92255
+Average Recall: 0.93875
+Initial average recall with ef=150: 0.93875
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 223.43
+Training rv-bucket 7 [87.856, 89.1461) with 200 queries.
+Average Recall: 0.92765
+Initial average recall with ef=100: 0.92765
+Average Recall: 0.9442
+Initial average recall with ef=150: 0.9442
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 225.25
+Training rv-bucket 8 [89.1461, 90.7195) with 200 queries.
+Average Recall: 0.932
+Initial average recall with ef=100: 0.932
+Average Recall: 0.94745
+Initial average recall with ef=150: 0.94745
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 178.43
+Training rv-bucket 9 [90.7195, inf) with 200 queries.
+Average Recall: 0.9384
+Initial average recall with ef=100: 0.9384
+Average Recall: 0.95015
+Initial average recall with ef=150: 0.95015
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 158.27
+  WAE (weighted avg ef): 247
+  avg_recall=0.993725  p5_recall=0.97  p1_recall=0.94  median_time=6859 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=24 avg_recall=0.993725 p5_recall=0.97 p1_recall=0.94 median_time_ms=6859 wae=247
+
+--- gamma=32 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [66.9895, 80.5846) with 200 queries.
+Average Recall: 0.88965
+Initial average recall with ef=100: 0.88965
+Average Recall: 0.91735
+Initial average recall with ef=150: 0.91735
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 336.135
+Training rv-bucket 1 [80.5846, 83.168) with 200 queries.
+Average Recall: 0.91125
+Initial average recall with ef=100: 0.91125
+Average Recall: 0.9328
+Initial average recall with ef=150: 0.9328
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 285.145
+Training rv-bucket 2 [83.168, 84.7295) with 200 queries.
+Average Recall: 0.91825
+Initial average recall with ef=100: 0.91825
+Average Recall: 0.9365
+Initial average recall with ef=150: 0.9365
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 249.765
+Training rv-bucket 3 [84.7295, 86.0566) with 200 queries.
+Average Recall: 0.9199
+Initial average recall with ef=100: 0.9199
+Average Recall: 0.93745
+Initial average recall with ef=150: 0.93745
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 266.05
+Training rv-bucket 4 [86.0566, 87.2026) with 200 queries.
+Average Recall: 0.92005
+Initial average recall with ef=100: 0.92005
+Average Recall: 0.93825
+Initial average recall with ef=150: 0.93825
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 226.37
+Training rv-bucket 5 [87.2026, 88.4227) with 200 queries.
+Average Recall: 0.9203
+Initial average recall with ef=100: 0.9203
+Average Recall: 0.93885
+Initial average recall with ef=150: 0.93885
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 222.5
+Training rv-bucket 6 [88.4227, 89.6681) with 200 queries.
+Average Recall: 0.9243
+Initial average recall with ef=100: 0.9243
+Average Recall: 0.94175
+Initial average recall with ef=150: 0.94175
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 219.835
+Training rv-bucket 7 [89.6681, 91.2054) with 200 queries.
+Average Recall: 0.92375
+Initial average recall with ef=100: 0.92375
+Average Recall: 0.9428
+Initial average recall with ef=150: 0.9428
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 246.18
+Training rv-bucket 8 [91.2054, 93.0542) with 200 queries.
+Average Recall: 0.92805
+Initial average recall with ef=100: 0.92805
+Average Recall: 0.9439
+Initial average recall with ef=150: 0.9439
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 211.575
+Training rv-bucket 9 [93.0542, inf) with 200 queries.
+Average Recall: 0.9283
+Initial average recall with ef=100: 0.9283
+Average Recall: 0.94465
+Initial average recall with ef=150: 0.94465
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 198.45
+  WAE (weighted avg ef): 246
+  avg_recall=0.99344  p5_recall=0.97  p1_recall=0.94  median_time=6790 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=32 avg_recall=0.99344 p5_recall=0.97 p1_recall=0.94 median_time_ms=6790 wae=246
+
+--- gamma=48 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [65.188, 80.3174) with 200 queries.
+Average Recall: 0.9037
+Initial average recall with ef=100: 0.9037
+Average Recall: 0.9264
+Initial average recall with ef=150: 0.9264
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 281.32
+Training rv-bucket 1 [80.3174, 82.5383) with 200 queries.
+Average Recall: 0.92185
+Initial average recall with ef=100: 0.92185
+Average Recall: 0.9392
+Initial average recall with ef=150: 0.9392
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 234.28
+Training rv-bucket 2 [82.5383, 84.7301) with 200 queries.
+Average Recall: 0.9161
+Initial average recall with ef=100: 0.9161
+Average Recall: 0.93385
+Initial average recall with ef=150: 0.93385
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 259.945
+Training rv-bucket 3 [84.7301, 87.0574) with 200 queries.
+Average Recall: 0.9214
+Initial average recall with ef=100: 0.9214
+Average Recall: 0.9389
+Initial average recall with ef=150: 0.9389
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 252.985
+Training rv-bucket 4 [87.0574, 88.8977) with 200 queries.
+Average Recall: 0.91655
+Initial average recall with ef=100: 0.91655
+Average Recall: 0.93655
+Initial average recall with ef=150: 0.93655
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 264.385
+Training rv-bucket 5 [88.8977, 90.8232) with 200 queries.
+Average Recall: 0.91995
+Initial average recall with ef=100: 0.91995
+Average Recall: 0.93815
+Initial average recall with ef=150: 0.93815
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 225.22
+Training rv-bucket 6 [90.8232, 92.5136) with 200 queries.
+Average Recall: 0.91605
+Initial average recall with ef=100: 0.91605
+Average Recall: 0.93665
+Initial average recall with ef=150: 0.93665
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 242.84
+Training rv-bucket 7 [92.5136, 94.1953) with 200 queries.
+Average Recall: 0.9237
+Initial average recall with ef=100: 0.9237
+Average Recall: 0.94355
+Initial average recall with ef=150: 0.94355
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 218.255
+Training rv-bucket 8 [94.1953, 95.949) with 200 queries.
+Average Recall: 0.92415
+Initial average recall with ef=100: 0.92415
+Average Recall: 0.9417
+Initial average recall with ef=150: 0.9417
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 240.615
+Training rv-bucket 9 [95.949, inf) with 200 queries.
+Average Recall: 0.92035
+Initial average recall with ef=100: 0.92035
+Average Recall: 0.93935
+Initial average recall with ef=150: 0.93935
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 216.185
+  WAE (weighted avg ef): 243
+  avg_recall=0.991801  p5_recall=0.97  p1_recall=0.94  median_time=6201 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=48 avg_recall=0.991801 p5_recall=0.97 p1_recall=0.94 median_time_ms=6201 wae=243
+
+--- gamma=64 ---
+Average Recall: 0.918379
+Initial average recall with ef=100: 0.91838
+Average Recall: 0.937425
+Initial average recall with ef=150: 0.93743
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 262.683
+Training rv-bucket 0 [63.5461, 77.281) with 200 queries.
+Average Recall: 0.9134
+Initial average recall with ef=100: 0.9134
+Average Recall: 0.93185
+Initial average recall with ef=150: 0.93185
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 269.535
+Training rv-bucket 1 [77.281, 81.5714) with 200 queries.
+Average Recall: 0.9227
+Initial average recall with ef=100: 0.9227
+Average Recall: 0.93975
+Initial average recall with ef=150: 0.93975
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 218.14
+Training rv-bucket 2 [81.5714, 85.0073) with 200 queries.
+Average Recall: 0.9141
+Initial average recall with ef=100: 0.9141
+Average Recall: 0.9344
+Initial average recall with ef=150: 0.9344
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 260.75
+Training rv-bucket 3 [85.0073, 87.9748) with 200 queries.
+Average Recall: 0.91875
+Initial average recall with ef=100: 0.91875
+Average Recall: 0.9361
+Initial average recall with ef=150: 0.9361
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 256.665
+Training rv-bucket 4 [87.9748, 90.5633) with 200 queries.
+Average Recall: 0.9185
+Initial average recall with ef=100: 0.9185
+Average Recall: 0.9377
+Initial average recall with ef=150: 0.9377
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 245.635
+Training rv-bucket 5 [90.5633, 92.7143) with 200 queries.
+Average Recall: 0.91365
+Initial average recall with ef=100: 0.91365
+Average Recall: 0.9352
+Initial average recall with ef=150: 0.9352
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 254.525
+Training rv-bucket 6 [92.7143, 94.6105) with 200 queries.
+Average Recall: 0.92135
+Initial average recall with ef=100: 0.92135
+Average Recall: 0.9384
+Initial average recall with ef=150: 0.9384
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 256.705
+Training rv-bucket 7 [94.6105, 96.2504) with 200 queries.
+Average Recall: 0.9207
+Initial average recall with ef=100: 0.9207
+Average Recall: 0.9412
+Initial average recall with ef=150: 0.9412
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 243.645
+Training rv-bucket 8 [96.2504, 97.7279) with 200 queries.
+Average Recall: 0.9244
+Initial average recall with ef=100: 0.9244
+Average Recall: 0.94265
+Initial average recall with ef=150: 0.94265
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 250.855
+Training rv-bucket 9 [97.7279, inf) with 200 queries.
+Average Recall: 0.91625
+Initial average recall with ef=100: 0.91625
+Average Recall: 0.93705
+Initial average recall with ef=150: 0.93705
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 249.205
+  WAE (weighted avg ef): 250
+  avg_recall=0.991773  p5_recall=0.97  p1_recall=0.94  median_time=6185 ms
+[GAMMA_SWEEP] dataset=sift-128-euclidean gamma=64 avg_recall=0.991773 p5_recall=0.97 p1_recall=0.94 median_time_ms=6185 wae=250
+
+Gamma sweep complete.
