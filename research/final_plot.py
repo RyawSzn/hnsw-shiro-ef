@@ -77,9 +77,9 @@ def parse_log(filepath):
     return datasets
 
 
-shiro = parse_log("output_shiro.log")
-ada = parse_log("output_ada.log")
-sift_log = parse_log("output_shiro.log")
+shiro = parse_log("./log/output_shiro.log")
+ada = parse_log("./log/output_ada.log")
+sift_log = parse_log("./log/output_shiro.log")
 
 datasets_keys = ["deep-image-96-angular", "glove-100-angular", "sift-128-euclidean"]
 
@@ -174,7 +174,7 @@ for idx, ds_name in enumerate(datasets_keys):
         common_efs = set(shiro.get(ds_name, {}).get("baseline", {}).keys()).intersection(
             set(ada.get(ds_name, {}).get("baseline", {}).keys())
         )
-        
+
         total_s_time = 0
         total_a_time = 0
         for ef in common_efs:
@@ -182,7 +182,7 @@ for idx, ds_name in enumerate(datasets_keys):
             a_t = ada[ds_name]["baseline"][ef]["times"]
             total_s_time += s_t[1] if len(s_t) > 1 else s_t[0]
             total_a_time += a_t[1] if len(a_t) > 1 else a_t[0]
-            
+
         # Gamma scales Ada's clock speed to match Shiro's hardware environment
         gamma = total_s_time / total_a_time if total_a_time > 0 else 1.0
 
@@ -293,11 +293,11 @@ for idx, ds_name in enumerate(datasets_keys):
                 )
 
     if ds_name == 'deep-image-96-angular':
-        ax.set_title(f"{ds_name}\nef_max = 4000", fontsize=14)
+        ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
     elif ds_name == 'glove-100-angular':
-        ax.set_title(f"{ds_name}\nef_max = 4000", fontsize=14)
+        ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
     elif ds_name == 'sift-128-euclidean':
-        ax.set_title(f"{ds_name}\nef_max = 350", fontsize=14)
+        ax.set_title(f"{ds_name}\nef_max = 300", fontsize=14)
     else:
         ax.set_title(ds_name, fontsize=14)
     ax.set_xlabel("Latency (s)", fontsize=12)
