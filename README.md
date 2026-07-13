@@ -4,7 +4,7 @@ This repository implements an **Adaptive `ef` (exploration factor) search mechan
 
 ## How it Works
 
-The `hnsw-shiro-ef` (Ada-EF) system augments the standard HNSW search algorithm with dynamic thresholding based on local neighborhood density and query difficulty estimation.
+The `hnsw-shiro-ef` (SHIRO-EF) system augments the standard HNSW search algorithm with dynamic thresholding based on local neighborhood density and query difficulty estimation.
 
 Instead of applying a globally fixed `ef` parameter, the system uses:
 1. **Cross-Validation (CV) Tables**: To estimate the relationship between approximate distance scores and the required `ef` for the target recall. The dataset is chunked into `n_cv_tables` (default: 15) to calculate out-of-fold statistics, preventing overfitting to the training queries.
