@@ -1480,7 +1480,8 @@ namespace hnswdis
             const float alpha, const float gamma,
             const size_t statics_length,
             const std::string &samplings_filename,
-            int ef_upper_bound
+            int ef_upper_bound,
+            int sampling_size
         ) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
 
@@ -1503,7 +1504,7 @@ namespace hnswdis
             {
                 // Sample data and compute ground truth
                 std::cout << "Sampling data and computing ground truth..." << std::endl;
-                auto pair = compute_samplings(data_vectors, metric, k, 2000);
+                auto pair = compute_samplings(data_vectors, metric, k, sampling_size);
                 MatrixXf sample_query_vectors = pair.first;
                 MatrixXi sample_ground_truth = pair.second;
                 serialize_samplings(samplings_filename, sample_query_vectors, sample_ground_truth);
