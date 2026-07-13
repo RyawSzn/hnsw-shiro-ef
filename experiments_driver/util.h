@@ -467,6 +467,9 @@ void adaptive_search(
     const size_t statics_length,
     const float expected_recall)
 {
+    // Force purely single-threaded execution for accurate search latency
+    Eigen::setNbThreads(1);
+
     std::vector<int64_t> time;
     time.reserve(repeat);
 
@@ -572,6 +575,7 @@ void adaptive_search(
               << std::get<7>(exp_record) << std::endl;
 
     std::cout << "Experiment finished" << std::endl;
+    Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 }
 
 void adaptive_search_per_query_result(
@@ -586,6 +590,9 @@ void adaptive_search_per_query_result(
     const size_t statics_length,
     const float expected_recall)
 {
+    // Force purely single-threaded execution for accurate search latency
+    Eigen::setNbThreads(1);
+
     const int num_queries = query_vectors.rows();
     std::vector<std::vector<size_t>> result(num_queries, std::vector<size_t>(k, 0));
 
@@ -657,6 +664,7 @@ void adaptive_search_per_query_result(
     std::cout << "99th percentile latency: " << sorted_latencies[(int)(num_queries * 0.99)] << " ns" << std::endl;
 
     std::cout << "Experiment finished." << std::endl;
+    Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 }
 
 
@@ -687,6 +695,9 @@ void baseline_search(
     const size_t k,
     const size_t ef_upper_bound)
 {
+    // Force purely single-threaded execution for accurate search latency
+    Eigen::setNbThreads(1);
+
     size_t ef = k;
     float avg_recall = 0.0f;
     // scheme for storing the results
@@ -809,6 +820,7 @@ void baseline_search(
                   << std::get<7>(result) << std::endl;
     }
     std::cout << "Experiment finished" << std::endl;
+    Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 }
 
 void search_with_patience_in_proximity(
@@ -929,4 +941,5 @@ void search_with_patience_in_proximity(
               << std::get<7>(exp_record) << std::endl;
 
     std::cout << "Experiment finished" << std::endl;
+    Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 }

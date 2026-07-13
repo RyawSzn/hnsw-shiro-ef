@@ -4,11 +4,7 @@ Starting experiments for Shiro-ef hnswdis library...
 EXPERIMENTS_ROOT: /home/ryawszn/experiments/shiro-ef
 Starting offline experiments...
 
-
-
-Dataset: deep-image-96-angular
-Metric: cd
-Truncation ratio: 0.25
+Rebuilding table for deep-image-96-angular...
 Normalize the data vectors
 Data vectors dimensions: 9990000 x 96
 Query vectors dimensions: 10000 x 96
@@ -17,81 +13,105 @@ Using AVX512 Inner Product distance
 Index loaded
 Dimension of space:96
 Data size of space:384
-Dataset statistics computing time: 0 ms
-Sampling computing time: 121837 ms
 Loading samplings from /home/ryawszn/experiments/shiro-ef/sampling/deep-image-96-angular-samplings--k100-ef.bin
 Samplings loaded from /home/ryawszn/experiments/shiro-ef/sampling/deep-image-96-angular-samplings--k100-ef.bin
-Average Recall: 0.886096
-Initial average recall with ef=100: 0.8861
-Average Recall: 0.927466
-Initial average recall with ef=150: 0.92747
-Weighted average ef: 230.583
-EF-estimation table computing time: 102259 ms
-Training rv-bucket 0 [39.6747, 64.8189) with 200 queries.
-Average Recall: 0.7292
-Initial average recall with ef=100: 0.7292
-Average Recall: 0.80515
-Initial average recall with ef=150: 0.80515
-Weighted average ef: 570.24
-Training rv-bucket 1 [64.8189, 69.2383) with 200 queries.
-Average Recall: 0.8123
-Initial average recall with ef=100: 0.8123
-Average Recall: 0.8721
-Initial average recall with ef=150: 0.8721
-Weighted average ef: 378.34
-Training rv-bucket 2 [69.2383, 71.8026) with 200 queries.
-Average Recall: 0.84615
-Initial average recall with ef=100: 0.84615
-Average Recall: 0.9018
-Initial average recall with ef=150: 0.9018
-Recall diff is too small, break.
-Weighted average ef: 295.87
-Training rv-bucket 3 [71.8026, 74.1964) with 200 queries.
-Average Recall: 0.86675
-Initial average recall with ef=100: 0.86675
-Average Recall: 0.9151
-Initial average recall with ef=150: 0.9151
-Weighted average ef: 267.515
-Training rv-bucket 4 [74.1964, 76.1509) with 200 queries.
-Average Recall: 0.891
-Initial average recall with ef=100: 0.891
-Average Recall: 0.93365
-Initial average recall with ef=150: 0.93365
-Weighted average ef: 211.75
-Training rv-bucket 5 [76.1509, 77.9538) with 200 queries.
-Average Recall: 0.90615
-Initial average recall with ef=100: 0.90615
-Average Recall: 0.94495
-Initial average recall with ef=150: 0.94495
-Recall diff is too small, break.
-Weighted average ef: 197.265
-Training rv-bucket 6 [77.9538, 80.0961) with 200 queries.
-Average Recall: 0.928251
-Initial average recall with ef=100: 0.92825
-Average Recall: 0.96015
-Initial average recall with ef=150: 0.96015
-Weighted average ef: 160.465
-Training rv-bucket 7 [80.0961, 82.2965) with 200 queries.
-Average Recall: 0.94505
-Initial average recall with ef=100: 0.94505
-Average Recall: 0.9723
-Initial average recall with ef=150: 0.9723
-Weighted average ef: 141.51
-Training rv-bucket 8 [82.2965, 85.045) with 200 queries.
-Average Recall: 0.95695
-Initial average recall with ef=100: 0.95695
-Average Recall: 0.97925
-Initial average recall with ef=150: 0.97925
-Weighted average ef: 127.865
-Training rv-bucket 9 [85.045, inf) with 200 queries.
-Average Recall: 0.9792
-Initial average recall with ef=100: 0.9792
-Average Recall: 0.99025
-Initial average recall with ef=150: 0.99025
-Weighted average ef: 111.09
-Dataset: glove-100-angular
-Metric: cd
-Truncation ratio: 0.25
+Average Recall: 0.88657
+Initial average recall with ef=100: 0.885307
+Average Recall: 0.927491
+Initial average recall with ef=150: 0.926683
+Weighted average ef: 235.64
+Training rv-bucket 0 [34.9491, 62.1639) with 200 queries.
+Average Recall: 0.71335
+Initial average recall with ef=100: 0.71197
+Average Recall: 0.7902
+Initial average recall with ef=150: 0.788939
+Weighted average ef: 624.275
+Training rv-bucket 1 [62.1639, 66.3495) with 200 queries.
+Average Recall: 0.7802
+Initial average recall with ef=100: 0.779242
+Average Recall: 0.8492
+Initial average recall with ef=150: 0.848232
+Weighted average ef: 417.46
+Training rv-bucket 2 [66.3495, 69.3123) with 200 queries.
+Average Recall: 0.8236
+Initial average recall with ef=100: 0.8233
+Average Recall: 0.88115
+Initial average recall with ef=150: 0.881218
+Weighted average ef: 328.995
+Training rv-bucket 3 [69.3123, 71.2537) with 200 queries.
+Average Recall: 0.84105
+Initial average recall with ef=100: 0.839337
+Average Recall: 0.8988
+Initial average recall with ef=150: 0.897857
+Weighted average ef: 287.2
+Training rv-bucket 4 [71.2537, 72.8803) with 200 queries.
+Average Recall: 0.85395
+Initial average recall with ef=100: 0.856198
+Average Recall: 0.90315
+Initial average recall with ef=150: 0.905781
+Weighted average ef: 263.665
+Training rv-bucket 5 [72.8803, 74.5338) with 200 queries.
+Average Recall: 0.87115
+Initial average recall with ef=100: 0.871495
+Average Recall: 0.92065
+Initial average recall with ef=150: 0.921031
+Weighted average ef: 234.89
+Training rv-bucket 6 [74.5338, 75.8096) with 200 queries.
+Average Recall: 0.8912
+Initial average recall with ef=100: 0.89
+Average Recall: 0.9341
+Initial average recall with ef=150: 0.933198
+Weighted average ef: 208.97
+Training rv-bucket 7 [75.8096, 77.0573) with 200 queries.
+Average Recall: 0.88915
+Initial average recall with ef=100: 0.88835
+Average Recall: 0.9327
+Initial average recall with ef=150: 0.932268
+Weighted average ef: 205.185
+Training rv-bucket 8 [77.0573, 78.2387) with 200 queries.
+Average Recall: 0.91785
+Initial average recall with ef=100: 0.918549
+Average Recall: 0.9518
+Initial average recall with ef=150: 0.952487
+Weighted average ef: 178.5
+Training rv-bucket 9 [78.2387, 79.6585) with 200 queries.
+Average Recall: 0.91865
+Initial average recall with ef=100: 0.920942
+Average Recall: 0.95125
+Initial average recall with ef=150: 0.953717
+Weighted average ef: 163.7
+Training rv-bucket 10 [79.6585, 80.9926) with 200 queries.
+Average Recall: 0.94105
+Initial average recall with ef=100: 0.940942
+Average Recall: 0.9704
+Initial average recall with ef=150: 0.970838
+Weighted average ef: 130.75
+Training rv-bucket 11 [80.9926, 82.4982) with 200 queries.
+Average Recall: 0.9449
+Initial average recall with ef=100: 0.943455
+Average Recall: 0.9718
+Initial average recall with ef=150: 0.970942
+Weighted average ef: 131.75
+Training rv-bucket 12 [82.4982, 84.2299) with 200 queries.
+Average Recall: 0.956351
+Initial average recall with ef=100: 0.954974
+Average Recall: 0.9778
+Initial average recall with ef=150: 0.976878
+Weighted average ef: 119.825
+Training rv-bucket 13 [84.2299, 86.1261) with 200 queries.
+Average Recall: 0.972601
+Initial average recall with ef=100: 0.971359
+Average Recall: 0.98745
+Initial average recall with ef=150: 0.987065
+Weighted average ef: 100.75
+Training rv-bucket 14 [86.1261, inf) with 200 queries.
+Average Recall: 0.9836
+Initial average recall with ef=100: 0.985882
+Average Recall: 0.99205
+Initial average recall with ef=150: 0.994235
+Weighted average ef: 88
+Finished building table for deep-image-96-angular
+Rebuilding table for glove-100-angular...
 Normalize the data vectors
 Data vectors dimensions: 1183514 x 100
 Query vectors dimensions: 10000 x 100
@@ -100,102 +120,123 @@ Using AVX512 Inner Product distance
 Index loaded
 Dimension of space:100
 Data size of space:400
-Dataset statistics computing time: 0 ms
-Sampling computing time: 8847 ms
 Loading samplings from /home/ryawszn/experiments/shiro-ef/sampling/glove-100-angular-samplings--k100-ef.bin
 Samplings loaded from /home/ryawszn/experiments/shiro-ef/sampling/glove-100-angular-samplings--k100-ef.bin
-Average Recall: 0.746562
-Initial average recall with ef=100: 0.74619
-Average Recall: 0.790744
-Initial average recall with ef=150: 0.79035
+Average Recall: 0.747367
+Initial average recall with ef=100: 0.746689
+Average Recall: 0.791631
+Initial average recall with ef=150: 0.790905
 Recall diff is too small, break.
+Weighted average ef: 1502.29
+Training rv-bucket 0 [16.0745, 43.5114) with 200 queries.
+Average Recall: 0.5079
+Initial average recall with ef=100: 0.501327
+Average Recall: 0.56645
+Initial average recall with ef=150: 0.559796
+Weighted average ef: 3772.79
+Training rv-bucket 1 [43.5114, 50.6228) with 200 queries.
+Average Recall: 0.488543
+Initial average recall with ef=100: 0.484545
+Average Recall: 0.545477
+Initial average recall with ef=150: 0.541111
 Recall diff is too small, break.
+Weighted average ef: 3558.76
+Training rv-bucket 2 [50.6228, 55.9751) with 200 queries.
+Average Recall: 0.5316
+Initial average recall with ef=100: 0.528629
+Average Recall: 0.59255
+Initial average recall with ef=150: 0.590101
+Weighted average ef: 3093.35
+Training rv-bucket 3 [55.9751, 60.7171) with 200 queries.
+Average Recall: 0.5853
+Initial average recall with ef=100: 0.580256
+Average Recall: 0.6496
+Initial average recall with ef=150: 0.644923
 Recall diff is too small, break.
+Weighted average ef: 2461.88
+Training rv-bucket 4 [60.7171, 64.2345) with 200 queries.
+Average Recall: 0.64775
+Initial average recall with ef=100: 0.637656
+Average Recall: 0.70655
+Initial average recall with ef=150: 0.697083
+Weighted average ef: 1873.22
+Training rv-bucket 5 [64.2345, 67.05) with 200 queries.
+Average Recall: 0.6877
+Initial average recall with ef=100: 0.681641
+Average Recall: 0.7455
+Initial average recall with ef=150: 0.740154
+Weighted average ef: 1571.6
+Training rv-bucket 6 [67.05, 69.5508) with 200 queries.
+Average Recall: 0.73715
+Initial average recall with ef=100: 0.735152
+Average Recall: 0.79035
+Initial average recall with ef=150: 0.788737
 Recall diff is too small, break.
-Weighted average ef: 970.649
-EF-estimation table computing time: 11364 ms
-Training rv-bucket 0 [16.0745, 47.3517) with 200 queries.
-Average Recall: 0.49905
-Initial average recall with ef=100: 0.49905
-Average Recall: 0.55385
-Initial average recall with ef=150: 0.55385
-Weighted average ef: 3865.29
-Training rv-bucket 1 [47.3517, 55.9934) with 200 queries.
-Average Recall: 0.52201
-Initial average recall with ef=100: 0.5194
-Average Recall: 0.581105
-Initial average recall with ef=150: 0.5782
+Weighted average ef: 1154.34
+Training rv-bucket 7 [69.5508, 72.338) with 200 queries.
+Average Recall: 0.75665
+Initial average recall with ef=100: 0.751641
+Average Recall: 0.80885
+Initial average recall with ef=150: 0.804615
 Recall diff is too small, break.
-Weighted average ef: 3178.17
-Training rv-bucket 2 [55.9934, 62.4932) with 200 queries.
-Average Recall: 0.60015
-Initial average recall with ef=100: 0.60015
-Average Recall: 0.66355
-Initial average recall with ef=150: 0.66355
-Weighted average ef: 2340.83
-Training rv-bucket 3 [62.4932, 67.05) with 200 queries.
-Average Recall: 0.67405
-Initial average recall with ef=100: 0.67405
-Average Recall: 0.7321
-Initial average recall with ef=150: 0.7321
+Weighted average ef: 1165.86
+Training rv-bucket 8 [72.338, 74.9332) with 200 queries.
+Average Recall: 0.81225
+Initial average recall with ef=100: 0.804865
+Average Recall: 0.85935
+Initial average recall with ef=150: 0.854595
+Weighted average ef: 656.3
+Training rv-bucket 9 [74.9332, 77.2525) with 200 queries.
+Average Recall: 0.85195
+Initial average recall with ef=100: 0.85041
+Average Recall: 0.8867
+Initial average recall with ef=150: 0.885641
+Weighted average ef: 615.13
+Training rv-bucket 10 [77.2525, 79.6518) with 200 queries.
+Average Recall: 0.86775
+Initial average recall with ef=100: 0.865625
+Average Recall: 0.90175
+Initial average recall with ef=150: 0.900208
+Weighted average ef: 567
+Training rv-bucket 11 [79.6518, 81.3853) with 200 queries.
+Average Recall: 0.89565
+Initial average recall with ef=100: 0.889679
+Average Recall: 0.9257
+Initial average recall with ef=150: 0.92107
+Weighted average ef: 406.72
+Training rv-bucket 12 [81.3853, 83.2835) with 200 queries.
+Average Recall: 0.9299
+Initial average recall with ef=100: 0.929526
+Average Recall: 0.954551
+Initial average recall with ef=150: 0.954947
+Weighted average ef: 214.885
+Training rv-bucket 13 [83.2835, 85.3715) with 200 queries.
+Average Recall: 0.94545
+Initial average recall with ef=100: 0.94555
+Average Recall: 0.96325
+Initial average recall with ef=150: 0.963874
 Recall diff is too small, break.
-Weighted average ef: 1720.34
-Training rv-bucket 4 [67.05, 71.3741) with 200 queries.
-Average Recall: 0.7417
-Initial average recall with ef=100: 0.7417
-Average Recall: 0.79415
-Initial average recall with ef=150: 0.79415
-Weighted average ef: 1283.89
-Training rv-bucket 5 [71.3741, 74.993) with 200 queries.
-Average Recall: 0.79155
-Initial average recall with ef=100: 0.79155
-Average Recall: 0.84115
-Initial average recall with ef=150: 0.84115
-Weighted average ef: 845.01
-Training rv-bucket 6 [74.993, 78.5331) with 200 queries.
-Average Recall: 0.85785
-Initial average recall with ef=100: 0.85785
-Average Recall: 0.89335
-Initial average recall with ef=150: 0.89335
-Recall diff is too small, break.
-Weighted average ef: 610.41
-Training rv-bucket 7 [78.5331, 81.3854) with 200 queries.
-Average Recall: 0.88225
-Initial average recall with ef=100: 0.88225
-Average Recall: 0.91365
-Initial average recall with ef=150: 0.91365
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 486.83
-Training rv-bucket 8 [81.3854, 84.3554) with 200 queries.
-Average Recall: 0.93185
-Initial average recall with ef=100: 0.93185
-Average Recall: 0.9551
-Initial average recall with ef=150: 0.9551
-Weighted average ef: 250.17
-Training rv-bucket 9 [84.3554, inf) with 200 queries.
-Average Recall: 0.96405
-Initial average recall with ef=100: 0.96405
-Average Recall: 0.9784
-Initial average recall with ef=150: 0.9784
-Weighted average ef: 154.67
-Dataset: sift-128-euclidean
-Metric: l2
-Truncation ratio: 0.25
+Weighted average ef: 211.65
+Training rv-bucket 14 [85.3715, inf) with 200 queries.
+Average Recall: 0.9637
+Initial average recall with ef=100: 0.962167
+Average Recall: 0.97665
+Initial average recall with ef=150: 0.976
+Weighted average ef: 158.83
+Finished building table for glove-100-angular
+Rebuilding table for sift-128-euclidean...
 Data vectors dimensions: 1000000 x 128
 Query vectors dimensions: 10000 x 128
 Neighbors dimensions: 10000 x 100
 Index loaded
 Dimension of space:128
 Data size of space:512
-Dataset statistics computing time: 0 ms
-Sampling computing time: 7814 ms
 Loading samplings from /home/ryawszn/experiments/shiro-ef/sampling/sift-128-euclidean-samplings--k100-ef.bin
 Samplings loaded from /home/ryawszn/experiments/shiro-ef/sampling/sift-128-euclidean-samplings--k100-ef.bin
-Average Recall: 0.918379
-Initial average recall with ef=100: 0.91838
-Average Recall: 0.937425
-Initial average recall with ef=150: 0.93743
+Average Recall: 0.91911
+Initial average recall with ef=100: 0.91944
+Average Recall: 0.937828
+Initial average recall with ef=150: 0.938253
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
@@ -206,144 +247,134 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 254.803
+Training rv-bucket 0 [54.9409, 71.3924) with 200 queries.
+Average Recall: 0.85975
+Initial average recall with ef=100: 0.860153
+Average Recall: 0.90245
+Initial average recall with ef=150: 0.903112
 Recall diff is too small, break.
+Weighted average ef: 294
+Training rv-bucket 1 [71.3924, 73.8155) with 200 queries.
+Average Recall: 0.8857
+Initial average recall with ef=100: 0.885431
+Average Recall: 0.9176
+Initial average recall with ef=150: 0.917665
 Recall diff is too small, break.
+Weighted average ef: 294
+Training rv-bucket 2 [73.8155, 75.6769) with 200 queries.
+Average Recall: 0.8928
+Initial average recall with ef=100: 0.893503
+Average Recall: 0.92435
+Initial average recall with ef=150: 0.925076
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 294.45
+Training rv-bucket 3 [75.6769, 76.9932) with 200 queries.
+Average Recall: 0.9023
+Initial average recall with ef=100: 0.903299
+Average Recall: 0.93105
+Initial average recall with ef=150: 0.932216
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 291
+Training rv-bucket 4 [76.9932, 78.1567) with 200 queries.
+Average Recall: 0.91105
+Initial average recall with ef=100: 0.911865
+Average Recall: 0.93135
+Initial average recall with ef=150: 0.932694
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 269.765
+Training rv-bucket 5 [78.1567, 79.1476) with 200 queries.
+Average Recall: 0.91775
+Initial average recall with ef=100: 0.917928
+Average Recall: 0.9366
+Initial average recall with ef=150: 0.937098
 Recall diff is too small, break.
 Recall diff is too small, break.
-Weighted average ef: 262.683
-EF-estimation table computing time: 3599 ms
-Training rv-bucket 0 [54.9409, 72.9352) with 200 queries.
-Average Recall: 0.86565
-Initial average recall with ef=100: 0.86565
-Average Recall: 0.90445
-Initial average recall with ef=150: 0.90445
 Recall diff is too small, break.
+Weighted average ef: 260.5
+Training rv-bucket 6 [79.1476, 80.1332) with 200 queries.
+Average Recall: 0.91955
+Initial average recall with ef=100: 0.919897
+Average Recall: 0.94065
+Initial average recall with ef=150: 0.941598
+Weighted average ef: 229
+Training rv-bucket 7 [80.1332, 81.144) with 200 queries.
+Average Recall: 0.92645
+Initial average recall with ef=100: 0.926923
+Average Recall: 0.94385
+Initial average recall with ef=150: 0.944513
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 205.75
+Training rv-bucket 8 [81.144, 82.0369) with 200 queries.
+Average Recall: 0.9258
+Initial average recall with ef=100: 0.930753
+Average Recall: 0.9398
+Initial average recall with ef=150: 0.944086
 Recall diff is too small, break.
-Weighted average ef: 349.25
-Training rv-bucket 1 [72.9352, 75.6892) with 200 queries.
-Average Recall: 0.8909
-Initial average recall with ef=100: 0.8909
-Average Recall: 0.9226
-Initial average recall with ef=150: 0.9226
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 222.68
+Training rv-bucket 9 [82.0369, 82.938) with 200 queries.
+Average Recall: 0.9325
+Initial average recall with ef=100: 0.933005
+Average Recall: 0.9448
+Initial average recall with ef=150: 0.945699
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 196.81
+Training rv-bucket 10 [82.938, 83.7453) with 200 queries.
+Average Recall: 0.93485
+Initial average recall with ef=100: 0.934869
+Average Recall: 0.94745
+Initial average recall with ef=150: 0.94801
 Recall diff is too small, break.
-Weighted average ef: 341.415
-Training rv-bucket 2 [75.6892, 77.601) with 200 queries.
-Average Recall: 0.89965
-Initial average recall with ef=100: 0.89965
-Average Recall: 0.92805
-Initial average recall with ef=150: 0.92805
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 158.76
+Training rv-bucket 11 [83.7453, 84.625) with 200 queries.
+Average Recall: 0.9366
+Initial average recall with ef=100: 0.938206
+Average Recall: 0.94695
+Initial average recall with ef=150: 0.949239
 Recall diff is too small, break.
 Recall diff is too small, break.
-Weighted average ef: 336.75
-Training rv-bucket 3 [77.601, 79.1329) with 200 queries.
-Average Recall: 0.91605
-Initial average recall with ef=100: 0.91605
-Average Recall: 0.93495
-Initial average recall with ef=150: 0.93495
 Recall diff is too small, break.
+Weighted average ef: 165.75
+Training rv-bucket 12 [84.625, 85.6844) with 200 queries.
+Average Recall: 0.9429
+Initial average recall with ef=100: 0.943957
+Average Recall: 0.9514
+Initial average recall with ef=150: 0.952941
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
-Weighted average ef: 285.54
-Training rv-bucket 4 [79.1329, 80.724) with 200 queries.
-Average Recall: 0.9218
-Initial average recall with ef=100: 0.9218
-Average Recall: 0.941
-Initial average recall with ef=150: 0.941
+Weighted average ef: 151.5
+Training rv-bucket 13 [85.6844, 87.0733) with 200 queries.
+Average Recall: 0.94575
+Initial average recall with ef=100: 0.947337
+Average Recall: 0.95185
+Initial average recall with ef=150: 0.953967
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
+Weighted average ef: 114.51
+Training rv-bucket 14 [87.0733, inf) with 200 queries.
+Average Recall: 0.953101
+Initial average recall with ef=100: 0.957414
+Average Recall: 0.957551
+Initial average recall with ef=150: 0.962069
 Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 246
-Training rv-bucket 5 [80.724, 82.0337) with 200 queries.
-Average Recall: 0.92745
-Initial average recall with ef=100: 0.92745
-Average Recall: 0.943
-Initial average recall with ef=150: 0.943
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 237
-Training rv-bucket 6 [82.0337, 83.2382) with 200 queries.
-Average Recall: 0.9342
-Initial average recall with ef=100: 0.9342
-Average Recall: 0.94635
-Initial average recall with ef=150: 0.94635
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 180.41
-Training rv-bucket 7 [83.2382, 84.532) with 200 queries.
-Average Recall: 0.93575
-Initial average recall with ef=100: 0.93575
-Average Recall: 0.94835
-Initial average recall with ef=150: 0.94835
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 173.125
-Training rv-bucket 8 [84.532, 86.3291) with 200 queries.
-Average Recall: 0.94115
-Initial average recall with ef=100: 0.94115
-Average Recall: 0.94935
-Initial average recall with ef=150: 0.94935
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 174.73
-Training rv-bucket 9 [86.3291, inf) with 200 queries.
-Average Recall: 0.9512
-Initial average recall with ef=100: 0.9512
-Average Recall: 0.9562
-Initial average recall with ef=150: 0.9562
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 116.4
+Weighted average ef: 93.045
+Finished building table for sift-128-euclidean
 Starting adaptive ef tests...
 
 
@@ -358,18 +389,18 @@ Using AVX512 Inner Product distance
 Index loaded
 Dimension of space:96
 Data size of space:384
-****Weighted average ef: 246
-Search time: 10693 ms
-Search time: 8781 ms
-Search time: 8817 ms
-Average Recall: 0.981296
+****Weighted average ef: 232
+Search time: 9705 ms
+Search time: 8031 ms
+Search time: 9091 ms
+Average Recall: 0.980121
 5th percentile recall: 0.93
 1st percentile recall: 0.89
-Median search time: 8817 ms
-Search times: 8781 ms, 8817 ms, 10693 ms, 
+Median search time: 9091 ms
+Search times: 8031 ms, 9091 ms, 9705 ms, 
 deep-image-96-angular experiment results:
 statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-1025, 8817, 0.981296, 0.93, 0.89, 5821, 8768, 9839
+1025, 9091, 0.980121, 0.93, 0.89, 5532, 8685, 9830
 Experiment finished
 Adaptive EF Analysis for dataset: deep-image-96-angular
 
@@ -378,42 +409,42 @@ ef: 300
 Average Recall: 0.734045
 5th percentile recall: 0.45
 1st percentile recall: 0.32
-Median search time: 3690 ms
-Search times: 3628 ms, 3690 ms, 4761 ms, 
+Median search time: 3963 ms
+Search times: 2792 ms, 3963 ms, 3981 ms, 
 deep-image-96-angular experiment results:
 ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-300, 3690, 0.734045, 0.45, 0.32, 95, 464, 1409
+300, 3963, 0.734045, 0.45, 0.32, 95, 464, 1409
 Experiment finished
 ef: 100
 Average Recall: 0.858172
 5th percentile recall: 0.6
 1st percentile recall: 0.46
-Median search time: 2255 ms
-Search times: 2238 ms, 2255 ms, 2280 ms, 
+Median search time: 2471 ms
+Search times: 2449 ms, 2471 ms, 2475 ms, 
 ef: 200
 Average Recall: 0.935349
 5th percentile recall: 0.76
 1st percentile recall: 0.62
-Median search time: 4216 ms
-Search times: 4154 ms, 4216 ms, 4242 ms, 
+Median search time: 4587 ms
+Search times: 4575 ms, 4587 ms, 4635 ms, 
 ef: 400
 Average Recall: 0.974592
 5th percentile recall: 0.88
 1st percentile recall: 0.78
-Median search time: 8034 ms
-Search times: 7837 ms, 8034 ms, 8949 ms, 
+Median search time: 8459 ms
+Search times: 7456 ms, 8459 ms, 8584 ms, 
 ef: 800
 Average Recall: 0.99121
 5th percentile recall: 0.95
 1st percentile recall: 0.89
-Median search time: 14681 ms
-Search times: 14605 ms, 14681 ms, 15702 ms, 
+Median search time: 14972 ms
+Search times: 14937 ms, 14972 ms, 15963 ms, 
 deep-image-96-angular experiment results:
 ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-100, 2255, 0.858172, 0.6, 0.46, 1331, 2752, 4550
-200, 4216, 0.935349, 0.76, 0.62, 3591, 5682, 7579
-400, 8034, 0.974592, 0.88, 0.78, 6289, 8232, 9251
-800, 14681, 0.99121, 0.95, 0.89, 8379, 9441, 9858
+100, 2471, 0.858172, 0.6, 0.46, 1331, 2752, 4550
+200, 4587, 0.935349, 0.76, 0.62, 3591, 5682, 7579
+400, 8459, 0.974592, 0.88, 0.78, 6289, 8232, 9251
+800, 14972, 0.99121, 0.95, 0.89, 8379, 9441, 9858
 Experiment finished
 Dataset: glove-100-angular
 Metric: cd
@@ -426,18 +457,18 @@ Using AVX512 Inner Product distance
 Index loaded
 Dimension of space:100
 Data size of space:400
-****Weighted average ef: 1473
-Search time: 42944 ms
-Search time: 43527 ms
-Search time: 41215 ms
-Average Recall: 0.97865
+****Weighted average ef: 1432
+Search time: 41758 ms
+Search time: 41141 ms
+Search time: 39903 ms
+Average Recall: 0.978526
 5th percentile recall: 0.91
 1st percentile recall: 0.87
-Median search time: 42944 ms
-Search times: 41215 ms, 42944 ms, 43527 ms, 
+Median search time: 41141 ms
+Search times: 39903 ms, 41141 ms, 41758 ms, 
 glove-100-angular experiment results:
 statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-1025, 42944, 0.97865, 0.91, 0.87, 6020, 8180, 9625
+1025, 41141, 0.978526, 0.91, 0.87, 5974, 8141, 9643
 Experiment finished
 Adaptive EF Analysis for dataset: glove-100-angular
 
@@ -446,112 +477,112 @@ ef: 300
 Average Recall: 0.582264
 5th percentile recall: 0.13
 1st percentile recall: 0.05
-Median search time: 3833 ms
-Search times: 3703 ms, 3833 ms, 3933 ms, 
+Median search time: 4005 ms
+Search times: 4002 ms, 4005 ms, 4022 ms, 
 glove-100-angular experiment results:
 ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-300, 3833, 0.582264, 0.13, 0.05, 61, 365, 1093
+300, 4005, 0.582264, 0.13, 0.05, 61, 365, 1093
 Experiment finished
 ef: 100
 Average Recall: 0.69279
 5th percentile recall: 0.22
 1st percentile recall: 0.13
-Median search time: 2150 ms
-Search times: 2066 ms, 2150 ms, 2180 ms, 
+Median search time: 2008 ms
+Search times: 2003 ms, 2008 ms, 2034 ms, 
 ef: 200
 Average Recall: 0.780761
 5th percentile recall: 0.34
 1st percentile recall: 0.24
-Median search time: 3973 ms
-Search times: 3846 ms, 3973 ms, 4066 ms, 
+Median search time: 3847 ms
+Search times: 2736 ms, 3847 ms, 3925 ms, 
 ef: 400
 Average Recall: 0.8506
 5th percentile recall: 0.48
 1st percentile recall: 0.37
-Median search time: 6966 ms
-Search times: 6878 ms, 6966 ms, 8237 ms, 
+Median search time: 7316 ms
+Search times: 6087 ms, 7316 ms, 7392 ms, 
 ef: 800
 Average Recall: 0.905966
 5th percentile recall: 0.63
 1st percentile recall: 0.52
-Median search time: 13685 ms
-Search times: 13329 ms, 13685 ms, 14435 ms, 
+Median search time: 14152 ms
+Search times: 13294 ms, 14152 ms, 14480 ms, 
 ef: 1600
 Average Recall: 0.947894
 5th percentile recall: 0.77
 1st percentile recall: 0.68
-Median search time: 26804 ms
-Search times: 26696 ms, 26804 ms, 26951 ms, 
+Median search time: 25983 ms
+Search times: 25872 ms, 25983 ms, 27115 ms, 
 ef: 2000
 Average Recall: 0.958151
 5th percentile recall: 0.81
 1st percentile recall: 0.73
-Median search time: 32427 ms
-Search times: 32379 ms, 32427 ms, 32472 ms, 
+Median search time: 31892 ms
+Search times: 31887 ms, 31892 ms, 31930 ms, 
 ef: 2400
 Average Recall: 0.96554
 5th percentile recall: 0.84
 1st percentile recall: 0.77
-Median search time: 37974 ms
-Search times: 37759 ms, 37974 ms, 37978 ms, 
+Median search time: 38166 ms
+Search times: 36697 ms, 38166 ms, 39589 ms, 
 ef: 2800
 Average Recall: 0.971168
 5th percentile recall: 0.86
 1st percentile recall: 0.8
-Median search time: 44728 ms
-Search times: 43915 ms, 44728 ms, 44758 ms, 
+Median search time: 44583 ms
+Search times: 44208 ms, 44583 ms, 44825 ms, 
 ef: 3200
 Average Recall: 0.975495
 5th percentile recall: 0.88
 1st percentile recall: 0.82
-Median search time: 50156 ms
-Search times: 50013 ms, 50156 ms, 50769 ms, 
+Median search time: 49221 ms
+Search times: 48950 ms, 49221 ms, 53236 ms, 
 ef: 3600
 Average Recall: 0.978852
 5th percentile recall: 0.9
 1st percentile recall: 0.84
-Median search time: 55715 ms
-Search times: 54752 ms, 55715 ms, 56332 ms, 
+Median search time: 55070 ms
+Search times: 54846 ms, 55070 ms, 55929 ms, 
 ef: 4000
 Average Recall: 0.981573
 5th percentile recall: 0.91
 1st percentile recall: 0.86
-Median search time: 61024 ms
-Search times: 60129 ms, 61024 ms, 61314 ms, 
+Median search time: 60764 ms
+Search times: 60656 ms, 60764 ms, 60884 ms, 
 ef: 4400
 Average Recall: 0.983881
 5th percentile recall: 0.92
 1st percentile recall: 0.87
-Median search time: 66451 ms
-Search times: 66444 ms, 66451 ms, 66930 ms, 
+Median search time: 66486 ms
+Search times: 64963 ms, 66486 ms, 66548 ms, 
 ef: 4800
 Average Recall: 0.985826
 5th percentile recall: 0.93
 1st percentile recall: 0.88
-Median search time: 72056 ms
-Search times: 71637 ms, 72056 ms, 72507 ms, 
+Median search time: 71634 ms
+Search times: 71291 ms, 71634 ms, 72006 ms, 
 ef: 5200
 Average Recall: 0.987418
 5th percentile recall: 0.94
 1st percentile recall: 0.9
-Median search time: 77587 ms
-Search times: 77433 ms, 77587 ms, 78329 ms, 
+Median search time: 78466 ms
+Search times: 77472 ms, 78466 ms, 78655 ms, 
 glove-100-angular experiment results:
 ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-100, 2150, 0.69279, 0.22, 0.13, 903, 1807, 2837
-200, 3973, 0.780761, 0.34, 0.24, 2084, 3132, 4250
-400, 6966, 0.8506, 0.48, 0.37, 3178, 4334, 5490
-800, 13685, 0.905966, 0.63, 0.52, 4215, 5494, 6665
-1600, 26804, 0.947894, 0.77, 0.68, 5304, 6636, 7842
-2000, 32427, 0.958151, 0.81, 0.73, 5673, 7062, 8270
-2400, 37974, 0.96554, 0.84, 0.77, 5989, 7386, 8618
-2800, 44728, 0.971168, 0.86, 0.8, 6266, 7694, 8947
-3200, 50156, 0.975495, 0.88, 0.82, 6495, 7978, 9185
-3600, 55715, 0.978852, 0.9, 0.84, 6713, 8227, 9394
-4000, 61024, 0.981573, 0.91, 0.86, 6921, 8440, 9548
-4400, 66451, 0.983881, 0.92, 0.87, 7133, 8624, 9681
-4800, 72056, 0.985826, 0.93, 0.88, 7338, 8824, 9768
-5200, 77587, 0.987418, 0.94, 0.9, 7510, 8999, 9835
+100, 2008, 0.69279, 0.22, 0.13, 903, 1807, 2837
+200, 3847, 0.780761, 0.34, 0.24, 2084, 3132, 4250
+400, 7316, 0.8506, 0.48, 0.37, 3178, 4334, 5490
+800, 14152, 0.905966, 0.63, 0.52, 4215, 5494, 6665
+1600, 25983, 0.947894, 0.77, 0.68, 5304, 6636, 7842
+2000, 31892, 0.958151, 0.81, 0.73, 5673, 7062, 8270
+2400, 38166, 0.96554, 0.84, 0.77, 5989, 7386, 8618
+2800, 44583, 0.971168, 0.86, 0.8, 6266, 7694, 8947
+3200, 49221, 0.975495, 0.88, 0.82, 6495, 7978, 9185
+3600, 55070, 0.978852, 0.9, 0.84, 6713, 8227, 9394
+4000, 60764, 0.981573, 0.91, 0.86, 6921, 8440, 9548
+4400, 66486, 0.983881, 0.92, 0.87, 7133, 8624, 9681
+4800, 71634, 0.985826, 0.93, 0.88, 7338, 8824, 9768
+5200, 78466, 0.987418, 0.94, 0.9, 7510, 8999, 9835
 Experiment finished
 Dataset: sift-128-euclidean
 Metric: l2
@@ -562,18 +593,18 @@ Neighbors dimensions: 10000 x 100
 Index loaded
 Dimension of space:128
 Data size of space:512
-****Weighted average ef: 244
-Search time: 6045 ms
-Search time: 6191 ms
-Search time: 6142 ms
-Average Recall: 0.993727
-5th percentile recall: 0.97
-1st percentile recall: 0.94
-Median search time: 6142 ms
-Search times: 6045 ms, 6142 ms, 6191 ms, 
+****Weighted average ef: 216
+Search time: 4537 ms
+Search time: 5865 ms
+Search time: 5969 ms
+Average Recall: 0.991017
+5th percentile recall: 0.96
+1st percentile recall: 0.92
+Median search time: 5865 ms
+Search times: 4537 ms, 5865 ms, 5969 ms, 
 sift-128-euclidean experiment results:
 statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-1025, 6142, 0.993727, 0.97, 0.94, 8543, 9785, 9993
+1025, 5865, 0.991017, 0.96, 0.92, 7932, 9587, 9955
 Experiment finished
 Adaptive EF Analysis for dataset: sift-128-euclidean
 
@@ -582,33 +613,33 @@ ef: 300
 Average Recall: 0.807587
 5th percentile recall: 0.62
 1st percentile recall: 0.53
-Median search time: 3166 ms
-Search times: 3157 ms, 3166 ms, 3227 ms, 
+Median search time: 3487 ms
+Search times: 3387 ms, 3487 ms, 3579 ms, 
 sift-128-euclidean experiment results:
 ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-300, 3166, 0.807587, 0.62, 0.53, 96, 595, 1967
+300, 3487, 0.807587, 0.62, 0.53, 96, 595, 1967
 Experiment finished
 ef: 100
 Average Recall: 0.926805
 5th percentile recall: 0.79
 1st percentile recall: 0.72
-Median search time: 1783 ms
-Search times: 1776 ms, 1783 ms, 1787 ms, 
+Median search time: 1943 ms
+Search times: 1943 ms, 1943 ms, 2036 ms, 
 ef: 200
 Average Recall: 0.979195
 5th percentile recall: 0.92
 1st percentile recall: 0.87
-Median search time: 3348 ms
-Search times: 3335 ms, 3348 ms, 3369 ms, 
+Median search time: 3672 ms
+Search times: 1945 ms, 3672 ms, 3765 ms, 
 ef: 400
 Average Recall: 0.995709
 5th percentile recall: 0.98
 1st percentile recall: 0.95
-Median search time: 6242 ms
-Search times: 6134 ms, 6242 ms, 7233 ms, 
+Median search time: 6897 ms
+Search times: 6777 ms, 6897 ms, 6967 ms, 
 sift-128-euclidean experiment results:
 ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
-100, 1783, 0.926805, 0.79, 0.72, 2003, 4251, 6988
-200, 3348, 0.979195, 0.92, 0.87, 5826, 8450, 9688
-400, 6242, 0.995709, 0.98, 0.95, 9056, 9888, 9997
+100, 1943, 0.926805, 0.79, 0.72, 2003, 4251, 6988
+200, 3672, 0.979195, 0.92, 0.87, 5826, 8450, 9688
+400, 6897, 0.995709, 0.98, 0.95, 9056, 9888, 9997
 Experiment finished

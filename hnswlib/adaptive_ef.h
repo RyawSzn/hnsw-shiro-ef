@@ -822,6 +822,7 @@ namespace hnswdis
                   const hnswdis::ApproximatedScoreCalculator &score_cal,
                   const size_t ef,
                   const size_t statics_length,
+                  const int min_queries_per_score,
                   const bool verbose = false)
         {
             alg_hnsw->setEf(ef);
@@ -865,6 +866,17 @@ namespace hnswdis
                 grouped_recalls[score_key].push_back(recalls[i]);
 
                 score_to_query_map[score_key].push_back(i); // for tracking the score group of queries
+            }
+
+            if (min_queries_per_score > 0) {
+                for (auto it = grouped_recalls.begin(); it != grouped_recalls.end(); ) {
+                    if (it->second.size() < static_cast<size_t>(min_queries_per_score)) {
+                        score_to_query_map.erase(it->first);
+                        it = grouped_recalls.erase(it);
+                    } else {
+                        ++it;
+                    }
+                }
             }
 
             // Compute statistics for each score group
@@ -920,7 +932,8 @@ namespace hnswdis
             const std::string &metric,
             const size_t ef,
             const float alpha, const float gamma,
-            const size_t statics_length)
+            const size_t statics_length,
+            const int min_queries_per_score = 3)
         {
             std::shared_ptr<hnswdis::MatrixXf> query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
             MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
@@ -934,7 +947,8 @@ namespace hnswdis
                  k,
                  score_cal,
                  ef,
-                 statics_length);
+                 statics_length,
+                 min_queries_per_score);
         }
 
         RecallEstimator(
@@ -945,7 +959,8 @@ namespace hnswdis
             size_t k,
             hnswdis::ApproximatedScoreCalculator &score_cal,
             const size_t ef,
-            const size_t statics_length)
+            const size_t statics_length,
+            const int min_queries_per_score = 3)
         {
             init(alg_hnsw,
                  data_vectors,
@@ -954,7 +969,8 @@ namespace hnswdis
                  k,
                  score_cal,
                  ef,
-                 statics_length);
+                 statics_length,
+                 min_queries_per_score);
         }
 
         RecallEstimator(
@@ -1199,19 +1215,20 @@ namespace hnswdis
                   const size_t statics_length,
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-                  EfRecallTable &out_table)
+                  EfRecallTable &out_table,
+                  int min_queries_per_score = 3)
         {
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
             size_t first_ef = k;
             size_t second_ef = static_cast<size_t>(1.5 * first_ef);
 
-            RecallEstimator first_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, first_ef, statics_length);
+            RecallEstimator first_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, first_ef, statics_length, min_queries_per_score);
             add_ef_recall(first_ef, first_recall_estimator, out_table);
             float first_average_recall = compute_average_recall(first_recall_estimator);
             std::cout << "Initial average recall with ef=" << first_ef << ": " << first_average_recall << std::endl;
 
-            RecallEstimator second_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, second_ef, statics_length);
+            RecallEstimator second_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, second_ef, statics_length, min_queries_per_score);
             add_ef_recall(second_ef, second_recall_estimator, out_table);
             float second_average_recall = compute_average_recall(second_recall_estimator);
             std::cout << "Initial average recall with ef=" << second_ef << ": " << second_average_recall << std::endl;
@@ -1416,7 +1433,8 @@ namespace hnswdis
             wae = weighted_average_ef;
         }
 
-        void add_ef_recall(const int ef, const RecallEstimator &recall_estimator, EfRecallTable &out_table)
+        void add_ef_recall(const int ef, const RecallEstimator &recall_estimator, EfRecallTable &out_table,
+                  int min_queries_per_score = 3)
         {
             const std::vector<std::pair<int, float>> &score_recall = get_score_recall(recall_estimator);
             if (out_table.empty())
@@ -1481,7 +1499,8 @@ namespace hnswdis
             const size_t statics_length,
             const std::string &samplings_filename,
             int ef_upper_bound,
-            int sampling_size
+            int sampling_size,
+            int min_queries_per_score = 3
         ) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
 
@@ -1513,7 +1532,7 @@ namespace hnswdis
                 sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
             }
 
-            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_recall_estimators);
+            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_recall_estimators, min_queries_per_score);
         }
 
         EfAdapter(
@@ -1526,9 +1545,10 @@ namespace hnswdis
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            int ef_upper_bound) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
+            int ef_upper_bound,
+            int min_queries_per_score = 3) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
-            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators);
+            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators, min_queries_per_score);
         }
 
         EfAdapter(
@@ -1546,7 +1566,8 @@ namespace hnswdis
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            const int n_cv_tables)
+            const int n_cv_tables,
+            int min_queries_per_score = 3)
         {
             const int n = query_vectors->rows();
 
@@ -1557,47 +1578,92 @@ namespace hnswdis
             std::iota(order.begin(), order.end(), 0);
             std::sort(order.begin(), order.end(), [&](int a, int b) { return cvs[a] < cvs[b]; });
 
-            int actual_n_cv_tables = std::max(1, n_cv_tables);
-            int chunk = n / actual_n_cv_tables;
-
-            cv_centers.clear();
-            for (int t = 0; t < actual_n_cv_tables; ++t) {
-                int lo = t * chunk;
-                int hi = (t == actual_n_cv_tables - 1) ? n : (t + 1) * chunk;
-                cv_centers.push_back(cvs[order[(lo + hi) / 2]]);
-            }
-
-            cv_tables.resize(actual_n_cv_tables);
-
             float accumulated_wae = 0.0f;
-            for (int t = 0; t < actual_n_cv_tables; ++t)
-            {
-                int lo = t * chunk;
-                int hi = (t == actual_n_cv_tables - 1) ? n : (t + 1) * chunk;
 
-                int bucket_size = hi - lo;
-                MatrixXf bucket_queries(bucket_size, query_vectors->cols());
-                MatrixXi bucket_gt(bucket_size, ground_truth_ptr->cols());
-                for (int r = 0; r < bucket_size; ++r)
-                {
-                    bucket_queries.row(r) = query_vectors->row(order[lo + r]);
-                    bucket_gt.row(r)      = ground_truth_ptr->row(order[lo + r]);
+            if (n_cv_tables == 0) {
+                std::map<int, std::vector<int>> cv_groups;
+                for (int i = 0; i < n; ++i) {
+                    int cv_score = std::max(0, std::min(100, static_cast<int>(cvs[i])));
+                    cv_groups[cv_score].push_back(i);
                 }
 
-                std::cout << "Training rv-bucket " << t
-                          << " [" << cvs[order[lo]] << ", "
-                          << (t < actual_n_cv_tables - 1 ? cvs[order[hi]] : std::numeric_limits<float>::infinity())
-                          << ") with " << bucket_size << " queries." << std::endl;
+                for (auto it = cv_groups.begin(); it != cv_groups.end(); ) {
+                    if (it->second.size() < static_cast<size_t>(std::max(1, min_queries_per_score))) {
+                        it = cv_groups.erase(it);
+                    } else {
+                        ++it;
+                    }
+                }
 
-                init(alg_hnsw,
-                     data_vectors,
-                     k, metric, alpha, gamma, statics_length,
-                     std::make_shared<MatrixXf>(bucket_queries),
-                     std::make_shared<MatrixXi>(bucket_gt),
-                     cv_tables[t]);
+                cv_tables.resize(cv_groups.size());
+                cv_centers.clear();
 
-                accumulated_wae += wae * ((float)bucket_size / n);
+                int t = 0;
+                for (const auto &[cv_score, q_indices] : cv_groups) {
+                    cv_centers.push_back(cv_score / 100.0f);
+                    int bucket_size = q_indices.size();
+
+                    MatrixXf bucket_queries(bucket_size, query_vectors->cols());
+                    MatrixXi bucket_gt(bucket_size, ground_truth_ptr->cols());
+
+                    for (int i = 0; i < bucket_size; ++i) {
+                        bucket_queries.row(i) = query_vectors->row(q_indices[i]);
+                        bucket_gt.row(i) = ground_truth_ptr->row(q_indices[i]);
+                    }
+
+                    std::cout << "Training absolute cv-matrix bin " << cv_score << " with " << bucket_size << " queries." << std::endl;
+
+                    init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length,
+                         std::make_shared<MatrixXf>(bucket_queries),
+                         std::make_shared<MatrixXi>(bucket_gt),
+                         cv_tables[t], min_queries_per_score);
+
+                    accumulated_wae += wae * ((float)bucket_size / n);
+                    t++;
+                }
+            } else {
+                int actual_n_cv_tables = std::max(1, n_cv_tables);
+                int chunk = n / actual_n_cv_tables;
+
+                cv_centers.clear();
+                for (int t = 0; t < actual_n_cv_tables; ++t) {
+                    int lo = t * chunk;
+                    int hi = (t == actual_n_cv_tables - 1) ? n : (t + 1) * chunk;
+                    cv_centers.push_back(cvs[order[(lo + hi) / 2]]);
+                }
+
+                cv_tables.resize(actual_n_cv_tables);
+
+                for (int t = 0; t < actual_n_cv_tables; ++t)
+                {
+                    int lo = t * chunk;
+                    int hi = (t == actual_n_cv_tables - 1) ? n : (t + 1) * chunk;
+
+                    int bucket_size = hi - lo;
+                    MatrixXf bucket_queries(bucket_size, query_vectors->cols());
+                    MatrixXi bucket_gt(bucket_size, ground_truth_ptr->cols());
+                    for (int r = 0; r < bucket_size; ++r)
+                    {
+                        bucket_queries.row(r) = query_vectors->row(order[lo + r]);
+                        bucket_gt.row(r)      = ground_truth_ptr->row(order[lo + r]);
+                    }
+
+                    std::cout << "Training rv-bucket " << t
+                              << " [" << cvs[order[lo]] << ", "
+                              << (t < actual_n_cv_tables - 1 ? cvs[order[hi]] : std::numeric_limits<float>::infinity())
+                              << ") with " << bucket_size << " queries." << std::endl;
+
+                    init(alg_hnsw,
+                         data_vectors,
+                         k, metric, alpha, gamma, statics_length,
+                         std::make_shared<MatrixXf>(bucket_queries),
+                         std::make_shared<MatrixXi>(bucket_gt),
+                         cv_tables[t], min_queries_per_score);
+
+                    accumulated_wae += wae * ((float)bucket_size / n);
+                }
             }
+
             wae = accumulated_wae;
         }
 
