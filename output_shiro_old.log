@@ -1,0 +1,258 @@
+Starting experiments for Ada-ef hnswdis library...
+
+
+EXPERIMENTS_ROOT: /home/ryawszn/experiments/2metric
+Starting adaptive ef tests...
+
+
+Dataset: deep-image-96-angular
+Metric: cd
+Truncation ratio: 0.25
+Normalize the data vectors
+Data vectors dimensions: 9990000 x 96
+Query vectors dimensions: 10000 x 96
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:96
+Data size of space:384
+****Weighted average ef: 242
+Search time: 8823 ms
+Search time: 11353 ms
+Search time: 8343 ms
+Average Recall: 0.979282
+5th percentile recall: 0.93
+1st percentile recall: 0.89
+Median search time: 8823 ms
+Search times: 8343 ms, 8823 ms, 11353 ms,
+deep-image-96-angular experiment results:
+statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+1025, 8823, 0.979282, 0.93, 0.89, 5492, 8549, 9790
+Experiment finished
+Adaptive EF Analysis for dataset: deep-image-96-angular
+
+Search with Patience in Proximity for dataset: deep-image-96-angular
+ef: 300
+Average Recall: 0.734045
+5th percentile recall: 0.45
+1st percentile recall: 0.32
+Median search time: 3502 ms
+Search times: 3494 ms, 3502 ms, 3515 ms,
+deep-image-96-angular experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+300, 3502, 0.734045, 0.45, 0.32, 95, 464, 1409
+Experiment finished
+ef: 100
+Average Recall: 0.858172
+5th percentile recall: 0.6
+1st percentile recall: 0.46
+Median search time: 2260 ms
+Search times: 2252 ms, 2260 ms, 5200 ms,
+ef: 200
+Average Recall: 0.935349
+5th percentile recall: 0.76
+1st percentile recall: 0.62
+Median search time: 4162 ms
+Search times: 4159 ms, 4162 ms, 4170 ms,
+ef: 400
+Average Recall: 0.974592
+5th percentile recall: 0.88
+1st percentile recall: 0.78
+Median search time: 8183 ms
+Search times: 7841 ms, 8183 ms, 10790 ms,
+ef: 800
+Average Recall: 0.99121
+5th percentile recall: 0.95
+1st percentile recall: 0.89
+Median search time: 14824 ms
+Search times: 14645 ms, 14824 ms, 17696 ms,
+deep-image-96-angular experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+100, 2260, 0.858172, 0.6, 0.46, 1331, 2752, 4550
+200, 4162, 0.935349, 0.76, 0.62, 3591, 5682, 7579
+400, 8183, 0.974592, 0.88, 0.78, 6289, 8232, 9251
+800, 14824, 0.99121, 0.95, 0.89, 8379, 9441, 9858
+Experiment finished
+Dataset: glove-100-angular
+Metric: cd
+Truncation ratio: 0.25
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+****Weighted average ef: 1468
+Search time: 47817 ms
+Search time: 44058 ms
+Search time: 46603 ms
+Average Recall: 0.97878
+5th percentile recall: 0.92
+1st percentile recall: 0.87
+Median search time: 46603 ms
+Search times: 44058 ms, 46603 ms, 47817 ms,
+glove-100-angular experiment results:
+statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+1025, 46603, 0.97878, 0.92, 0.87, 6012, 8184, 9651
+Experiment finished
+Adaptive EF Analysis for dataset: glove-100-angular
+
+Search with Patience in Proximity for dataset: glove-100-angular
+ef: 300
+Average Recall: 0.582264
+5th percentile recall: 0.13
+1st percentile recall: 0.05
+Median search time: 3522 ms
+Search times: 3521 ms, 3522 ms, 3525 ms,
+glove-100-angular experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+300, 3522, 0.582264, 0.13, 0.05, 61, 365, 1093
+Experiment finished
+ef: 100
+Average Recall: 0.69279
+5th percentile recall: 0.22
+1st percentile recall: 0.13
+Median search time: 1894 ms
+Search times: 1882 ms, 1894 ms, 1941 ms,
+ef: 200
+Average Recall: 0.780761
+5th percentile recall: 0.34
+1st percentile recall: 0.24
+Median search time: 3688 ms
+Search times: 3656 ms, 3688 ms, 6601 ms,
+ef: 400
+Average Recall: 0.8506
+5th percentile recall: 0.48
+1st percentile recall: 0.37
+Median search time: 7417 ms
+Search times: 6950 ms, 7417 ms, 7472 ms,
+ef: 800
+Average Recall: 0.905966
+5th percentile recall: 0.63
+1st percentile recall: 0.52
+Median search time: 16489 ms
+Search times: 13465 ms, 16489 ms, 16659 ms,
+ef: 1600
+Average Recall: 0.947894
+5th percentile recall: 0.77
+1st percentile recall: 0.68
+Median search time: 28715 ms
+Search times: 25661 ms, 28715 ms, 28717 ms,
+ef: 2000
+Average Recall: 0.958151
+5th percentile recall: 0.81
+1st percentile recall: 0.73
+Median search time: 35592 ms
+Search times: 34956 ms, 35592 ms, 35743 ms,
+ef: 2400
+Average Recall: 0.96554
+5th percentile recall: 0.84
+1st percentile recall: 0.77
+Median search time: 39778 ms
+Search times: 39651 ms, 39778 ms, 40392 ms,
+ef: 2800
+Average Recall: 0.971168
+5th percentile recall: 0.86
+1st percentile recall: 0.8
+Median search time: 45752 ms
+Search times: 45737 ms, 45752 ms, 48292 ms,
+ef: 3200
+Average Recall: 0.975495
+5th percentile recall: 0.88
+1st percentile recall: 0.82
+Median search time: 54205 ms
+Search times: 51271 ms, 54205 ms, 54331 ms,
+ef: 3600
+Average Recall: 0.978852
+5th percentile recall: 0.9
+1st percentile recall: 0.84
+Median search time: 59713 ms
+Search times: 56794 ms, 59713 ms, 60094 ms,
+ef: 4000
+Average Recall: 0.981573
+5th percentile recall: 0.91
+1st percentile recall: 0.86
+Median search time: 65507 ms
+Search times: 62530 ms, 65507 ms, 65676 ms,
+ef: 4400
+Average Recall: 0.983881
+5th percentile recall: 0.92
+1st percentile recall: 0.87
+Median search time: 70885 ms
+Search times: 70532 ms, 70885 ms, 70977 ms,
+glove-100-angular experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+100, 1894, 0.69279, 0.22, 0.13, 903, 1807, 2837
+200, 3688, 0.780761, 0.34, 0.24, 2084, 3132, 4250
+400, 7417, 0.8506, 0.48, 0.37, 3178, 4334, 5490
+800, 16489, 0.905966, 0.63, 0.52, 4215, 5494, 6665
+1600, 28715, 0.947894, 0.77, 0.68, 5304, 6636, 7842
+2000, 35592, 0.958151, 0.81, 0.73, 5673, 7062, 8270
+2400, 39778, 0.96554, 0.84, 0.77, 5989, 7386, 8618
+2800, 45752, 0.971168, 0.86, 0.8, 6266, 7694, 8947
+3200, 54205, 0.975495, 0.88, 0.82, 6495, 7978, 9185
+3600, 59713, 0.978852, 0.9, 0.84, 6713, 8227, 9394
+4000, 65507, 0.981573, 0.91, 0.86, 6921, 8440, 9548
+4400, 70885, 0.983881, 0.92, 0.87, 7133, 8624, 9681
+Experiment finished
+Dataset: sift-128-euclidean
+Metric: l2
+Truncation ratio: 0.25
+Data vectors dimensions: 1000000 x 128
+Query vectors dimensions: 10000 x 128
+Neighbors dimensions: 10000 x 100
+Index loaded
+Dimension of space:128
+Data size of space:512
+****Weighted average ef: 248
+Search time: 7099 ms
+Search time: 6163 ms
+Search time: 6167 ms
+Average Recall: 0.993746
+5th percentile recall: 0.97
+1st percentile recall: 0.94
+Median search time: 6167 ms
+Search times: 6163 ms, 6167 ms, 7099 ms,
+sift-128-euclidean experiment results:
+statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+1025, 6167, 0.993746, 0.97, 0.94, 8548, 9786, 9993
+Experiment finished
+Adaptive EF Analysis for dataset: sift-128-euclidean
+
+Search with Patience in Proximity for dataset: sift-128-euclidean
+ef: 300
+Average Recall: 0.807587
+5th percentile recall: 0.62
+1st percentile recall: 0.53
+Median search time: 3215 ms
+Search times: 3188 ms, 3215 ms, 3217 ms,
+sift-128-euclidean experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+300, 3215, 0.807587, 0.62, 0.53, 96, 595, 1967
+Experiment finished
+ef: 100
+Average Recall: 0.926805
+5th percentile recall: 0.79
+1st percentile recall: 0.72
+Median search time: 1873 ms
+Search times: 1867 ms, 1873 ms, 4814 ms,
+ef: 200
+Average Recall: 0.979195
+5th percentile recall: 0.92
+1st percentile recall: 0.87
+Median search time: 3549 ms
+Search times: 3485 ms, 3549 ms, 3846 ms,
+ef: 400
+Average Recall: 0.995709
+5th percentile recall: 0.98
+1st percentile recall: 0.95
+Median search time: 6971 ms
+Search times: 6661 ms, 6971 ms, 8274 ms,
+sift-128-euclidean experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+100, 1873, 0.926805, 0.79, 0.72, 2003, 4251, 6988
+200, 3549, 0.979195, 0.92, 0.87, 5826, 8450, 9688
+400, 6971, 0.995709, 0.98, 0.95, 9056, 9888, 9997
+Experiment finished
