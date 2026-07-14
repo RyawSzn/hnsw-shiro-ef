@@ -77,9 +77,8 @@ def parse_log(filepath):
     return datasets
 
 
-shiro = parse_log("./log/output_shiro.log")
-ada = parse_log("./log/output_ada.log")
-sift_log = parse_log("./log/output_shiro.log")
+shiro = parse_log("research/log/output_shiro_sift.log")
+ada = parse_log("research/log/output_ada.log")
 
 datasets_keys = ["deep-image-96-angular", "glove-100-angular", "sift-128-euclidean"]
 
@@ -89,7 +88,7 @@ for idx, ds_name in enumerate(datasets_keys):
     ax = axes[idx]
 
     if ds_name == "sift-128-euclidean":
-        data = sift_log.get(ds_name, {})
+        data = shiro.get(ds_name, {})
 
         bl_efs = sorted(list(data.get("baseline", {}).keys()))
         bl_times_med = []
@@ -316,9 +315,9 @@ for idx, ds_name in enumerate(datasets_keys):
         ax.xaxis.set_major_locator(MultipleLocator(2))
         ax.set_ylim(0.70, 1.01)
         max_time = max(bl_times_med) if bl_times_med else 10
-        if "our_method" in sift_log.get(ds_name, {}):
+        if "our_method" in shiro.get(ds_name, {}):
             max_time = max(
-                max_time, min(sift_log[ds_name]["our_method"]["times"]) / 1000.0
+                max_time, min(shiro[ds_name]["our_method"]["times"]) / 1000.0
             )
         ax.set_xlim(0, max_time * 1.1)
 
@@ -349,5 +348,7 @@ for idx, ds_name in enumerate(datasets_keys):
         ax.legend(handles, labels, fontsize=9, ncol=1, loc="lower right")
 
 plt.tight_layout()
-plt.savefig("visualization_final.png", dpi=300)
-print("Saved to visualization_final.png")
+import os
+os.makedirs("research/img", exist_ok=True)
+plt.savefig("research/img/visualization_final.png", dpi=300)
+print("Saved to research/img/visualization_final.png")

@@ -1248,9 +1248,12 @@ namespace hnswdis
                 auto it = score_to_query_map.find(score);
                 if (it != score_to_query_map.end())
                 {
-                    while (expected_recall - latest_agg_recall > 1e-4f)
+                    int patience = 0;
+                    const int MAX_PATIENCE = 1;
+
+                    while (expected_recall - latest_agg_recall > 1e-5f)
                     {
-                        ef_diff = std::max((int)(ef_diff * (expected_recall - latest_agg_recall) / recall_diff), (int)(k * 0.5));
+                        ef_diff = std::max((int)(ef_diff * (expected_recall - latest_agg_recall) / std::max(recall_diff, 1e-5f)), (int)(k * 0.5));
                         int ef = latest_ef + ef_diff;
 
                         if (ef > ef_upper_bound)
@@ -1302,9 +1305,24 @@ namespace hnswdis
 
                         if (recall_diff < 1e-5f)
                         {
-                            std::cout << "Recall diff is too small, break." << std::endl;
-                            break;
+                            patience++;
+                            if (patience >= MAX_PATIENCE) {
+                                std::cout << "Recall diff is too small for " << MAX_PATIENCE << " consecutive steps, break." << std::endl;
+                                // Pop the useless evaluations that didn't improve recall to avoid inflating ef
+                                for (int p = 0; p < MAX_PATIENCE; ++p) {
+                                    ef_recall_list.pop_back();
+                                }
+                                break;
+                            } else {
+                                // Double the ef_diff to attempt a jump over the plateau
+                                // ef_diff = std::max((int)(ef_diff * 2), (int)(k * 1.5));
+                            }
                         }
+                        else
+                        {
+                            patience = 0; // Reset patience
+                        }
+
                         if (latest_ef == ef_upper_bound)
                             break;
                     }
