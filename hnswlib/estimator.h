@@ -1,6 +1,3 @@
-// ada-ef
-
-// remove some reducdant codes and variables like covariance matrices, distance matrices, etc. that are not used in the estimation process, or like some useless timings while keeping the current logic unchanged
 #pragma once
 
 #include <Eigen/Core>

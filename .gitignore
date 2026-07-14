@@ -4,6 +4,7 @@ dist/
 tmp/
 graphify-out/cache/
 python_bindings/tests/__pycache__/
+research/__pycache__/
 *.pyd
 hnswlib.cpython*.so
 var/

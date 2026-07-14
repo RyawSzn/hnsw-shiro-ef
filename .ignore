@@ -1,2 +1,4 @@
 !.slim/deepwork/
 !.slim/deepwork/**
+!.omo/run-continuation/
+!.omo/run-continuation/**

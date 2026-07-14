@@ -1,5 +1,5 @@
 #include "util.h"
-#include "../hnswlib/adaptive_ef.h"
+#include "../hnswlib/shiro_ef.h"
 #include <filesystem>
 #include <cstdlib>
 
@@ -24,15 +24,15 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_cv_tables, min_q, statics_length
-    {"deep-image-96-angular", "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",     "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"sift-128-euclidean",    "l2", 100, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"msmarco", "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cohere", "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"laion_image", "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"laion_text", "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"sift-128-euclidean",         "l2", 10, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32},
+    // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"laion_text",              "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"cluster_mg_uniform_100d", "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d", "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
+    // {"cluster_mg_zipf_100d",    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -1123,13 +1123,13 @@ void delete_exp(bool setup = false)
     }
 }
 
-void ablation_study_distance_list_size()
+void ablation_study_visited_list_size()
 {
-    std::cout << "Starting ablation study tests: distance list size...\n\n"
+    std::cout << "Starting ablation study tests: visited list size...\n\n"
               << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in shiro-ef offline computation
 
-    std::vector<int> distance_list_sizes = {
+    std::vector<int> visited_list_sizes = {
         1 + 32,                          // 1-hop neighbors on the base layer: M = 16
         1 + 32 + 31 * 32,                // 2-hop neighbors on the base layer: M = 16
         1 + 32 + 31 * 32 + 31 * 32 * 32, // 3-hop neighbors on the base layer: M = 16
@@ -1185,9 +1185,9 @@ void ablation_study_distance_list_size()
         hnswdis::deserialize_samplings(samplings_path, sample_query_vectors, sample_ground_truth, sample_ground_truth_dist);
         std::cout << "Samplings loaded" << std::endl;
 
-        for (const auto statics_length : distance_list_sizes)
+        for (const auto statics_length : visited_list_sizes)
         {
-            std::cout << "\n\nDistance list size: " << statics_length << "\n\n"
+            std::cout << "\n\nVisited list size: " << statics_length << "\n\n"
                       << std::endl;
 
             std::string ef_adaptor_path = (root / "ablation_distance_size" / (dataset + "-D-" + std::to_string(statics_length) + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
@@ -1695,14 +1695,14 @@ int main() {
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    offline_exp(true);          // offline computation of estimator, samplings, and ef-adaptor
+    offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor
     online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
     // insert_exp(true); // insert experiment with setup
     // delete_exp(true); // delete experiment with setup
 
-    // ablation_study_distance_list_size();      // ablation study on distance list size
+    // ablation_study_visited_list_size();      // ablation study on distance list size
     // ablation_study_sampling_size();           // ablation study on sampling size
     // ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
     // ablation_study_truncation_ratio();

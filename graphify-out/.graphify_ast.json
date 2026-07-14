@@ -1,0 +1,3570 @@
+{
+  "nodes": [
+    {
+      "id": "experiments_driver_run",
+      "label": "run.cpp",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig",
+      "label": "ExperimentConfig",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L10",
+      "_origin": "ast"
+    },
+    {
+      "id": "string",
+      "label": "string",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_dataset",
+      "label": "dataset",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_metric",
+      "label": "metric",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_k",
+      "label": "k",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L13",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_alpha",
+      "label": "alpha",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L14",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_gamma",
+      "label": "gamma",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L15",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_expected_recall",
+      "label": "expected_recall",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_ef_upper_bound",
+      "label": "ef_upper_bound",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L17",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_repeat",
+      "label": "repeat",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L18",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_sampling_size",
+      "label": "sampling_size",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L19",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_n_cv_tables",
+      "label": "n_cv_tables",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L20",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_min_queries_per_score",
+      "label": "min_queries_per_score",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_experimentconfig_statics_length",
+      "label": "statics_length",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L22",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_get_config",
+      "label": "get_config()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_make_sketch",
+      "label": "make_sketch()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L48",
+      "_origin": "ast"
+    },
+    {
+      "id": "sketch",
+      "label": "Sketch",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "efadapter",
+      "label": "EfAdapter",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_train_cv_buckets",
+      "label": "train_cv_buckets()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "_origin": "ast"
+    },
+    {
+      "id": "shared_ptr",
+      "label": "shared_ptr",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "hierarchicalnsw",
+      "label": "HierarchicalNSW",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "matrixxf",
+      "label": "MatrixXf",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "matrixxi",
+      "label": "MatrixXi",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_setup_laion_text2image",
+      "label": "setup_laion_text2image()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "_origin": "ast"
+    },
+    {
+      "id": "spaceinterface",
+      "label": "SpaceInterface",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_online_exp",
+      "label": "online_exp()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L122",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_indexing_exp",
+      "label": "indexing_exp()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L201",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_offline_laion_text2image",
+      "label": "offline_laion_text2image()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L216",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_process_offline_conf",
+      "label": "process_offline_conf()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L301",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_offline_exp",
+      "label": "offline_exp()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L375",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_compute_groundtruth_laion_text2image",
+      "label": "compute_groundtruth_laion_text2image()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L385",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_sensitivity_analysis",
+      "label": "sensitivity_analysis()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L411",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_insert_exp_setup",
+      "label": "insert_exp_setup()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L500",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_insert_exp_index_update",
+      "label": "insert_exp_index_update()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L575",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_insert_exp_adaef_update",
+      "label": "insert_exp_adaef_update()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_insert_exp",
+      "label": "insert_exp()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L686",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_delete_exp_setup",
+      "label": "delete_exp_setup()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_delete_exp_adaef_update",
+      "label": "delete_exp_adaef_update()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_delete_exp",
+      "label": "delete_exp()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L973",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_ablation_study_visited_list_size",
+      "label": "ablation_study_visited_list_size()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1126",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_ablation_study_sampling_size",
+      "label": "ablation_study_sampling_size()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1215",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_ablation_study_weighted_decay_function",
+      "label": "ablation_study_weighted_decay_function()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1304",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_ablation_study_truncation_ratio",
+      "label": "ablation_study_truncation_ratio()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1384",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_ablation_study_n_cv_tables",
+      "label": "ablation_study_n_cv_tables()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1465",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_ablation_study_min_queries_per_score",
+      "label": "ablation_study_min_queries_per_score()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1532",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_per_query_result_exp",
+      "label": "per_query_result_exp()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1599",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_run_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1680",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_util",
+      "label": "util.h",
+      "file_type": "code",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_util_load_hdf5",
+      "label": "load_hdf5()",
+      "file_type": "code",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "std",
+      "label": "std",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswdis",
+      "label": "hnswdis",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_util_save_hdf5",
+      "label": "save_hdf5()",
+      "file_type": "code",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L166",
+      "_origin": "ast"
+    },
+    {
+      "id": "experiments_driver_util_normalize_matrix",
+      "label": "normalize_matrix()",
+      "file_type": "code",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L229",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_estimator",
+      "label": "estimator.h",
+      "file_type": "code",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_estimator_hnswdis",
+      "label": "hnswdis()",
+      "file_type": "code",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L13",
+      "_origin": "ast"
+    },
+    {
+      "id": "namespace",
+      "label": "namespace",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef",
+      "label": "shiro_ef.h",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef_hnswdis",
+      "label": "hnswdis()",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "namespace",
+      "label": "namespace",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef_save_query_heaps",
+      "label": "save_query_heaps()",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L688",
+      "_origin": "ast"
+    },
+    {
+      "id": "std",
+      "label": "std",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef_estimate_recall",
+      "label": "estimate_recall()",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L986",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef_save_satistics",
+      "label": "save_satistics()",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1013",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef_serialize_samplings",
+      "label": "serialize_samplings()",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1066",
+      "_origin": "ast"
+    },
+    {
+      "id": "matrixxf",
+      "label": "MatrixXf",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "matrixxi",
+      "label": "MatrixXi",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef_deserialize_samplings",
+      "label": "deserialize_samplings()",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1124",
+      "_origin": "ast"
+    },
+    {
+      "id": "hnswlib_shiro_ef_efadapter",
+      "label": "EfAdapter()",
+      "file_type": "code",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1179",
+      "_origin": "ast"
+    },
+    {
+      "id": "class",
+      "label": "class",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_final_plot",
+      "label": "final_plot.py",
+      "file_type": "code",
+      "source_file": "research/final_plot.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_final_plot_parse_log",
+      "label": "parse_log()",
+      "file_type": "code",
+      "source_file": "research/final_plot.py",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ablation",
+      "label": "visualize_ablation.py",
+      "file_type": "code",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ablation_parse_log",
+      "label": "parse_log()",
+      "file_type": "code",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L43",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ablation_plot_ablation",
+      "label": "plot_ablation()",
+      "file_type": "code",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L115",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ablation_print_summary",
+      "label": "print_summary()",
+      "file_type": "code",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L200",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ablation_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L214",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map",
+      "label": "visualize_ef_map.py",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map_read_pod",
+      "label": "read_pod()",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map_read_table",
+      "label": "read_table()",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map_deserialize",
+      "label": "deserialize()",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map_table_to_dict",
+      "label": "table_to_dict()",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L50",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map_lookup_ef",
+      "label": "lookup_ef()",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L54",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map_estimate_ef2",
+      "label": "estimate_ef2()",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L65",
+      "_origin": "ast"
+    },
+    {
+      "id": "research_visualize_ef_map_plot_heatmap",
+      "label": "plot_heatmap()",
+      "file_type": "code",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L87",
+      "_origin": "ast"
+    },
+    {
+      "id": "setup",
+      "label": "setup.sh",
+      "file_type": "code",
+      "source_file": "setup.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast"
+    },
+    {
+      "id": "home_ryawszn_dev_cpp_hnsw_shiro_ef_setup_sh__entry",
+      "label": "setup.sh script",
+      "file_type": "code",
+      "source_file": "setup.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast"
+    }
+  ],
+  "edges": [
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_util",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "hnswlib_shiro_ef",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "filesystem",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "cstdlib",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_experimentconfig",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_dataset",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_metric",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_k",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_alpha",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L14",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_gamma",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L15",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_expected_recall",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L16",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_ef_upper_bound",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L17",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_repeat",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L18",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_sampling_size",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L19",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_n_cv_tables",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L20",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_min_queries_per_score",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L21",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run_experimentconfig",
+      "target": "experiments_driver_run_experimentconfig_statics_length",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L22",
+      "weight": 1.0,
+      "context": "field"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_get_config",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_get_config",
+      "target": "experiments_driver_run_experimentconfig",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L38",
+      "weight": 1.0,
+      "context": "return_type"
+    },
+    {
+      "source": "experiments_driver_run_get_config",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L38",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_make_sketch",
+      "target": "sketch",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L48",
+      "weight": 1.0,
+      "context": "return_type"
+    },
+    {
+      "source": "experiments_driver_run_make_sketch",
+      "target": "efadapter",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L48",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "efadapter",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "hierarchicalnsw",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_train_cv_buckets",
+      "target": "matrixxi",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L55",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_setup_laion_text2image",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "hierarchicalnsw",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "matrixxi",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "shared_ptr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "spaceinterface",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L80",
+      "weight": 1.0,
+      "context": "generic_arg"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_online_exp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L122",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_indexing_exp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_offline_laion_text2image",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L216",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_process_offline_conf",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_process_offline_conf",
+      "target": "experiments_driver_run_experimentconfig",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L301",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "future",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L373",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_offline_exp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L375",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_compute_groundtruth_laion_text2image",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L385",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_sensitivity_analysis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L411",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_insert_exp_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L500",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_setup",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L500",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_setup",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L500",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_setup",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L500",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_setup",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L500",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_insert_exp_index_update",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L575",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_index_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L575",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_index_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L575",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_index_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L575",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_index_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L575",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_index_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L575",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_insert_exp_adaef_update",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L608",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_insert_exp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L686",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_delete_exp_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L807",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_delete_exp_adaef_update",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "string",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L895",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_delete_exp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L973",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_ablation_study_visited_list_size",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1126",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_ablation_study_sampling_size",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1215",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_ablation_study_weighted_decay_function",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1304",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_ablation_study_truncation_ratio",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1384",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_ablation_study_n_cv_tables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1465",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_ablation_study_min_queries_per_score",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1532",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_per_query_result_exp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1599",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "experiments_driver_run_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1680",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_make_sketch",
+      "target": "sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_online_exp",
+      "target": "experiments_driver_run_setup_laion_text2image",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_online_exp",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L159",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_online_exp",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_indexing_exp",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L209",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_offline_laion_text2image",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_offline_laion_text2image",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L242",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_offline_laion_text2image",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L291",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_process_offline_conf",
+      "target": "experiments_driver_run_offline_laion_text2image",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_process_offline_conf",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L329",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_process_offline_conf",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L361",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_offline_exp",
+      "target": "experiments_driver_run_process_offline_conf",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L381",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_compute_groundtruth_laion_text2image",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L387",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_sensitivity_analysis",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_sensitivity_analysis",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L433",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_sensitivity_analysis",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L481",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_setup",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L529",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_setup",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L553",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_setup",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L568",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_index_update",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L585",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L627",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L645",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp_adaef_update",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L678",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L708",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L716",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "experiments_driver_run_insert_exp_setup",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L739",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "experiments_driver_run_insert_exp_index_update",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L740",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "experiments_driver_run_insert_exp_adaef_update",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L741",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L773",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L821",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L869",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L887",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L911",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L924",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_adaef_update",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L966",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp",
+      "target": "experiments_driver_run_get_config",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L994",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1002",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp",
+      "target": "experiments_driver_run_delete_exp_setup",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1025",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp",
+      "target": "experiments_driver_run_delete_exp_adaef_update",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1026",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1068",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_visited_list_size",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1163",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_visited_list_size",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1200",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_visited_list_size",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1206",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_sampling_size",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1253",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_sampling_size",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1289",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_sampling_size",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1295",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_weighted_decay_function",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1333",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_weighted_decay_function",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1366",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_weighted_decay_function",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1374",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_truncation_ratio",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1413",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_truncation_ratio",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1446",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_truncation_ratio",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1454",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_n_cv_tables",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1494",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_n_cv_tables",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1519",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_n_cv_tables",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1524",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_min_queries_per_score",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1561",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_min_queries_per_score",
+      "target": "experiments_driver_run_train_cv_buckets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1586",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_ablation_study_min_queries_per_score",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1591",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_per_query_result_exp",
+      "target": "experiments_driver_run_setup_laion_text2image",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1634",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_per_query_result_exp",
+      "target": "string",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1638",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_per_query_result_exp",
+      "target": "experiments_driver_run_make_sketch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1668",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_main",
+      "target": "experiments_driver_run_offline_exp",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1698",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_main",
+      "target": "experiments_driver_run_online_exp",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1699",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "h5cpp",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "hnswlib_shiro_ef",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L62",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L62",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L62",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L101",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L101",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L101",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L101",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L101",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L142",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L142",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_load_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L142",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "experiments_driver_util_save_hdf5",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util_save_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L166",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_save_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L166",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_save_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L166",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_save_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L166",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "experiments_driver_util_save_hdf5",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util_save_hdf5",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L202",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_save_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L202",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util_save_hdf5",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L202",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "experiments_driver_util",
+      "target": "experiments_driver_util_normalize_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_util_normalize_matrix",
+      "target": "hnswdis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "experiments_driver/util.h",
+      "source_location": "L229",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "core",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "memory",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "thread",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "iostream",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "fstream",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "omp",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "vector",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "cmath",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "algorithm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator",
+      "target": "hnswlib_estimator_hnswdis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_estimator_hnswdis",
+      "target": "namespace",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/estimator.h",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "return_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "map",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_estimator",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "home_ryawszn_dev_cpp_hnsw_shiro_ef_hnswlib_hnswalg_h",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "omp",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "thread",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_hnswdis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_hnswdis",
+      "target": "namespace",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "return_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_save_query_heaps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L688",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_save_query_heaps",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L688",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_save_query_heaps",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L688",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_estimate_recall",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L986",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_save_satistics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1013",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_save_satistics",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1013",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_serialize_samplings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1066",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_serialize_samplings",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1066",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_serialize_samplings",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1066",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_serialize_samplings",
+      "target": "matrixxi",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1066",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_serialize_samplings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1091",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_serialize_samplings",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1091",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_serialize_samplings",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1091",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_serialize_samplings",
+      "target": "matrixxi",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1091",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_serialize_samplings",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1091",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_deserialize_samplings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1124",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_deserialize_samplings",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1124",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_deserialize_samplings",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1124",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_deserialize_samplings",
+      "target": "matrixxi",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1124",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_deserialize_samplings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1148",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_deserialize_samplings",
+      "target": "std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1148",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_deserialize_samplings",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1148",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_deserialize_samplings",
+      "target": "matrixxi",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1148",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef_deserialize_samplings",
+      "target": "matrixxf",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1148",
+      "weight": 1.0,
+      "context": "parameter_type"
+    },
+    {
+      "source": "hnswlib_shiro_ef",
+      "target": "hnswlib_shiro_ef_efadapter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1179",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_efadapter",
+      "target": "class",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1179",
+      "weight": 1.0,
+      "context": "return_type"
+    },
+    {
+      "source": "research_final_plot",
+      "target": "re",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/final_plot.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "research_final_plot",
+      "target": "matplotlib_pyplot",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/final_plot.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "research_final_plot",
+      "target": "matplotlib_ticker",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/final_plot.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "research_final_plot",
+      "target": "research_final_plot_parse_log",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/final_plot.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "re",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "matplotlib",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "matplotlib_pyplot",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "matplotlib_ticker",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "collections",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "research_visualize_ablation_parse_log",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "research_visualize_ablation_plot_ablation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "research_visualize_ablation_print_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation",
+      "target": "research_visualize_ablation_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation_main",
+      "target": "research_visualize_ablation_parse_log",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L222",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation_main",
+      "target": "research_visualize_ablation_print_summary",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ablation_main",
+      "target": "research_visualize_ablation_plot_ablation",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ablation.py",
+      "source_location": "L230",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "struct",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "matplotlib_pyplot",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "numpy",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "research_visualize_ef_map_read_pod",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "research_visualize_ef_map_read_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "research_visualize_ef_map_deserialize",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "research_visualize_ef_map_table_to_dict",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "research_visualize_ef_map_lookup_ef",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "research_visualize_ef_map_estimate_ef2",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map",
+      "target": "research_visualize_ef_map_plot_heatmap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map_read_table",
+      "target": "research_visualize_ef_map_read_pod",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map_deserialize",
+      "target": "research_visualize_ef_map_read_table",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map_deserialize",
+      "target": "research_visualize_ef_map_read_pod",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map_estimate_ef2",
+      "target": "research_visualize_ef_map_lookup_ef",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map_plot_heatmap",
+      "target": "research_visualize_ef_map_deserialize",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map_plot_heatmap",
+      "target": "research_visualize_ef_map_table_to_dict",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "research_visualize_ef_map_plot_heatmap",
+      "target": "research_visualize_ef_map_estimate_ef2",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "research/visualize_ef_map.py",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "setup",
+      "target": "home_ryawszn_dev_cpp_hnsw_shiro_ef_setup_sh__entry",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup.sh",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_setup_laion_text2image",
+      "target": "experiments_driver_util_normalize_matrix",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_offline_laion_text2image",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_offline_laion_text2image",
+      "target": "experiments_driver_util_normalize_matrix",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L223",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_compute_groundtruth_laion_text2image",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L389",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_compute_groundtruth_laion_text2image",
+      "target": "experiments_driver_util_normalize_matrix",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L398",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_compute_groundtruth_laion_text2image",
+      "target": "experiments_driver_util_save_hdf5",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L408",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L721",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_insert_exp",
+      "target": "experiments_driver_util_normalize_matrix",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L724",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp_setup",
+      "target": "experiments_driver_util_save_hdf5",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L822",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp",
+      "target": "experiments_driver_util_load_hdf5",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1008",
+      "weight": 1.0
+    },
+    {
+      "source": "experiments_driver_run_delete_exp",
+      "target": "experiments_driver_util_normalize_matrix",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "experiments_driver/run.cpp",
+      "source_location": "L1011",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_efadapter",
+      "target": "experiments_driver_run_experimentconfig_expected_recall",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1548",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_efadapter",
+      "target": "research_visualize_ef_map_deserialize",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1556",
+      "weight": 1.0
+    },
+    {
+      "source": "hnswlib_shiro_ef_efadapter",
+      "target": "research_visualize_ef_map_read_table",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "hnswlib/shiro_ef.h",
+      "source_location": "L1710",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

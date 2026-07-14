@@ -1,7 +1,7 @@
 #pragma once
 
 #include <H5Cpp.h>
-#include "../hnswlib/adaptive_ef.h"
+#include "../hnswlib/shiro_ef.h"
 
 void load_hdf5(const std::string &path,
                hnswdis::MatrixXf &query_vectors,

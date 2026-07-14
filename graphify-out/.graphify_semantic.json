@@ -1,0 +1,256 @@
+{
+  "nodes": [
+    {
+      "id": "cmakelists_txt",
+      "label": "CMakeLists.txt",
+      "file_type": "code",
+      "source_file": "CMakeLists.txt"
+    },
+    {
+      "id": "readme_md",
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md"
+    },
+    {
+      "id": "hnswlib_hnswlib",
+      "label": "hnswlib",
+      "file_type": "code",
+      "source_file": "CMakeLists.txt"
+    },
+    {
+      "id": "experiments_driver_run",
+      "label": "run.cpp",
+      "file_type": "code",
+      "source_file": "experiments_driver/run.cpp"
+    },
+    {
+      "id": "hnswlib_adaptive_ef",
+      "label": "adaptive_ef.h",
+      "file_type": "code",
+      "source_file": "hnswlib/adaptive_ef.h"
+    },
+    {
+      "id": "hnswlib_estimator",
+      "label": "estimator.h",
+      "file_type": "code",
+      "source_file": "hnswlib/estimator.h"
+    },
+    {
+      "id": "hnswlib_sketch",
+      "label": "sketch.h",
+      "file_type": "code",
+      "source_file": "hnswlib/sketch.h"
+    },
+    {
+      "id": "research_ablation_alpha_plot",
+      "label": "Alpha Ablation Study Chart",
+      "file_type": "image",
+      "source_file": "research/img/ablation_alpha_plot.png"
+    },
+    {
+      "id": "research_ablation_gamma_plot",
+      "label": "Gamma Ablation Study Chart",
+      "file_type": "image",
+      "source_file": "research/img/ablation_gamma_plot.png"
+    },
+    {
+      "id": "research_deepim_recall_distribution_100",
+      "label": "Recall Distribution (ef=100)",
+      "file_type": "image",
+      "source_file": "research/img/deepIm_recall_distribution_100.png"
+    },
+    {
+      "id": "research_deepim_recall_distribution_250",
+      "label": "Recall Distribution (ef=250)",
+      "file_type": "image",
+      "source_file": "research/img/deepIm_recall_distribution_250.png"
+    },
+    {
+      "id": "research_deepimage_cv_trunc_vs_lid",
+      "label": "DeepImage CV vs LID Comparison",
+      "file_type": "image",
+      "source_file": "research/img/deepimage_cv_trunc_0.25_vs_lid.png"
+    },
+    {
+      "id": "research_glove_cv_trunc_vs_lid",
+      "label": "GloVe CV vs LID Comparison",
+      "file_type": "image",
+      "source_file": "research/img/glove_cv_trunc_0.25_vs_lid.png"
+    },
+    {
+      "id": "research_output_heatmap_deep",
+      "label": "Estimated ef Heatmap (DeepImage)",
+      "file_type": "image",
+      "source_file": "research/img/output_heatmap_deep.png"
+    },
+    {
+      "id": "research_output_heatmap_glove",
+      "label": "Estimated ef Heatmap (GloVe)",
+      "file_type": "image",
+      "source_file": "research/img/output_heatmap_glove.png"
+    },
+    {
+      "id": "research_output_heatmap_sift",
+      "label": "Estimated ef Heatmap (SIFT)",
+      "file_type": "image",
+      "source_file": "research/img/output_heatmap_sift.png"
+    },
+    {
+      "id": "research_visualization_final",
+      "label": "Final Visualization Frontier Plot",
+      "file_type": "image",
+      "source_file": "research/img/visualization_final.png"
+    },
+    {
+      "id": "concept_adaptive_ef",
+      "label": "Adaptive EF Search Mechanism",
+      "file_type": "concept",
+      "source_file": "README.md"
+    },
+    {
+      "id": "concept_shiro_ef",
+      "label": "Shiro EF (Ada-EF)",
+      "file_type": "concept",
+      "source_file": "README.md"
+    }
+  ],
+  "edges": [
+    {
+      "source": "cmakelists_txt",
+      "target": "hnswlib_hnswlib",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "cmakelists_txt",
+      "target": "experiments_driver_run",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "experiments_driver_run",
+      "target": "hnswlib_hnswlib",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "hnswlib_hnswlib",
+      "target": "hnswlib_adaptive_ef",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9
+    },
+    {
+      "source": "hnswlib_hnswlib",
+      "target": "hnswlib_estimator",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9
+    },
+    {
+      "source": "hnswlib_hnswlib",
+      "target": "hnswlib_sketch",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9
+    },
+    {
+      "source": "readme_md",
+      "target": "concept_shiro_ef",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "readme_md",
+      "target": "hnswlib_adaptive_ef",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "readme_md",
+      "target": "hnswlib_estimator",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "readme_md",
+      "target": "hnswlib_sketch",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "research_ablation_alpha_plot",
+      "target": "concept_shiro_ef",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "research_ablation_gamma_plot",
+      "target": "concept_shiro_ef",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "research_visualization_final",
+      "target": "concept_shiro_ef",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "research_output_heatmap_deep",
+      "target": "hnswlib_estimator",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8
+    },
+    {
+      "source": "research_deepimage_cv_trunc_vs_lid",
+      "target": "hnswlib_adaptive_ef",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "adaptive_ef_core_components",
+      "label": "Adaptive EF Core Components",
+      "nodes": [
+        "hnswlib_adaptive_ef",
+        "hnswlib_estimator",
+        "hnswlib_sketch"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md"
+    },
+    {
+      "id": "benchmarking_flow",
+      "label": "Benchmarking and Evaluation Flow",
+      "nodes": [
+        "experiments_driver_run",
+        "research_visualization_final",
+        "research_ablation_alpha_plot",
+        "research_ablation_gamma_plot"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "README.md"
+    }
+  ],
+  "input_tokens": 19006,
+  "output_tokens": 1479
+}
