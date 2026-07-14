@@ -77,7 +77,7 @@ def parse_log(filepath):
     return datasets
 
 
-shiro = parse_log("research/log/output_shiro_sift.log")
+shiro = parse_log("research/log/output_shiro.log")
 ada = parse_log("research/log/output_ada.log")
 
 datasets_keys = ["deep-image-96-angular", "glove-100-angular", "sift-128-euclidean"]
@@ -87,215 +87,155 @@ fig, axes = plt.subplots(1, 3, figsize=(18, 6.5))
 for idx, ds_name in enumerate(datasets_keys):
     ax = axes[idx]
 
-    if ds_name == "sift-128-euclidean":
-        data = shiro.get(ds_name, {})
+    # 1. First Pass: Compute the relative hardware scaling factor (Ada -> Shiro)
+    common_efs = set(shiro.get(ds_name, {}).get("baseline", {}).keys()).intersection(
+        set(ada.get(ds_name, {}).get("baseline", {}).keys())
+    )
 
-        bl_efs = sorted(list(data.get("baseline", {}).keys()))
-        bl_times_med = []
-        bl_avg = []
-        bl_p05 = []
-        bl_p01 = []
+    total_s_time = 0
+    total_a_time = 0
+    for ef in common_efs:
+        s_t = shiro[ds_name]["baseline"][ef]["times"]
+        a_t = ada[ds_name]["baseline"][ef]["times"]
+        total_s_time += s_t[1] if len(s_t) > 1 else s_t[0]
+        total_a_time += a_t[1] if len(a_t) > 1 else a_t[0]
 
-        for ef in bl_efs:
-            times = data["baseline"][ef]["times"]
-            if not times:
-                continue
+    # Gamma scales Ada's clock speed to match Shiro's hardware environment
+    gamma = total_s_time / total_a_time if total_a_time > 0 else 1.0
 
+    # 2. Second Pass: Extract data points using Shiro as primary, falling back to scaled Ada
+    bl_efs = sorted(
+        list(
+            set(shiro.get(ds_name, {}).get("baseline", {}).keys()).union(
+                set(ada.get(ds_name, {}).get("baseline", {}).keys())
+            )
+        )
+    )
+
+    bl_times_med = []
+    bl_avg = []
+    bl_p05 = []
+    bl_p01 = []
+
+    for ef in bl_efs:
+        s_log = shiro.get(ds_name, {}).get("baseline", {}).get(ef, {})
+        a_log = ada.get(ds_name, {}).get("baseline", {}).get(ef, {})
+
+        if s_log:
+            # Shiro is our baseline hardware anchor
+            times = s_log["times"]
             med_val = times[1] if len(times) > 1 else times[0]
             bl_times_med.append(med_val / 1000.0)
+            bl_avg.append(s_log["avg"])
+            bl_p05.append(s_log["p05"])
+            bl_p01.append(s_log["p01"])
+        elif a_log:
+            # Shiro doesn't have this ef; use Ada's recall but NORMALIZE its latency
+            times = a_log["times"]
+            med_val = times[1] if len(times) > 1 else times[0]
+            bl_times_med.append((med_val * gamma) / 1000.0)  # Apply hardware correction
+            bl_avg.append(a_log["avg"])
+            bl_p05.append(a_log["p05"])
+            bl_p01.append(a_log["p01"])
 
-            bl_avg.append(data["baseline"][ef]["avg"])
-            bl_p05.append(data["baseline"][ef]["p05"])
-            bl_p01.append(data["baseline"][ef]["p01"])
+    # 3. Plot the synchronized curves
+    ax.plot(
+        bl_times_med, bl_avg, "-", color="tab:blue", label="Baseline - Avg", linewidth=2
+    )
+    ax.plot(
+        bl_times_med,
+        bl_p05,
+        "-",
+        color="tab:green",
+        label=r"Baseline - $\pi_{0.05}$",
+        linewidth=2,
+    )
+    ax.plot(
+        bl_times_med,
+        bl_p01,
+        "-",
+        color="tab:orange",
+        label=r"Baseline - $\pi_{0.01}$",
+        linewidth=2,
+    )
 
-        ax.plot(
-            bl_times_med,
-            bl_avg,
-            "-",
-            color="tab:blue",
-            label=r"Baseline - Avg",
-            linewidth=2,
-        )
-        ax.plot(
-            bl_times_med,
-            bl_p05,
-            "-",
-            color="tab:green",
-            label=r"Baseline - $\pi_{0.05}$",
-            linewidth=2,
-        )
-        ax.plot(
-            bl_times_med,
-            bl_p01,
-            "-",
-            color="tab:orange",
-            label=r"Baseline - $\pi_{0.01}$",
-            linewidth=2,
-        )
+    if "our_method" in shiro.get(ds_name, {}):
+        s_data = shiro[ds_name]["our_method"]
+        if s_data.get("times"):
+            s_time = min(s_data["times"]) / 1000.0
+            ax.scatter(
+                [s_time],
+                [s_data["avg"]],
+                marker="*",
+                s=350,
+                color="blue",
+                edgecolor="black",
+                label=r"Shiro - Avg",
+                zorder=5,
+            )
+            ax.scatter(
+                [s_time],
+                [s_data["p05"]],
+                marker="*",
+                s=350,
+                color="green",
+                edgecolor="black",
+                label=r"Shiro - $\pi_{0.05}$",
+                zorder=5,
+            )
+            ax.scatter(
+                [s_time],
+                [s_data["p01"]],
+                marker="*",
+                s=350,
+                color="orange",
+                edgecolor="black",
+                label=r"Shiro - $\pi_{0.01}$",
+                zorder=5,
+            )
 
-        if "our_method" in data:
-            o_data = data["our_method"]
-            if o_data.get("times"):
-                o_time = min(o_data["times"]) / 1000.0
-                ax.scatter(
-                    [o_time],
-                    [o_data["avg"]],
-                    marker="*",
-                    s=350,
-                    color="blue",
-                    edgecolor="black",
-                    label=r"Ours - Avg",
-                    zorder=5,
-                )
-                ax.scatter(
-                    [o_time],
-                    [o_data["p05"]],
-                    marker="*",
-                    s=350,
-                    color="green",
-                    edgecolor="black",
-                    label=r"Ours - $\pi_{0.05}$",
-                    zorder=5,
-                )
-                ax.scatter(
-                    [o_time],
-                    [o_data["p01"]],
-                    marker="*",
-                    s=350,
-                    color="orange",
-                    edgecolor="black",
-                    label=r"Ours - $\pi_{0.01}$",
-                    zorder=5,
-                )
+    if "our_method" in ada.get(ds_name, {}):
+        a_data = ada[ds_name]["our_method"]
+        if a_data.get("times"):
+            a_time = (
+                a_data["times"][1] if len(a_data["times"]) > 1 else a_data["times"][0]
+            ) / 1000.0
+            ax.scatter(
+                [a_time],
+                [a_data["avg"]],
+                marker="X",
+                s=250,
+                color="blue",
+                edgecolor="black",
+                label=r"Ada - Avg",
+                zorder=5,
+            )
+            ax.scatter(
+                [a_time],
+                [a_data["p05"]],
+                marker="X",
+                s=250,
+                color="green",
+                edgecolor="black",
+                label=r"Ada - $\pi_{0.05}$",
+                zorder=5,
+            )
+            ax.scatter(
+                [a_time],
+                [a_data["p01"]],
+                marker="X",
+                s=250,
+                color="orange",
+                edgecolor="black",
+                label=r"Ada - $\pi_{0.01}$",
+                zorder=5,
+            )
 
-    else:
-        # 1. First Pass: Compute the relative hardware scaling factor (Ada -> Shiro)
-        common_efs = set(shiro.get(ds_name, {}).get("baseline", {}).keys()).intersection(
-            set(ada.get(ds_name, {}).get("baseline", {}).keys())
-        )
-
-        total_s_time = 0
-        total_a_time = 0
-        for ef in common_efs:
-            s_t = shiro[ds_name]["baseline"][ef]["times"]
-            a_t = ada[ds_name]["baseline"][ef]["times"]
-            total_s_time += s_t[1] if len(s_t) > 1 else s_t[0]
-            total_a_time += a_t[1] if len(a_t) > 1 else a_t[0]
-
-        # Gamma scales Ada's clock speed to match Shiro's hardware environment
-        gamma = total_s_time / total_a_time if total_a_time > 0 else 1.0
-
-        # 2. Second Pass: Extract data points using Shiro as primary, falling back to scaled Ada
-        bl_efs = sorted(list(set(shiro.get(ds_name, {}).get("baseline", {}).keys()).union(
-            set(ada.get(ds_name, {}).get("baseline", {}).keys())
-        )))
-
-        bl_times_med = []
-        bl_avg = []
-        bl_p05 = []
-        bl_p01 = []
-
-        for ef in bl_efs:
-            s_log = shiro.get(ds_name, {}).get("baseline", {}).get(ef, {})
-            a_log = ada.get(ds_name, {}).get("baseline", {}).get(ef, {})
-
-            if s_log:
-                # Shiro is our baseline hardware anchor
-                times = s_log["times"]
-                med_val = times[1] if len(times) > 1 else times[0]
-                bl_times_med.append(med_val / 1000.0)
-                bl_avg.append(s_log["avg"])
-                bl_p05.append(s_log["p05"])
-                bl_p01.append(s_log["p01"])
-            elif a_log:
-                # Shiro doesn't have this ef; use Ada's recall but NORMALIZE its latency
-                times = a_log["times"]
-                med_val = times[1] if len(times) > 1 else times[0]
-                bl_times_med.append((med_val * gamma) / 1000.0) # Apply hardware correction
-                bl_avg.append(a_log["avg"])
-                bl_p05.append(a_log["p05"])
-                bl_p01.append(a_log["p01"])
-
-        # 3. Plot the synchronized curves
-        ax.plot(bl_times_med, bl_avg, "-", color="tab:blue", label="Baseline - Avg", linewidth=2)
-        ax.plot(bl_times_med, bl_p05, "-", color="tab:green", label=r"Baseline - $\pi_{0.05}$", linewidth=2)
-        ax.plot(bl_times_med, bl_p01, "-", color="tab:orange", label=r"Baseline - $\pi_{0.01}$", linewidth=2)
-
-        if "our_method" in shiro.get(ds_name, {}):
-            s_data = shiro[ds_name]["our_method"]
-            if s_data.get("times"):
-                s_time = min(s_data["times"]) / 1000.0
-                ax.scatter(
-                    [s_time],
-                    [s_data["avg"]],
-                    marker="*",
-                    s=350,
-                    color="blue",
-                    edgecolor="black",
-                    label=r"Shiro - Avg",
-                    zorder=5,
-                )
-                ax.scatter(
-                    [s_time],
-                    [s_data["p05"]],
-                    marker="*",
-                    s=350,
-                    color="green",
-                    edgecolor="black",
-                    label=r"Shiro - $\pi_{0.05}$",
-                    zorder=5,
-                )
-                ax.scatter(
-                    [s_time],
-                    [s_data["p01"]],
-                    marker="*",
-                    s=350,
-                    color="orange",
-                    edgecolor="black",
-                    label=r"Shiro - $\pi_{0.01}$",
-                    zorder=5,
-                )
-
-        if "our_method" in ada.get(ds_name, {}):
-            a_data = ada[ds_name]["our_method"]
-            if a_data.get("times"):
-                a_time = (a_data["times"][1] if len(a_data["times"]) > 1 else a_data["times"][0]) / 1000.0
-                ax.scatter(
-                    [a_time],
-                    [a_data["avg"]],
-                    marker="X",
-                    s=250,
-                    color="blue",
-                    edgecolor="black",
-                    label=r"Ada - Avg",
-                    zorder=5,
-                )
-                ax.scatter(
-                    [a_time],
-                    [a_data["p05"]],
-                    marker="X",
-                    s=250,
-                    color="green",
-                    edgecolor="black",
-                    label=r"Ada - $\pi_{0.05}$",
-                    zorder=5,
-                )
-                ax.scatter(
-                    [a_time],
-                    [a_data["p01"]],
-                    marker="X",
-                    s=250,
-                    color="orange",
-                    edgecolor="black",
-                    label=r"Ada - $\pi_{0.01}$",
-                    zorder=5,
-                )
-
-    if ds_name == 'deep-image-96-angular':
+    if ds_name == "deep-image-96-angular":
         ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
-    elif ds_name == 'glove-100-angular':
+    elif ds_name == "glove-100-angular":
         ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
-    elif ds_name == 'sift-128-euclidean':
+    elif ds_name == "sift-128-euclidean":
         ax.set_title(f"{ds_name}\nef_max = 300", fontsize=14)
     else:
         ax.set_title(ds_name, fontsize=14)
@@ -349,6 +289,7 @@ for idx, ds_name in enumerate(datasets_keys):
 
 plt.tight_layout()
 import os
+
 os.makedirs("research/img", exist_ok=True)
 plt.savefig("research/img/visualization_final.png", dpi=300)
 print("Saved to research/img/visualization_final.png")
