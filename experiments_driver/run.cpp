@@ -24,9 +24,9 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_cv_tables, min_q, statics_length
-    // {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"sift-128-euclidean",         "l2", 10, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32},
+    {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"sift-128-euclidean",         "l2", 10, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32 + 15 * 32},
     // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},

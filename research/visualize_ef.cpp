@@ -4,18 +4,18 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
-#include "../hnswlib/adaptive_ef.h" // Includes all necessary headers
+#include "../hnswlib/shiro_ef.h" // Includes all necessary headers
 
 using namespace std;
 
 size_t estimate_ef_for_target(
-    const vector<pair<int, vector<pair<int, float>>>>& estimators, 
-    float score, 
-    float target_recall) 
+    const vector<pair<int, vector<pair<int, float>>>>& estimators,
+    float score,
+    float target_recall)
 {
     if (estimators.empty()) return 0;
-    
-    auto entry = lower_bound(estimators.begin(), estimators.end(), score, 
+
+    auto entry = lower_bound(estimators.begin(), estimators.end(), score,
         [](const auto &a, const float &b) { return a.first < b; });
 
     if (entry == estimators.begin()) {
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     cout << "Loading estimation table from: " << bin_path << endl;
     try {
         hnswdis::EfAdapter adapter(bin_path);
-        
+
         cout << "Target Recall: " << target_recall << endl;
         cout << "Original expected recall in file: " << adapter.get_expected_recall() << endl;
         cout << string(50, '-') << endl;
@@ -54,15 +54,15 @@ int main(int argc, char** argv) {
             const auto& dep_tables = adapter.get_all_tables();
             const auto& dep_thresholds = adapter.get_dep_thresholds();
             cout << "Found 2D Lookup Table with " << dep_tables.size() << " d_ep buckets." << endl;
-            
+
             for (size_t t = 0; t < dep_tables.size(); ++t) {
                 float lower_bound = (t == 0) ? 0.0f : dep_thresholds[t-1];
                 float upper_bound = (t == dep_thresholds.size()) ? std::numeric_limits<float>::infinity() : dep_thresholds[t];
-                
+
                 cout << "\n=== Bucket " << t << " | d_ep range: [" << lower_bound << ", " << upper_bound << ") ===" << endl;
                 cout << left << setw(10) << "Score" << setw(15) << "Estimated EF" << "Available (EF, Recall) distribution in group" << endl;
                 cout << string(80, '-') << endl;
-                
+
                 for (const auto& group : dep_tables[t]) {
                     int score = group.first;
                     size_t estimated_ef = estimate_ef_for_target(dep_tables[t], score, target_recall);

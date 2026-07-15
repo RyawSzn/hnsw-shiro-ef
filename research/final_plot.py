@@ -240,7 +240,13 @@ for idx, ds_name in enumerate(datasets_keys):
     else:
         ax.set_title(ds_name, fontsize=14)
     ax.set_xlabel("Latency (s)", fontsize=12)
-    ax.set_ylabel("Recall", fontsize=12)
+
+    if ds_name in ["deep-image-96-angular", "glove-100-angular"]:
+        ax.set_ylabel("Recall@100", fontsize=12)
+    elif ds_name == "sift-128-euclidean":
+        ax.set_ylabel("Recall@10", fontsize=12)
+    else:
+        ax.set_ylabel("Recall", fontsize=12)
 
     ax.yaxis.set_major_locator(MultipleLocator(0.05))
     if ds_name == "deep-image-96-angular":

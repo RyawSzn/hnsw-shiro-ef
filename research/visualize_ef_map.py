@@ -78,10 +78,24 @@ def estimate_ef2(tables_dicts, dep_centers, score, d_ep, expected_recall):
 
     c0 = dep_centers[idx]
     c1 = dep_centers[idx + 1]
-    if abs(d_ep - c0) <= abs(d_ep - c1):
-        return lookup_ef(tables_dicts[idx], score, expected_recall)
-    else:
-        return lookup_ef(tables_dicts[idx + 1], score, expected_recall)
+    
+    ef0 = lookup_ef(tables_dicts[idx], score, expected_recall)
+    ef1 = lookup_ef(tables_dicts[idx + 1], score, expected_recall)
+    
+    if np.isnan(ef0) and np.isnan(ef1):
+        return np.nan
+    if np.isnan(ef0):
+        return ef1
+    if np.isnan(ef1):
+        return ef0
+        
+    # Smooth linear interpolation between the two nearest CV tables
+    dist_total = c1 - c0
+    if dist_total == 0:
+        return ef0
+    w1 = (d_ep - c0) / dist_total
+    w0 = 1.0 - w1
+    return ef0 * w0 + ef1 * w1
 
 
 def plot_heatmap(filename, output_png):
@@ -102,7 +116,7 @@ def plot_heatmap(filename, output_png):
         d_ep_min -= 1.0
         d_ep_max += 1.0
 
-    d_eps = np.linspace(d_ep_min, d_ep_max, 100)
+    d_eps = np.linspace(d_ep_min, d_ep_max, 300) # Increased Y resolution for smoother interpolation
 
     X, Y = np.meshgrid(scores, d_eps)
     Z = np.zeros_like(X)
@@ -116,7 +130,7 @@ def plot_heatmap(filename, output_png):
     plt.figure(figsize=(10, 8))
     cmap = plt.get_cmap("viridis").copy()
     cmap.set_bad(color="white")
-    plt.pcolormesh(X, Y, Z, cmap=cmap, shading='nearest')
+    plt.pcolormesh(X, Y, Z, cmap=cmap, shading='gouraud') # Changed shading to gouraud for smooth gradients
     plt.colorbar(label="Estimated ef")
 
     for c in dep_centers:
