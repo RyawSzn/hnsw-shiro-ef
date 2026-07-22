@@ -807,166 +807,99 @@ namespace hnswdis
         return query_vectors;
     }
 
-    // LHS sampling over the 2D (CV, RV) probe space.
+    // Hard-first stratified sampling over the 2D (CV, RV) probe space.
     //
-    // Algorithm (5 steps from the plan):
-    //  1. Randomly pick `pool_size` candidate indices from data_vectors.
-    //  2. Probe each with adaptiveSearchKnn at statics_length=1024 to collect
-    //     (cv, rv) indicators (cheap upper-layer + short base-layer search).
-    //  3. Normalize both axes to [0,1] via their empirical CDF ranks.
-    //  4. Generate `sample_size` ideal LHS coordinates in [0,1]^2 using
-    //     scipy-equivalent stratified random sampling (pure C++, no deps).
-    //  5. For each ideal LHS point find the nearest-neighbour candidate in
-    //     normalised space; resolve collisions greedily (next-nearest unused).
-    //
-    // Returns the sampled query matrix (sample_size × dim).
+    // Hard = intersection(bottom-5% by CV, bottom-5% by RV). All hard
+    // queries are included unconditionally. The remaining budget is filled
+    // with a uniform random draw from the easy pool (everyone not in hard).
     std::shared_ptr<hnswdis::MatrixXf> sample_data_lhs(
-        const hnswlib::HierarchicalNSW<float>  &alg_hnsw,
-        const hnswdis::MatrixXf               &data_vectors,
-        const size_t                            sample_size,
-        const hnswdis::ApproximatedScoreCalculator &score_cal,
-        const size_t                            k,
-        const size_t                            probe_statics_length = 1024,
-        const size_t                            pool_size            = 10000,
-        const uint32_t                          seed                 = 123456789)
+        const hnswlib::HierarchicalNSW<float>             &alg_hnsw,
+        const hnswdis::MatrixXf                           &data_vectors,
+        const size_t                                       sample_size,
+        const hnswdis::ApproximatedScoreCalculator        &score_cal,
+        const size_t                                       k,
+        const size_t                                       probe_statics_length = 1024,
+        const size_t                                       pool_size            = 30000,
+        const uint32_t                                     seed                 = 123456789)
     {
         const size_t n_data = static_cast<size_t>(data_vectors.rows());
-        const size_t actual_pool = std::min(pool_size, n_data);
+        const size_t pool   = std::min(pool_size, n_data);
 
-        // ------------------------------------------------------------------ //
-        // Step 1 – pick `actual_pool` unique candidate indices at random
-        // ------------------------------------------------------------------ //
         std::mt19937 gen(seed);
-        std::vector<int> pool_indices;
-        pool_indices.reserve(actual_pool);
+
+        // ---- Step 1: random pool ----
+        std::vector<int> pool_idx;
+        pool_idx.reserve(pool);
         {
             std::uniform_int_distribution<int> dis(0, static_cast<int>(n_data) - 1);
             std::unordered_set<int> seen;
-            seen.reserve(actual_pool);
-            while (seen.size() < actual_pool)
+            seen.reserve(pool);
+            while (seen.size() < pool)
                 seen.insert(dis(gen));
-            pool_indices.assign(seen.begin(), seen.end());
+            pool_idx.assign(seen.begin(), seen.end());
         }
 
-        // ------------------------------------------------------------------ //
-        // Step 2 – probe each candidate to collect (cv, rv) indicators
-        // ------------------------------------------------------------------ //
-        std::vector<float> pool_cv(actual_pool);
-        std::vector<float> pool_rv(actual_pool);
-
-        for (size_t i = 0; i < actual_pool; ++i) {
+        // ---- Step 2: cheap probes ----
+        std::vector<float> raw_cv(pool), raw_rv(pool);
+        for (size_t i = 0; i < pool; ++i) {
             float cv = 0.0f;
             auto ret = alg_hnsw.adaptiveSearchKnn(
-                data_vectors.row(pool_indices[i]).data(),
-                k,
-                probe_statics_length,
-                score_cal,
-                nullptr,
-                &cv);
-            pool_cv[i] = cv;
-            pool_rv[i] = ret.second;
+                data_vectors.row(pool_idx[i]).data(), k,
+                probe_statics_length, score_cal, nullptr, &cv);
+            raw_cv[i] = cv;
+            raw_rv[i] = ret.second;
         }
 
-        // ------------------------------------------------------------------ //
-        // Step 3 – normalise both axes to [0,1] via empirical CDF rank
-        //          rank(i) / (N-1)  →  uniform [0,1]
-        // ------------------------------------------------------------------ //
-        auto empirical_cdf_ranks = [&](const std::vector<float>& vals) {
-            const size_t n = vals.size();
-            std::vector<size_t> order(n);
-            std::iota(order.begin(), order.end(), 0);
-            std::sort(order.begin(), order.end(),
-                      [&](size_t a, size_t b){ return vals[a] < vals[b]; });
+        // ---- Step 3: sort indices by each axis independently ----
+        std::vector<size_t> cv_order(pool), rv_order(pool);
+        std::iota(cv_order.begin(), cv_order.end(), 0);
+        std::iota(rv_order.begin(), rv_order.end(), 0);
+        std::sort(cv_order.begin(), cv_order.end(),
+                  [&](size_t a, size_t b){ return raw_cv[a] < raw_cv[b]; });
+        std::sort(rv_order.begin(), rv_order.end(),
+                  [&](size_t a, size_t b){ return raw_rv[a] < raw_rv[b]; });
 
-            std::vector<float> normalized(n);
-            // Handle ties: assign the average rank of the tied group
-            for (size_t i = 0; i < n; ) {
-                size_t j = i;
-                while (j < n && vals[order[j]] == vals[order[i]]) ++j;
-                float avg_rank = static_cast<float>(i + j - 1) / 2.0f;
-                float u = (n > 1) ? avg_rank / static_cast<float>(n - 1) : 0.5f;
-                for (size_t k2 = i; k2 < j; ++k2)
-                    normalized[order[k2]] = u;
-                i = j;
-            }
-            return normalized;
-        };
+        // ---- Step 4: Hard = intersection(bottom-5% CV, bottom-5% RV) ----
+        const size_t tail = static_cast<size_t>(std::round(0.05 * pool));
+        
+        std::unordered_set<size_t> cv_tail_set;
+        cv_tail_set.reserve(tail);
+        for (size_t i = 0; i < tail; ++i) cv_tail_set.insert(cv_order[i]);
 
-        std::vector<float> u_cv = empirical_cdf_ranks(pool_cv);
-        std::vector<float> u_rv = empirical_cdf_ranks(pool_rv);
-
-        // ------------------------------------------------------------------ //
-        // Step 4 – generate `sample_size` ideal LHS coordinates in [0,1]^2
-        //
-        //  For dimension d, divide [0,1] into `sample_size` equal strata
-        //  [i/N, (i+1)/N).  Draw a uniform point within each stratum.
-        //  Shuffle the stratum assignments independently per dimension.
-        //  This is the standard rank-based Latin Hypercube Design (LHD).
-        // ------------------------------------------------------------------ //
-        const size_t N = sample_size;
-        std::vector<float> lhs_u(N), lhs_v(N);
-
-        // Build strata indices [0, N)
-        std::vector<size_t> perm_u(N), perm_v(N);
-        std::iota(perm_u.begin(), perm_u.end(), 0);
-        std::iota(perm_v.begin(), perm_v.end(), 0);
-
-        std::shuffle(perm_u.begin(), perm_u.end(), gen);
-        std::shuffle(perm_v.begin(), perm_v.end(), gen);
-
-        std::uniform_real_distribution<float> unit(0.0f, 1.0f);
-        for (size_t i = 0; i < N; ++i) {
-            lhs_u[i] = (static_cast<float>(perm_u[i]) + unit(gen)) / static_cast<float>(N);
-            lhs_v[i] = (static_cast<float>(perm_v[i]) + unit(gen)) / static_cast<float>(N);
-        }
-
-        // ------------------------------------------------------------------ //
-        // Step 5 – nearest-neighbour mapping + collision avoidance
-        //
-        //  For each of the N LHS points find the closest pool candidate in
-        //  (u_cv, u_rv) space using Euclidean distance.  If a candidate has
-        //  already been selected, walk to the next nearest unselected one.
-        //
-        //  Implementation: for each LHS point, build a sorted priority queue
-        //  of (distance, pool_idx) and pop until we get an unused candidate.
-        // ------------------------------------------------------------------ //
-        std::vector<int> selected_indices;
-        selected_indices.reserve(N);
-        std::unordered_set<int> used_pool_positions;
-        used_pool_positions.reserve(N);
-
-        for (size_t i = 0; i < N; ++i) {
-            float lu = lhs_u[i];
-            float lv = lhs_v[i];
-
-            std::vector<std::pair<float, size_t>> dists;
-            dists.reserve(actual_pool);
-            for (size_t p = 0; p < actual_pool; ++p) {
-                float du = u_cv[p] - lu;
-                float dv = u_rv[p] - lv;
-                dists.emplace_back(du * du + dv * dv, p);
-            }
-
-            std::sort(dists.begin(), dists.end(),
-                      [](const auto &a, const auto &b){ return a.first < b.first; });
-
-            for (const auto &[dist, p] : dists) {
-                if (used_pool_positions.count(p) == 0) {
-                    used_pool_positions.insert(p);
-                    selected_indices.push_back(pool_indices[p]);
-                    break;
-                }
+        std::unordered_set<size_t> hard_set;
+        hard_set.reserve(tail);
+        for (size_t i = 0; i < tail; ++i) {
+            if (cv_tail_set.count(rv_order[i])) {
+                hard_set.insert(rv_order[i]);
             }
         }
 
-        const size_t actual_selected = selected_indices.size();
-        auto query_vectors = std::make_shared<hnswdis::MatrixXf>(
-            static_cast<int>(actual_selected), data_vectors.cols());
-        for (size_t i = 0; i < actual_selected; ++i)
-            query_vectors->row(static_cast<int>(i)) =
-                data_vectors.row(selected_indices[i]);
+        // ---- Step 5: emit all hard queries ----
+        std::vector<int> selected;
+        selected.reserve(sample_size);
+        for (size_t idx : hard_set)
+            selected.push_back(pool_idx[idx]);
 
-        return query_vectors;
+        // ---- Step 6: fill remaining budget from easy pool ----
+        if (selected.size() < sample_size) {
+            std::vector<size_t> easy;
+            easy.reserve(pool - hard_set.size());
+            for (size_t i = 0; i < pool; ++i)
+                if (!hard_set.count(i)) easy.push_back(i);
+
+            std::shuffle(easy.begin(), easy.end(), gen);
+            const size_t need = sample_size - selected.size();
+            const size_t take = std::min(need, easy.size());
+            for (size_t i = 0; i < take; ++i)
+                selected.push_back(pool_idx[easy[i]]);
+        }
+
+        const size_t actual = selected.size();
+        auto out = std::make_shared<hnswdis::MatrixXf>(
+            static_cast<int>(actual), data_vectors.cols());
+        for (size_t i = 0; i < actual; ++i)
+            out->row(static_cast<int>(i)) = data_vectors.row(selected[i]);
+        return out;
     }
 
     class RecallEstimator
@@ -1234,7 +1167,7 @@ namespace hnswdis
         const float alpha,
         const float gamma,
         const size_t statics_length,
-        const size_t pool_size = 10000)
+        const size_t pool_size = 30000)
     {
         hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
         std::shared_ptr<hnswdis::MatrixXf> sample_query_vectors =
