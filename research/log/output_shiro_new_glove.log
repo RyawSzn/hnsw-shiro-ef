@@ -153,7 +153,7 @@ Average Recall: 0.979593
 5th percentile recall: 0.92
 1st percentile recall: 0.87
 Median search time: 42660 ms
-Search times: 42634 ms, 42660 ms, 43696 ms, 
+Search times: 42634 ms, 42660 ms, 43696 ms,
 glove-100-angular experiment results:
 statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
 1025, 42660, 0.979593, 0.92, 0.87, 6149, 8257, 9657
