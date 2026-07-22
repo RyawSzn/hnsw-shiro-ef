@@ -838,7 +838,7 @@ namespace hnswdis
             {
                 labels.push_back(std::move(std::get<0>(r)));
                 float raw_cv = std::get<2>(r);
-                int cv_score = std::max(0, std::min(100, static_cast<int>(raw_cv * 100.0f)));
+                int cv_score = std::max(0, std::min(100, static_cast<int>(raw_cv * 500.0f)));
                 score_list.push_back(static_cast<float>(cv_score));
             }
 
