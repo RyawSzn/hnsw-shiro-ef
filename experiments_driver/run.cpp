@@ -24,9 +24,9 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_cv_tables, min_q, statics_length
-    // {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"sift-128-euclidean",         "l2", 10, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32 + 15 * 32},
+    {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 0, 1 + 32 + 31 * 32},
+    // {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 0, 1 + 32 + 31 * 32},
+    // {"sift-128-euclidean",         "l2", 100, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 0, 1 + 32 + 31 * 32},
     // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
@@ -65,12 +65,45 @@ static void train_cv_buckets(
     const std::shared_ptr<hnswdis::MatrixXi> ground_truth,
     const int ef_upper_bound,
     const int n_cv_tables,
-    const int min_queries_per_score)
+    const int min_queries_per_score,
+    const std::string &samplings_path = "")
 {
     adapter.init_with_cv_buckets(
         hnsw, data, k, metric, alpha, gamma, statics_length,
         query_vectors, ground_truth,
         n_cv_tables, min_queries_per_score);
+
+    if (samplings_path != "") {
+        size_t num_hard_queries = 0;
+        std::ifstream meta_in(samplings_path + ".meta");
+        if (meta_in.good()) {
+            meta_in >> num_hard_queries;
+        }
+
+        if (num_hard_queries > 0 && num_hard_queries <= query_vectors->rows()) {
+            float ef_hard_sum = 0;
+            float ef_easy_sum = 0;
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
+            hnswdis::Sketch temp_sketch(adapter.get_all_tables(), adapter.get_cv_centers(), adapter.get_expected_recall());
+
+            for(size_t i = 0; i < query_vectors->rows(); ++i) {
+                float cv = 0.0f;
+                auto ret = hnsw->adaptiveSearchKnn(query_vectors->row(i).data(), k, statics_length, score_cal, nullptr, &cv);
+                int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 500.0f)));
+                size_t est_ef = temp_sketch.estimate_ef2(cv_score, ret.second);
+                if (i < num_hard_queries) ef_hard_sum += est_ef;
+                else ef_easy_sum += est_ef;
+            }
+
+            float ef_hard = ef_hard_sum / num_hard_queries;
+            float ef_easy = (query_vectors->rows() - num_hard_queries) > 0 ? ef_easy_sum / (query_vectors->rows() - num_hard_queries) : 0;
+            float hard_pct = static_cast<float>(num_hard_queries) / 30000.0f;
+            float true_wae = hard_pct * ef_hard + (1.0f - hard_pct) * ef_easy;
+
+            adapter.set_wae(true_wae);
+            std::cout << "Reconstructed True WAE: " << true_wae << " (Hard Pct: " << hard_pct << ")" << std::endl;
+        }
+    }
 }
 
 const char *experiments_root = std::getenv("EXPERIMENTS_ROOT");
@@ -292,7 +325,7 @@ void offline_laion_text2image()
                 k, "cd", alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(_sq),
                 std::make_shared<hnswdis::MatrixXi>(_sgt),
-                ef_upper_bound, n_cv_tables, min_queries_per_score);
+        ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
         }
         ef_adapter.serialize(ef_adaptor_path);
     }
@@ -339,13 +372,18 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
 
     // 1. Sample data and compute ground truth
     start = std::chrono::high_resolution_clock::now();
-    auto pair = hnswdis::compute_samplings(hnsw, data, metric, k, sampling_size, alpha, gamma, statics_length);
+    size_t num_hard_queries = 0;
+    auto pair = hnswdis::compute_samplings(hnsw, data, metric, k, sampling_size, alpha, gamma, statics_length, 30000, &num_hard_queries);
     end = std::chrono::high_resolution_clock::now();
     if (!fast_rebuild) {
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
         std::cout << "Sampling computing time: " << duration << " ms" << std::endl;
     }
     hnswdis::serialize_samplings(samplings_path, pair.first, pair.second);
+    {
+        std::ofstream meta_out(samplings_path + ".meta");
+        meta_out << num_hard_queries << "\n";
+    }
 
     // 2. compute ef_adaptor
     start = std::chrono::high_resolution_clock::now();
@@ -362,7 +400,7 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
         k, metric, alpha, gamma, statics_length,
         std::make_shared<hnswdis::MatrixXf>(_sq),
         std::make_shared<hnswdis::MatrixXi>(_sgt),
-        ef_upper_bound, n_cv_tables, min_queries_per_score);
+        ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
 
     ef_adapter.serialize(ef_adaptor_path);
     if (fast_rebuild) {
@@ -568,7 +606,7 @@ void insert_exp_setup(
     train_cv_buckets(ef_adapter, alg_hnsw, before_data_ptr,
         k, metric, alpha, gamma, statics_length,
         sample_query_vectors, std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-        ef_upper_bound, n_cv_tables, min_queries_per_score);
+        ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
     ef_adapter.serialize(ef_adaptor_path);
 }
 
@@ -678,7 +716,7 @@ auto start = std::chrono::high_resolution_clock::now();
         train_cv_buckets(ef_adapter, alg_hnsw, full_data_ptr,
             k, metric, alpha, gamma, statics_length,
             sample_query_vectors_ptr, sample_ground_truth_ptr,
-            ef_upper_bound, n_cv_tables, min_queries_per_score);
+            ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
         ef_adapter.serialize(updated_ef_adaptor_path);
     }
 }
@@ -887,7 +925,7 @@ void delete_exp_setup(
         train_cv_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
             k, metric, alpha, gamma, statics_length,
             sample_query_vectors, sample_ground_truth_ptr,
-            ef_upper_bound, n_cv_tables, min_queries_per_score);
+            ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
         ef_adapter.serialize(ef_adaptor_path);
     }
 }
@@ -966,7 +1004,7 @@ auto start = std::chrono::high_resolution_clock::now();
     train_cv_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
         k, metric, alpha, gamma, statics_length,
         sample_query_vectors_ptr, sample_ground_truth_ptr,
-        ef_upper_bound, n_cv_tables, min_queries_per_score);
+        ef_upper_bound, n_cv_tables, min_queries_per_score, updated_samplings_path);
     ef_adapter.serialize(updated_ef_adaptor_path);
 }
 
@@ -1200,7 +1238,7 @@ void ablation_study_visited_list_size()
             train_cv_buckets(ef_adapter, hnsw, data,
                 k, metric, alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                ef_upper_bound, conf.n_cv_tables, min_queries_per_score);
+                ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
             ef_adapter.serialize(ef_adaptor_path);
 
             hnswdis::Sketch sketch = make_sketch(ef_adapter, expected_recall);
@@ -1289,7 +1327,7 @@ void ablation_study_sampling_size()
             train_cv_buckets(ef_adapter, hnsw, data,
                 k, metric, alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(pair.first), std::make_shared<hnswdis::MatrixXi>(pair.second),
-                ef_upper_bound, conf.n_cv_tables, min_queries_per_score);
+                ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
             ef_adapter.serialize(ef_adaptor_path);
 
             hnswdis::Sketch sketch = make_sketch(ef_adapter, expected_recall);
@@ -1366,7 +1404,7 @@ void ablation_study_weighted_decay_function()
             train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length,
                              std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
                              std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                             ef_upper_bound, conf.n_cv_tables, min_queries_per_score);
+                             ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_gamma");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1446,7 +1484,7 @@ void ablation_study_truncation_ratio()
             train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length,
                              std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
                              std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                             ef_upper_bound, conf.n_cv_tables, min_queries_per_score);
+                             ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_alpha");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1516,7 +1554,7 @@ void ablation_study_n_cv_tables()
             std::string ef_adaptor_path = (root / "ablation_n_cv" / (dataset + "-ncv-" + std::to_string(n_cv_tables) + "-ef.bin")).string();
 
             hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
-            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_cv_tables, min_queries_per_score);
+            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_n_cv");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1583,7 +1621,7 @@ void ablation_study_min_queries_per_score()
             std::string ef_adaptor_path = (root / "ablation_min_q" / (dataset + "-minq-" + std::to_string(min_queries_per_score) + "-ef.bin")).string();
 
             hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
-            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_cv_tables, min_queries_per_score);
+            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_min_q");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1695,7 +1733,7 @@ int main() {
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor
+    // offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor
     online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 

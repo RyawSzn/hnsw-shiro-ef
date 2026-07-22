@@ -1557,9 +1557,6 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                             if (ef < ef_copy) {
                                 ef = ef_copy;
                             }
-                            // if (ef > ef_copy * 3) {
-                            //     ef = ef_copy * 3;
-                            // }
                         } else {
                             ef = ef_copy;
                         }
@@ -1833,7 +1830,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                                 temp_q.pop();
                             }
                             float mean = sum / q_size;
-                            if (mean > 1e-6f) {
+                            if (mean > 1e-4f) {
                                 float variance = std::max(0.0f, (sum_sq / q_size) - (mean * mean));
                                 cv = std::sqrt(variance) / mean;
                             }

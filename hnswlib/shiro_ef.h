@@ -807,11 +807,19 @@ namespace hnswdis
         return query_vectors;
     }
 
+    inline bool safe_less(float a, float b) {
+        if (std::isnan(a) && std::isnan(b)) return false;
+        if (std::isnan(a)) return false;
+        if (std::isnan(b)) return true;
+        return a < b;
+    }
+
     // Hard-first stratified sampling over the 2D (CV, RV) probe space.
     //
     // Hard = intersection(bottom-5% by CV, bottom-5% by RV). All hard
     // queries are included unconditionally. The remaining budget is filled
-    // with a uniform random draw from the easy pool (everyone not in hard).
+    // via Stratified Jittered Grid Sampling (ceil(sqrt(budget)) grid) over
+    // the Easy pool to ensure even coverage across off-diagonal combinations.
     std::shared_ptr<hnswdis::MatrixXf> sample_data_lhs(
         const hnswlib::HierarchicalNSW<float>             &alg_hnsw,
         const hnswdis::MatrixXf                           &data_vectors,
@@ -820,7 +828,8 @@ namespace hnswdis
         const size_t                                       k,
         const size_t                                       probe_statics_length = 1024,
         const size_t                                       pool_size            = 30000,
-        const uint32_t                                     seed                 = 123456789)
+        const uint32_t                                     seed                 = 123456789,
+        size_t                                            *out_hard_count       = nullptr)
     {
         const size_t n_data = static_cast<size_t>(data_vectors.rows());
         const size_t pool   = std::min(pool_size, n_data);
@@ -855,9 +864,9 @@ namespace hnswdis
         std::iota(cv_order.begin(), cv_order.end(), 0);
         std::iota(rv_order.begin(), rv_order.end(), 0);
         std::sort(cv_order.begin(), cv_order.end(),
-                  [&](size_t a, size_t b){ return raw_cv[a] < raw_cv[b]; });
+                  [&](size_t a, size_t b){ return safe_less(raw_cv[a], raw_cv[b]); });
         std::sort(rv_order.begin(), rv_order.end(),
-                  [&](size_t a, size_t b){ return raw_rv[a] < raw_rv[b]; });
+                  [&](size_t a, size_t b){ return safe_less(raw_rv[a], raw_rv[b]); });
 
         // ---- Step 4: Hard = intersection(bottom-5% CV, bottom-5% RV) ----
         const size_t tail = static_cast<size_t>(std::round(0.05 * pool));
@@ -879,6 +888,10 @@ namespace hnswdis
         selected.reserve(sample_size);
         for (size_t idx : hard_set)
             selected.push_back(pool_idx[idx]);
+            
+        if (out_hard_count) {
+            *out_hard_count = hard_set.size();
+        }
 
         // ---- Step 6: fill remaining budget from easy pool ----
         if (selected.size() < sample_size) {
@@ -1027,7 +1040,7 @@ namespace hnswdis
             const size_t ef,
             const float alpha, const float gamma,
             const size_t statics_length,
-            const int min_queries_per_score = 3)
+            const int min_queries_per_score = 0)
         {
             std::shared_ptr<hnswdis::MatrixXf> query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
             MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
@@ -1054,7 +1067,7 @@ namespace hnswdis
             hnswdis::ApproximatedScoreCalculator &score_cal,
             const size_t ef,
             const size_t statics_length,
-            const int min_queries_per_score = 3)
+            const int min_queries_per_score = 0)
         {
             init(alg_hnsw,
                  data_vectors,
@@ -1167,12 +1180,13 @@ namespace hnswdis
         const float alpha,
         const float gamma,
         const size_t statics_length,
-        const size_t pool_size = 20000)
+        const size_t pool_size = 30000,
+        size_t *out_hard_count = nullptr)
     {
         hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
         std::shared_ptr<hnswdis::MatrixXf> sample_query_vectors =
             hnswdis::sample_data_lhs(*alg_hnsw, *data_vectors, sample_size,
-                                     score_cal, k, statics_length, pool_size);
+                                     score_cal, k, statics_length, pool_size, 123456789, out_hard_count);
         MatrixXi sample_ground_truth = compute_ground_truth_batch_parallel4(
             *sample_query_vectors, *data_vectors, metric, k);
         return {*sample_query_vectors, sample_ground_truth};
@@ -1330,7 +1344,7 @@ namespace hnswdis
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
                   EfRecallTable &out_table,
-                  int min_queries_per_score = 3)
+                  int min_queries_per_score = 0)
         {
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
@@ -1366,9 +1380,9 @@ namespace hnswdis
                     int patience = 0;
                     const int MAX_PATIENCE = 1;
 
-                    while (expected_recall - latest_agg_recall > 1e-5f)
+                    while (expected_recall - latest_agg_recall > 1e-4f)
                     {
-                        ef_diff = std::max((int)(ef_diff * (expected_recall - latest_agg_recall) / std::max(recall_diff, 1e-5f)), (int)(k * 0.5));
+                        ef_diff = std::max((int)(ef_diff * (expected_recall - latest_agg_recall) / std::max(recall_diff, 1e-4f)), (int)(k * 0.5));
                         int ef = latest_ef + ef_diff;
 
                         if (ef > ef_upper_bound)
@@ -1418,7 +1432,7 @@ namespace hnswdis
                         latest_ef = ef;
                         latest_agg_recall = agg_recall;
 
-                        if (recall_diff < 1e-5f)
+                        if (recall_diff < 1e-4f)
                         {
                             patience++;
                             if (patience >= MAX_PATIENCE) {
@@ -1491,7 +1505,7 @@ namespace hnswdis
         }
 
         void add_ef_recall(const int ef, const RecallEstimator &recall_estimator, EfRecallTable &out_table,
-                  int min_queries_per_score = 3)
+                  int min_queries_per_score = 0)
         {
             const std::vector<std::pair<int, float>> &score_recall = get_score_recall(recall_estimator);
             if (out_table.empty())
@@ -1557,7 +1571,7 @@ namespace hnswdis
             const std::string &samplings_filename,
             int ef_upper_bound,
             int sampling_size,
-            int min_queries_per_score = 3
+            int min_queries_per_score = 0
         ) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
 
@@ -1602,7 +1616,7 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             int ef_upper_bound,
-            int min_queries_per_score = 3) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
+            int min_queries_per_score = 0) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
             init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators, min_queries_per_score);
         }
@@ -1623,7 +1637,7 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             const int n_cv_tables,
-            int min_queries_per_score = 3)
+            int min_queries_per_score = 0)
         {
             const int n = query_vectors->rows();
 
@@ -1854,5 +1868,6 @@ namespace hnswdis
         float get_expected_recall() const { return expected_recall; }
 
         float get_wae() const { return wae; }
+        void set_wae(float w) { wae = w; }
     };
 }

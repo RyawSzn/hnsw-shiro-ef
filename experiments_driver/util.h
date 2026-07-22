@@ -551,7 +551,7 @@ void adaptive_search(
         }
     }
     std::sort(time.begin(), time.end());
-    int64_t median_time = time[time.size() / 2];
+    int64_t median_time = time.empty() ? 0 : time[time.size() / 2];
     std::cout << "Median search time: " << median_time << " ms" << std::endl;
     std::cout << "Search times: ";
     for (const auto &t : time)
