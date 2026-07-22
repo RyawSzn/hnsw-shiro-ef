@@ -13,7 +13,7 @@ var/
 .cache/
 .opencode/
 .sisyphus/
-./omo/run-continuation/
+.omo/run-continuation/
 .slim/deepwork
 **.DS_Store
 *.pyc

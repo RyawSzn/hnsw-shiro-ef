@@ -24,9 +24,9 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_cv_tables, min_q, statics_length
-    {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"sift-128-euclidean",         "l2", 10, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32 + 15 * 32},
+    // {"sift-128-euclidean",         "l2", 10, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32 + 15 * 32},
     // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
@@ -339,7 +339,7 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
 
     // 1. Sample data and compute ground truth
     start = std::chrono::high_resolution_clock::now();
-    auto pair = hnswdis::compute_samplings(data, metric, k, sampling_size);
+    auto pair = hnswdis::compute_samplings(hnsw, data, metric, k, sampling_size, alpha, gamma, statics_length);
     end = std::chrono::high_resolution_clock::now();
     if (!fast_rebuild) {
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
@@ -1275,7 +1275,7 @@ void ablation_study_sampling_size()
             std::string ef_adaptor_path = (root / "ablation_sampling_size" / (dataset + "-samplings-" + std::to_string(samplings) + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
 
             start = std::chrono::high_resolution_clock::now();
-            auto pair = hnswdis::compute_samplings(data, metric, k, samplings);
+            auto pair = hnswdis::compute_samplings(hnsw, data, metric, k, samplings, alpha, gamma, statics_length);
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "Sampling computing time: " << duration << " ms" << std::endl;
