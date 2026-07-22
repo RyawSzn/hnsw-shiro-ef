@@ -861,7 +861,7 @@ namespace hnswdis
 
         // ---- Step 4: Hard = intersection(bottom-5% CV, bottom-5% RV) ----
         const size_t tail = static_cast<size_t>(std::round(0.05 * pool));
-        
+
         std::unordered_set<size_t> cv_tail_set;
         cv_tail_set.reserve(tail);
         for (size_t i = 0; i < tail; ++i) cv_tail_set.insert(cv_order[i]);
@@ -1167,7 +1167,7 @@ namespace hnswdis
         const float alpha,
         const float gamma,
         const size_t statics_length,
-        const size_t pool_size = 30000)
+        const size_t pool_size = 20000)
     {
         hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
         std::shared_ptr<hnswdis::MatrixXf> sample_query_vectors =
@@ -1446,7 +1446,6 @@ namespace hnswdis
 
             auto &stat = first_recall_estimator.get_recall_statistics();
 
-            // 1. Extract score to EF and count mapping
             std::map<int, size_t> score_to_ef;
             std::map<int, size_t> score_to_cnt;
 
@@ -1467,73 +1466,6 @@ namespace hnswdis
                 score_to_cnt[score] = cnt;
             }
 
-            // 2. Identify continuous and discrete parts
-            std::vector<int> scores;
-            for (auto const& [score, _] : score_to_ef) {
-                scores.push_back(score);
-            }
-
-            int best_start = 0, best_len = 0;
-            int curr_start = 0, curr_len = 1;
-
-            if (scores.size() > 0) {
-                for (size_t i = 1; i < scores.size(); ++i) {
-                    if (scores[i] == scores[i-1] + 1) {
-                        curr_len++;
-                    } else {
-                        if (curr_len > best_len) {
-                            best_len = curr_len;
-                            best_start = curr_start;
-                        }
-                        curr_start = i;
-                        curr_len = 1;
-                    }
-                }
-                if (curr_len > best_len) {
-                    best_len = curr_len;
-                    best_start = curr_start;
-                }
-            }
-
-            int cont_start_score = 0;
-            int cont_end_score = 100;
-            if (best_len > 0) {
-                cont_start_score = scores[best_start];
-                cont_end_score = scores[best_start + best_len - 1];
-                if (best_len >= 3) {
-                    cont_start_score += 1;
-                    cont_end_score -= 1;
-                }
-            }
-
-            // 3. Compute weighted averages for discrete regions and the continuous block
-            float left_sum_ef = 0, right_sum_ef = 0, cont_sum_ef = 0;
-            size_t left_sum_cnt = 0, right_sum_cnt = 0, cont_sum_cnt = 0;
-
-            for (auto const& [score, ef] : score_to_ef) {
-                size_t cnt = score_to_cnt[score];
-                if (score < cont_start_score) {
-                    left_sum_ef += ef * cnt;
-                    left_sum_cnt += cnt;
-                } else if (score > cont_end_score) {
-                    right_sum_ef += ef * cnt;
-                    right_sum_cnt += cnt;
-                } else {
-                    cont_sum_ef += ef * cnt;
-                    cont_sum_cnt += cnt;
-                }
-            }
-
-            size_t cont_avg_ef = cont_sum_cnt > 0 ? std::round(cont_sum_ef / cont_sum_cnt) : 0;
-            size_t left_avg_ef = left_sum_cnt > 0 ? std::round(left_sum_ef / left_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.begin()->second);
-            size_t right_avg_ef = right_sum_cnt > 0 ? std::round(right_sum_ef / right_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.rbegin()->second);
-
-            if (cont_sum_cnt > 0) {
-                left_avg_ef = std::max(left_avg_ef, cont_avg_ef); // Harder queries should need >= average ef.
-                right_avg_ef = std::min(right_avg_ef, cont_avg_ef); // Easier queries should need <= average ef.
-            }
-
-            // 4. Build smoothed table and calculate new weighted average EF
             EfRecallTable smoothed_table;
             float weighted_average_ef = 0.0f;
             float total_queries = query_vectors->rows();
@@ -1542,17 +1474,9 @@ namespace hnswdis
                 size_t final_ef = 0;
                 size_t cnt = score_to_cnt.count(s) ? score_to_cnt[s] : 0;
 
-                if (s < cont_start_score) {
-                    final_ef = left_avg_ef;
+                if (score_to_ef.count(s)) {
+                    final_ef = score_to_ef[s];
                     smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
-                } else if (s > cont_end_score) {
-                    final_ef = right_avg_ef;
-                    smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
-                } else {
-                    if (score_to_ef.count(s)) {
-                        final_ef = score_to_ef[s];
-                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
-                    }
                 }
 
                 if (cnt > 0 && final_ef > 0) {
@@ -1563,6 +1487,7 @@ namespace hnswdis
             out_table = smoothed_table;
             std::cout << "Weighted average ef: " << weighted_average_ef << std::endl;
             wae = weighted_average_ef;
+
         }
 
         void add_ef_recall(const int ef, const RecallEstimator &recall_estimator, EfRecallTable &out_table,
