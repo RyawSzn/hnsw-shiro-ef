@@ -1,3 +1,4 @@
+#include <cerrno>
 #include <map>
 #pragma once
 
@@ -5,6 +6,8 @@
 #include "hnswalg.h"
 #include <omp.h>
 #include <thread>
+
+constexpr int FILLING_METHOD = 2;
 
 namespace hnswdis
 {
@@ -1459,167 +1462,240 @@ namespace hnswdis
             }
 
             auto &stat = first_recall_estimator.get_recall_statistics();
-
-            // No filling function is applied here, as we want to keep the original statistics for analysis.
-            // std::map<int, size_t> score_to_ef;
-            // std::map<int, size_t> score_to_cnt;
-
-            // for (int i = 0; i < (int)stat.size(); ++i)
-            // {
-            //     int score = std::get<0>(stat[i]);
-            //     size_t cnt = std::get<5>(stat[i]);
-            //     size_t ef = out_table[i].second.back().first;
-            //     for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
-            //     {
-            //         if (out_table[i].second[j].second >= expected_recall)
-            //         {
-            //             ef = out_table[i].second[j].first;
-            //             break;
-            //         }
-            //     }
-            //     score_to_ef[score] = ef;
-            //     score_to_cnt[score] = cnt;
-            // }
-
-            // EfRecallTable smoothed_table;
-            // float weighted_average_ef = 0.0f;
-            // float total_queries = query_vectors->rows();
-
-            // for (int s = 0; s <= 100; ++s) {
-            //     size_t final_ef = 0;
-            //     size_t cnt = score_to_cnt.count(s) ? score_to_cnt[s] : 0;
-
-            //     if (score_to_ef.count(s)) {
-            //         final_ef = score_to_ef[s];
-            //         smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
-            //     }
-
-            //     if (cnt > 0 && final_ef > 0) {
-            //         weighted_average_ef += cnt * final_ef / total_queries;
-            //     }
-            // }
-
-            // out_table = smoothed_table;
-            // std::cout << "Weighted average ef: " << weighted_average_ef << std::endl;
-            // wae = weighted_average_ef;
-
-            // 1. Extract score to EF and count mapping
-            std::map<int, size_t> score_to_ef;
-            std::map<int, size_t> score_to_cnt;
-
-            for (int i = 0; i < (int)stat.size(); ++i)
-            {
-                int score = std::get<0>(stat[i]);
-                size_t cnt = std::get<5>(stat[i]);
-                size_t ef = out_table[i].second.back().first;
-                for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
-                {
-                    if (out_table[i].second[j].second >= expected_recall)
-                    {
-                        ef = out_table[i].second[j].first;
-                        break;
-                    }
-                }
-                score_to_ef[score] = ef;
-                score_to_cnt[score] = cnt;
-            }
-
-            // 2. Identify continuous and discrete parts
-            std::vector<int> scores;
-            for (auto const& [score, _] : score_to_ef) {
-                scores.push_back(score);
-            }
-
-            int best_start = 0, best_len = 0;
-            int curr_start = 0, curr_len = 1;
-
-            if (scores.size() > 0) {
-                for (size_t i = 1; i < scores.size(); ++i) {
-                    if (scores[i] == scores[i-1] + 1) {
-                        curr_len++;
-                    } else {
-                        if (curr_len > best_len) {
-                            best_len = curr_len;
-                            best_start = curr_start;
-                        }
-                        curr_start = i;
-                        curr_len = 1;
-                    }
-                }
-                if (curr_len > best_len) {
-                    best_len = curr_len;
-                    best_start = curr_start;
-                }
-            }
-
-            int cont_start_score = 0;
-            int cont_end_score = 100;
-            if (best_len > 0) {
-                cont_start_score = scores[best_start];
-                cont_end_score = scores[best_start + best_len - 1];
-                if (best_len >= 3) {
-                    cont_start_score += 1;
-                    cont_end_score -= 1;
-                }
-            }
-
-            // 3. Compute weighted averages for discrete regions and the continuous block
-            float left_sum_ef = 0, right_sum_ef = 0, cont_sum_ef = 0;
-            size_t left_sum_cnt = 0, right_sum_cnt = 0, cont_sum_cnt = 0;
-
-            for (auto const& [score, ef] : score_to_ef) {
-                size_t cnt = score_to_cnt[score];
-                if (score < cont_start_score) {
-                    left_sum_ef += ef * cnt;
-                    left_sum_cnt += cnt;
-                } else if (score > cont_end_score) {
-                    right_sum_ef += ef * cnt;
-                    right_sum_cnt += cnt;
-                } else {
-                    cont_sum_ef += ef * cnt;
-                    cont_sum_cnt += cnt;
-                }
-            }
-
-            size_t cont_avg_ef = cont_sum_cnt > 0 ? std::round(cont_sum_ef / cont_sum_cnt) : 0;
-            size_t left_avg_ef = left_sum_cnt > 0 ? std::round(left_sum_ef / left_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.begin()->second);
-            size_t right_avg_ef = right_sum_cnt > 0 ? std::round(right_sum_ef / right_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.rbegin()->second);
-
-            if (cont_sum_cnt > 0) {
-                left_avg_ef = std::max(left_avg_ef, cont_avg_ef); // Harder queries should need >= average ef.
-                right_avg_ef = std::min(right_avg_ef, cont_avg_ef); // Easier queries should need <= average ef.
-            }
-
-            // 4. Build smoothed table and calculate new weighted average EF
             EfRecallTable smoothed_table;
             float weighted_average_ef = 0.0f;
             float total_queries = query_vectors->rows();
 
-            for (int s = 0; s <= 100; ++s) {
-                size_t final_ef = 0;
-                size_t cnt = score_to_cnt.count(s) ? score_to_cnt[s] : 0;
+            if constexpr (FILLING_METHOD == 0) {
+                std::map<int, size_t> score_to_ef;
+                std::map<int, size_t> score_to_cnt;
 
-                if (s < cont_start_score) {
-                    final_ef = left_avg_ef;
-                    smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
-                } else if (s > cont_end_score) {
-                    final_ef = right_avg_ef;
-                    smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
-                } else {
+                for (int i = 0; i < (int)stat.size(); ++i)
+                {
+                    int score = std::get<0>(stat[i]);
+                    size_t cnt = std::get<5>(stat[i]);
+                    size_t ef = out_table[i].second.back().first;
+                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
+                    {
+                        if (out_table[i].second[j].second >= expected_recall)
+                        {
+                            ef = out_table[i].second[j].first;
+                            break;
+                        }
+                    }
+                    score_to_ef[score] = ef;
+                    score_to_cnt[score] = cnt;
+                }
+
+                for (int s = 0; s <= 100; ++s) {
+                    size_t final_ef = 0;
+                    size_t cnt = score_to_cnt.count(s) ? score_to_cnt[s] : 0;
+
                     if (score_to_ef.count(s)) {
                         final_ef = score_to_ef[s];
                         smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
                     }
+
+                    if (cnt > 0 && final_ef > 0) {
+                        weighted_average_ef += cnt * final_ef / total_queries;
+                    }
+                }
+            } else if constexpr (FILLING_METHOD == 1) {
+                // 1. Extract score to EF and count mapping
+                std::map<int, size_t> score_to_ef;
+                std::map<int, size_t> score_to_cnt;
+
+                for (int i = 0; i < (int)stat.size(); ++i)
+                {
+                    int score = std::get<0>(stat[i]);
+                    size_t cnt = std::get<5>(stat[i]);
+                    size_t ef = out_table[i].second.back().first;
+                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
+                    {
+                        if (out_table[i].second[j].second >= expected_recall)
+                        {
+                            ef = out_table[i].second[j].first;
+                            break;
+                        }
+                    }
+                    score_to_ef[score] = ef;
+                    score_to_cnt[score] = cnt;
                 }
 
-                if (cnt > 0 && final_ef > 0) {
-                    weighted_average_ef += cnt * final_ef / total_queries;
+                // 2. Identify continuous and discrete parts
+                std::vector<int> scores;
+                for (auto const& [score, _] : score_to_ef) {
+                    scores.push_back(score);
+                }
+
+                int best_start = 0, best_len = 0;
+                int curr_start = 0, curr_len = 1;
+
+                if (scores.size() > 0) {
+                    for (size_t i = 1; i < scores.size(); ++i) {
+                        if (scores[i] == scores[i-1] + 1) {
+                            curr_len++;
+                        } else {
+                            if (curr_len > best_len) {
+                                best_len = curr_len;
+                                best_start = curr_start;
+                            }
+                            curr_start = i;
+                            curr_len = 1;
+                        }
+                    }
+                    if (curr_len > best_len) {
+                        best_len = curr_len;
+                        best_start = curr_start;
+                    }
+                }
+
+                int cont_start_score = 0;
+                int cont_end_score = 100;
+                if (best_len > 0) {
+                    cont_start_score = scores[best_start];
+                    cont_end_score = scores[best_start + best_len - 1];
+                    if (best_len >= 3) {
+                        cont_start_score += 1;
+                        cont_end_score -= 1;
+                    }
+                }
+
+                // 3. Compute weighted averages for discrete regions and the continuous block
+                float left_sum_ef = 0, right_sum_ef = 0, cont_sum_ef = 0;
+                size_t left_sum_cnt = 0, right_sum_cnt = 0, cont_sum_cnt = 0;
+
+                for (auto const& [score, ef] : score_to_ef) {
+                    size_t cnt = score_to_cnt[score];
+                    if (score < cont_start_score) {
+                        left_sum_ef += ef * cnt;
+                        left_sum_cnt += cnt;
+                    } else if (score > cont_end_score) {
+                        right_sum_ef += ef * cnt;
+                        right_sum_cnt += cnt;
+                    } else {
+                        cont_sum_ef += ef * cnt;
+                        cont_sum_cnt += cnt;
+                    }
+                }
+
+                size_t cont_avg_ef = cont_sum_cnt > 0 ? std::round(cont_sum_ef / cont_sum_cnt) : 0;
+                size_t left_avg_ef = left_sum_cnt > 0 ? std::round(left_sum_ef / left_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.begin()->second);
+                size_t right_avg_ef = right_sum_cnt > 0 ? std::round(right_sum_ef / right_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.rbegin()->second);
+
+                if (cont_sum_cnt > 0) {
+                    left_avg_ef = std::max(left_avg_ef, cont_avg_ef); // Harder queries should need >= average ef.
+                    right_avg_ef = std::min(right_avg_ef, cont_avg_ef); // Easier queries should need <= average ef.
+                }
+
+                // 4. Build smoothed table and calculate new weighted average EF
+                for (int s = 0; s <= 100; ++s) {
+                    size_t final_ef = 0;
+                    size_t cnt = score_to_cnt.count(s) ? score_to_cnt[s] : 0;
+
+                    if (s < cont_start_score) {
+                        final_ef = left_avg_ef;
+                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                    } else if (s > cont_end_score) {
+                        final_ef = right_avg_ef;
+                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                    } else {
+                        if (score_to_ef.count(s)) {
+                            final_ef = score_to_ef[s];
+                            smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                        }
+                    }
+
+                    if (cnt > 0 && final_ef > 0) {
+                        weighted_average_ef += cnt * final_ef / total_queries;
+                    }
+                }
+            }
+            else if constexpr (FILLING_METHOD == 2) {
+                // 1. Extract score to EF and count mapping
+                std::map<int, size_t> score_to_ef;
+                std::map<int, size_t> score_to_cnt;
+
+                for (int i = 0; i < (int)stat.size(); ++i)
+                {
+                    int score = std::get<0>(stat[i]);
+                    size_t cnt = std::get<5>(stat[i]);
+                    size_t ef = out_table[i].second.back().first;
+                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
+                    {
+                        if (out_table[i].second[j].second >= expected_recall)
+                        {
+                            ef = out_table[i].second[j].first;
+                            break;
+                        }
+                    }
+                    score_to_ef[score] = ef;
+                    score_to_cnt[score] = cnt;
+                }
+
+                std::vector<float> efs(101, 0.0f);
+
+                // 2. IDW (Inverse Distance Weighting) for all scores 0-100
+                for (int s = 0; s <= 100; ++s) {
+                    if (score_to_ef.count(s)) {
+                        efs[s] = score_to_ef[s];
+                    } else {
+                        float sum_w = 0.0f;
+                        float sum_ef = 0.0f;
+                        for (auto const& [known_s, known_ef] : score_to_ef) {
+                            float dist = std::abs(s - known_s);
+                            float w = 1.0f / (dist * dist);
+                            sum_w += w;
+                            sum_ef += w * known_ef;
+                        }
+                        if (sum_w > 0) {
+                            efs[s] = sum_ef / sum_w;
+                        } else {
+                            efs[s] = 0.0f;
+                        }
+                    }
+                }
+
+                // 3. 1D PAVA (Pool-Adjacent-Violators Algorithm) to enforce monotonicity (decreasing)
+                std::vector<std::pair<float, int>> blocks;
+                for (int i = 0; i <= 100; ++i) {
+                    float val = efs[i];
+                    int weight = 1;
+
+                    while (!blocks.empty() && blocks.back().first < val)
+                    {
+                        float prev_val = blocks.back().first;
+                        int prev_weight = blocks.back().second;
+
+                        val = (prev_val * prev_weight + val * weight) / (prev_weight + weight);
+                        weight += prev_weight;
+
+                        blocks.pop_back();
+                    }
+                    blocks.push_back({val, weight});
+                }
+
+                int idx = 0;
+                for (const auto& block : blocks) {
+                    for (int i = 0; i < block.second; ++i) {
+                        efs[idx++] = block.first;
+                    }
+                }
+
+                // 4. Build smoothed table and calculate Weighted Average EF
+                for (int s = 0; s <= 100; ++s) {
+                    size_t final_ef = std::round(efs[s]);
+                    smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+
+                    if (score_to_cnt.count(s)) {
+                        weighted_average_ef += score_to_cnt[s] * final_ef / total_queries;
+                    }
                 }
             }
 
             out_table = smoothed_table;
-            std::cout << "Weighted average ef: " << weighted_average_ef << std::endl;
             wae = weighted_average_ef;
+            std::cout << "Weighted average ef: " << wae << std::endl;
         }
 
         void add_ef_recall(const int ef, const RecallEstimator &recall_estimator, EfRecallTable &out_table,

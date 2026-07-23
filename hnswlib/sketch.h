@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iostream>
 
+constexpr int SMOOTHING_METHOD = 0; // 0: no smoothing, 1: simple smoothing
+
 namespace hnswdis
 {
     using EfRecallTable = std::vector<std::pair<int, std::vector<std::pair<int, float>>>>;
@@ -67,9 +69,17 @@ namespace hnswdis
                            float score) const
         {
             size_t first = lookup_ef(table, links, score);
-            if (score < 1 || score >= 100)
+
+            if constexpr (SMOOTHING_METHOD == 0)
+            {
                 return first;
-            return (first + lookup_ef(table, links, score - 1) + lookup_ef(table, links, score + 1)) / 3;
+            }
+            else if constexpr (SMOOTHING_METHOD == 1)
+            {
+                if (score < 1 || score >= 100)
+                    return first;
+                return (first + lookup_ef(table, links, score - 1) + lookup_ef(table, links, score + 1)) / 3;
+            }
         }
 
     public:
@@ -117,7 +127,7 @@ namespace hnswdis
                 float c0 = (*cv_centers_)[idx];
                 float c1 = (*cv_centers_)[idx + 1];
                 float w = (cv - c0) / (c1 - c0);
-                
+
                 size_t ef0 = smoothed_ef((*tables_)[idx], all_links[idx], score);
                 size_t ef1 = smoothed_ef((*tables_)[idx + 1], all_links[idx + 1], score);
 

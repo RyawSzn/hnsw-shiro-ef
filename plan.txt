@@ -1,0 +1,18 @@
+1. 现状分析
+- 在 `shiro_ef.h` 的 `EfAdapter::init` 中，`FILLING_METHOD` 处理的是 `score` (0-100的整数) 到 `ef` (搜索深度) 的一维映射（1D Mapping）。
+- 当前 Case 1 主要是找出连续的一段 score（Continuous block），并对左侧（Harder queries）和右侧（Easier queries）使用加权平均值来进行填充（Padding/Imputation）。这属于一种基础的常数外推与填充。
+
+2. 方法对比与评估
+由于数据维度是**一维 (1D)**，我们需要评估你提到的几种方法：
+- **线性/三次样条插值 (Linear / Cubic Spline Interpolation)**: **最适合 (Best Fit)**。适用于一维数据中缺失值的填补（比如 `score` 为 45 和 47 都有真实的 `ef`，但 46 缺失）。线性插值计算简单且符合 EF 随 Score 平滑变化的物理直觉；三次样条能保证一阶导数连续，更加平滑。
+- **双线性/三线性插值 (Bilinear / Trilinear Interpolation)**: **不适用 (Not Applicable)**。它们分别用于二维（2D）和三维（3D）网格数据。当前你的变量仅有 `score` 一维。除非你引入了其他维度（例如将 `k` 或 `预期 Recall` 作为额外的输入特征构建 2D/3D 查找表），否则无法使用。
+- **拉普拉斯修复 (Laplacian Inpainting)**: **大材小用 / 可用于平滑 (Overkill but gives smooth results)**。拉普拉斯修复（通过求解泊松方程使二阶导数最小化）在图像（2D）修复中极好，降阶到 1D 本质上等价于某种平滑样条（Smoothing Splines）或带有平滑先验的线性插值。考虑到 HNSW 中 EF 的单调性，它可以用来压制异常突变的 `ef`，但实现成本较高。
+
+3. 推荐与优化计划 (Plan)
+建议采用 **1D 线性插值 (1D Linear Interpolation)** 结合 **单调性约束 (Monotonicity Constraint)**，而不是复杂的图像处理算法。
+理由：
+1. **物理意义**：Score 代表 Query 的“容易程度”（例如 CV/RV 预估）。Score 越高，Query 越容易，所需的 `ef` 应该越小。它们之间是近似单调递减的关系。
+2. **算法设计**：
+   - **中间填补 (Interpolation)**: 对于在观测范围内的缺失 Score，使用左近邻和右近邻的点进行线性插值。
+   - **边缘外推 (Extrapolation)**: 对于小于观测最小 Score 的部分，使用最小 Score 对应的 EF（或左侧平均）；大于最大 Score 的部分，使用最大 Score 对应的 EF（或者截断到 k）。
+   - **保序滤波 (Isotonic Regression/Smoothing)**: （可选）对填充后的 `ef` 序列进行单调递减强制处理，防止出现 Score 变高但 `ef` 反而变大的反直觉现象。
