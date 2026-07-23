@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <iostream>
 
-constexpr int SMOOTHING_METHOD = 0; // 0: no smoothing, 1: simple smoothing
+constexpr int SMOOTHING_METHOD = 1; // 0: no smoothing, 1: simple smoothing
 
 namespace hnswdis
 {

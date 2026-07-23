@@ -24,9 +24,9 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_cv_tables, min_q, statics_length
-    {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"sift-128-euclidean",         "l2", 100, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"sift-128-euclidean",         "l2", 100, 0.25f, 12.0f, 0.95f,  300, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
@@ -89,7 +89,7 @@ static void train_cv_buckets(
             for(size_t i = 0; i < query_vectors->rows(); ++i) {
                 float cv = 0.0f;
                 auto ret = hnsw->adaptiveSearchKnn(query_vectors->row(i).data(), k, statics_length, score_cal, nullptr, &cv);
-                int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 500.0f)));
+                int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 400.0f)));
                 size_t est_ef = temp_sketch.estimate_ef2(cv_score, ret.second);
                 if (i < num_hard_queries) ef_hard_sum += est_ef;
                 else ef_easy_sum += est_ef;

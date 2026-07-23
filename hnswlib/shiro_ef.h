@@ -8,6 +8,7 @@
 #include <thread>
 
 constexpr int FILLING_METHOD = 2;
+constexpr int SAMPLING_METHOD = 1; // 0: Normal Random, 1: Hard First
 
 namespace hnswdis
 {
@@ -823,7 +824,7 @@ namespace hnswdis
     // queries are included unconditionally. The remaining budget is filled
     // via Stratified Jittered Grid Sampling (ceil(sqrt(budget)) grid) over
     // the Easy pool to ensure even coverage across off-diagonal combinations.
-    std::shared_ptr<hnswdis::MatrixXf> sample_data_lhs(
+    std::shared_ptr<hnswdis::MatrixXf> sample_data_hard_first(
         const hnswlib::HierarchicalNSW<float>             &alg_hnsw,
         const hnswdis::MatrixXf                           &data_vectors,
         const size_t                                       sample_size,
@@ -949,7 +950,7 @@ namespace hnswdis
             {
                 labels.push_back(std::move(std::get<0>(r)));
                 float raw_cv = std::get<2>(r);
-                int cv_score = std::max(0, std::min(100, static_cast<int>(raw_cv * 500.0f)));
+                int cv_score = std::max(0, std::min(100, static_cast<int>(raw_cv * 400.0f)));
                 score_list.push_back(static_cast<float>(cv_score));
             }
 
@@ -1186,13 +1187,20 @@ namespace hnswdis
         const size_t pool_size = 30000,
         size_t *out_hard_count = nullptr)
     {
-        hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
-        std::shared_ptr<hnswdis::MatrixXf> sample_query_vectors =
-            hnswdis::sample_data_lhs(*alg_hnsw, *data_vectors, sample_size,
-                                     score_cal, k, statics_length, pool_size, 123456789, out_hard_count);
-        MatrixXi sample_ground_truth = compute_ground_truth_batch_parallel4(
-            *sample_query_vectors, *data_vectors, metric, k);
-        return {*sample_query_vectors, sample_ground_truth};
+        if constexpr (SAMPLING_METHOD == 0) {
+            if (out_hard_count) *out_hard_count = 0;
+            return compute_samplings(data_vectors, metric, k, sample_size);
+        } else if constexpr (SAMPLING_METHOD == 1) {
+            hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
+            std::shared_ptr<hnswdis::MatrixXf> sample_query_vectors =
+                hnswdis::sample_data_hard_first(*alg_hnsw, *data_vectors, sample_size,
+                                         score_cal, k, statics_length, pool_size, 123456789, out_hard_count);
+            MatrixXi sample_ground_truth = compute_ground_truth_batch_parallel4(
+                *sample_query_vectors, *data_vectors, metric, k);
+            return {*sample_query_vectors, sample_ground_truth};
+        } else {
+            throw std::runtime_error("Invalid SAMPLING_METHOD");
+        }
     }
 
     void serialize_samplings(const std::string &filename,
@@ -1616,15 +1624,12 @@ namespace hnswdis
                 std::map<int, size_t> score_to_ef;
                 std::map<int, size_t> score_to_cnt;
 
-                for (int i = 0; i < (int)stat.size(); ++i)
-                {
+                for (int i = 0; i < (int)stat.size(); ++i) {
                     int score = std::get<0>(stat[i]);
                     size_t cnt = std::get<5>(stat[i]);
                     size_t ef = out_table[i].second.back().first;
-                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
-                    {
-                        if (out_table[i].second[j].second >= expected_recall)
-                        {
+                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
+                        if (out_table[i].second[j].second >= expected_recall) {
                             ef = out_table[i].second[j].first;
                             break;
                         }
@@ -1633,56 +1638,90 @@ namespace hnswdis
                     score_to_cnt[score] = cnt;
                 }
 
-                std::vector<float> efs(101, 0.0f);
+                // 2. Identify Continuous Block and Discrete Parts (Borrowing from Method 1)
+                std::vector<int> scores;
+                for (auto const& [score, _] : score_to_ef) scores.push_back(score);
 
-                // 2. IDW (Inverse Distance Weighting) for all scores 0-100
-                for (int s = 0; s <= 100; ++s) {
-                    if (score_to_ef.count(s)) {
-                        efs[s] = score_to_ef[s];
-                    } else {
-                        float sum_w = 0.0f;
-                        float sum_ef = 0.0f;
-                        for (auto const& [known_s, known_ef] : score_to_ef) {
-                            float dist = std::abs(s - known_s);
-                            float w = 1.0f / (dist * dist);
-                            sum_w += w;
-                            sum_ef += w * known_ef;
-                        }
-                        if (sum_w > 0) {
-                            efs[s] = sum_ef / sum_w;
+                int best_start = 0, best_len = 0;
+                int curr_start = 0, curr_len = 1;
+                if (!scores.empty()) {
+                    for (size_t i = 1; i < scores.size(); ++i) {
+                        if (scores[i] == scores[i-1] + 1) {
+                            curr_len++;
                         } else {
-                            efs[s] = 0.0f;
+                            if (curr_len > best_len) { best_len = curr_len; best_start = curr_start; }
+                            curr_start = i; curr_len = 1;
+                        }
+                    }
+                    if (curr_len > best_len) { best_len = curr_len; best_start = curr_start; }
+                }
+
+                int cont_start_score = 0, cont_end_score = 100;
+                if (best_len > 0) {
+                    cont_start_score = scores[best_start];
+                    cont_end_score = scores[best_start + best_len - 1];
+                    if (best_len >= 3) {
+                        cont_start_score += 1;
+                        cont_end_score -= 1;
+                    }
+                }
+
+                // 3. Compute Averages for Discrete Left/Right and Continuous Center
+                float left_sum_ef = 0, right_sum_ef = 0, cont_sum_ef = 0;
+                size_t left_sum_cnt = 0, right_sum_cnt = 0, cont_sum_cnt = 0;
+
+                for (auto const& [score, ef] : score_to_ef) {
+                    size_t cnt = score_to_cnt[score];
+                    if (score < cont_start_score) {
+                        left_sum_ef += ef * cnt; left_sum_cnt += cnt;
+                    } else if (score > cont_end_score) {
+                        right_sum_ef += ef * cnt; right_sum_cnt += cnt;
+                    } else {
+                        cont_sum_ef += ef * cnt; cont_sum_cnt += cnt;
+                    }
+                }
+
+                float cont_avg_ef = cont_sum_cnt > 0 ? (cont_sum_ef / cont_sum_cnt) : 0.0f;
+                float left_avg_ef = left_sum_cnt > 0 ? (left_sum_ef / left_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.begin()->second);
+                float right_avg_ef = right_sum_cnt > 0 ? (right_sum_ef / right_sum_cnt) : (score_to_ef.empty() ? 0 : score_to_ef.rbegin()->second);
+
+                // 4. Ultimate Method 2: Create Safe Pivots and Fill
+                float left_pivot = std::max(left_avg_ef, cont_avg_ef);
+                float right_pivot = std::min(right_avg_ef, cont_avg_ef);
+
+                int min_score = scores.empty() ? 0 : scores.front();
+                int max_score = scores.empty() ? 100 : scores.back();
+
+                std::vector<float> efs(101, 0.0f);
+                if (!score_to_ef.empty()) {
+                    for (int s = 0; s <= 100; ++s) {
+                        if (s <= min_score) {
+                            // Ocean Extrapolation with Pivot Floor
+                            efs[s] = std::max(static_cast<float>(score_to_ef[min_score]), left_pivot);
+                        } else if (s >= max_score) {
+                            // Ocean Extrapolation with Pivot Ceiling
+                            efs[s] = std::min(static_cast<float>(score_to_ef[max_score]), right_pivot);
+                        } else if (score_to_ef.count(s)) {
+                            // Perfect Spike Preservation
+                            efs[s] = score_to_ef[s];
+                        } else {
+                            // Linear Interpolation for Holes
+                            auto it = score_to_ef.upper_bound(s);
+                            int right_s = it->first;
+                            float right_ef = it->second;
+
+                            --it;
+                            int left_s = it->first;
+                            float left_ef = it->second;
+
+                            float w = static_cast<float>(s - left_s) / (right_s - left_s);
+                            efs[s] = left_ef * (1.0f - w) + right_ef * w;
                         }
                     }
                 }
 
-                // 3. 1D PAVA (Pool-Adjacent-Violators Algorithm) to enforce monotonicity (decreasing)
-                std::vector<std::pair<float, int>> blocks;
-                for (int i = 0; i <= 100; ++i) {
-                    float val = efs[i];
-                    int weight = 1;
-
-                    while (!blocks.empty() && blocks.back().first < val)
-                    {
-                        float prev_val = blocks.back().first;
-                        int prev_weight = blocks.back().second;
-
-                        val = (prev_val * prev_weight + val * weight) / (prev_weight + weight);
-                        weight += prev_weight;
-
-                        blocks.pop_back();
-                    }
-                    blocks.push_back({val, weight});
-                }
-
-                int idx = 0;
-                for (const auto& block : blocks) {
-                    for (int i = 0; i < block.second; ++i) {
-                        efs[idx++] = block.first;
-                    }
-                }
-
-                // 4. Build smoothed table and calculate Weighted Average EF
+                // 5. Build smoothed table and calculate WAE
+                float total_queries = query_vectors->rows();
                 for (int s = 0; s <= 100; ++s) {
                     size_t final_ef = std::round(efs[s]);
                     smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
