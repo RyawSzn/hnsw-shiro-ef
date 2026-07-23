@@ -511,7 +511,7 @@ void sensitivity_analysis()
                     << "Expected recall: " << expected_recall << std::endl;
 
                 start = std::chrono::high_resolution_clock::now();
-                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size);
+                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size, min_queries_per_score);
                 end = std::chrono::high_resolution_clock::now();
                 duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
                 std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -1231,7 +1231,7 @@ void ablation_study_visited_list_size()
             std::string ef_adaptor_path = (root / "ablation_distance_size" / (dataset + "-D-" + std::to_string(statics_length) + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
 
             auto start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size, min_queries_per_score);
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -1320,7 +1320,7 @@ void ablation_study_sampling_size()
             hnswdis::serialize_samplings(samplings_path, pair.first, pair.second);
 
             start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, samplings);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, samplings, min_queries_per_score);
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
@@ -1397,7 +1397,7 @@ void ablation_study_weighted_decay_function()
             std::string ef_adaptor_path = (root / "ablation_gamma" / (dataset + "-gamma-" + std::to_string(gamma) + "-ef.bin")).string();
 
             auto start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size, min_queries_per_score);
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
@@ -1477,7 +1477,7 @@ void ablation_study_truncation_ratio()
             std::string ef_adaptor_path = (root / "ablation_alpha" / (dataset + "-alpha-" + std::to_string(alpha) + "-ef.bin")).string();
 
             auto start = std::chrono::high_resolution_clock::now();
-            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size);
+            hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size, min_queries_per_score);
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
@@ -1572,7 +1572,7 @@ void ablation_study_min_queries_per_score()
     std::cout << "Starting ablation study tests: min_queries_per_score...\n\n" << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 
-    std::vector<int> min_q_list = {0, 1, 3, 5, 10};
+    std::vector<int> min_q_list = {0, 1, 3, 5};
 
     for (const auto& conf : g_experiments)
     {
@@ -1733,7 +1733,7 @@ int main() {
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor
+    // offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor
     online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 

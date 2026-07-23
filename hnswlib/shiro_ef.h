@@ -1040,7 +1040,7 @@ namespace hnswdis
             const size_t ef,
             const float alpha, const float gamma,
             const size_t statics_length,
-            const int min_queries_per_score = 3)
+            const int min_queries_per_score)
         {
             std::shared_ptr<hnswdis::MatrixXf> query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
             MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
@@ -1067,7 +1067,7 @@ namespace hnswdis
             hnswdis::ApproximatedScoreCalculator &score_cal,
             const size_t ef,
             const size_t statics_length,
-            const int min_queries_per_score = 3)
+            const int min_queries_per_score)
         {
             init(alg_hnsw,
                  data_vectors,
@@ -1344,7 +1344,7 @@ namespace hnswdis
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
                   EfRecallTable &out_table,
-                  int min_queries_per_score = 3)
+                  int min_queries_per_score)
         {
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
@@ -1352,12 +1352,12 @@ namespace hnswdis
             size_t second_ef = static_cast<size_t>(1.5 * first_ef);
 
             RecallEstimator first_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, first_ef, statics_length, min_queries_per_score);
-            add_ef_recall(first_ef, first_recall_estimator, out_table);
+            add_ef_recall(first_ef, first_recall_estimator, out_table, min_queries_per_score);
             float first_average_recall = compute_average_recall(first_recall_estimator);
             std::cout << "Initial average recall with ef=" << first_ef << ": " << first_average_recall << std::endl;
 
             RecallEstimator second_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, second_ef, statics_length, min_queries_per_score);
-            add_ef_recall(second_ef, second_recall_estimator, out_table);
+            add_ef_recall(second_ef, second_recall_estimator, out_table, min_queries_per_score);
             float second_average_recall = compute_average_recall(second_recall_estimator);
             std::cout << "Initial average recall with ef=" << second_ef << ": " << second_average_recall << std::endl;
 
@@ -1623,7 +1623,7 @@ namespace hnswdis
         }
 
         void add_ef_recall(const int ef, const RecallEstimator &recall_estimator, EfRecallTable &out_table,
-                  int min_queries_per_score = 3)
+                  int min_queries_per_score)
         {
             const std::vector<std::pair<int, float>> &score_recall = get_score_recall(recall_estimator);
             if (out_table.empty())
@@ -1689,7 +1689,7 @@ namespace hnswdis
             const std::string &samplings_filename,
             int ef_upper_bound,
             int sampling_size,
-            int min_queries_per_score = 3
+            int min_queries_per_score
         ) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
 
@@ -1734,7 +1734,7 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             int ef_upper_bound,
-            int min_queries_per_score = 3) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
+            int min_queries_per_score) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
             init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators, min_queries_per_score);
         }
@@ -1755,7 +1755,7 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             const int n_cv_tables,
-            int min_queries_per_score = 3)
+            int min_queries_per_score)
         {
             const int n = query_vectors->rows();
 
