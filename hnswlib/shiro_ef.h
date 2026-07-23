@@ -1040,7 +1040,7 @@ namespace hnswdis
             const size_t ef,
             const float alpha, const float gamma,
             const size_t statics_length,
-            const int min_queries_per_score = 0)
+            const int min_queries_per_score = 3)
         {
             std::shared_ptr<hnswdis::MatrixXf> query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
             MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
@@ -1067,7 +1067,7 @@ namespace hnswdis
             hnswdis::ApproximatedScoreCalculator &score_cal,
             const size_t ef,
             const size_t statics_length,
-            const int min_queries_per_score = 0)
+            const int min_queries_per_score = 3)
         {
             init(alg_hnsw,
                  data_vectors,
@@ -1344,7 +1344,7 @@ namespace hnswdis
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
                   EfRecallTable &out_table,
-                  int min_queries_per_score = 0)
+                  int min_queries_per_score = 3)
         {
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
@@ -1623,7 +1623,7 @@ namespace hnswdis
         }
 
         void add_ef_recall(const int ef, const RecallEstimator &recall_estimator, EfRecallTable &out_table,
-                  int min_queries_per_score = 0)
+                  int min_queries_per_score = 3)
         {
             const std::vector<std::pair<int, float>> &score_recall = get_score_recall(recall_estimator);
             if (out_table.empty())
@@ -1689,7 +1689,7 @@ namespace hnswdis
             const std::string &samplings_filename,
             int ef_upper_bound,
             int sampling_size,
-            int min_queries_per_score = 0
+            int min_queries_per_score = 3
         ) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
 
@@ -1734,7 +1734,7 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             int ef_upper_bound,
-            int min_queries_per_score = 0) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
+            int min_queries_per_score = 3) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
             init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators, min_queries_per_score);
         }
@@ -1755,7 +1755,7 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             const int n_cv_tables,
-            int min_queries_per_score = 0)
+            int min_queries_per_score = 3)
         {
             const int n = query_vectors->rows();
 
