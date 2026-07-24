@@ -17,13 +17,13 @@ struct ExperimentConfig {
     int ef_upper_bound;
     int repeat;
     int sampling_size;
-    int n_cv_tables;
+    int n_convergence_buckets;
     int min_queries_per_score;
     size_t statics_length;
 };
 
 static std::vector<ExperimentConfig> g_experiments = {
-    // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_cv_tables, min_q, statics_length
+    // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_convergence_buckets, min_q, statics_length
     // {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
     // {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
     // {"sift-128-euclidean",         "l2", 100, 0.25f, 12.0f, 0.95f,  500, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
@@ -50,12 +50,12 @@ static ExperimentConfig get_config(const std::string& dataset) {
 
 static hnswdis::Sketch make_sketch(const hnswdis::EfAdapter &adapter, float expected_recall)
 {
-    if (adapter.has_cv_tables())
-        return hnswdis::Sketch(adapter.get_all_tables(), adapter.get_cv_centers(), expected_recall);
+    if (adapter.has_convergence_buckets())
+        return hnswdis::Sketch(adapter.get_all_tables(), adapter.get_convergence_centers(), expected_recall);
     return hnswdis::Sketch(adapter.get_ef_recall_estimators(), expected_recall);
 }
 
-static void train_cv_buckets(
+static void train_convergence_buckets(
     hnswdis::EfAdapter &adapter,
     const std::shared_ptr<hnswlib::HierarchicalNSW<float>> hnsw,
     const std::shared_ptr<hnswdis::MatrixXf> data,
@@ -67,14 +67,14 @@ static void train_cv_buckets(
     const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
     const std::shared_ptr<hnswdis::MatrixXi> ground_truth,
     const int ef_upper_bound,
-    const int n_cv_tables,
+    const int n_convergence_buckets,
     const int min_queries_per_score,
     const std::string &samplings_path = "")
 {
-    adapter.init_with_cv_buckets(
+    adapter.init_with_convergence_buckets(
         hnsw, data, k, metric, alpha, gamma, statics_length,
         query_vectors, ground_truth,
-        n_cv_tables, min_queries_per_score);
+        n_convergence_buckets, min_queries_per_score);
 
     if (samplings_path != "") {
         size_t num_hard_queries = 0;
@@ -87,7 +87,7 @@ static void train_cv_buckets(
             float ef_hard_sum = 0;
             float ef_easy_sum = 0;
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
-            hnswdis::Sketch temp_sketch(adapter.get_all_tables(), adapter.get_cv_centers(), adapter.get_expected_recall());
+            hnswdis::Sketch temp_sketch(adapter.get_all_tables(), adapter.get_convergence_centers(), adapter.get_expected_recall());
 
             for(size_t i = 0; i < query_vectors->rows(); ++i) {
                 float cv = 0.0f;
@@ -170,7 +170,7 @@ void online_exp()
         float expected_recall = conf.expected_recall;
         int ef_upper_bound = conf.ef_upper_bound;
         int sampling_size = conf.sampling_size;
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         float gamma = conf.gamma;
@@ -277,7 +277,7 @@ void offline_laion_text2image()
     float expected_recall = 0.95;
     auto conf = get_config("laion_text");
     int sampling_size = conf.sampling_size;
-    int n_cv_tables = conf.n_cv_tables;
+    int n_convergence_buckets = conf.n_convergence_buckets;
     int min_queries_per_score = conf.min_queries_per_score;
     size_t statics_length = conf.statics_length;
     float gamma = conf.gamma;
@@ -324,11 +324,11 @@ void offline_laion_text2image()
         {
             hnswdis::MatrixXf _sq; hnswdis::MatrixXi _sgt;
             hnswdis::deserialize_samplings(samplings_path, _sq, _sgt);
-            train_cv_buckets(ef_adapter, hnsw, data,
+            train_convergence_buckets(ef_adapter, hnsw, data,
                 k, "cd", alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(_sq),
                 std::make_shared<hnswdis::MatrixXi>(_sgt),
-        ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
+        ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
         }
         ef_adapter.serialize(ef_adaptor_path);
     }
@@ -342,7 +342,7 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
     float expected_recall = conf.expected_recall;
     int ef_upper_bound = conf.ef_upper_bound;
     int sampling_size = conf.sampling_size;
-    int n_cv_tables = conf.n_cv_tables;
+    int n_convergence_buckets = conf.n_convergence_buckets;
     int min_queries_per_score = conf.min_queries_per_score;
     size_t statics_length = conf.statics_length;
     size_t k = conf.k;
@@ -399,11 +399,11 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
 
     hnswdis::MatrixXf _sq; hnswdis::MatrixXi _sgt;
     hnswdis::deserialize_samplings(samplings_path, _sq, _sgt);
-    train_cv_buckets(ef_adapter, hnsw, data,
+    train_convergence_buckets(ef_adapter, hnsw, data,
         k, metric, alpha, gamma, statics_length,
         std::make_shared<hnswdis::MatrixXf>(_sq),
         std::make_shared<hnswdis::MatrixXi>(_sgt),
-        ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
+        ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
 
     ef_adapter.serialize(ef_adaptor_path);
     if (fast_rebuild) {
@@ -460,7 +460,7 @@ void sensitivity_analysis()
     for (const std::string &dataset : datasets)
     {
         auto conf = get_config(dataset);
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         std::string metric = "cd";
@@ -593,7 +593,7 @@ void insert_exp_setup(
     float expected_recall = 0.95;
     auto conf = get_config(dataset);
     int sampling_size = conf.sampling_size;
-    int n_cv_tables = conf.n_cv_tables;
+    int n_convergence_buckets = conf.n_convergence_buckets;
     int min_queries_per_score = conf.min_queries_per_score;
     size_t statics_length = conf.statics_length;
     float gamma = conf.gamma;
@@ -606,10 +606,10 @@ void insert_exp_setup(
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
-    train_cv_buckets(ef_adapter, alg_hnsw, before_data_ptr,
+    train_convergence_buckets(ef_adapter, alg_hnsw, before_data_ptr,
         k, metric, alpha, gamma, statics_length,
         sample_query_vectors, std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-        ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
+        ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
     ef_adapter.serialize(ef_adaptor_path);
 }
 
@@ -684,7 +684,7 @@ void insert_exp_adaef_update(
 
         // update estimator
             auto conf = get_config(dataset);
-    int n_cv_tables = conf.n_cv_tables;
+    int n_convergence_buckets = conf.n_convergence_buckets;
     int min_queries_per_score = conf.min_queries_per_score;
 auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
@@ -716,10 +716,10 @@ auto start = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
         std::string updated_ef_adaptor_path = (root / "incremental_update" / batch_type / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef-updated.bin")).string();
-        train_cv_buckets(ef_adapter, alg_hnsw, full_data_ptr,
+        train_convergence_buckets(ef_adapter, alg_hnsw, full_data_ptr,
             k, metric, alpha, gamma, statics_length,
             sample_query_vectors_ptr, sample_ground_truth_ptr,
-            ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
+            ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
         ef_adapter.serialize(updated_ef_adaptor_path);
     }
 }
@@ -747,7 +747,7 @@ void insert_exp(bool setup = false)
 
         std::string metric = "cd";
         auto conf = get_config(dataset);
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         float gamma = conf.gamma;
@@ -909,7 +909,7 @@ void delete_exp_setup(
         float expected_recall = 0.95;
     auto conf = get_config(dataset);
     int sampling_size = conf.sampling_size;
-    int n_cv_tables = conf.n_cv_tables;
+    int n_convergence_buckets = conf.n_convergence_buckets;
     int min_queries_per_score = conf.min_queries_per_score;
     size_t statics_length = conf.statics_length;
     float gamma = conf.gamma;
@@ -925,10 +925,10 @@ void delete_exp_setup(
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
-        train_cv_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
+        train_convergence_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
             k, metric, alpha, gamma, statics_length,
             sample_query_vectors, sample_ground_truth_ptr,
-            ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
+            ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
         ef_adapter.serialize(ef_adaptor_path);
     }
 }
@@ -963,7 +963,7 @@ void delete_exp_adaef_update(
 
     // update estimator
         auto conf = get_config(dataset);
-    int n_cv_tables = conf.n_cv_tables;
+    int n_convergence_buckets = conf.n_convergence_buckets;
     int min_queries_per_score = conf.min_queries_per_score;
 auto start = std::chrono::high_resolution_clock::now();
     auto end = std::chrono::high_resolution_clock::now();
@@ -1004,10 +1004,10 @@ auto start = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "EF-estimation table computing time: " << duration.count() << " ms" << std::endl;
     std::string updated_ef_adaptor_path = (root / "incremental_deletion" / batch_type / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef-updated.bin")).string();
-    train_cv_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
+    train_convergence_buckets(ef_adapter, alg_hnsw, after_updates_data_ptr,
         k, metric, alpha, gamma, statics_length,
         sample_query_vectors_ptr, sample_ground_truth_ptr,
-        ef_upper_bound, n_cv_tables, min_queries_per_score, updated_samplings_path);
+        ef_upper_bound, n_convergence_buckets, min_queries_per_score, updated_samplings_path);
     ef_adapter.serialize(updated_ef_adaptor_path);
 }
 
@@ -1033,7 +1033,7 @@ void delete_exp(bool setup = false)
 
         std::string metric = "cd";
         auto conf = get_config(dataset);
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         float gamma = conf.gamma;
@@ -1185,7 +1185,7 @@ void ablation_study_visited_list_size()
         float expected_recall = conf.expected_recall;
         int ef_upper_bound = conf.ef_upper_bound;
         int sampling_size = conf.sampling_size;
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         float gamma = conf.gamma;
@@ -1238,10 +1238,10 @@ void ablation_study_visited_list_size()
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
-            train_cv_buckets(ef_adapter, hnsw, data,
+            train_convergence_buckets(ef_adapter, hnsw, data,
                 k, metric, alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
+                ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
             ef_adapter.serialize(ef_adaptor_path);
 
             hnswdis::Sketch sketch = make_sketch(ef_adapter, expected_recall);
@@ -1275,7 +1275,7 @@ void ablation_study_sampling_size()
         size_t k = conf.k;
         float expected_recall = conf.expected_recall;
         int ef_upper_bound = conf.ef_upper_bound;
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         float gamma = conf.gamma;
@@ -1327,10 +1327,10 @@ void ablation_study_sampling_size()
             end = std::chrono::high_resolution_clock::now();
             duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
             std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
-            train_cv_buckets(ef_adapter, hnsw, data,
+            train_convergence_buckets(ef_adapter, hnsw, data,
                 k, metric, alpha, gamma, statics_length,
                 std::make_shared<hnswdis::MatrixXf>(pair.first), std::make_shared<hnswdis::MatrixXi>(pair.second),
-                ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
+                ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
             ef_adapter.serialize(ef_adaptor_path);
 
             hnswdis::Sketch sketch = make_sketch(ef_adapter, expected_recall);
@@ -1358,7 +1358,7 @@ void ablation_study_weighted_decay_function()
         float expected_recall = conf.expected_recall;
         int ef_upper_bound = conf.ef_upper_bound;
         int sampling_size = conf.sampling_size;
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         int repeat = conf.repeat;
@@ -1404,10 +1404,10 @@ void ablation_study_weighted_decay_function()
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length,
+            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length,
                              std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
                              std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                             ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
+                             ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_gamma");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1438,7 +1438,7 @@ void ablation_study_truncation_ratio()
         float expected_recall = conf.expected_recall;
         int ef_upper_bound = conf.ef_upper_bound;
         int sampling_size = conf.sampling_size;
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         int repeat = 3;
@@ -1484,10 +1484,10 @@ void ablation_study_truncation_ratio()
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length,
+            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length,
                              std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
                              std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                             ef_upper_bound, conf.n_cv_tables, min_queries_per_score, samplings_path);
+                             ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_alpha");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1503,9 +1503,9 @@ void ablation_study_truncation_ratio()
 }
 
 
-void ablation_study_n_cv_tables()
+void ablation_study_n_convergence_buckets()
 {
-    std::cout << "Starting ablation study tests: n_cv_tables...\n\n" << std::endl;
+    std::cout << "Starting ablation study tests: n_convergence_buckets...\n\n" << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 
     std::vector<int> tables_list = {0, 5, 10, 15, 20};
@@ -1550,14 +1550,14 @@ void ablation_study_n_cv_tables()
             hnswdis::deserialize_samplings(samplings_path, sample_query_vectors, sample_ground_truth);
         }
 
-        for (const auto n_cv_tables : tables_list)
+        for (const auto n_convergence_buckets : tables_list)
         {
-            std::cout << "\n--- n_cv_tables: " << n_cv_tables << " ---\n" << std::endl;
+            std::cout << "\n--- n_convergence_buckets: " << n_convergence_buckets << " ---\n" << std::endl;
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
-            std::string ef_adaptor_path = (root / "ablation_n_cv" / (dataset + "-ncv-" + std::to_string(n_cv_tables) + "-ef.bin")).string();
+            std::string ef_adaptor_path = (root / "ablation_n_cv" / (dataset + "-ncv-" + std::to_string(n_convergence_buckets) + "-ef.bin")).string();
 
             hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
-            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
+            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_n_cv");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1587,7 +1587,7 @@ void ablation_study_min_queries_per_score()
         float expected_recall = conf.expected_recall;
         int ef_upper_bound = conf.ef_upper_bound;
         int sampling_size = conf.sampling_size;
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         size_t statics_length = conf.statics_length;
         int repeat = 3;
 
@@ -1624,7 +1624,7 @@ void ablation_study_min_queries_per_score()
             std::string ef_adaptor_path = (root / "ablation_min_q" / (dataset + "-minq-" + std::to_string(min_queries_per_score) + "-ef.bin")).string();
 
             hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
-            train_cv_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_cv_tables, min_queries_per_score, samplings_path);
+            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, statics_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
 
             std::filesystem::create_directories(root / "ablation_min_q");
             ef_adapter.serialize(ef_adaptor_path);
@@ -1653,7 +1653,7 @@ void per_query_result_exp()
         float expected_recall = conf.expected_recall;
         int ef_upper_bound = conf.ef_upper_bound;
         int sampling_size = conf.sampling_size;
-        int n_cv_tables = conf.n_cv_tables;
+        int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
         float gamma = conf.gamma;
@@ -1747,7 +1747,7 @@ int main() {
     // ablation_study_sampling_size();           // ablation study on sampling size
     // ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
     // ablation_study_truncation_ratio();
-    // ablation_study_n_cv_tables();
+    // ablation_study_n_convergence_buckets();
     // ablation_study_min_queries_per_score();        // ablation study on truncation ratio
 
     // per_query_result_exp(); // per-query result experiments

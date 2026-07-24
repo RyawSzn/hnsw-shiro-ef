@@ -1,0 +1,17 @@
+Starting experiments for Shiro-ef hnswdis library...
+
+
+EXPERIMENTS_ROOT: /home/ryawszn/experiments/shiro-ef
+Dataset: gist-960-euclidean
+[Query vectors] rows: 1000, cols: 960
+[Data vectors]  rows: 1000000, cols: 960
+[Neighbors] rows: 1000, cols: 100
+Index built in 1166340 ms
+First 1k Data Points Recall: 0.556
+Last 1k Data Points Recall: 0.632
+The index have been saved to: /home/ryawszn/experiments/shiro-ef/index/gist-960-euclidean-M16-efc-500-parallel.hnsw
+Dataset: word2vec-300-angular
+[Query vectors] rows: 1000, cols: 300
+[Data vectors]  rows: 1000000, cols: 300
+[Neighbors] rows: 1000, cols: 100
+Using AVX512 Inner Product distance

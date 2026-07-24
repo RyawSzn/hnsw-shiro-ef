@@ -17,9 +17,9 @@ namespace hnswdis
         const EfRecallTable *ef_recall_estimators_single{nullptr};
 
         const std::vector<EfRecallTable> *tables_{nullptr};
-        // cv_centers_[i] is the upper boundary of bucket i (cv < threshold[i] → bucket i).
+        // convergence_centers_[i] is the upper boundary of bucket i (cv < threshold[i] → bucket i).
         // size == tables_.size() - 1; last bucket has no upper bound.
-        const std::vector<float>         *cv_centers_{nullptr};
+        const std::vector<float>         *convergence_centers_{nullptr};
 
         const float expected_recall;
 
@@ -92,10 +92,10 @@ namespace hnswdis
         }
 
         Sketch(const std::vector<EfRecallTable> &tables,
-               const std::vector<float>         &cv_centers,
+               const std::vector<float>         &convergence_centers,
                float expected_recall)
             : tables_(&tables),
-              cv_centers_(&cv_centers),
+              convergence_centers_(&convergence_centers),
               expected_recall(expected_recall)
         {
             all_links.reserve(tables.size());
@@ -105,27 +105,27 @@ namespace hnswdis
 
                 size_t estimate_ef2(float score, float cv = 0) const
         {
-            if (tables_ != nullptr && cv_centers_->size() == tables_->size())
+            if (tables_ != nullptr && convergence_centers_->size() == tables_->size())
             {
-                int n_centers = cv_centers_->size();
+                int n_centers = convergence_centers_->size();
                 if (n_centers == 1) {
                     return smoothed_ef((*tables_)[0], all_links[0], score);
                 }
 
-                if (cv <= (*cv_centers_)[0]) {
+                if (cv <= (*convergence_centers_)[0]) {
                     return smoothed_ef((*tables_)[0], all_links[0], score);
                 }
-                if (cv >= (*cv_centers_)[n_centers - 1]) {
+                if (cv >= (*convergence_centers_)[n_centers - 1]) {
                     return smoothed_ef((*tables_)[n_centers - 1], all_links[n_centers - 1], score);
                 }
 
                 int idx = 0;
-                while (idx < n_centers - 1 && cv > (*cv_centers_)[idx + 1]) {
+                while (idx < n_centers - 1 && cv > (*convergence_centers_)[idx + 1]) {
                     idx++;
                 }
 
-                float c0 = (*cv_centers_)[idx];
-                float c1 = (*cv_centers_)[idx + 1];
+                float c0 = (*convergence_centers_)[idx];
+                float c1 = (*convergence_centers_)[idx + 1];
                 float w = (cv - c0) / (c1 - c0);
 
                 size_t ef0 = smoothed_ef((*tables_)[idx], all_links[idx], score);
@@ -173,9 +173,9 @@ namespace hnswdis
             {
                 for (int i = 0; i < (int)tables_->size(); ++i)
                 {
-                    float lo = (i == 0) ? 0.0f : (*cv_centers_)[i - 1];
-                    float hi = (i < (int)cv_centers_->size())
-                                   ? (*cv_centers_)[i]
+                    float lo = (i == 0) ? 0.0f : (*convergence_centers_)[i - 1];
+                    float hi = (i < (int)convergence_centers_->size())
+                                   ? (*convergence_centers_)[i]
                                    : std::numeric_limits<float>::infinity();
                     std::cout << "=== cv bucket " << i
                               << " [" << lo << ", " << hi << ") ===" << std::endl;

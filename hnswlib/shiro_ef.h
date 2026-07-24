@@ -1321,8 +1321,8 @@ namespace hnswdis
     private:
         EfRecallTable ef_recall_estimators;
 
-        std::vector<EfRecallTable> cv_tables;
-        std::vector<float>         cv_centers;
+        std::vector<EfRecallTable> convergence_buckets;
+        std::vector<float>         convergence_centers;
 
         float expected_recall;
         float wae;
@@ -1889,7 +1889,7 @@ namespace hnswdis
             deserialize(filename);
         }
 
-        void init_with_cv_buckets(
+        void init_with_convergence_buckets(
             const std::shared_ptr<hnswlib::HierarchicalNSW<float>> alg_hnsw,
             const std::shared_ptr<hnswdis::MatrixXf> data_vectors,
             const size_t k,
@@ -1898,7 +1898,7 @@ namespace hnswdis
             const size_t statics_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
-            const int n_cv_tables,
+            const int n_convergence_buckets,
             int min_queries_per_score)
         {
             const int n = query_vectors->rows();
@@ -1912,7 +1912,7 @@ namespace hnswdis
 
             float accumulated_wae = 0.0f;
 
-            if (n_cv_tables == 0) {
+            if (n_convergence_buckets == 0) {
                 std::map<int, std::vector<int>> cv_groups;
                 for (int i = 0; i < n; ++i) {
                     int cv_score = std::max(0, std::min(100, static_cast<int>(cvs[i])));
@@ -1927,12 +1927,12 @@ namespace hnswdis
                     }
                 }
 
-                cv_tables.resize(cv_groups.size());
-                cv_centers.clear();
+                convergence_buckets.resize(cv_groups.size());
+                convergence_centers.clear();
 
                 int t = 0;
                 for (const auto &[cv_score, q_indices] : cv_groups) {
-                    cv_centers.push_back(cv_score / 100.0f);
+                    convergence_centers.push_back(cv_score / 100.0f);
                     int bucket_size = q_indices.size();
 
                     MatrixXf bucket_queries(bucket_size, query_vectors->cols());
@@ -1948,28 +1948,28 @@ namespace hnswdis
                     init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length,
                          std::make_shared<MatrixXf>(bucket_queries),
                          std::make_shared<MatrixXi>(bucket_gt),
-                         cv_tables[t], min_queries_per_score);
+                         convergence_buckets[t], min_queries_per_score);
 
                     accumulated_wae += wae * ((float)bucket_size / n);
                     t++;
                 }
             } else {
-                int actual_n_cv_tables = std::max(1, n_cv_tables);
-                int chunk = n / actual_n_cv_tables;
+                int actual_n_convergence_buckets = std::max(1, n_convergence_buckets);
+                int chunk = n / actual_n_convergence_buckets;
 
-                cv_centers.clear();
-                for (int t = 0; t < actual_n_cv_tables; ++t) {
+                convergence_centers.clear();
+                for (int t = 0; t < actual_n_convergence_buckets; ++t) {
                     int lo = t * chunk;
-                    int hi = (t == actual_n_cv_tables - 1) ? n : (t + 1) * chunk;
-                    cv_centers.push_back(cvs[order[(lo + hi) / 2]]);
+                    int hi = (t == actual_n_convergence_buckets - 1) ? n : (t + 1) * chunk;
+                    convergence_centers.push_back(cvs[order[(lo + hi) / 2]]);
                 }
 
-                cv_tables.resize(actual_n_cv_tables);
+                convergence_buckets.resize(actual_n_convergence_buckets);
 
-                for (int t = 0; t < actual_n_cv_tables; ++t)
+                for (int t = 0; t < actual_n_convergence_buckets; ++t)
                 {
                     int lo = t * chunk;
-                    int hi = (t == actual_n_cv_tables - 1) ? n : (t + 1) * chunk;
+                    int hi = (t == actual_n_convergence_buckets - 1) ? n : (t + 1) * chunk;
 
                     int bucket_size = hi - lo;
                     MatrixXf bucket_queries(bucket_size, query_vectors->cols());
@@ -1982,7 +1982,7 @@ namespace hnswdis
 
                     std::cout << "Training rv-bucket " << t
                               << " [" << cvs[order[lo]] << ", "
-                              << (t < actual_n_cv_tables - 1 ? cvs[order[hi]] : std::numeric_limits<float>::infinity())
+                              << (t < actual_n_convergence_buckets - 1 ? cvs[order[hi]] : std::numeric_limits<float>::infinity())
                               << ") with " << bucket_size << " queries." << std::endl;
 
                     init(alg_hnsw,
@@ -1990,7 +1990,7 @@ namespace hnswdis
                          k, metric, alpha, gamma, statics_length,
                          std::make_shared<MatrixXf>(bucket_queries),
                          std::make_shared<MatrixXi>(bucket_gt),
-                         cv_tables[t], min_queries_per_score);
+                         convergence_buckets[t], min_queries_per_score);
 
                     accumulated_wae += wae * ((float)bucket_size / n);
                 }
@@ -2009,9 +2009,9 @@ namespace hnswdis
 
                 // Identify global contiguous regions across scores for Method 1 heuristics
                 std::map<int, size_t> global_score_to_ef;
-                for (size_t t = 0; t < cv_tables.size(); ++t) {
-                    float cv_val = cv_centers[t] * 100.0f;
-                    for (const auto& entry : cv_tables[t]) {
+                for (size_t t = 0; t < convergence_buckets.size(); ++t) {
+                    float cv_val = convergence_centers[t] * 100.0f;
+                    for (const auto& entry : convergence_buckets[t]) {
                         float score_val = entry.first;
                         float ef_val = entry.second.back().first;
                         raw_points.push_back({cv_val, score_val, ef_val});
@@ -2060,6 +2060,30 @@ namespace hnswdis
                 int min_score = scores.empty() ? 0 : scores.front();
                 int max_score = scores.empty() ? 100 : scores.back();
 
+                                // --- Mahalanobis Distance Setup ---
+                float mean_cv = 0.0f, mean_score = 0.0f;
+                for (const auto& p : raw_points) { mean_cv += p.cv; mean_score += p.score; }
+                if (!raw_points.empty()) { mean_cv /= raw_points.size(); mean_score /= raw_points.size(); }
+
+                float cov_cv_cv = 0.0f, cov_score_score = 0.0f, cov_cv_score = 0.0f;
+                for (const auto& p : raw_points) {
+                    float dcv = p.cv - mean_cv;
+                    float dsc = p.score - mean_score;
+                    cov_cv_cv += dcv * dcv;
+                    cov_score_score += dsc * dsc;
+                    cov_cv_score += dcv * dsc;
+                }
+                float n_minus_1 = std::max(1.0f, (float)raw_points.size() - 1.0f);
+                cov_cv_cv /= n_minus_1; cov_score_score /= n_minus_1; cov_cv_score /= n_minus_1;
+
+                float det = cov_cv_cv * cov_score_score - cov_cv_score * cov_cv_score;
+                float inv_cv_cv = 1.0f, inv_score_score = 1.0f, inv_cv_score = 0.0f;
+                if (det > 1e-6f) {
+                    inv_cv_cv = cov_score_score / det;
+                    inv_score_score = cov_cv_cv / det;
+                    inv_cv_score = -cov_cv_score / det;
+                }
+                
                 std::vector<EfRecallTable> full_tables(101);
                 std::vector<float> full_centers(101);
 
@@ -2074,25 +2098,24 @@ namespace hnswdis
                                 exact_ef = p.ef;
                                 break;
                             }
-                            float dist_sq = (cv - p.cv) * (cv - p.cv) + (score - p.score) * (score - p.score);
-                            float w = 1.0f / dist_sq;
+                            float dcv = cv - p.cv; float dsc = score - p.score; float dist_sq = inv_cv_cv * (dcv * dcv) + 2.0f * inv_cv_score * (dcv * dsc) + inv_score_score * (dsc * dsc);
+                            float w = 1.0f / (dist_sq + 1e-6f);
                             sum_w += w;
                             sum_ef += w * p.ef;
                         }
 
                         float final_ef = exact_ef;
                         if (final_ef < 0) {
-                            if (score <= min_score) final_ef = std::max(sum_w > 0 ? (sum_ef / sum_w) : left_pivot, left_pivot);
-                            else if (score >= max_score) final_ef = std::min(sum_w > 0 ? (sum_ef / sum_w) : right_pivot, right_pivot);
-                            else final_ef = sum_w > 0 ? (sum_ef / sum_w) : 0.0f;
+                            // Pure Shepard: No clamping/pivots. Just pure IDW interpolation/extrapolation.
+                            final_ef = sum_w > 0 ? (sum_ef / sum_w) : 0.0f;
                         }
 
                         full_tables[cv].push_back({score, {{(int)std::round(final_ef), expected_recall}}});
                     }
                 }
 
-                cv_tables = std::move(full_tables);
-                cv_centers = std::move(full_centers);
+                convergence_buckets = std::move(full_tables);
+                convergence_centers = std::move(full_centers);
 
                 std::cout << "2D Shepard Interpolation complete. 101x101 grid generated." << std::endl;
             }
@@ -2169,14 +2192,14 @@ namespace hnswdis
             hnswlib::writeBinaryPOD(out, expected_recall);
             hnswlib::writeBinaryPOD(out, wae);
 
-            size_t n_cv = cv_tables.size();
+            size_t n_cv = convergence_buckets.size();
             hnswlib::writeBinaryPOD(out, n_cv);
-            for (const auto &t : cv_tables)
+            for (const auto &t : convergence_buckets)
                 write_table(out, t);
 
-            size_t n_thresh = cv_centers.size();
+            size_t n_thresh = convergence_centers.size();
             hnswlib::writeBinaryPOD(out, n_thresh);
-            for (float v : cv_centers)
+            for (float v : convergence_centers)
                 hnswlib::writeBinaryPOD(out, v);
 
             out.close();
@@ -2195,14 +2218,14 @@ namespace hnswdis
 
             size_t n_cv;
             hnswlib::readBinaryPOD(in, n_cv);
-            cv_tables.resize(n_cv);
-            for (auto &t : cv_tables)
+            convergence_buckets.resize(n_cv);
+            for (auto &t : convergence_buckets)
                 read_table(in, t);
 
             size_t n_thresh;
             hnswlib::readBinaryPOD(in, n_thresh);
-            cv_centers.resize(n_thresh);
-            for (float &v : cv_centers)
+            convergence_centers.resize(n_thresh);
+            for (float &v : convergence_centers)
                 hnswlib::readBinaryPOD(in, v);
 
             in.close();
@@ -2220,11 +2243,11 @@ namespace hnswdis
 
         const EfRecallTable &get_ef_recall_estimators() const { return ef_recall_estimators; }
 
-        const std::vector<EfRecallTable> &get_all_tables() const { return cv_tables; }
+        const std::vector<EfRecallTable> &get_all_tables() const { return convergence_buckets; }
 
-        const std::vector<float> &get_cv_centers() const { return cv_centers; }
+        const std::vector<float> &get_convergence_centers() const { return convergence_centers; }
 
-        bool has_cv_tables() const { return !cv_tables.empty(); }
+        bool has_convergence_buckets() const { return !convergence_buckets.empty(); }
 
         float get_expected_recall() const { return expected_recall; }
 
