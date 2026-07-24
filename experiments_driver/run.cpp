@@ -24,15 +24,18 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_cv_tables, min_q, statics_length
-    {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"sift-128-euclidean",         "l2", 100, 0.25f, 12.0f, 0.95f,  500, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"laion_text",              "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_uniform_100d", "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d",    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
+    // {"deep-image-96-angular",      "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    // {"glove-100-angular",          "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    // {"sift-128-euclidean",         "l2", 100, 0.25f, 12.0f, 0.95f,  500, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    // {"laion_text",              "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_uniform_100d", "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_zipf_100d",    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 0, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -1730,7 +1733,7 @@ int main() {
     }
     std::cout << "EXPERIMENTS_ROOT: " << root_path << std::endl;
 
-    // indexing_exp(); // indexes are precomputed, uncomment to run if needed
+    indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
     offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor

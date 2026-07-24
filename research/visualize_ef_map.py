@@ -133,14 +133,18 @@ def plot_heatmap(filename, output_png):
     plt.pcolormesh(X, Y, Z, cmap=cmap, shading='gouraud') # Changed shading to gouraud for smooth gradients
     plt.colorbar(label="Estimated ef")
 
-    for c in dep_centers:
-        plt.axhline(
-            y=c,
-            color="r",
-            linestyle="--",
-            alpha=0.5,
-            label="Center" if c == dep_centers[0] else "",
-        )
+    # Only plot center lines if there aren't too many (e.g. don't clutter if n_cv_tables=0 creates 101 centers)
+    if len(dep_centers) <= 20:
+        for c in dep_centers:
+            plt.axhline(
+                y=c,
+                color="r",
+                linestyle="--",
+                alpha=0.5,
+                label="Center" if c == dep_centers[0] else "",
+            )
+    else:
+        print(f"Skipping drawing {len(dep_centers)} center lines to prevent cluttering the heatmap.")
 
     plt.xlabel("Coefficient of Variation (CV Score)")
     plt.ylabel("Revisit-Order (Convergence Score)")

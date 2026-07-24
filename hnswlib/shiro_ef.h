@@ -1729,6 +1729,36 @@ namespace hnswdis
                         weighted_average_ef += score_to_cnt[s] * final_ef / total_queries;
                     }
                 }
+            } else if constexpr (FILLING_METHOD == 3) {
+                // 1. Extract score to EF and count mapping
+                std::map<int, size_t> score_to_ef;
+                std::map<int, size_t> score_to_cnt;
+
+                for (int i = 0; i < (int)stat.size(); ++i) {
+                    int score = std::get<0>(stat[i]);
+                    size_t cnt = std::get<5>(stat[i]);
+                    size_t ef = out_table[i].second.back().first;
+                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
+                        if (out_table[i].second[j].second >= expected_recall) {
+                            ef = out_table[i].second[j].first;
+                            break;
+                        }
+                    }
+                    score_to_ef[score] = ef;
+                    score_to_cnt[score] = cnt;
+                }
+
+                // Only store existing raw points!
+                float total_queries = query_vectors->rows();
+                for (int s = 0; s <= 100; ++s) {
+                    if (score_to_ef.count(s)) {
+                        size_t final_ef = score_to_ef[s];
+                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                        if (score_to_cnt.count(s)) {
+                            weighted_average_ef += score_to_cnt[s] * final_ef / total_queries;
+                        }
+                    }
+                }
             }
 
             out_table = smoothed_table;
@@ -1967,6 +1997,105 @@ namespace hnswdis
             }
 
             wae = accumulated_wae;
+
+            if constexpr (FILLING_METHOD == 3) {
+                std::cout << "Executing 2D Shepard (IDW) interpolation..." << std::endl;
+
+                struct Point { float cv; float score; float ef; };
+                std::vector<Point> raw_points;
+
+                float left_sum_ef = 0, right_sum_ef = 0, cont_sum_ef = 0;
+                size_t left_sum_cnt = 0, right_sum_cnt = 0, cont_sum_cnt = 0;
+
+                // Identify global contiguous regions across scores for Method 1 heuristics
+                std::map<int, size_t> global_score_to_ef;
+                for (size_t t = 0; t < cv_tables.size(); ++t) {
+                    float cv_val = cv_centers[t] * 100.0f;
+                    for (const auto& entry : cv_tables[t]) {
+                        float score_val = entry.first;
+                        float ef_val = entry.second.back().first;
+                        raw_points.push_back({cv_val, score_val, ef_val});
+
+                        // For global heuristics
+                        global_score_to_ef[score_val] = std::max(global_score_to_ef[score_val], (size_t)ef_val);
+                    }
+                }
+
+                // Global continuous block identification
+                std::vector<int> scores;
+                for (auto const& [score, _] : global_score_to_ef) scores.push_back(score);
+
+                int best_start = 0, best_len = 0;
+                int curr_start = 0, curr_len = 1;
+                if (!scores.empty()) {
+                    for (size_t i = 1; i < scores.size(); ++i) {
+                        if (scores[i] == scores[i-1] + 1) curr_len++;
+                        else {
+                            if (curr_len > best_len) { best_len = curr_len; best_start = curr_start; }
+                            curr_start = i; curr_len = 1;
+                        }
+                    }
+                    if (curr_len > best_len) { best_len = curr_len; best_start = curr_start; }
+                }
+
+                int cont_start_score = 0, cont_end_score = 100;
+                if (best_len > 0) {
+                    cont_start_score = scores[best_start];
+                    cont_end_score = scores[best_start + best_len - 1];
+                    if (best_len >= 3) { cont_start_score += 1; cont_end_score -= 1; }
+                }
+
+                for (const auto& p : raw_points) {
+                    if (p.score < cont_start_score) { left_sum_ef += p.ef; left_sum_cnt++; }
+                    else if (p.score > cont_end_score) { right_sum_ef += p.ef; right_sum_cnt++; }
+                    else { cont_sum_ef += p.ef; cont_sum_cnt++; }
+                }
+
+                float cont_avg_ef = cont_sum_cnt > 0 ? (cont_sum_ef / cont_sum_cnt) : 0.0f;
+                float left_avg_ef = left_sum_cnt > 0 ? (left_sum_ef / left_sum_cnt) : (global_score_to_ef.empty() ? 0 : global_score_to_ef.begin()->second);
+                float right_avg_ef = right_sum_cnt > 0 ? (right_sum_ef / right_sum_cnt) : (global_score_to_ef.empty() ? 0 : global_score_to_ef.rbegin()->second);
+
+                float left_pivot = std::max(left_avg_ef, cont_avg_ef);
+                float right_pivot = std::min(right_avg_ef, cont_avg_ef);
+                int min_score = scores.empty() ? 0 : scores.front();
+                int max_score = scores.empty() ? 100 : scores.back();
+
+                std::vector<EfRecallTable> full_tables(101);
+                std::vector<float> full_centers(101);
+
+                for (int cv = 0; cv <= 100; ++cv) {
+                    full_centers[cv] = cv / 100.0f;
+                    for (int score = 0; score <= 100; ++score) {
+                        float exact_ef = -1;
+                        float sum_w = 0.0f, sum_ef = 0.0f;
+
+                        for (const auto& p : raw_points) {
+                            if (p.cv == cv && p.score == score) {
+                                exact_ef = p.ef;
+                                break;
+                            }
+                            float dist_sq = (cv - p.cv) * (cv - p.cv) + (score - p.score) * (score - p.score);
+                            float w = 1.0f / dist_sq;
+                            sum_w += w;
+                            sum_ef += w * p.ef;
+                        }
+
+                        float final_ef = exact_ef;
+                        if (final_ef < 0) {
+                            if (score <= min_score) final_ef = std::max(sum_w > 0 ? (sum_ef / sum_w) : left_pivot, left_pivot);
+                            else if (score >= max_score) final_ef = std::min(sum_w > 0 ? (sum_ef / sum_w) : right_pivot, right_pivot);
+                            else final_ef = sum_w > 0 ? (sum_ef / sum_w) : 0.0f;
+                        }
+
+                        full_tables[cv].push_back({score, {{(int)std::round(final_ef), expected_recall}}});
+                    }
+                }
+
+                cv_tables = std::move(full_tables);
+                cv_centers = std::move(full_centers);
+
+                std::cout << "2D Shepard Interpolation complete. 101x101 grid generated." << std::endl;
+            }
         }
 
         size_t estimate_ef(float score)
