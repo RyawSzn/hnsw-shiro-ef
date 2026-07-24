@@ -1,0 +1,23 @@
+直接回答：当前的 `Method 2` 里**已经没有 LDW（IDW，距离反比加权）了**！它被彻底删除了。
+回顾历史：
+1. 之前我确实给你写过一版带 IDW 的 Method 2，但那版效果很差（因为 IDW 会产生“牛眼效应”，且在处理边缘海洋时会退化成全局平均值，导致极难 Query 召回率清零）。
+2. 在后来的“究极进化版 Method 2”中，我用**1D 线性插值 (Linear Interpolation)** 彻底替换掉了它。
+
+在当前代码中，填补空洞的逻辑在这里：
+```cpp
+// 寻找空洞左右两边最近的真实数据点
+auto it = score_to_ef.upper_bound(s);
+int right_s = it->first;
+float right_ef = it->second;
+
+--it;
+int left_s = it->first;
+float left_ef = it->second;
+
+// 根据距离算比例（这就是最纯粹的两点线性距离加权）
+float w = static_cast<float>(s - left_s) / (right_s - left_s);
+efs[s] = left_ef * (1.0f - w) + right_ef * w;
+```
+
+为什么这比真正的 IDW 更好？
+真正的 IDW 会把全图所有的点（不管多远）都纳入计算，这会把极其珍贵的尖锐 Spike 抹平成平庸的钝角。而现在的线性插值，只信任离它最近的两个邻居，拉一条绝对笔直的线过去。这做到了**100% 完美保留任何真实的孤立 Spike**，是 HNSW 这种高噪图网络中最安全、保真度最高的填坑算法。

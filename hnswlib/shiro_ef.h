@@ -1705,17 +1705,16 @@ namespace hnswdis
                             // Perfect Spike Preservation
                             efs[s] = score_to_ef[s];
                         } else {
-                            // Linear Interpolation for Holes
-                            auto it = score_to_ef.upper_bound(s);
-                            int right_s = it->first;
-                            float right_ef = it->second;
-
-                            --it;
-                            int left_s = it->first;
-                            float left_ef = it->second;
-
-                            float w = static_cast<float>(s - left_s) / (right_s - left_s);
-                            efs[s] = left_ef * (1.0f - w) + right_ef * w;
+                            // LDW (Inverse Distance Weighting) for Holes
+                            float sum_w = 0.0f;
+                            float sum_ef = 0.0f;
+                            for (auto const& pair : score_to_ef) {
+                                float dist = std::abs(s - pair.first);
+                                float w = 1.0f / (dist * dist); // Inverse distance squared
+                                sum_w += w;
+                                sum_ef += w * pair.second;
+                            }
+                            efs[s] = (sum_w > 0.0f) ? (sum_ef / sum_w) : 0.0f;
                         }
                     }
                 }
