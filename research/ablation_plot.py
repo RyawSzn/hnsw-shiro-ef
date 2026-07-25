@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.ticker import MultipleLocator
 
-BASE_LOG = "research/log/output_shiro_new.log"
+BASE_LOG = "research/log/output_shiro_new0.log"
 
 ABLATIONS = {
     "hops": {
@@ -220,7 +220,7 @@ def plot_ablation(name, cfg, base_data, out_dir):
 
         ax.axhline(y=0.95, color="#e31a1c", ls="-.", lw=1.2, alpha=0.8, zorder=6)
 
-        ax.set_ylim(0.70, 1.0)
+        ax.set_ylim(0.70, 1.01)
         ax.yaxis.set_major_locator(MultipleLocator(0.05))
 
         ax.set_title(ds, fontsize=11, fontweight="bold", pad=6)

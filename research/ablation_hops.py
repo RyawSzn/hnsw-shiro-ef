@@ -7,7 +7,7 @@ from matplotlib.lines import Line2D
 from matplotlib.ticker import MultipleLocator
 
 HOP_LOG = "research/log/ablation_visited_list_size.log"
-BASE_LOG = "research/log/output_shiro_new.log"
+BASE_LOG = "research/log/output_shiro_new0.log"
 
 HOP_ORDER = [513, 1025, 32769]
 HOP_LABELS = {513: "1.5-hop", 1025: "2-hop", 32769: "3-hop"}
@@ -154,7 +154,7 @@ for idx, ds in enumerate(datasets):
 
     ax.axhline(y=0.95, color="#e31a1c", ls="-.", lw=1.2, alpha=0.8, zorder=6)
 
-    ax.set_ylim(0.70, 1.0)
+    ax.set_ylim(0.70, 1.01)
     ax.yaxis.set_major_locator(MultipleLocator(0.05))
 
     ax.set_title(ds, fontsize=11, fontweight="bold", pad=6)

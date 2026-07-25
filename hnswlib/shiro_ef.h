@@ -7,7 +7,7 @@
 #include <omp.h>
 #include <thread>
 
-constexpr int FILLING_METHOD = 2;
+constexpr int FILLING_METHOD = 2; // 0: No Filling, 1: Fill with Pivots, 2: Fill with Pivots and LDW
 constexpr int SAMPLING_METHOD = 1; // 0: Normal Random, 1: Hard First
 
 namespace hnswdis

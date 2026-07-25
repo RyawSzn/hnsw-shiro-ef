@@ -1,0 +1,57 @@
+Starting experiments for Shiro-ef hnswdis library...
+
+
+EXPERIMENTS_ROOT: /home/ryawszn/experiments/shiro-ef
+Starting adaptive ef tests...
+
+
+Dataset: glove-100-angular
+Metric: cd
+Truncation ratio: 0.25
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+****Weighted average ef: 1342
+Search time: 38769 ms
+Search time: 37512 ms
+Search time: 39772 ms
+Average Recall: 0.977855
+5th percentile recall: 0.91
+1st percentile recall: 0.87
+Median search time: 38769 ms
+Search times: 37512 ms, 38769 ms, 39772 ms
+glove-100-angular experiment results:
+statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+1025, 38769, 0.977855, 0.91, 0.87, 5882, 8079, 9633
+Experiment finished
+Adaptive EF Analysis for dataset: glove-100-angular
+
+Search with Patience in Proximity for dataset: glove-100-angular
+ef: 300
+Average Recall: 0.582264
+5th percentile recall: 0.13
+1st percentile recall: 0.05
+Median search time: 3320 ms
+Search times: 3307 ms, 3320 ms, 6296 ms,
+glove-100-angular experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+300, 3320, 0.582264, 0.13, 0.05, 61, 365, 1093
+Experiment finished
+ef: 100
+Average Recall: 0.69279
+5th percentile recall: 0.22
+1st percentile recall: 0.13
+Median search time: 1719 ms
+Search times: 1696 ms, 1719 ms, 1734 ms,
+ef: 200
+Average Recall: 0.780761
+5th percentile recall: 0.34
+1st percentile recall: 0.24
+Median search time: 3226 ms
+Search times: 3220 ms, 3226 ms, 3270 ms,
+ef: 400

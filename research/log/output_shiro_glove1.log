@@ -1,0 +1,145 @@
+Starting experiments for Shiro-ef hnswdis library...
+
+
+EXPERIMENTS_ROOT: /home/ryawszn/experiments/shiro-ef
+Starting adaptive ef tests...
+
+
+Dataset: glove-100-angular
+Metric: cd
+Truncation ratio: 0.25
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+****Weighted average ef: 1433
+Search time: 39502 ms
+Search time: 39699 ms
+Search time: 39590 ms
+Average Recall: 0.97901
+5th percentile recall: 0.92
+1st percentile recall: 0.88
+Median search time: 39590 ms
+Search times: 39502 ms, 39590 ms, 39699 ms, 
+glove-100-angular experiment results:
+statisc_length, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+1025, 39590, 0.97901, 0.92, 0.88, 5982, 8187, 9674
+Experiment finished
+Adaptive EF Analysis for dataset: glove-100-angular
+
+Search with Patience in Proximity for dataset: glove-100-angular
+ef: 300
+Average Recall: 0.582264
+5th percentile recall: 0.13
+1st percentile recall: 0.05
+Median search time: 3349 ms
+Search times: 3321 ms, 3349 ms, 3372 ms, 
+glove-100-angular experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+300, 3349, 0.582264, 0.13, 0.05, 61, 365, 1093
+Experiment finished
+ef: 100
+Average Recall: 0.69279
+5th percentile recall: 0.22
+1st percentile recall: 0.13
+Median search time: 1663 ms
+Search times: 1629 ms, 1663 ms, 4672 ms, 
+ef: 200
+Average Recall: 0.780761
+5th percentile recall: 0.34
+1st percentile recall: 0.24
+Median search time: 3097 ms
+Search times: 3087 ms, 3097 ms, 3144 ms, 
+ef: 400
+Average Recall: 0.8506
+5th percentile recall: 0.48
+1st percentile recall: 0.37
+Median search time: 6082 ms
+Search times: 5956 ms, 6082 ms, 6114 ms, 
+ef: 800
+Average Recall: 0.905966
+5th percentile recall: 0.63
+1st percentile recall: 0.52
+Median search time: 11935 ms
+Search times: 11903 ms, 11935 ms, 15920 ms, 
+ef: 1600
+Average Recall: 0.947894
+5th percentile recall: 0.77
+1st percentile recall: 0.68
+Median search time: 26299 ms
+Search times: 26147 ms, 26299 ms, 26353 ms, 
+ef: 2000
+Average Recall: 0.958151
+5th percentile recall: 0.81
+1st percentile recall: 0.73
+Median search time: 31351 ms
+Search times: 28366 ms, 31351 ms, 31561 ms, 
+ef: 2400
+Average Recall: 0.96554
+5th percentile recall: 0.84
+1st percentile recall: 0.77
+Median search time: 36634 ms
+Search times: 36580 ms, 36634 ms, 36703 ms, 
+ef: 2800
+Average Recall: 0.971168
+5th percentile recall: 0.86
+1st percentile recall: 0.8
+Median search time: 41680 ms
+Search times: 41565 ms, 41680 ms, 45364 ms, 
+ef: 3200
+Average Recall: 0.975495
+5th percentile recall: 0.88
+1st percentile recall: 0.82
+Median search time: 46730 ms
+Search times: 46634 ms, 46730 ms, 50205 ms, 
+ef: 3600
+Average Recall: 0.978852
+5th percentile recall: 0.9
+1st percentile recall: 0.84
+Median search time: 54548 ms
+Search times: 51878 ms, 54548 ms, 55135 ms, 
+ef: 4000
+Average Recall: 0.981573
+5th percentile recall: 0.91
+1st percentile recall: 0.86
+Median search time: 59541 ms
+Search times: 56762 ms, 59541 ms, 59680 ms, 
+ef: 4400
+Average Recall: 0.983881
+5th percentile recall: 0.92
+1st percentile recall: 0.87
+Median search time: 64517 ms
+Search times: 61927 ms, 64517 ms, 70536 ms, 
+ef: 4800
+Average Recall: 0.985826
+5th percentile recall: 0.93
+1st percentile recall: 0.88
+Median search time: 72371 ms
+Search times: 70217 ms, 72371 ms, 79195 ms, 
+ef: 5200
+Average Recall: 0.987418
+5th percentile recall: 0.94
+1st percentile recall: 0.9
+Median search time: 75102 ms
+Search times: 73905 ms, 75102 ms, 80548 ms, 
+glove-100-angular experiment results:
+ef, time, avg_recall, 5th_percentile_recall, 1st_percentile_recall, recall_above_99, recall_above_95, recall_above_90
+100, 1663, 0.69279, 0.22, 0.13, 903, 1807, 2837
+200, 3097, 0.780761, 0.34, 0.24, 2084, 3132, 4250
+400, 6082, 0.8506, 0.48, 0.37, 3178, 4334, 5490
+800, 11935, 0.905966, 0.63, 0.52, 4215, 5494, 6665
+1600, 26299, 0.947894, 0.77, 0.68, 5304, 6636, 7842
+2000, 31351, 0.958151, 0.81, 0.73, 5673, 7062, 8270
+2400, 36634, 0.96554, 0.84, 0.77, 5989, 7386, 8618
+2800, 41680, 0.971168, 0.86, 0.8, 6266, 7694, 8947
+3200, 46730, 0.975495, 0.88, 0.82, 6495, 7978, 9185
+3600, 54548, 0.978852, 0.9, 0.84, 6713, 8227, 9394
+4000, 59541, 0.981573, 0.91, 0.86, 6921, 8440, 9548
+4400, 64517, 0.983881, 0.92, 0.87, 7133, 8624, 9681
+4800, 72371, 0.985826, 0.93, 0.88, 7338, 8824, 9768
+5200, 75102, 0.987418, 0.94, 0.9, 7510, 8999, 9835
+Experiment finished

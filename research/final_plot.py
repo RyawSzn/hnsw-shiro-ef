@@ -79,7 +79,7 @@ def parse_log(filepath):
     return datasets
 
 
-shiro = parse_log("research/log/output_shiro_new.log")
+shiro = parse_log("research/log/output_shiro_new0.log")
 ada = parse_log("research/log/output_ada.log")
 progress = parse_log("research/log/output_shiro_progress.log")
 
@@ -200,6 +200,8 @@ for idx, ds_name in enumerate(datasets_keys):
         label=r"Baseline - $\pi_{0.01}$",
         linewidth=2,
     )
+
+    ax.fill_between(bl_times_med, bl_p01, bl_avg, color="silver", alpha=0.15, zorder=1)
 
     if "our_method" in shiro.get(ds_name, {}):
         s_data = shiro[ds_name]["our_method"]
