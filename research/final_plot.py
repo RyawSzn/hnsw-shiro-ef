@@ -93,14 +93,20 @@ for ds_name in datasets_keys:
             global_all_recalls.extend([a_log["avg"], a_log["p05"], a_log["p01"]])
     if "our_method" in shiro.get(ds_name, {}):
         om = shiro[ds_name]["our_method"]
-        if "avg" in om: global_all_recalls.append(om["avg"])
-        if "p05" in om: global_all_recalls.append(om["p05"])
-        if "p01" in om: global_all_recalls.append(om["p01"])
+        if "avg" in om:
+            global_all_recalls.append(om["avg"])
+        if "p05" in om:
+            global_all_recalls.append(om["p05"])
+        if "p01" in om:
+            global_all_recalls.append(om["p01"])
     if "our_method" in ada.get(ds_name, {}):
         om = ada[ds_name]["our_method"]
-        if "avg" in om: global_all_recalls.append(om["avg"])
-        if "p05" in om: global_all_recalls.append(om["p05"])
-        if "p01" in om: global_all_recalls.append(om["p01"])
+        if "avg" in om:
+            global_all_recalls.append(om["avg"])
+        if "p05" in om:
+            global_all_recalls.append(om["p05"])
+        if "p01" in om:
+            global_all_recalls.append(om["p01"])
 
 import math
 
@@ -260,7 +266,7 @@ for idx, ds_name in enumerate(datasets_keys):
             )
 
     max_ef = max(bl_efs) if bl_efs else "Unknown"
-    ax.set_title(f"{ds_name}\nef_max = {max_ef}", fontsize=14)
+    ax.set_title(f"{ds_name}\nObserved ef_max = {max_ef}", fontsize=14)
 
     ax.set_xlabel("Latency (s)", fontsize=12)
 
@@ -268,7 +274,7 @@ for idx, ds_name in enumerate(datasets_keys):
 
     ax.yaxis.set_major_locator(MultipleLocator(0.05))
 
-    ax.set_ylim(0.60, 1.01)
+    ax.set_ylim(0.70, 1.01)
 
     max_time = max(bl_times_med) if bl_times_med else 10
     if "our_method" in shiro.get(ds_name, {}):
