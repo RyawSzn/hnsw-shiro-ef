@@ -1706,6 +1706,7 @@ namespace hnswdis
                             efs[s] = score_to_ef[s];
                         } else {
                             // LDW (Inverse Distance Weighting) for Holes
+                            // or linear inpotation?
                             float sum_w = 0.0f;
                             float sum_ef = 0.0f;
                             for (auto const& pair : score_to_ef) {
