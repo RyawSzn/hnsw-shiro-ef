@@ -100,7 +100,7 @@ static void train_convergence_buckets(
 
             float ef_hard = ef_hard_sum / num_hard_queries;
             float ef_easy = (query_vectors->rows() - num_hard_queries) > 0 ? ef_easy_sum / (query_vectors->rows() - num_hard_queries) : 0;
-            float hard_pct = static_cast<float>(num_hard_queries) / 30000.0f;
+            float hard_pct = static_cast<float>(num_hard_queries) / static_cast<float>(query_vectors->rows() * 10);
             float true_wae = hard_pct * ef_hard + (1.0f - hard_pct) * ef_easy;
 
             adapter.set_wae(true_wae);
@@ -376,7 +376,7 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
     // 1. Sample data and compute ground truth
     start = std::chrono::high_resolution_clock::now();
     size_t num_hard_queries = 0;
-    auto pair = hnswdis::compute_samplings(hnsw, data, metric, k, sampling_size, alpha, gamma, statics_length, 30000, &num_hard_queries);
+    auto pair = hnswdis::compute_samplings(hnsw, data, metric, k, sampling_size, alpha, gamma, statics_length, 0, &num_hard_queries);
     end = std::chrono::high_resolution_clock::now();
     if (!fast_rebuild) {
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
@@ -463,6 +463,7 @@ void sensitivity_analysis()
         int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
+        int sampling_size = conf.sampling_size;
         std::string metric = "cd";
         float alpha = 0.25f;
         float gamma = 12.0f;
@@ -498,7 +499,7 @@ void sensitivity_analysis()
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-        int repeat = 1;
+        int repeat = 3;
 
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
@@ -514,7 +515,7 @@ void sensitivity_analysis()
                     << "Expected recall: " << expected_recall << std::endl;
 
                 start = std::chrono::high_resolution_clock::now();
-                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, conf.sampling_size, min_queries_per_score);
+                hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
                 end = std::chrono::high_resolution_clock::now();
                 duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
                 std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;

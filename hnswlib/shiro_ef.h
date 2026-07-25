@@ -881,12 +881,13 @@ namespace hnswdis
         const hnswdis::ApproximatedScoreCalculator        &score_cal,
         const size_t                                       k,
         const size_t                                       probe_statics_length = 1024,
-        const size_t                                       pool_size            = 30000,
+        const size_t                                       pool_size            = 0,
         const uint32_t                                     seed                 = 123456789,
         size_t                                            *out_hard_count       = nullptr)
     {
-        const size_t n_data = static_cast<size_t>(data_vectors.rows());
-        const size_t pool   = std::min(pool_size, n_data);
+        const size_t n_data     = static_cast<size_t>(data_vectors.rows());
+        const size_t pool_actual = (pool_size == 0) ? sample_size * 10 : pool_size;
+        const size_t pool        = std::min(pool_actual, n_data);
 
         std::mt19937 gen(seed);
 
@@ -1234,7 +1235,7 @@ namespace hnswdis
         const float alpha,
         const float gamma,
         const size_t statics_length,
-        const size_t pool_size = 30000,
+        const size_t pool_size = 0,
         size_t *out_hard_count = nullptr)
     {
         if constexpr (SAMPLING_METHOD == 0) {
