@@ -432,7 +432,7 @@ namespace hnswdis
         omp_set_num_threads(numThreads);
 
         size_t batch_size = 50;
-        
+
         Eigen::VectorXf data_sq_norms;
         if (metric == "l2") {
             data_sq_norms = data_vectors.rowwise().squaredNorm();
@@ -443,7 +443,7 @@ namespace hnswdis
             MatrixXf current_query_batch = query_vectors.middleRows(batch_start, current_batch_size);
 
             MatrixXf distances = current_query_batch * data_vectors.transpose();
-            
+
             Eigen::VectorXf query_sq_norms;
             if (metric == "l2") {
                 query_sq_norms = current_query_batch.rowwise().squaredNorm();
@@ -519,7 +519,7 @@ namespace hnswdis
         omp_set_num_threads(numThreads);
 
         size_t batch_size = 50;
-        
+
         Eigen::VectorXf data_sq_norms;
         if (metric == "l2") {
             data_sq_norms = data_vectors.rowwise().squaredNorm();
@@ -530,7 +530,7 @@ namespace hnswdis
             MatrixXf current_query_batch = query_vectors.middleRows(batch_start, current_batch_size);
 
             MatrixXf distances = current_query_batch * data_vectors.transpose();
-            
+
             Eigen::VectorXf query_sq_norms;
             if (metric == "l2") {
                 query_sq_norms = current_query_batch.rowwise().squaredNorm();
@@ -2031,7 +2031,7 @@ namespace hnswdis
                         bucket_gt.row(r)      = ground_truth_ptr->row(order[lo + r]);
                     }
 
-                    std::cout << "Training rv-bucket " << t
+                    std::cout << "Training convergence-bucket " << t
                               << " [" << cvs[order[lo]] << ", "
                               << (t < actual_n_convergence_buckets - 1 ? cvs[order[hi]] : std::numeric_limits<float>::infinity())
                               << ") with " << bucket_size << " queries." << std::endl;

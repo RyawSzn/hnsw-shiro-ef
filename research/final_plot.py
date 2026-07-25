@@ -77,12 +77,40 @@ def parse_log(filepath):
     return datasets
 
 
-shiro = parse_log("research/log/output_shiro_fill2.log")
+shiro = parse_log("research/log/output_shiro_new.log")
 ada = parse_log("research/log/output_ada.log")
 
-datasets_keys = ["deep-image-96-angular", "glove-100-angular", "sift-128-euclidean"]
+datasets_keys = sorted(list(set(list(shiro.keys()) + list(ada.keys()))))
+num_ds = len(datasets_keys)
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 6.5))
+global_all_recalls = []
+for ds_name in datasets_keys:
+    if "baseline" in shiro.get(ds_name, {}):
+        for ef, s_log in shiro[ds_name]["baseline"].items():
+            global_all_recalls.extend([s_log["avg"], s_log["p05"], s_log["p01"]])
+    if "baseline" in ada.get(ds_name, {}):
+        for ef, a_log in ada[ds_name]["baseline"].items():
+            global_all_recalls.extend([a_log["avg"], a_log["p05"], a_log["p01"]])
+    if "our_method" in shiro.get(ds_name, {}):
+        om = shiro[ds_name]["our_method"]
+        if "avg" in om: global_all_recalls.append(om["avg"])
+        if "p05" in om: global_all_recalls.append(om["p05"])
+        if "p01" in om: global_all_recalls.append(om["p01"])
+    if "our_method" in ada.get(ds_name, {}):
+        om = ada[ds_name]["our_method"]
+        if "avg" in om: global_all_recalls.append(om["avg"])
+        if "p05" in om: global_all_recalls.append(om["p05"])
+        if "p01" in om: global_all_recalls.append(om["p01"])
+
+import math
+
+global_min_y = (
+    math.floor(min(global_all_recalls) / 0.05) * 0.05 if global_all_recalls else 0.70
+)
+
+fig, axes = plt.subplots(1, num_ds, figsize=(6 * num_ds, 6.5))
+if num_ds == 1:
+    axes = [axes]
 
 for idx, ds_name in enumerate(datasets_keys):
     ax = axes[idx]
@@ -231,41 +259,28 @@ for idx, ds_name in enumerate(datasets_keys):
                 zorder=5,
             )
 
-    if ds_name == "deep-image-96-angular":
-        ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
-    elif ds_name == "glove-100-angular":
-        ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
-    elif ds_name == "sift-128-euclidean":
-        ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
-    else:
-        ax.set_title(ds_name, fontsize=14)
+    max_ef = max(bl_efs) if bl_efs else "Unknown"
+    ax.set_title(f"{ds_name}\nef_max = {max_ef}", fontsize=14)
+
     ax.set_xlabel("Latency (s)", fontsize=12)
 
-    if ds_name in ["deep-image-96-angular", "glove-100-angular"]:
-        ax.set_ylabel("Recall@100", fontsize=12)
-    elif ds_name == "sift-128-euclidean":
-        ax.set_ylabel("Recall@10", fontsize=12)
-    else:
-        ax.set_ylabel("Recall", fontsize=12)
+    ax.set_ylabel("Recall@100", fontsize=12)
 
     ax.yaxis.set_major_locator(MultipleLocator(0.05))
-    if ds_name == "deep-image-96-angular":
-        ax.xaxis.set_major_locator(MultipleLocator(5))
-        ax.set_ylim(0.75, 1.01)
-        ax.set_xlim(0, 18)
-    elif ds_name == "glove-100-angular":
-        ax.xaxis.set_major_locator(MultipleLocator(25))
-        ax.set_ylim(0.65, 1.01)
-        ax.set_xlim(0, 70)
-    elif ds_name == "sift-128-euclidean":
-        ax.xaxis.set_major_locator(MultipleLocator(2))
-        ax.set_ylim(0.70, 1.01)
-        max_time = max(bl_times_med) if bl_times_med else 10
-        if "our_method" in shiro.get(ds_name, {}):
+
+    ax.set_ylim(0.60, 1.01)
+
+    max_time = max(bl_times_med) if bl_times_med else 10
+    if "our_method" in shiro.get(ds_name, {}):
+        if shiro[ds_name]["our_method"].get("times"):
             max_time = max(
                 max_time, min(shiro[ds_name]["our_method"]["times"]) / 1000.0
             )
-        ax.set_xlim(0, max_time * 1.1)
+    if "our_method" in ada.get(ds_name, {}):
+        if ada[ds_name]["our_method"].get("times"):
+            max_time = max(max_time, min(ada[ds_name]["our_method"]["times"]) / 1000.0)
+
+    ax.set_xlim(0, max_time * 1.1)
 
     # ADD TARGET RECALL LINE
     ax.axhline(
