@@ -432,12 +432,22 @@ namespace hnswdis
         omp_set_num_threads(numThreads);
 
         size_t batch_size = 50;
+        
+        Eigen::VectorXf data_sq_norms;
+        if (metric == "l2") {
+            data_sq_norms = data_vectors.rowwise().squaredNorm();
+        }
 
         for (size_t batch_start = 0; batch_start < totalQueries; batch_start += batch_size) {
             size_t current_batch_size = std::min(batch_size, totalQueries - batch_start);
             MatrixXf current_query_batch = query_vectors.middleRows(batch_start, current_batch_size);
 
             MatrixXf distances = current_query_batch * data_vectors.transpose();
+            
+            Eigen::VectorXf query_sq_norms;
+            if (metric == "l2") {
+                query_sq_norms = current_query_batch.rowwise().squaredNorm();
+            }
 
 #pragma omp parallel for schedule(static)
             for (int i = 0; i < static_cast<int>(current_batch_size); ++i)
@@ -449,13 +459,23 @@ namespace hnswdis
 
                 for (size_t data_i = 0; data_i < k; ++data_i)
                 {
-                    float dist = 1.0f - local_distance(data_i); // distance-based comparion
+                    float dist;
+                    if (metric == "l2") {
+                        dist = std::max(0.0f, query_sq_norms(i) + data_sq_norms(data_i) - 2.0f * local_distance(data_i));
+                    } else {
+                        dist = 1.0f - local_distance(data_i); // IP / Cosine
+                    }
                     topResults.emplace(dist, data_i);
                 }
                 float lastdist = topResults.top().first;
                 for (size_t data_i = k; data_i < num_elements; ++data_i)
                 {
-                    float dist = 1.0f - local_distance(data_i); // distance-based comparion
+                    float dist;
+                    if (metric == "l2") {
+                        dist = std::max(0.0f, query_sq_norms(i) + data_sq_norms(data_i) - 2.0f * local_distance(data_i));
+                    } else {
+                        dist = 1.0f - local_distance(data_i); // IP / Cosine
+                    }
                     if (dist <= lastdist)
                     {
                         topResults.emplace(dist, data_i);
@@ -499,12 +519,22 @@ namespace hnswdis
         omp_set_num_threads(numThreads);
 
         size_t batch_size = 50;
+        
+        Eigen::VectorXf data_sq_norms;
+        if (metric == "l2") {
+            data_sq_norms = data_vectors.rowwise().squaredNorm();
+        }
 
         for (size_t batch_start = 0; batch_start < totalQueries; batch_start += batch_size) {
             size_t current_batch_size = std::min(batch_size, totalQueries - batch_start);
             MatrixXf current_query_batch = query_vectors.middleRows(batch_start, current_batch_size);
 
             MatrixXf distances = current_query_batch * data_vectors.transpose();
+            
+            Eigen::VectorXf query_sq_norms;
+            if (metric == "l2") {
+                query_sq_norms = current_query_batch.rowwise().squaredNorm();
+            }
 
 #pragma omp parallel for schedule(static)
             for (int i = 0; i < static_cast<int>(current_batch_size); ++i)
@@ -516,13 +546,23 @@ namespace hnswdis
 
                 for (size_t data_i = 0; data_i < k; ++data_i)
                 {
-                    float dist = 1.0f - local_distance(data_i); // distance-based comparion
+                    float dist;
+                    if (metric == "l2") {
+                        dist = std::max(0.0f, query_sq_norms(i) + data_sq_norms(data_i) - 2.0f * local_distance(data_i));
+                    } else {
+                        dist = 1.0f - local_distance(data_i); // IP / Cosine
+                    }
                     topResults.emplace(dist, data_i);
                 }
                 float lastdist = topResults.top().first;
                 for (size_t data_i = k; data_i < num_elements; ++data_i)
                 {
-                    float dist = 1.0f - local_distance(data_i); // distance-based comparion
+                    float dist;
+                    if (metric == "l2") {
+                        dist = std::max(0.0f, query_sq_norms(i) + data_sq_norms(data_i) - 2.0f * local_distance(data_i));
+                    } else {
+                        dist = 1.0f - local_distance(data_i); // IP / Cosine
+                    }
                     if (dist <= lastdist)
                     {
                         topResults.emplace(dist, data_i);
@@ -547,14 +587,13 @@ namespace hnswdis
 
         return {ground_truth, ground_truth_distances};
     }
-
-
     void update_ground_truth_with_new_data(
         const MatrixXf &query_vectors,
         MatrixXi &ground_truth,
         MatrixXf &ground_truth_distances,
         const MatrixXf &updates_data,
-        const int start_index)
+        const int start_index,
+        const std::string &metric)
     {
 
         const int n_queries = query_vectors.rows();
@@ -586,8 +625,13 @@ namespace hnswdis
             // Compare with new data
             for (int j = 0; j < num_updates; ++j)
             {
-                float sim = query.dot(updates_data.row(j));
-                float dist = 1.0f - sim;
+                float dist;
+                if (metric == "l2") {
+                    dist = std::max(0.0f, query.squaredNorm() + updates_data.row(j).squaredNorm() - 2.0f * query.dot(updates_data.row(j)));
+                } else {
+                    float sim = query.dot(updates_data.row(j));
+                    dist = 1.0f - sim;
+                }
 
                 topResults.emplace(dist, j + start_index);
                 if (topResults.size() > k)
@@ -611,7 +655,8 @@ namespace hnswdis
     };
     std::vector<QueryHeap> build_full_gt_structure(
         const MatrixXf &queries,
-        const MatrixXf &data)
+        const MatrixXf &data,
+        const std::string &metric)
     {
         const int n_queries = queries.rows();
         const int n_data = data.rows();
@@ -626,8 +671,13 @@ namespace hnswdis
 
             for (int j = 0; j < n_data; ++j)
             {
-                float sim = query.dot(data.row(j));
-                float dist = 1.0f - sim;
+                float dist;
+                if (metric == "l2") {
+                    dist = std::max(0.0f, query.squaredNorm() + data.row(j).squaredNorm() - 2.0f * query.dot(data.row(j)));
+                } else {
+                    float sim = query.dot(data.row(j));
+                    dist = 1.0f - sim;
+                }
                 qh.distances.emplace_back(dist, j);
             }
             std::sort(qh.distances.begin(), qh.distances.end());
@@ -2084,7 +2134,7 @@ namespace hnswdis
                     inv_score_score = cov_cv_cv / det;
                     inv_cv_score = -cov_cv_score / det;
                 }
-                
+
                 std::vector<EfRecallTable> full_tables(101);
                 std::vector<float> full_centers(101);
 

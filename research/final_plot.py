@@ -236,7 +236,7 @@ for idx, ds_name in enumerate(datasets_keys):
     elif ds_name == "glove-100-angular":
         ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
     elif ds_name == "sift-128-euclidean":
-        ax.set_title(f"{ds_name}\nef_max = 500", fontsize=14)
+        ax.set_title(f"{ds_name}\nef_max = 5000", fontsize=14)
     else:
         ax.set_title(ds_name, fontsize=14)
     ax.set_xlabel("Latency (s)", fontsize=12)

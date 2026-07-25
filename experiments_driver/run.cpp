@@ -24,18 +24,18 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_convergence_buckets, min_q, statics_length
-    // {"deep-image-96-angular",   "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"glove-100-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"sift-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f,  500, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 500,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"msmarco",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cohere",                  "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"laion_image",             "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"laion_text",              "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_uniform_100d", "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d",    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
+    // {"deep-image-96-angular",      "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"glove-100-angular",          "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 500,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 500,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                     "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"laion_image",                "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"laion_text",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_uniform_100d",    "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_zipf_100d",       "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -697,7 +697,7 @@ auto start = std::chrono::high_resolution_clock::now();
             sample_ground_truth,
             sample_ground_truth_dist,
             updates_data,
-            before_updates);
+            before_updates, metric);
         end = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "Samplings updated in " << duration.count() << " ms" << std::endl;
@@ -872,7 +872,7 @@ void delete_exp_setup(
         hnswdis::MatrixXi sample_ground_truth_k_only;
         hnswdis::deserialize_samplings(samplings_path, sample_query_vectors, sample_ground_truth_k_only);
         std::cout << "Samplings loaded" << std::endl;
-        auto sample_ground_truth_full_dist = hnswdis::build_full_gt_structure(sample_query_vectors, full_data);
+        auto sample_ground_truth_full_dist = hnswdis::build_full_gt_structure(sample_query_vectors, full_data, metric);
         std::cout << "Full ground truth for samplings computed" << std::endl;
         // store the full ground truth for later use
         std::string full_ground_truth_path = (root / "incremental_deletion" / batch_type / (dataset + "-full-ground-truth-samplings-" + "-k-" + std::to_string(k) + ".bin")).string();
@@ -1733,7 +1733,7 @@ int main() {
     }
     std::cout << "EXPERIMENTS_ROOT: " << root_path << std::endl;
 
-    // indexing_exp(); // indexes are precomputed, uncomment to run if needed
+    indexing_exp(); // indexes are precomputed, uncomment to run if needed
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
     offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor
