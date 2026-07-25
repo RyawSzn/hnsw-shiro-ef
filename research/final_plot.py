@@ -1,6 +1,8 @@
+import math
 import re
 
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 from matplotlib.ticker import MultipleLocator
 
 
@@ -79,8 +81,11 @@ def parse_log(filepath):
 
 shiro = parse_log("research/log/output_shiro_new.log")
 ada = parse_log("research/log/output_ada.log")
+progress = parse_log("research/log/output_shiro_progress.log")
 
-datasets_keys = sorted(list(set(list(shiro.keys()) + list(ada.keys()))))
+datasets_keys = sorted(
+    list(set(list(shiro.keys()) + list(ada.keys()) + list(progress.keys())))
+)
 num_ds = len(datasets_keys)
 
 global_all_recalls = []
@@ -114,12 +119,15 @@ global_min_y = (
     math.floor(min(global_all_recalls) / 0.05) * 0.05 if global_all_recalls else 0.70
 )
 
-fig, axes = plt.subplots(1, num_ds, figsize=(6 * num_ds, 6.5))
-if num_ds == 1:
-    axes = [axes]
+ncols = 3
+nrows = math.ceil(num_ds / ncols)
+fig, axes = plt.subplots(nrows, ncols, figsize=(6 * ncols, 6.5 * nrows))
+axes_flat = axes.flatten() if num_ds > 1 else [axes]
+for i in range(num_ds, len(axes_flat)):
+    axes_flat[i].set_visible(False)
 
 for idx, ds_name in enumerate(datasets_keys):
-    ax = axes[idx]
+    ax = axes_flat[idx]
 
     # 1. First Pass: Compute the relative hardware scaling factor (Ada -> Shiro)
     common_efs = set(shiro.get(ds_name, {}).get("baseline", {}).keys()).intersection(
@@ -265,6 +273,22 @@ for idx, ds_name in enumerate(datasets_keys):
                 zorder=5,
             )
 
+    if "our_method" in progress.get(ds_name, {}):
+        p_data = progress[ds_name]["our_method"]
+        if p_data.get("times"):
+            p_time = min(p_data["times"]) / 1000.0
+            for val in [p_data.get("avg"), p_data.get("p05"), p_data.get("p01")]:
+                if val is not None:
+                    ax.scatter(
+                        [p_time],
+                        [val],
+                        marker="^",
+                        s=220,
+                        color="grey",
+                        edgecolor="black",
+                        zorder=2,
+                    )
+
     max_ef = max(bl_efs) if bl_efs else "Unknown"
     ax.set_title(f"{ds_name}\nObserved ef_max = {max_ef}", fontsize=14)
 
@@ -310,11 +334,93 @@ for idx, ds_name in enumerate(datasets_keys):
 
     ax.grid(True, linestyle="--", alpha=0.6)
 
-    if idx == 0:
-        handles, labels = ax.get_legend_handles_labels()
-        ax.legend(handles, labels, fontsize=9, ncol=1, loc="lower right")
 
-plt.tight_layout()
+plt.tight_layout(rect=(0, 0.03, 1, 1))
+
+legend_handles = [
+    Line2D([0], [0], color="tab:blue", lw=2.5, label="Baseline – Avg"),
+    Line2D([0], [0], color="tab:green", lw=2.5, label=r"Baseline – $\pi_{0.05}$"),
+    Line2D([0], [0], color="tab:orange", lw=2.5, label=r"Baseline – $\pi_{0.01}$"),
+    Line2D(
+        [0],
+        [0],
+        marker="*",
+        color="w",
+        markerfacecolor="blue",
+        markersize=11,
+        markeredgecolor="black",
+        label="Shiro – Avg",
+    ),
+    Line2D(
+        [0],
+        [0],
+        marker="*",
+        color="w",
+        markerfacecolor="green",
+        markersize=11,
+        markeredgecolor="black",
+        label=r"Shiro – $\pi_{0.05}$",
+    ),
+    Line2D(
+        [0],
+        [0],
+        marker="*",
+        color="w",
+        markerfacecolor="orange",
+        markersize=11,
+        markeredgecolor="black",
+        label=r"Shiro – $\pi_{0.01}$",
+    ),
+    Line2D(
+        [0],
+        [0],
+        marker="X",
+        color="w",
+        markerfacecolor="blue",
+        markersize=10,
+        markeredgecolor="black",
+        label="Ada – Avg",
+    ),
+    Line2D(
+        [0],
+        [0],
+        marker="X",
+        color="w",
+        markerfacecolor="green",
+        markersize=10,
+        markeredgecolor="black",
+        label=r"Ada – $\pi_{0.05}$",
+    ),
+    Line2D(
+        [0],
+        [0],
+        marker="X",
+        color="w",
+        markerfacecolor="orange",
+        markersize=10,
+        markeredgecolor="black",
+        label=r"Ada – $\pi_{0.01}$",
+    ),
+    Line2D(
+        [0],
+        [0],
+        marker="^",
+        color="w",
+        markerfacecolor="grey",
+        markersize=10,
+        markeredgecolor="black",
+        label="Progress",
+    ),
+]
+fig.legend(
+    handles=legend_handles,
+    loc="lower center",
+    ncol=len(legend_handles),
+    fontsize=9,
+    framealpha=0.95,
+    edgecolor="#cccccc",
+    bbox_to_anchor=(0.5, 0.0),
+)
 import os
 
 os.makedirs("research/img", exist_ok=True)
