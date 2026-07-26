@@ -24,13 +24,13 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_convergence_buckets, min_q, statics_length
-    // {"deep-image-96-angular",      "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"glove-100-angular",          "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"deep-image-96-angular",      "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"glove-100-angular",          "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"cohere",                     "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"cluster_mg_uniform_100d",    "cd", 1000, 0.25f, 12.0f, 0.95f, 1000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"cluster_mg_zipf_100d",       "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
@@ -1728,12 +1728,12 @@ int main() {
     // insert_exp(true); // insert experiment with setup
     // delete_exp(true); // delete experiment with setup
 
-    // ablation_study_visited_list_size();      // ablation study on distance list size
-    // ablation_study_sampling_size();           // ablation study on sampling size
-    // ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
-    // ablation_study_truncation_ratio();
-    // ablation_study_n_convergence_buckets();
-    // ablation_study_min_queries_per_score();        // ablation study on truncation ratio
+    ablation_study_visited_list_size();      // ablation study on distance list size
+    ablation_study_sampling_size();           // ablation study on sampling size
+    ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
+    ablation_study_truncation_ratio();
+    ablation_study_n_convergence_buckets();
+    ablation_study_min_queries_per_score();        // ablation study on truncation ratio
 
     // per_query_result_exp(); // per-query result experiments
     return 0;
