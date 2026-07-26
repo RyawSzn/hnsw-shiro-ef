@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-EXPERIMENTS_ROOT="/home/ryawszn/experiments/shiro-ef"
+EXPERIMENTS_ROOT="/path/to/experiments"
 
 mkdir -p "$EXPERIMENTS_ROOT"
 
 dirs=(
   index
-  data
+  data/fvecs
   estimation_table
   sampling
   statistics

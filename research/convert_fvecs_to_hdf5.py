@@ -71,19 +71,33 @@ def create_hdf5(name, base_file, query_file, metric="euclidean"):
 if __name__ == "__main__":
     datasets = [
         # GIST uses Euclidean (L2) distance
-        # ("gist", "/home/ryawszn/experiments/shiro-ef/data/fvecs/gist_base.fvecs", "/home/ryawszn/experiments/shiro-ef/data/fvecs/gist_query.fvecs", "euclidean"),
+        (
+            "gist",
+            "/home/ryawszn/experiments/shiro-ef/data/fvecs/gist_base.fvecs",
+            "/home/ryawszn/experiments/shiro-ef/data/fvecs/gist_query.fvecs",
+            "euclidean",
+        ),
         # Word2Vec is used with Cosine/Angular distance
-        # ("word2vec", "/home/ryawszn/experiments/shiro-ef/data/fvecs/word2vec_base.fvecs", "/home/ryawszn/experiments/shiro-ef/data/fvecs/word2vec_query.fvecs", "angular"),
+        (
+            "word2vec",
+            "/home/ryawszn/experiments/shiro-ef/data/fvecs/word2vec_base.fvecs",
+            "/home/ryawszn/experiments/shiro-ef/data/fvecs/word2vec_query.fvecs",
+            "angular",
+        ),
         # Tiny5M (TinyImages GIST features) uses Euclidean (L2) distance
-        # ("tiny5m", "/home/ryawszn/experiments/shiro-ef/data/fvecs/tiny5m_base.fvecs", "/home/ryawszn/experiments/shiro-ef/data/fvecs/tiny5m_query.fvecs", "euclidean")
-        #
+        (
+            "tiny5m",
+            "/home/ryawszn/experiments/shiro-ef/data/fvecs/tiny5m_base.fvecs",
+            "/home/ryawszn/experiments/shiro-ef/data/fvecs/tiny5m_query.fvecs",
+            "euclidean",
+        ),
         # Sift10M uses Euclidean (L2) distance
         (
             "sift10m",
             "/home/ryawszn/experiments/shiro-ef/data/fvecs/sift10m_base.fvecs",
             "/home/ryawszn/experiments/shiro-ef/data/fvecs/sift10m_query.fvecs",
             "euclidean",
-        )
+        ),
     ]
 
     for name, base, query, metric in datasets:

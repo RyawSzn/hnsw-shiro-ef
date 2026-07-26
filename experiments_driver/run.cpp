@@ -24,18 +24,18 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_convergence_buckets, min_q, statics_length
-    // {"deep-image-96-angular",      "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"deep-image-96-angular",      "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"glove-100-angular",          "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cohere",                     "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"cohere",                     "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"cluster_mg_uniform_100d",    "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"cluster_mg_zipf_100d",       "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
     // {"laion_image",                "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"laion_text",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_uniform_100d",    "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d",       "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
+    // {"laion_text",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -157,7 +157,7 @@ void setup_laion_text2image(std::shared_ptr<hnswlib::HierarchicalNSW<float>> &hn
 
 void online_exp()
 {
-    std::cout << "Starting adaptive ef tests...\n\n"
+    std::cout << "Starting shiro-ef tests...\n\n"
               << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in shiro-ef offline computation
 
@@ -202,13 +202,9 @@ void online_exp()
             space = std::get<4>(tuple);
         }
 
-        // the followings are for adaptive ef experiments
+        // the followings are for shiro-ef experiments
         std::string ef_adaptor_path = (root / "estimation_table" / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
         std::string samplings_path = (root / "sampling" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
-
-        if (dataset == "laion_text")
-        {
-        }
 
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
@@ -410,8 +406,6 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
         std::cout << "Finished building table for " << dataset << std::endl;
     }
 }
-
-#include <future>
 
 void offline_exp(bool fast_rebuild = false)
 {
@@ -1734,11 +1728,11 @@ int main() {
     }
     std::cout << "EXPERIMENTS_ROOT: " << root_path << std::endl;
 
-    // indexing_exp(); // indexes are precomputed, uncomment to run if needed
+    // indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    // offline_exp(true);      // offline computation of estimator, samplings, and ef-adaptor
-    online_exp();           // onine search experiments
+    // offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
+    // online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
     // insert_exp(true); // insert experiment with setup
