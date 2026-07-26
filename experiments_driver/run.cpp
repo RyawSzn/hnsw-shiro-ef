@@ -24,15 +24,15 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_convergence_buckets, min_q, statics_length
-    {"deep-image-96-angular",      "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"cohere",                     "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"cluster_mg_uniform_100d",    "cd", 1000, 0.251f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"deep-image-96-angular",      "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"glove-100-angular",          "cd", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"word2vec-300-angular",       "cd", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                     "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    {"cluster_mg_uniform_100d",    "cd", 1000, 0.25f, 12.0f, 0.95f, 1000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"cluster_mg_zipf_100d",       "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
     // {"laion_image",                "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"laion_text",                 "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
@@ -330,7 +330,7 @@ void offline_laion_text2image()
     }
 }
 
-void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
+void process_offline_conf(const ExperimentConfig& conf)
 {
     std::string dataset = conf.dataset;
     std::string metric = conf.metric;
@@ -344,13 +344,9 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
     size_t k = conf.k;
     float gamma = conf.gamma;
 
-    if (!fast_rebuild) {
-        std::cout << "\nDataset: " << dataset << std::endl
-                  << "Metric: " << metric << std::endl
-                  << "Truncation ratio: " << alpha << std::endl;
-    } else {
-        std::cout << "Rebuilding table for " << dataset << "..." << std::endl;
-    }
+    std::cout << "\nDataset: " << dataset << std::endl
+              << "Metric: " << metric << std::endl
+              << "Truncation ratio: " << alpha << std::endl;
 
     if (dataset == "laion_text")
     {
@@ -374,10 +370,8 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
     size_t num_hard_queries = 0;
     auto pair = hnswdis::compute_samplings(hnsw, data, metric, k, sampling_size, alpha, gamma, statics_length, 0, &num_hard_queries);
     end = std::chrono::high_resolution_clock::now();
-    if (!fast_rebuild) {
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-        std::cout << "Sampling computing time: " << duration << " ms" << std::endl;
-    }
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    std::cout << "Sampling computing time: " << duration << " ms" << std::endl;
     hnswdis::serialize_samplings(samplings_path, pair.first, pair.second);
     {
         std::ofstream meta_out(samplings_path + ".meta");
@@ -407,13 +401,12 @@ void process_offline_conf(const ExperimentConfig& conf, bool fast_rebuild)
     }
 }
 
-void offline_exp(bool fast_rebuild = false)
+void offline_exp()
 {
     std::cout << "Starting offline experiments...\n" << std::endl;
-    Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Same threads logic as ablation studies
 
     for (const auto& conf : g_experiments) {
-        process_offline_conf(conf, fast_rebuild);
+        process_offline_conf(conf);
     }
 }
 
@@ -726,13 +719,13 @@ void insert_exp(bool setup = false)
               << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 of all available threads
     std::vector<std::tuple<std::string, size_t, std::string, size_t>> dataset_updates = {
-        {"cohere", 1000, "10percent", 1838056},
+        // {"cohere", 1000, "10percent", 1838056},
         {"deep-image-96-angular", 100, "10percent", 999000},
-        {"cohere", 1000, "50percent", 9190280},
+        {"sift10m-128-euclidean", 100, "10percent", 1000000},
+        // {"cohere", 1000, "50percent", 9190280},
         {"deep-image-96-angular", 100, "50percent", 4995000},
+        {"sift10m-128-euclidean", 100, "50percent", 5000000}
     };
-
-    const float expected_recall = 0.95;
 
     for (const auto [dataset, k, batch_type, num_updates] : dataset_updates)
     {
@@ -740,8 +733,9 @@ void insert_exp(bool setup = false)
         std::cout << "\n\nDataset: " << dataset << ", k: " << k << ", batch type: " << batch_type << ", num_updates: " << num_updates << "\n\n"
                   << std::endl;
 
-        std::string metric = "cd";
         auto conf = get_config(dataset);
+        int expected_recall = conf.expected_recall;
+        std::string metric = conf.metric;
         int n_convergence_buckets = conf.n_convergence_buckets;
         int min_queries_per_score = conf.min_queries_per_score;
         size_t statics_length = conf.statics_length;
@@ -1166,7 +1160,7 @@ void ablation_study_visited_list_size()
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads for eigen parallelization in shiro-ef offline computation
 
     std::vector<int> visited_list_sizes = {
-        1 + 32 + 15 * 32,                // 1.5-hop neighbors on the base layer: M = 16
+        1 + 32,                          // 1-hop neighbors on the base layer: M = 16
         1 + 32 + 31 * 32,                // 2-hop neighbors on the base layer: M = 16
         1 + 32 + 31 * 32 + 31 * 32 * 32, // 3-hop neighbors on the base layer: M = 16
     };
@@ -1685,10 +1679,6 @@ void per_query_result_exp()
         std::string ef_adaptor_path = (root / "estimation_table_o3" / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
         // std::string samplings_path = (root / "sampling_o3" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
 
-        if (dataset == "laion_text")
-        {
-        }
-
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
 
@@ -1728,11 +1718,11 @@ int main() {
     }
     std::cout << "EXPERIMENTS_ROOT: " << root_path << std::endl;
 
-    // indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
+    indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    // offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
-    // online_exp();           // onine search experiments
+    offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
+    online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
     // insert_exp(true); // insert experiment with setup
