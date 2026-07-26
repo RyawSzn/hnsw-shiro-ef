@@ -58,16 +58,10 @@ Before running the experiments, you need to ensure the correct directory structu
 1. **`data/`**: This is where your dataset files must be placed.
 2. **`index/`**: This is where the pre-built HNSW graph indices (`.bin` files) will be loaded from or automatically saved to.
 
-Make sure to create these directories in your project root before running the benchmark:
+Make sure to set the environment and run the shell script to create the directories in your project root before running the benchmark:
 
 ```bash
-mkdir data
-mkdir index
-```
-
-Or make when by running the shell script:
-
-```bash
+export EXPERIMENTS_ROOT="/path/to/experiments"
 ./setup.sh
 ```
 
