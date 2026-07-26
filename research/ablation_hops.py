@@ -9,9 +9,9 @@ from matplotlib.ticker import MultipleLocator
 HOP_LOG = "research/log/ablation_visited_list_size.log"
 BASE_LOG = "research/log/output_shiro_new0.log"
 
-HOP_ORDER = [513, 1025, 32769]
-HOP_LABELS = {513: "1.5-hop", 1025: "2-hop", 32769: "3-hop"}
-HOP_COLORS = {"1.5-hop": "#2166ac", "2-hop": "#d6604d", "3-hop": "#1a9641"}
+HOP_ORDER = [33, 1025, 32769]
+HOP_LABELS = {33: "1-hop", 1025: "2-hop", 32769: "3-hop"}
+HOP_COLORS = {"1-hop": "#2166ac", "2-hop": "#d6604d", "3-hop": "#1a9641"}
 
 METRIC_STYLE = {
     "avg": {"marker": "o", "size": 160, "label": "Avg"},
@@ -222,7 +222,7 @@ fig.legend(
 )
 
 fig.suptitle(
-    "Visited List Size Ablation: 1.5-hop / 2-hop / 3-hop\n"
+    "Visited List Size Ablation: 1-hop / 2-hop / 3-hop\n"
     "○=Avg  □=P05  △=P01  |  Bar=Avg–P01 spread  |  Grey band=baseline ef sweep",
     fontsize=12,
     fontweight="bold",

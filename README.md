@@ -18,6 +18,7 @@ Instead of applying a globally fixed `ef` parameter, the system operates through
    - **`ablation_hops.py` / `ablation_plot.py`**: Scripts to analyze how different visited list sizes (1.5-hop, 2-hop, 3-hop) and sampling sizes affect latency and prediction accuracy.
    - **`compare_sampling.py`**: Compares the benchmark results between different dataset sampling configurations.
    - **`convert_fvecs_to_hdf5.py`**: A dedicated utility to parse binary `.fvecs` and `.ivecs` files into `.hdf5` formats ready for the C++ harness.
+   - **`data_prep.ipynb`**: A Jupyter notebook for preparing datasets in ada-ef.
 
 ## Dependencies
 
@@ -30,13 +31,6 @@ To compile and run the project, ensure the following system-level dependencies a
 - **Eigen3**: Used extensively in `util.h` for matrix and vector representations of datasets.
 - **Boost**: Required for internal project utilities.
 - **HDF5 (with C++ bindings)**: Used by `experiments_driver/util.h` via `<H5Cpp.h>` to read and write dataset structures. On Ubuntu, this is typically provided by `libhdf5-dev` and `libhdf5-cpp-11` (or similar).
-
-### Python Dependencies (Optional, for `research/`)
-
-If you plan to run the analysis scripts or convert datasets, you will need:
-
-- **`numpy`** and **`matplotlib`**: For log parsing and rendering visual plots (`final_plot.py`, `ablation_plot.py`).
-- **`h5py`**: For running format conversion utilities.
 
 ## Building the Project
 
