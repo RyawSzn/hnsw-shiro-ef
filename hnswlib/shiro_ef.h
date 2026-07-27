@@ -256,6 +256,7 @@ namespace hnswdis
         const std::string &metric,
         const int k)
     {
+        auto start = std::chrono::high_resolution_clock::now();
 
         std::size_t numThreads = std::max(1u, std::thread::hardware_concurrency() / 4);
 
@@ -356,6 +357,8 @@ namespace hnswdis
         const std::string &metric,
         const int k)
     {
+        auto start = std::chrono::high_resolution_clock::now();
+
         size_t totalQueries = query_vectors.rows();
         size_t num_elements = data_vectors.rows();
         size_t dim = data_vectors.cols();
@@ -409,6 +412,10 @@ namespace hnswdis
             }
         }
 
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::cout << "Ground truth computed in " << duration.count() << " ms" << std::endl;
+
         return ground_truth;
     }
 
@@ -421,6 +428,8 @@ namespace hnswdis
         const std::string &metric,
         const int k)
     {
+        auto start = std::chrono::high_resolution_clock::now();
+
         Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4)); // Limit to 1/4 available threads
 
         size_t totalQueries = query_vectors.rows();
@@ -495,6 +504,10 @@ namespace hnswdis
                 }
             }
         }
+
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::cout << "Ground truth computed in " << duration.count() << " ms" << std::endl;
 
         return ground_truth;
     }
