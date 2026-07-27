@@ -30,7 +30,7 @@ static std::vector<ExperimentConfig> g_experiments = {
     {"sift10m-128-euclidean",      "l2", 100,  0.25f, 12.0f, 0.95f, 1000,  3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"gist-960-euclidean",         "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"tiny5m-384-euclidean",       "l2", 100,  0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
+    // {"msmarco",                    "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     // {"cohere",                     "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"cluster_mg_uniform_100d",    "cd", 1000, 0.25f, 12.0f, 0.95f, 1000, 3, 3000, 15, 3, 1 + 32 + 31 * 32},
     {"cluster_mg_zipf_100d",       "cd", 1000, 0.25f, 12.0f, 0.95f, 5000, 3, 3000, 15, 3, 1 + 32 + 31 * 32}
@@ -382,10 +382,8 @@ void process_offline_conf(const ExperimentConfig& conf)
     start = std::chrono::high_resolution_clock::now();
     hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, statics_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
     end = std::chrono::high_resolution_clock::now();
-    if (!fast_rebuild) {
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-        std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
-    }
+    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    std::cout << "EF-estimation table computing time: " << duration << " ms" << std::endl;
 
     hnswdis::MatrixXf _sq; hnswdis::MatrixXi _sgt;
     hnswdis::deserialize_samplings(samplings_path, _sq, _sgt);
@@ -396,9 +394,6 @@ void process_offline_conf(const ExperimentConfig& conf)
         ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
 
     ef_adapter.serialize(ef_adaptor_path);
-    if (fast_rebuild) {
-        std::cout << "Finished building table for " << dataset << std::endl;
-    }
 }
 
 void offline_exp()
