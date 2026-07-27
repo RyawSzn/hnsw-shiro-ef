@@ -1730,6 +1730,6 @@ int main() {
     insert_exp(true); // insert experiment with setup
     delete_exp(true); // delete experiment with setup
 
-    // per_query_result_exp(); // per-query result experiments
+    per_query_result_exp(); // per-query result experiments
     return 0;
 }
