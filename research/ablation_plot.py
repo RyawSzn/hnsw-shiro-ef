@@ -8,22 +8,22 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.ticker import MultipleLocator
 
-BASE_LOG = "research/log/output_shiro_new0.log"
+BASE_LOG = "research/log/output_shiro_full.log"
 
 ABLATIONS = {
     "hops": {
-        "log": "research/log/ablation_sampling_size.log",
-        "title": "Visited List Size (1.5-hop / 2-hop / 3-hop)",
+        "log": "research/log/output_shiro_full.log",
+        "title": "Visited List Size (1-hop / 2-hop / 3-hop)",
         "marker_re": r"^Visited list size:\s+(\d+)",
-        "data_re": r"^(\d+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
-        "label_fn": lambda v: {513: "1.5-hop", 1025: "2-hop", 32769: "3-hop"}.get(
+        "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
+        "label_fn": lambda v: {33: "1-hop", 1025: "2-hop", 32769: "3-hop"}.get(
             int(v), v
         ),
         "x_label": "Visited list size",
         "sort_num": True,
     },
     "gamma": {
-        "log": "research/log/ablation_alpha_gamma.log",
+        "log": "research/log/output_shiro_full.log",
         "title": "Weighted Decay Function γ Ablation",
         "marker_re": r"^---\s*Gamma:\s+([\d.]+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
@@ -32,7 +32,7 @@ ABLATIONS = {
         "sort_num": True,
     },
     "alpha": {
-        "log": "research/log/ablation_alpha_gamma.log",
+        "log": "research/log/output_shiro_full.log",
         "title": "Truncation Ratio α Ablation",
         "marker_re": r"^---\s*Alpha:\s+([\d.]+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
@@ -40,22 +40,31 @@ ABLATIONS = {
         "x_label": "Alpha",
         "sort_num": True,
     },
-    "n_cv": {
-        "log": "research/log/ablation_cv.log",
-        "title": "n_cv_tables Ablation",
-        "marker_re": r"^---\s*n_cv_tables:\s+(\d+)\s*---",
+    "n_convergence_buckets": {
+        "log": "research/log/output_shiro_full.log",
+        "title": "n_convergence_buckets Ablation",
+        "marker_re": r"^---\s*n_convergence_buckets:\s+(\d+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
         "label_fn": str,
-        "x_label": "n_cv_tables",
+        "x_label": "n_convergence_buckets",
         "sort_num": True,
     },
     "min_q": {
-        "log": "research/log/ablation_cv.log",
+        "log": "research/log/output_shiro_full.log",
         "title": "min_queries_per_score Ablation",
         "marker_re": r"^---\s*min_queries_per_score:\s+(\d+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
         "label_fn": str,
         "x_label": "min_queries_per_score",
+        "sort_num": True,
+    },
+    "sampling_size": {
+        "log": "research/log/output_shiro_full.log",
+        "title": "Sampling Size Ablation",
+        "marker_re": r"^Sampling size:\s+(\d+)",
+        "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
+        "label_fn": str,
+        "x_label": "Sampling size",
         "sort_num": True,
     },
 }
@@ -136,7 +145,9 @@ def plot_ablation(name, cfg, base_data, out_dir):
     all_param_vals = sorted(
         {k for ds_rows in records.values() for k in ds_rows},
         key=lambda v: (
-            float(v) if cfg["sort_num"] and re.match(r"^[\d.]+$", str(v)) else v
+            (0, float(v))
+            if cfg.get("sort_num") and re.match(r"^[+-]?[\d.]+$", str(v))
+            else (1, str(v))
         ),
     )
     cmap = matplotlib.colormaps["tab10"]

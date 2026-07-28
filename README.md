@@ -93,7 +93,7 @@ The benchmarking suite is driven by `experiments_driver/run.cpp`. You can execut
 To capture the output logs for reproducing data and further analysis:
 
 ```bash
-./build/run > output_shiro.log
+nohup ./build/run > ./output_shiro.log 2>&1 &
 ```
 
 _Note: The datasets to be evaluated are configured in the `g_experiments` list inside `run.cpp`._
