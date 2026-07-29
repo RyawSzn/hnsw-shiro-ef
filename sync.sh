@@ -12,11 +12,11 @@ SOURCE_DIR="${SOURCE_DIR%/}"  # 去掉末尾斜杠
 
 # 2. 自动生成远程路径（取文件夹名）
 FOLDER_NAME=$(basename "$(cd "$SOURCE_DIR" && pwd)")
-REMOTE_PATH="ssd11:~/dev/${FOLDER_NAME}/"
+REMOTE_PATH="yc.shea@ssd11:~/dev/${FOLDER_NAME}/"
 
 # 如果用户指定了第二个参数，则覆盖默认目标
 if [ -n "$2" ]; then
-    REMOTE_PATH="ssd11:$2"
+    REMOTE_PATH="yc.shea@ssd11:$2"
 fi
 
 # 3. 确认信息
@@ -25,7 +25,8 @@ echo "To: $REMOTE_PATH"
 echo "----------------------------------------"
 
 # 4. 执行同步（包含所有忽略项）
-rsync -avz --progress \
+rsync -avz --progress --delete \
+    -e 'ssh -J yc.shea@projgw.cse.cuhk.edu.hk:2241' \
     --exclude='hnswlib.egg-info/' \
     --exclude='build/' \
     --exclude='dist/' \
