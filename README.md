@@ -115,19 +115,19 @@ Here is a detailed breakdown of every configuration parameter in the benchmarkin
 
 ### 2. Adaptive EF Scaling Parameters
 
-- **`alpha`** (`float`): Scaling weight (e.g., `0.25f`) used inside the dynamic score estimator. It controls how tightly the adaptive mechanism binds the search threshold to the predicted query complexity. A higher alpha demands a wider margin of safety, increasing `ef` dynamically.
-- **`gamma`** (`float`): Calibration parameter (e.g., `12.0f`) managing the exponential/logarithmic decay of score distributions. It directly controls error tolerance thresholds across varying density regions of the dataset.
+- **`alpha`** (`float`): Truncation ratio (e.g., `0.5f`) used inside the convergence indicator. It controls how many unsignificant edge evaluations is discarded . A higher alpha demands computing efforts, while increasing the quality of the indictor.
+- **`gamma`** (`float`): Calibration parameter (e.g., `16.0f`) managing the exponential/logarithmic decay of weight distributions of convergence. It directly controls error tolerance thresholds at early probe evaluations across varying density regions of the dataset.
 
 ### 3. HNSW and Computational Bounds
 
-- **`ef_upper_bound`** (`int`): The hard safety maximum allowed for the dynamically predicted `ef` value. Ensures worst-case queries do not cause catastrophic tail-latencies. For datasets like SIFT, `300` is common; for harder datasets like deep-image, it can safely go up to `5000`.
+- **`ef_upper_bound`** (`int`): The hard safety maximum allowed for the dynamically predicted `ef` value. Ensures worst-case queries do not cause catastrophic tail-latencies. For easy datasets like SIFT, `1000` is common; for harder datasets like deep-image, it can safely go up to `5000`.
 - **`statics_length`** (`size_t`): Defines the internal memory length (e.g., `1 + 32 + 31 * 32`) representing the size of the pre-computed static lookup tables utilized by the HNSW search bound approximator to execute faster at query-time.
 
 ### 4. Cross-Validation & Outlier Resilience (Shiro EF Core)
 
-- **`n_convergence_buckets`** (`int`): Number of cross-validation chunks/partitions used during calibration (default **`15`**). The system chunks the data and uses "out-of-fold" validation to determine distance score mappings. Using 15 chunks prevents overfitting to localized high-density regions inside the indexing structure.
-- **`sampling_size`** (`int`): Number of ground-truth query samples used dynamically to prime and pre-generate the cross-validation score lookup tables (e.g., `3000`).
-- **`min_queries_per_score` / `min_q`** (`int`): Frequency threshold constraint (default **`3`**). A specific predicted distance score bracket must contain at least 3 queries during calibration to be considered statistically valid. It trims single-query outlier noise, stabilizing the final boundary estimators.
+- **`n_convergence_buckets`** (`int`): Number of cross-validation chunks/partitions used during calibration (default **`10`**). The system chunks the data and uses "out-of-fold" validation to determine distance score mappings. Using 15 chunks prevents overfitting to localized high-density regions inside the indexing structure.
+- **`sampling_size`** (`int`): Number of ground-truth query samples used dynamically to prime and pre-generate the cross-validation score lookup tables (e.g., `2000`).
+- **`min_queries_per_score` / `min_q`** (`int`): Frequency threshold constraint (default **`3`**). A specific predicted distance score bracket must contain at least amount of queries during calibration to be considered statistically valid. It trims single-query outlier noise, stabilizing the final boundary estimators.
 - **`repeat`** (`int`): Number of full passes the driver simulates (e.g., `3`) to ensure benchmark timing and latency distributions are robust against OS jitter.
 
 ## Result Demonstration
