@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.ticker import MultipleLocator
 
-BASE_LOG = "research/log/output_shiro_full.log"
+BASE_LOG = "research/log/output_shiro_ssd11.log"
 
 ABLATIONS = {
     "hops": {
-        "log": "research/log/output_shiro_full.log",
+        "log": "research/log/output_shiro_ssd11.log",
         "title": "Visited List Size (1-hop / 2-hop / 3-hop)",
         "marker_re": r"^Visited list size:\s+(\d+)",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
@@ -23,7 +23,7 @@ ABLATIONS = {
         "sort_num": True,
     },
     "gamma": {
-        "log": "research/log/output_shiro_full.log",
+        "log": "research/log/output_shiro_ssd11.log",
         "title": "Weighted Decay Function γ Ablation",
         "marker_re": r"^---\s*Gamma:\s+([\d.]+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
@@ -32,7 +32,7 @@ ABLATIONS = {
         "sort_num": True,
     },
     "alpha": {
-        "log": "research/log/output_shiro_full.log",
+        "log": "research/log/output_shiro_ssd11.log",
         "title": "Truncation Ratio α Ablation",
         "marker_re": r"^---\s*Alpha:\s+([\d.]+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
@@ -41,7 +41,7 @@ ABLATIONS = {
         "sort_num": True,
     },
     "n_convergence_buckets": {
-        "log": "research/log/output_shiro_full.log",
+        "log": "research/log/output_shiro_ssd11.log",
         "title": "n_convergence_buckets Ablation",
         "marker_re": r"^---\s*n_convergence_buckets:\s+(\d+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
@@ -50,7 +50,7 @@ ABLATIONS = {
         "sort_num": True,
     },
     "min_q": {
-        "log": "research/log/output_shiro_full.log",
+        "log": "research/log/output_shiro_ssd11.log",
         "title": "min_queries_per_score Ablation",
         "marker_re": r"^---\s*min_queries_per_score:\s+(\d+)\s*---",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
@@ -59,7 +59,7 @@ ABLATIONS = {
         "sort_num": True,
     },
     "sampling_size": {
-        "log": "research/log/output_shiro_full.log",
+        "log": "research/log/output_shiro_ssd11.log",
         "title": "Sampling Size Ablation",
         "marker_re": r"^Sampling size:\s+(\d+)",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",

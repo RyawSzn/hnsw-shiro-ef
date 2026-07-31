@@ -1727,8 +1727,8 @@ int main() {
     ablation_study_n_convergence_buckets();
     ablation_study_min_queries_per_score();        // ablation study on truncation ratio
 
-    insert_exp(true); // insert experiment with setup
-    delete_exp(true); // delete experiment with setup
+    // insert_exp(true); // insert experiment with setup
+    // delete_exp(true); // delete experiment with setup
 
     per_query_result_exp(); // per-query result experiments
     return 0;

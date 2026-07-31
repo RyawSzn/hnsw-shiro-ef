@@ -79,7 +79,7 @@ def parse_log(filepath):
     return datasets
 
 
-shiro = parse_log("research/log/output_shiro_new0.log")
+shiro = parse_log("research/log/output_shiro_new.log")
 ada = parse_log("research/log/output_ada.log")
 progress = parse_log("research/log/output_shiro_progress.log")
 
