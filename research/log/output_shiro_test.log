@@ -1,0 +1,1375 @@
+Starting experiments for Shiro-ef hnswdis library...
+
+
+EXPERIMENTS_ROOT: /home/ryawszn/experiments/shiro-ef
+Starting offline experiments...
+
+
+Dataset: deep-image-96-angular
+Metric: cd
+Truncation ratio: 0.5
+Normalize the data vectors
+Data vectors dimensions: 9990000 x 96
+Query vectors dimensions: 10000 x 96
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:96
+Data size of space:384
+Ground truth computed in 93440 ms
+Sampling computing time: 103979 ms
+Loading samplings from /home/ryawszn/experiments/shiro-ef/sampling/deep-image-96-angular-samplings--k100-ef.bin
+Samplings loaded from /home/ryawszn/experiments/shiro-ef/sampling/deep-image-96-angular-samplings--k100-ef.bin
+Average Recall: 0.838966
+Initial average recall with ef=100: 0.838874
+Average Recall: 0.886667
+Initial average recall with ef=150: 0.886432
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 359.195
+EF-estimation table computing time: 92626 ms
+Training convergence-bucket 0 [15.9769, 48.7988) with 200 queries.
+Average Recall: 0.620804
+Initial average recall with ef=100: 0.61367
+Average Recall: 0.699749
+Initial average recall with ef=150: 0.69367
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 923.35
+Training convergence-bucket 1 [48.7988, 52.9019) with 200 queries.
+Average Recall: 0.653
+Initial average recall with ef=100: 0.643829
+Average Recall: 0.73215
+Initial average recall with ef=150: 0.723143
+Weighted average ef: 737.755
+Training convergence-bucket 2 [52.9019, 60.0296) with 200 queries.
+Average Recall: 0.7367
+Initial average recall with ef=100: 0.734021
+Average Recall: 0.8058
+Initial average recall with ef=150: 0.803598
+Weighted average ef: 531.905
+Training convergence-bucket 3 [60.0296, 64.134) with 200 queries.
+Average Recall: 0.816
+Initial average recall with ef=100: 0.814712
+Average Recall: 0.87875
+Initial average recall with ef=150: 0.877853
+Weighted average ef: 337.12
+Training convergence-bucket 4 [64.134, 67.6072) with 200 queries.
+Average Recall: 0.858141
+Initial average recall with ef=100: 0.855591
+Average Recall: 0.912864
+Initial average recall with ef=150: 0.910215
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 256.965
+Training convergence-bucket 5 [67.6072, 71.1849) with 200 queries.
+Average Recall: 0.88515
+Initial average recall with ef=100: 0.88766
+Average Recall: 0.9299
+Initial average recall with ef=150: 0.933032
+Weighted average ef: 202.975
+Training convergence-bucket 6 [71.1849, 74.4271) with 200 queries.
+Average Recall: 0.92065
+Initial average recall with ef=100: 0.922473
+Average Recall: 0.9561
+Initial average recall with ef=150: 0.957581
+Weighted average ef: 152.75
+Training convergence-bucket 7 [74.4271, 77.7543) with 200 queries.
+Average Recall: 0.9451
+Initial average recall with ef=100: 0.948192
+Average Recall: 0.9724
+Initial average recall with ef=150: 0.974787
+Weighted average ef: 121.8
+Training convergence-bucket 8 [77.7543, 82.04) with 200 queries.
+Average Recall: 0.9686
+Initial average recall with ef=100: 0.968769
+Average Recall: 0.9849
+Initial average recall with ef=150: 0.985128
+Weighted average ef: 109.25
+Training convergence-bucket 9 [82.04, inf) with 200 queries.
+Average Recall: 0.98455
+Initial average recall with ef=100: 0.989126
+Average Recall: 0.9933
+Initial average recall with ef=150: 0.99612
+Weighted average ef: 93.25
+Reconstructed True WAE: 243.132 (Hard Pct: 0.0211)
+
+Dataset: glove-100-angular
+Metric: cd
+Truncation ratio: 0.5
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+Ground truth computed in 9276 ms
+Sampling computing time: 17437 ms
+Loading samplings from /home/ryawszn/experiments/shiro-ef/sampling/glove-100-angular-samplings--k100-ef.bin
+Samplings loaded from /home/ryawszn/experiments/shiro-ef/sampling/glove-100-angular-samplings--k100-ef.bin
+Average Recall: 0.727104
+Initial average recall with ef=100: 0.727344
+Average Recall: 0.770668
+Initial average recall with ef=150: 0.77093
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 1690.15
+EF-estimation table computing time: 28995 ms
+Training convergence-bucket 0 [11.9239, 36.5612) with 200 queries.
+Average Recall: 0.45775
+Initial average recall with ef=100: 0.434202
+Average Recall: 0.5046
+Initial average recall with ef=150: 0.481489
+Weighted average ef: 4369.62
+Training convergence-bucket 1 [36.5612, 44.32) with 200 queries.
+Average Recall: 0.4665
+Initial average recall with ef=100: 0.442582
+Average Recall: 0.5241
+Initial average recall with ef=150: 0.500549
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 3776.78
+Training convergence-bucket 2 [44.32, 51.3519) with 200 queries.
+Average Recall: 0.5554
+Initial average recall with ef=100: 0.541087
+Average Recall: 0.61685
+Initial average recall with ef=150: 0.604402
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 2805.55
+Training convergence-bucket 3 [51.3519, 57.3494) with 200 queries.
+Average Recall: 0.631
+Initial average recall with ef=100: 0.620449
+Average Recall: 0.69215
+Initial average recall with ef=150: 0.680674
+Weighted average ef: 1928.91
+Training convergence-bucket 4 [57.3494, 62.36) with 200 queries.
+Average Recall: 0.71275
+Initial average recall with ef=100: 0.697614
+Average Recall: 0.76865
+Initial average recall with ef=150: 0.757045
+Weighted average ef: 1212.92
+Training convergence-bucket 5 [62.36, 67.4098) with 200 queries.
+Average Recall: 0.79205
+Initial average recall with ef=100: 0.781492
+Average Recall: 0.8402
+Initial average recall with ef=150: 0.831713
+Weighted average ef: 813.325
+Training convergence-bucket 6 [67.4098, 72.0157) with 200 queries.
+Average Recall: 0.8497
+Initial average recall with ef=100: 0.843046
+Average Recall: 0.89005
+Initial average recall with ef=150: 0.885287
+Weighted average ef: 551.17
+Training convergence-bucket 7 [72.0157, 76.1974) with 200 queries.
+Average Recall: 0.90275
+Initial average recall with ef=100: 0.900177
+Average Recall: 0.9333
+Initial average recall with ef=150: 0.932249
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 243.29
+Training convergence-bucket 8 [76.1974, 80.8181) with 200 queries.
+Average Recall: 0.9334
+Initial average recall with ef=100: 0.936292
+Average Recall: 0.9541
+Initial average recall with ef=150: 0.956348
+Recall diff is too small for 1 consecutive steps, break.
+Recall diff is too small for 1 consecutive steps, break.
+Weighted average ef: 190.01
+Training convergence-bucket 9 [80.8181, inf) with 200 queries.
+Average Recall: 0.969751
+Initial average recall with ef=100: 0.974066
+Average Recall: 0.9827
+Initial average recall with ef=150: 0.985824
+Weighted average ef: 99.5
+Reconstructed True WAE: 1436.65 (Hard Pct: 0.0084)
+Starting per-query result experiments...
+
+
+Dataset: deep-image-96-angular
+Metric: cd
+Truncation Ratio: 0.5
+Normalize the data vectors
+Data vectors dimensions: 9990000 x 96
+Query vectors dimensions: 10000 x 96
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:96
+Data size of space:384
+****Weighted average ef: 243
+
+=== Summary (Iteration 1/3) ===
+Average Latency: 911105 ns
+Average Recall: 0.980951
+Total Latency: 9.11105 seconds
+
+=== Summary (Iteration 2/3) ===
+Average Latency: 907700 ns
+Average Recall: 0.980951
+Total Latency: 9.077 seconds
+
+=== Summary (Iteration 3/3) ===
+Average Latency: 920584 ns
+Average Recall: 0.980951
+Total Latency: 9.20584 seconds
+
+Per-query results (from median iteration 1) have been written to research/csv/per_query_results_deep-image-96-angular.csv
+
+=== Final Summary (Median Iteration) ===
+Average Latency: 911105 ns
+Average Recall: 0.980951
+Total Latency: 9.11105 seconds
+Average Recall: 0.980951
+5th percentile recall: 0.93
+1st percentile recall: 0.89
+
+Total Latency: 9.11105 seconds
+Average Latency: 911105 ns
+Latency for 99th percentile recall queries: 346841 ns
+Latency for 95th percentile recall queries: 451557 ns
+Latency for 5th percentile recall queries: 644515 ns
+Latency for 1st percentile recall queries: 642490 ns
+
+deep-image-96-angular adaptive per-query experiment results:
+ef, avg_recall, 5th_perc_recall, 1st_perc_recall, avg_lat(ns), lat_99th_rec, lat_95th_rec, lat_5th_rec, lat_1st_rec
+243, 0.980951, 0.93, 0.89, 911105, 346841, 451557, 644515, 642490
+Experiment finished.
+
+======================================
+Testing ef: 100
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 100 ===
+Average Recall: 0.858449
+5th percentile recall: 0.61
+1st percentile recall: 0.46
+
+Total Latency: 2.50476 seconds
+Average Latency: 250476 ns
+Latency for 99th percentile recall queries: 222214 ns
+Latency for 95th percentile recall queries: 170212 ns
+Latency for 5th percentile recall queries: 253287 ns
+Latency for 1st percentile recall queries: 282641 ns
+
+======================================
+Testing ef: 150
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 150 ===
+Average Recall: 0.90873
+5th percentile recall: 0.7
+1st percentile recall: 0.55
+
+Total Latency: 3.54957 seconds
+Average Latency: 354957 ns
+Latency for 99th percentile recall queries: 372814 ns
+Latency for 95th percentile recall queries: 302472 ns
+Latency for 5th percentile recall queries: 389110 ns
+Latency for 1st percentile recall queries: 383291 ns
+
+======================================
+Testing ef: 200
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 200 ===
+Average Recall: 0.935464
+5th percentile recall: 0.76
+1st percentile recall: 0.62
+
+Total Latency: 4.67836 seconds
+Average Latency: 467836 ns
+Latency for 99th percentile recall queries: 625701 ns
+Latency for 95th percentile recall queries: 434856 ns
+Latency for 5th percentile recall queries: 529177 ns
+Latency for 1st percentile recall queries: 567676 ns
+
+======================================
+Testing ef: 250
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 250 ===
+Average Recall: 0.951352
+5th percentile recall: 0.81
+1st percentile recall: 0.68
+
+Total Latency: 5.5046 seconds
+Average Latency: 550460 ns
+Latency for 99th percentile recall queries: 651901 ns
+Latency for 95th percentile recall queries: 546857 ns
+Latency for 5th percentile recall queries: 550703 ns
+Latency for 1st percentile recall queries: 570197 ns
+
+======================================
+Testing ef: 300
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 300 ===
+Average Recall: 0.96196
+5th percentile recall: 0.84
+1st percentile recall: 0.71
+
+Total Latency: 6.71626 seconds
+Average Latency: 671626 ns
+Latency for 99th percentile recall queries: 878150 ns
+Latency for 95th percentile recall queries: 714744 ns
+Latency for 5th percentile recall queries: 639046 ns
+Latency for 1st percentile recall queries: 1135705 ns
+
+======================================
+Testing ef: 350
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 350 ===
+Average Recall: 0.969369
+5th percentile recall: 0.86
+1st percentile recall: 0.75
+
+Total Latency: 7.6344 seconds
+Average Latency: 763440 ns
+Latency for 99th percentile recall queries: 999345 ns
+Latency for 95th percentile recall queries: 829756 ns
+Latency for 5th percentile recall queries: 890573 ns
+Latency for 1st percentile recall queries: 882720 ns
+
+======================================
+Testing ef: 400
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 400 ===
+Average Recall: 0.974615
+5th percentile recall: 0.88
+1st percentile recall: 0.78
+
+Total Latency: 8.36872 seconds
+Average Latency: 836872 ns
+Latency for 99th percentile recall queries: 1014394 ns
+Latency for 95th percentile recall queries: 904111 ns
+Latency for 5th percentile recall queries: 1000457 ns
+Latency for 1st percentile recall queries: 968766 ns
+
+======================================
+Testing ef: 450
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 450 ===
+Average Recall: 0.978613
+5th percentile recall: 0.9
+1st percentile recall: 0.8
+
+Total Latency: 9.37546 seconds
+Average Latency: 937546 ns
+Latency for 99th percentile recall queries: 1135032 ns
+Latency for 95th percentile recall queries: 1032090 ns
+Latency for 5th percentile recall queries: 1003685 ns
+Latency for 1st percentile recall queries: 1169511 ns
+
+======================================
+Testing ef: 500
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 500 ===
+Average Recall: 0.981696
+5th percentile recall: 0.91
+1st percentile recall: 0.81
+
+Total Latency: 10.053 seconds
+Average Latency: 1.0053e+06 ns
+Latency for 99th percentile recall queries: 1262425 ns
+Latency for 95th percentile recall queries: 1120141 ns
+Latency for 5th percentile recall queries: 1169554 ns
+Latency for 1st percentile recall queries: 1323892 ns
+
+======================================
+Testing ef: 550
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 550 ===
+Average Recall: 0.984192
+5th percentile recall: 0.92
+1st percentile recall: 0.83
+
+Total Latency: 10.5676 seconds
+Average Latency: 1.05676e+06 ns
+Latency for 99th percentile recall queries: 1327697 ns
+Latency for 95th percentile recall queries: 1196945 ns
+Latency for 5th percentile recall queries: 1236437 ns
+Latency for 1st percentile recall queries: 1327800 ns
+
+======================================
+Testing ef: 600
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 600 ===
+Average Recall: 0.986142
+5th percentile recall: 0.93
+1st percentile recall: 0.85
+
+Total Latency: 11.497 seconds
+Average Latency: 1.1497e+06 ns
+Latency for 99th percentile recall queries: 1449764 ns
+Latency for 95th percentile recall queries: 1308158 ns
+Latency for 5th percentile recall queries: 1295301 ns
+Latency for 1st percentile recall queries: 1359150 ns
+
+======================================
+Testing ef: 650
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 650 ===
+Average Recall: 0.987761
+5th percentile recall: 0.94
+1st percentile recall: 0.86
+
+Total Latency: 12.2214 seconds
+Average Latency: 1.22214e+06 ns
+Latency for 99th percentile recall queries: 1535056 ns
+Latency for 95th percentile recall queries: 1401515 ns
+Latency for 5th percentile recall queries: 1251787 ns
+Latency for 1st percentile recall queries: 1508389 ns
+
+======================================
+Testing ef: 700
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 700 ===
+Average Recall: 0.989093
+5th percentile recall: 0.94
+1st percentile recall: 0.87
+
+Total Latency: 13.1798 seconds
+Average Latency: 1.31798e+06 ns
+Latency for 99th percentile recall queries: 1713528 ns
+Latency for 95th percentile recall queries: 1521399 ns
+Latency for 5th percentile recall queries: 1593174 ns
+Latency for 1st percentile recall queries: 1679735 ns
+
+======================================
+Testing ef: 750
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 750 ===
+Average Recall: 0.990242
+5th percentile recall: 0.95
+1st percentile recall: 0.88
+
+Total Latency: 14.3424 seconds
+Average Latency: 1.43424e+06 ns
+Latency for 99th percentile recall queries: 1914631 ns
+Latency for 95th percentile recall queries: 1682810 ns
+Latency for 5th percentile recall queries: 1565397 ns
+Latency for 1st percentile recall queries: 1877697 ns
+
+deep-image-96-angular baseline per-query experiment results:
+ef, avg_recall, 5th_perc_recall, 1st_perc_recall, avg_lat(ns), lat_99th_rec, lat_95th_rec, lat_5th_rec, lat_1st_rec
+100, 0.858449, 0.61, 0.46, 250476, 222214, 170212, 253287, 282641
+150, 0.90873, 0.7, 0.55, 354957, 372814, 302472, 389110, 383291
+200, 0.935464, 0.76, 0.62, 467836, 625701, 434856, 529177, 567676
+250, 0.951352, 0.81, 0.68, 550460, 651901, 546857, 550703, 570197
+300, 0.96196, 0.84, 0.71, 671626, 878150, 714744, 639046, 1135705
+350, 0.969369, 0.86, 0.75, 763440, 999345, 829756, 890573, 882720
+400, 0.974615, 0.88, 0.78, 836872, 1014394, 904111, 1000457, 968766
+450, 0.978613, 0.9, 0.8, 937546, 1135032, 1032090, 1003685, 1169511
+500, 0.981696, 0.91, 0.81, 1.0053e+06, 1262425, 1120141, 1169554, 1323892
+550, 0.984192, 0.92, 0.83, 1.05676e+06, 1327697, 1196945, 1236437, 1327800
+600, 0.986142, 0.93, 0.85, 1.1497e+06, 1449764, 1308158, 1295301, 1359150
+650, 0.987761, 0.94, 0.86, 1.22214e+06, 1535056, 1401515, 1251787, 1508389
+700, 0.989093, 0.94, 0.87, 1.31798e+06, 1713528, 1521399, 1593174, 1679735
+750, 0.990242, 0.95, 0.88, 1.43424e+06, 1914631, 1682810, 1565397, 1877697
+Experiment finished
+Dataset: glove-100-angular
+Metric: cd
+Truncation Ratio: 0.5
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX512 Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+****Weighted average ef: 1436
+
+=== Summary (Iteration 1/3) ===
+Average Latency: 4.56369e+06 ns
+Average Recall: 0.978862
+Total Latency: 45.6369 seconds
+
+=== Summary (Iteration 2/3) ===
+Average Latency: 4.57175e+06 ns
+Average Recall: 0.978862
+Total Latency: 45.7175 seconds
+
+=== Summary (Iteration 3/3) ===
+Average Latency: 4.0696e+06 ns
+Average Recall: 0.978862
+Total Latency: 40.696 seconds
+
+Per-query results (from median iteration 1) have been written to research/csv/per_query_results_glove-100-angular.csv
+
+=== Final Summary (Median Iteration) ===
+Average Latency: 4.56369e+06 ns
+Average Recall: 0.978862
+Total Latency: 45.6369 seconds
+Average Recall: 0.978862
+5th percentile recall: 0.92
+1st percentile recall: 0.87
+
+Total Latency: 45.6369 seconds
+Average Latency: 4.56369e+06 ns
+Latency for 99th percentile recall queries: 1368798 ns
+Latency for 95th percentile recall queries: 1621854 ns
+Latency for 5th percentile recall queries: 9201232 ns
+Latency for 1st percentile recall queries: 7302254 ns
+
+glove-100-angular adaptive per-query experiment results:
+ef, avg_recall, 5th_perc_recall, 1st_perc_recall, avg_lat(ns), lat_99th_rec, lat_95th_rec, lat_5th_rec, lat_1st_rec
+1436, 0.978862, 0.92, 0.87, 4.56369e+06, 1368798, 1621854, 9201232, 7302254
+Experiment finished.
+
+======================================
+Testing ef: 100
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 100 ===
+Average Recall: 0.693211
+5th percentile recall: 0.22
+1st percentile recall: 0.13
+
+Total Latency: 1.84007 seconds
+Average Latency: 184007 ns
+Latency for 99th percentile recall queries: 150121 ns
+Latency for 95th percentile recall queries: 205778 ns
+Latency for 5th percentile recall queries: 191579 ns
+Latency for 1st percentile recall queries: 208595 ns
+
+======================================
+Testing ef: 150
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 150 ===
+Average Recall: 0.747045
+5th percentile recall: 0.29
+1st percentile recall: 0.19
+
+Total Latency: 2.71103 seconds
+Average Latency: 271103 ns
+Latency for 99th percentile recall queries: 257514 ns
+Latency for 95th percentile recall queries: 203224 ns
+Latency for 5th percentile recall queries: 289013 ns
+Latency for 1st percentile recall queries: 299794 ns
+
+======================================
+Testing ef: 200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 200 ===
+Average Recall: 0.78078
+5th percentile recall: 0.34
+1st percentile recall: 0.24
+
+Total Latency: 3.55652 seconds
+Average Latency: 355652 ns
+Latency for 99th percentile recall queries: 351758 ns
+Latency for 95th percentile recall queries: 291669 ns
+Latency for 5th percentile recall queries: 385867 ns
+Latency for 1st percentile recall queries: 379804 ns
+
+======================================
+Testing ef: 250
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 250 ===
+Average Recall: 0.804943
+5th percentile recall: 0.38
+1st percentile recall: 0.28
+
+Total Latency: 4.43778 seconds
+Average Latency: 443778 ns
+Latency for 99th percentile recall queries: 453347 ns
+Latency for 95th percentile recall queries: 376807 ns
+Latency for 5th percentile recall queries: 498567 ns
+Latency for 1st percentile recall queries: 449229 ns
+
+======================================
+Testing ef: 300
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 300 ===
+Average Recall: 0.823661
+5th percentile recall: 0.42
+1st percentile recall: 0.31
+
+Total Latency: 5.58023 seconds
+Average Latency: 558023 ns
+Latency for 99th percentile recall queries: 578047 ns
+Latency for 95th percentile recall queries: 490742 ns
+Latency for 5th percentile recall queries: 676034 ns
+Latency for 1st percentile recall queries: 551353 ns
+
+======================================
+Testing ef: 350
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 350 ===
+Average Recall: 0.838316
+5th percentile recall: 0.45
+1st percentile recall: 0.34
+
+Total Latency: 6.17829 seconds
+Average Latency: 617829 ns
+Latency for 99th percentile recall queries: 651215 ns
+Latency for 95th percentile recall queries: 553556 ns
+Latency for 5th percentile recall queries: 705101 ns
+Latency for 1st percentile recall queries: 681117 ns
+
+======================================
+Testing ef: 400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 400 ===
+Average Recall: 0.850518
+5th percentile recall: 0.48
+1st percentile recall: 0.36
+
+Total Latency: 6.88456 seconds
+Average Latency: 688456 ns
+Latency for 99th percentile recall queries: 725189 ns
+Latency for 95th percentile recall queries: 627025 ns
+Latency for 5th percentile recall queries: 748648 ns
+Latency for 1st percentile recall queries: 892209 ns
+
+======================================
+Testing ef: 450
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 450 ===
+Average Recall: 0.861051
+5th percentile recall: 0.5
+1st percentile recall: 0.39
+
+Total Latency: 7.64029 seconds
+Average Latency: 764029 ns
+Latency for 99th percentile recall queries: 805371 ns
+Latency for 95th percentile recall queries: 702330 ns
+Latency for 5th percentile recall queries: 942304 ns
+Latency for 1st percentile recall queries: 941330 ns
+
+======================================
+Testing ef: 500
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 500 ===
+Average Recall: 0.87009
+5th percentile recall: 0.53
+1st percentile recall: 0.42
+
+Total Latency: 8.85724 seconds
+Average Latency: 885724 ns
+Latency for 99th percentile recall queries: 952203 ns
+Latency for 95th percentile recall queries: 816641 ns
+Latency for 5th percentile recall queries: 890955 ns
+Latency for 1st percentile recall queries: 1004854 ns
+
+======================================
+Testing ef: 550
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 550 ===
+Average Recall: 0.878121
+5th percentile recall: 0.55
+1st percentile recall: 0.44
+
+Total Latency: 9.57079 seconds
+Average Latency: 957079 ns
+Latency for 99th percentile recall queries: 1036539 ns
+Latency for 95th percentile recall queries: 901305 ns
+Latency for 5th percentile recall queries: 1058737 ns
+Latency for 1st percentile recall queries: 953207 ns
+
+======================================
+Testing ef: 600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 600 ===
+Average Recall: 0.88479
+5th percentile recall: 0.57
+1st percentile recall: 0.45
+
+Total Latency: 10.3999 seconds
+Average Latency: 1.03999e+06 ns
+Latency for 99th percentile recall queries: 1132758 ns
+Latency for 95th percentile recall queries: 988123 ns
+Latency for 5th percentile recall queries: 921195 ns
+Latency for 1st percentile recall queries: 1365509 ns
+
+======================================
+Testing ef: 650
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 650 ===
+Average Recall: 0.890873
+5th percentile recall: 0.58
+1st percentile recall: 0.47
+
+Total Latency: 11.1543 seconds
+Average Latency: 1.11543e+06 ns
+Latency for 99th percentile recall queries: 1224114 ns
+Latency for 95th percentile recall queries: 1062630 ns
+Latency for 5th percentile recall queries: 1437341 ns
+Latency for 1st percentile recall queries: 1352176 ns
+
+======================================
+Testing ef: 700
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 700 ===
+Average Recall: 0.89638
+5th percentile recall: 0.6
+1st percentile recall: 0.49
+
+Total Latency: 11.8909 seconds
+Average Latency: 1.18909e+06 ns
+Latency for 99th percentile recall queries: 1321616 ns
+Latency for 95th percentile recall queries: 1145858 ns
+Latency for 5th percentile recall queries: 1330842 ns
+Latency for 1st percentile recall queries: 1340398 ns
+
+======================================
+Testing ef: 750
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 750 ===
+Average Recall: 0.901417
+5th percentile recall: 0.61
+1st percentile recall: 0.51
+
+Total Latency: 13.8367 seconds
+Average Latency: 1.38367e+06 ns
+Latency for 99th percentile recall queries: 1497383 ns
+Latency for 95th percentile recall queries: 1331506 ns
+Latency for 5th percentile recall queries: 1718861 ns
+Latency for 1st percentile recall queries: 1476945 ns
+
+======================================
+Testing ef: 800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 800 ===
+Average Recall: 0.906007
+5th percentile recall: 0.63
+1st percentile recall: 0.52
+
+Total Latency: 14.3715 seconds
+Average Latency: 1.43715e+06 ns
+Latency for 99th percentile recall queries: 1589687 ns
+Latency for 95th percentile recall queries: 1394717 ns
+Latency for 5th percentile recall queries: 1551044 ns
+Latency for 1st percentile recall queries: 1818008 ns
+
+======================================
+Testing ef: 850
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 850 ===
+Average Recall: 0.910205
+5th percentile recall: 0.64
+1st percentile recall: 0.53
+
+Total Latency: 15.4909 seconds
+Average Latency: 1.54909e+06 ns
+Latency for 99th percentile recall queries: 1733364 ns
+Latency for 95th percentile recall queries: 1534375 ns
+Latency for 5th percentile recall queries: 1870697 ns
+Latency for 1st percentile recall queries: 2159571 ns
+
+======================================
+Testing ef: 900
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 900 ===
+Average Recall: 0.91413
+5th percentile recall: 0.65
+1st percentile recall: 0.55
+
+Total Latency: 15.2319 seconds
+Average Latency: 1.52319e+06 ns
+Latency for 99th percentile recall queries: 1698954 ns
+Latency for 95th percentile recall queries: 1488922 ns
+Latency for 5th percentile recall queries: 2059026 ns
+Latency for 1st percentile recall queries: 1689636 ns
+
+======================================
+Testing ef: 950
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 950 ===
+Average Recall: 0.91778
+5th percentile recall: 0.67
+1st percentile recall: 0.56
+
+Total Latency: 16.9176 seconds
+Average Latency: 1.69176e+06 ns
+Latency for 99th percentile recall queries: 1904258 ns
+Latency for 95th percentile recall queries: 1681457 ns
+Latency for 5th percentile recall queries: 1808076 ns
+Latency for 1st percentile recall queries: 1960389 ns
+
+======================================
+Testing ef: 1000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1000 ===
+Average Recall: 0.921142
+5th percentile recall: 0.68
+1st percentile recall: 0.57
+
+Total Latency: 16.9871 seconds
+Average Latency: 1.69871e+06 ns
+Latency for 99th percentile recall queries: 1888106 ns
+Latency for 95th percentile recall queries: 1671287 ns
+Latency for 5th percentile recall queries: 1968874 ns
+Latency for 1st percentile recall queries: 2216578 ns
+
+======================================
+Testing ef: 1050
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1050 ===
+Average Recall: 0.924145
+5th percentile recall: 0.69
+1st percentile recall: 0.59
+
+Total Latency: 17.3161 seconds
+Average Latency: 1.73161e+06 ns
+Latency for 99th percentile recall queries: 1901628 ns
+Latency for 95th percentile recall queries: 1720470 ns
+Latency for 5th percentile recall queries: 1970711 ns
+Latency for 1st percentile recall queries: 1981693 ns
+
+======================================
+Testing ef: 1100
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1100 ===
+Average Recall: 0.926995
+5th percentile recall: 0.7
+1st percentile recall: 0.59
+
+Total Latency: 18.1987 seconds
+Average Latency: 1.81987e+06 ns
+Latency for 99th percentile recall queries: 2049336 ns
+Latency for 95th percentile recall queries: 1824617 ns
+Latency for 5th percentile recall queries: 2079018 ns
+Latency for 1st percentile recall queries: 2581200 ns
+
+======================================
+Testing ef: 1150
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1150 ===
+Average Recall: 0.929642
+5th percentile recall: 0.71
+1st percentile recall: 0.61
+
+Total Latency: 18.8624 seconds
+Average Latency: 1.88624e+06 ns
+Latency for 99th percentile recall queries: 2113955 ns
+Latency for 95th percentile recall queries: 1891646 ns
+Latency for 5th percentile recall queries: 2139376 ns
+Latency for 1st percentile recall queries: 1981482 ns
+
+======================================
+Testing ef: 1200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1200 ===
+Average Recall: 0.932081
+5th percentile recall: 0.72
+1st percentile recall: 0.62
+
+Total Latency: 19.539 seconds
+Average Latency: 1.9539e+06 ns
+Latency for 99th percentile recall queries: 2186578 ns
+Latency for 95th percentile recall queries: 1961083 ns
+Latency for 5th percentile recall queries: 2114922 ns
+Latency for 1st percentile recall queries: 2094659 ns
+
+======================================
+Testing ef: 1250
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1250 ===
+Average Recall: 0.934434
+5th percentile recall: 0.73
+1st percentile recall: 0.62
+
+Total Latency: 20.232 seconds
+Average Latency: 2.0232e+06 ns
+Latency for 99th percentile recall queries: 2271996 ns
+Latency for 95th percentile recall queries: 2035464 ns
+Latency for 5th percentile recall queries: 2049764 ns
+Latency for 1st percentile recall queries: 2654701 ns
+
+======================================
+Testing ef: 1300
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1300 ===
+Average Recall: 0.936762
+5th percentile recall: 0.73
+1st percentile recall: 0.63
+
+Total Latency: 21.2104 seconds
+Average Latency: 2.12104e+06 ns
+Latency for 99th percentile recall queries: 2404568 ns
+Latency for 95th percentile recall queries: 2149915 ns
+Latency for 5th percentile recall queries: 2799371 ns
+Latency for 1st percentile recall queries: 2787031 ns
+
+======================================
+Testing ef: 1350
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1350 ===
+Average Recall: 0.938892
+5th percentile recall: 0.74
+1st percentile recall: 0.64
+
+Total Latency: 21.7951 seconds
+Average Latency: 2.17951e+06 ns
+Latency for 99th percentile recall queries: 2468001 ns
+Latency for 95th percentile recall queries: 2211072 ns
+Latency for 5th percentile recall queries: 2570741 ns
+Latency for 1st percentile recall queries: 2619738 ns
+
+======================================
+Testing ef: 1400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1400 ===
+Average Recall: 0.940876
+5th percentile recall: 0.75
+1st percentile recall: 0.65
+
+Total Latency: 22.5636 seconds
+Average Latency: 2.25636e+06 ns
+Latency for 99th percentile recall queries: 2587718 ns
+Latency for 95th percentile recall queries: 2298945 ns
+Latency for 5th percentile recall queries: 2468899 ns
+Latency for 1st percentile recall queries: 2748764 ns
+
+======================================
+Testing ef: 1450
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1450 ===
+Average Recall: 0.942808
+5th percentile recall: 0.75
+1st percentile recall: 0.66
+
+Total Latency: 24.4616 seconds
+Average Latency: 2.44616e+06 ns
+Latency for 99th percentile recall queries: 2858388 ns
+Latency for 95th percentile recall queries: 2506114 ns
+Latency for 5th percentile recall queries: 3281254 ns
+Latency for 1st percentile recall queries: 2884553 ns
+
+======================================
+Testing ef: 1500
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1500 ===
+Average Recall: 0.944601
+5th percentile recall: 0.76
+1st percentile recall: 0.67
+
+Total Latency: 26.309 seconds
+Average Latency: 2.6309e+06 ns
+Latency for 99th percentile recall queries: 3160388 ns
+Latency for 95th percentile recall queries: 2716385 ns
+Latency for 5th percentile recall queries: 3141237 ns
+Latency for 1st percentile recall queries: 3015575 ns
+
+======================================
+Testing ef: 1550
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1550 ===
+Average Recall: 0.946238
+5th percentile recall: 0.77
+1st percentile recall: 0.68
+
+Total Latency: 26.6917 seconds
+Average Latency: 2.66917e+06 ns
+Latency for 99th percentile recall queries: 3142260 ns
+Latency for 95th percentile recall queries: 2748814 ns
+Latency for 5th percentile recall queries: 2912424 ns
+Latency for 1st percentile recall queries: 2935240 ns
+
+======================================
+Testing ef: 1600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1600 ===
+Average Recall: 0.947809
+5th percentile recall: 0.77
+1st percentile recall: 0.68
+
+Total Latency: 26.5127 seconds
+Average Latency: 2.65127e+06 ns
+Latency for 99th percentile recall queries: 3141849 ns
+Latency for 95th percentile recall queries: 2739138 ns
+Latency for 5th percentile recall queries: 3175095 ns
+Latency for 1st percentile recall queries: 3199826 ns
+
+======================================
+Testing ef: 1800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1800 ===
+Average Recall: 0.953408
+5th percentile recall: 0.79
+1st percentile recall: 0.71
+
+Total Latency: 29.4128 seconds
+Average Latency: 2.94128e+06 ns
+Latency for 99th percentile recall queries: 3524882 ns
+Latency for 95th percentile recall queries: 3074789 ns
+Latency for 5th percentile recall queries: 3682106 ns
+Latency for 1st percentile recall queries: 3452123 ns
+
+======================================
+Testing ef: 2000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2000 ===
+Average Recall: 0.958095
+5th percentile recall: 0.81
+1st percentile recall: 0.73
+
+Total Latency: 32.2758 seconds
+Average Latency: 3.22758e+06 ns
+Latency for 99th percentile recall queries: 3890355 ns
+Latency for 95th percentile recall queries: 3405582 ns
+Latency for 5th percentile recall queries: 3761256 ns
+Latency for 1st percentile recall queries: 3715450 ns
+
+======================================
+Testing ef: 2200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2200 ===
+Average Recall: 0.962028
+5th percentile recall: 0.83
+1st percentile recall: 0.75
+
+Total Latency: 35.1151 seconds
+Average Latency: 3.51151e+06 ns
+Latency for 99th percentile recall queries: 4188171 ns
+Latency for 95th percentile recall queries: 3718694 ns
+Latency for 5th percentile recall queries: 3788260 ns
+Latency for 1st percentile recall queries: 4110470 ns
+
+======================================
+Testing ef: 2400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2400 ===
+Average Recall: 0.965554
+5th percentile recall: 0.84
+1st percentile recall: 0.77
+
+Total Latency: 38.0486 seconds
+Average Latency: 3.80486e+06 ns
+Latency for 99th percentile recall queries: 4588754 ns
+Latency for 95th percentile recall queries: 4087593 ns
+Latency for 5th percentile recall queries: 4511086 ns
+Latency for 1st percentile recall queries: 4411594 ns
+
+======================================
+Testing ef: 2600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2600 ===
+Average Recall: 0.968452
+5th percentile recall: 0.85
+1st percentile recall: 0.78
+
+Total Latency: 41.0373 seconds
+Average Latency: 4.10373e+06 ns
+Latency for 99th percentile recall queries: 5000817 ns
+Latency for 95th percentile recall queries: 4420651 ns
+Latency for 5th percentile recall queries: 5289721 ns
+Latency for 1st percentile recall queries: 4910253 ns
+
+======================================
+Testing ef: 2800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2800 ===
+Average Recall: 0.971148
+5th percentile recall: 0.86
+1st percentile recall: 0.8
+
+Total Latency: 43.817 seconds
+Average Latency: 4.3817e+06 ns
+Latency for 99th percentile recall queries: 5381914 ns
+Latency for 95th percentile recall queries: 4732876 ns
+Latency for 5th percentile recall queries: 6097729 ns
+Latency for 1st percentile recall queries: 4834295 ns
+
+======================================
+Testing ef: 3000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 3000 ===
+Average Recall: 0.973445
+5th percentile recall: 0.87
+1st percentile recall: 0.81
+
+Total Latency: 47.0497 seconds
+Average Latency: 4.70497e+06 ns
+Latency for 99th percentile recall queries: 5765597 ns
+Latency for 95th percentile recall queries: 5149824 ns
+Latency for 5th percentile recall queries: 6036385 ns
+Latency for 1st percentile recall queries: 5527475 ns
+
+======================================
+Testing ef: 3200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 3200 ===
+Average Recall: 0.975476
+5th percentile recall: 0.88
+1st percentile recall: 0.82
+
+Total Latency: 49.6996 seconds
+Average Latency: 4.96996e+06 ns
+Latency for 99th percentile recall queries: 6152508 ns
+Latency for 95th percentile recall queries: 5467100 ns
+Latency for 5th percentile recall queries: 6091298 ns
+Latency for 1st percentile recall queries: 5959007 ns
+
+======================================
+Testing ef: 3400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 3400 ===
+Average Recall: 0.977206
+5th percentile recall: 0.89
+1st percentile recall: 0.83
+
+Total Latency: 52.3204 seconds
+Average Latency: 5.23204e+06 ns
+Latency for 99th percentile recall queries: 6463197 ns
+Latency for 95th percentile recall queries: 5744735 ns
+Latency for 5th percentile recall queries: 6063045 ns
+Latency for 1st percentile recall queries: 6385073 ns
+
+======================================
+Testing ef: 3600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 3600 ===
+Average Recall: 0.978849
+5th percentile recall: 0.9
+1st percentile recall: 0.84
+
+Total Latency: 55.2849 seconds
+Average Latency: 5.52849e+06 ns
+Latency for 99th percentile recall queries: 6869787 ns
+Latency for 95th percentile recall queries: 6104728 ns
+Latency for 5th percentile recall queries: 6029513 ns
+Latency for 1st percentile recall queries: 6732312 ns
+
+======================================
+Testing ef: 3800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 3800 ===
+Average Recall: 0.980296
+5th percentile recall: 0.9
+1st percentile recall: 0.85
+
+Total Latency: 58.063 seconds
+Average Latency: 5.8063e+06 ns
+Latency for 99th percentile recall queries: 7187504 ns
+Latency for 95th percentile recall queries: 6412209 ns
+Latency for 5th percentile recall queries: 7147604 ns
+Latency for 1st percentile recall queries: 6863963 ns
+
+======================================
+Testing ef: 4000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4000 ===
+Average Recall: 0.981574
+5th percentile recall: 0.91
+1st percentile recall: 0.86
+
+Total Latency: 61.7624 seconds
+Average Latency: 6.17624e+06 ns
+Latency for 99th percentile recall queries: 7753194 ns
+Latency for 95th percentile recall queries: 6891147 ns
+Latency for 5th percentile recall queries: 6881865 ns
+Latency for 1st percentile recall queries: 7145195 ns
+
+======================================
+Testing ef: 4200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4200 ===
+Average Recall: 0.982786
+5th percentile recall: 0.91
+1st percentile recall: 0.87
+
+Total Latency: 63.9995 seconds
+Average Latency: 6.39995e+06 ns
+Latency for 99th percentile recall queries: 8071280 ns
+Latency for 95th percentile recall queries: 7187218 ns
+Latency for 5th percentile recall queries: 8718637 ns
+Latency for 1st percentile recall queries: 7074987 ns
+
+======================================
+Testing ef: 4400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4400 ===
+Average Recall: 0.983889
+5th percentile recall: 0.92
+1st percentile recall: 0.87
+
+Total Latency: 67.283 seconds
+Average Latency: 6.7283e+06 ns
+Latency for 99th percentile recall queries: 9116138 ns
+Latency for 95th percentile recall queries: 7588893 ns
+Latency for 5th percentile recall queries: 7628328 ns
+Latency for 1st percentile recall queries: 8789976 ns
+
+======================================
+Testing ef: 4600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4600 ===
+Average Recall: 0.984905
+5th percentile recall: 0.92
+1st percentile recall: 0.88
+
+Total Latency: 69.9548 seconds
+Average Latency: 6.99548e+06 ns
+Latency for 99th percentile recall queries: 8931581 ns
+Latency for 95th percentile recall queries: 7929776 ns
+Latency for 5th percentile recall queries: 9696927 ns
+Latency for 1st percentile recall queries: 7967891 ns
+
+======================================
+Testing ef: 4800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4800 ===
+Average Recall: 0.98581
+5th percentile recall: 0.93
+1st percentile recall: 0.88
+
+Total Latency: 72.3792 seconds
+Average Latency: 7.23792e+06 ns
+Latency for 99th percentile recall queries: 9168719 ns
+Latency for 95th percentile recall queries: 8184732 ns
+Latency for 5th percentile recall queries: 8134622 ns
+Latency for 1st percentile recall queries: 9237161 ns
+
+======================================
+Testing ef: 5000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 5000 ===
+Average Recall: 0.986646
+5th percentile recall: 0.93
+1st percentile recall: 0.89
+
+Total Latency: 75.7357 seconds
+Average Latency: 7.57357e+06 ns
+Latency for 99th percentile recall queries: 9786946 ns
+Latency for 95th percentile recall queries: 8618447 ns
+Latency for 5th percentile recall queries: 8901345 ns
+Latency for 1st percentile recall queries: 8690964 ns
+
+======================================
+Testing ef: 5200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 5200 ===
+Average Recall: 0.987421
+5th percentile recall: 0.94
+1st percentile recall: 0.89
+
+Total Latency: 78.3265 seconds
+Average Latency: 7.83265e+06 ns
+Latency for 99th percentile recall queries: 10136235 ns
+Latency for 95th percentile recall queries: 8978596 ns
+Latency for 5th percentile recall queries: 7911899 ns
+Latency for 1st percentile recall queries: 10639499 ns
+
+glove-100-angular baseline per-query experiment results:
+ef, avg_recall, 5th_perc_recall, 1st_perc_recall, avg_lat(ns), lat_99th_rec, lat_95th_rec, lat_5th_rec, lat_1st_rec
+100, 0.693211, 0.22, 0.13, 184007, 150121, 205778, 191579, 208595
+150, 0.747045, 0.29, 0.19, 271103, 257514, 203224, 289013, 299794
+200, 0.78078, 0.34, 0.24, 355652, 351758, 291669, 385867, 379804
+250, 0.804943, 0.38, 0.28, 443778, 453347, 376807, 498567, 449229
+300, 0.823661, 0.42, 0.31, 558023, 578047, 490742, 676034, 551353
+350, 0.838316, 0.45, 0.34, 617829, 651215, 553556, 705101, 681117
+400, 0.850518, 0.48, 0.36, 688456, 725189, 627025, 748648, 892209
+450, 0.861051, 0.5, 0.39, 764029, 805371, 702330, 942304, 941330
+500, 0.87009, 0.53, 0.42, 885724, 952203, 816641, 890955, 1004854
+550, 0.878121, 0.55, 0.44, 957079, 1036539, 901305, 1058737, 953207
+600, 0.88479, 0.57, 0.45, 1.03999e+06, 1132758, 988123, 921195, 1365509
+650, 0.890873, 0.58, 0.47, 1.11543e+06, 1224114, 1062630, 1437341, 1352176
+700, 0.89638, 0.6, 0.49, 1.18909e+06, 1321616, 1145858, 1330842, 1340398
+750, 0.901417, 0.61, 0.51, 1.38367e+06, 1497383, 1331506, 1718861, 1476945
+800, 0.906007, 0.63, 0.52, 1.43715e+06, 1589687, 1394717, 1551044, 1818008
+850, 0.910205, 0.64, 0.53, 1.54909e+06, 1733364, 1534375, 1870697, 2159571
+900, 0.91413, 0.65, 0.55, 1.52319e+06, 1698954, 1488922, 2059026, 1689636
+950, 0.91778, 0.67, 0.56, 1.69176e+06, 1904258, 1681457, 1808076, 1960389
+1000, 0.921142, 0.68, 0.57, 1.69871e+06, 1888106, 1671287, 1968874, 2216578
+1050, 0.924145, 0.69, 0.59, 1.73161e+06, 1901628, 1720470, 1970711, 1981693
+1100, 0.926995, 0.7, 0.59, 1.81987e+06, 2049336, 1824617, 2079018, 2581200
+1150, 0.929642, 0.71, 0.61, 1.88624e+06, 2113955, 1891646, 2139376, 1981482
+1200, 0.932081, 0.72, 0.62, 1.9539e+06, 2186578, 1961083, 2114922, 2094659
+1250, 0.934434, 0.73, 0.62, 2.0232e+06, 2271996, 2035464, 2049764, 2654701
+1300, 0.936762, 0.73, 0.63, 2.12104e+06, 2404568, 2149915, 2799371, 2787031
+1350, 0.938892, 0.74, 0.64, 2.17951e+06, 2468001, 2211072, 2570741, 2619738
+1400, 0.940876, 0.75, 0.65, 2.25636e+06, 2587718, 2298945, 2468899, 2748764
+1450, 0.942808, 0.75, 0.66, 2.44616e+06, 2858388, 2506114, 3281254, 2884553
+1500, 0.944601, 0.76, 0.67, 2.6309e+06, 3160388, 2716385, 3141237, 3015575
+1550, 0.946238, 0.77, 0.68, 2.66917e+06, 3142260, 2748814, 2912424, 2935240
+1600, 0.947809, 0.77, 0.68, 2.65127e+06, 3141849, 2739138, 3175095, 3199826
+1800, 0.953408, 0.79, 0.71, 2.94128e+06, 3524882, 3074789, 3682106, 3452123
+2000, 0.958095, 0.81, 0.73, 3.22758e+06, 3890355, 3405582, 3761256, 3715450
+2200, 0.962028, 0.83, 0.75, 3.51151e+06, 4188171, 3718694, 3788260, 4110470
+2400, 0.965554, 0.84, 0.77, 3.80486e+06, 4588754, 4087593, 4511086, 4411594
+2600, 0.968452, 0.85, 0.78, 4.10373e+06, 5000817, 4420651, 5289721, 4910253
+2800, 0.971148, 0.86, 0.8, 4.3817e+06, 5381914, 4732876, 6097729, 4834295
+3000, 0.973445, 0.87, 0.81, 4.70497e+06, 5765597, 5149824, 6036385, 5527475
+3200, 0.975476, 0.88, 0.82, 4.96996e+06, 6152508, 5467100, 6091298, 5959007
+3400, 0.977206, 0.89, 0.83, 5.23204e+06, 6463197, 5744735, 6063045, 6385073
+3600, 0.978849, 0.9, 0.84, 5.52849e+06, 6869787, 6104728, 6029513, 6732312
+3800, 0.980296, 0.9, 0.85, 5.8063e+06, 7187504, 6412209, 7147604, 6863963
+4000, 0.981574, 0.91, 0.86, 6.17624e+06, 7753194, 6891147, 6881865, 7145195
+4200, 0.982786, 0.91, 0.87, 6.39995e+06, 8071280, 7187218, 8718637, 7074987
+4400, 0.983889, 0.92, 0.87, 6.7283e+06, 9116138, 7588893, 7628328, 8789976
+4600, 0.984905, 0.92, 0.88, 6.99548e+06, 8931581, 7929776, 9696927, 7967891
+4800, 0.98581, 0.93, 0.88, 7.23792e+06, 9168719, 8184732, 8134622, 9237161
+5000, 0.986646, 0.93, 0.89, 7.57357e+06, 9786946, 8618447, 8901345, 8690964
+5200, 0.987421, 0.94, 0.89, 7.83265e+06, 10136235, 8978596, 7911899, 10639499
+Experiment finished
