@@ -1696,8 +1696,9 @@ void per_query_result_exp()
         const float wae = ef_adapter_ptr->get_wae();
         std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
         hnsw->setEf(wae);
-        
-        adaptive_search_per_query_result(dataset, *hnsw, *query, *data, *ground_truth, score_cal, k, sketch, statics_length, expected_recall, repeat);
+
+        adaptive_search_per_query_result(dataset, *hnsw, *query, *data, *ground_truth, score_cal, k, sketch, statics_length, expected_recall, repeat, (size_t)wae);
+        per_query_baseline_exp(dataset, repeat, *hnsw, *query, *ground_truth, k, ef_upper_bound);
     }
 }
 
@@ -1705,7 +1706,7 @@ int main() {
     std::cout << "Starting experiments for Shiro-ef hnswdis library...\n\n"
               << std::endl;
     // print the root path
-    //  get the root path, if it is not set, immediate exit
+    // get the root path, if it is not set, immediate exit
     char *root_path = std::getenv("EXPERIMENTS_ROOT");
     if (root_path == nullptr)
     {
