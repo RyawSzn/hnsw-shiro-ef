@@ -899,7 +899,7 @@ void per_query_baseline_exp(
         }
         else
         {
-            ef *= 50;
+            ef += 50;
         }
     }
 

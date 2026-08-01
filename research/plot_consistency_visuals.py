@@ -1,0 +1,175 @@
+import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from matplotlib.ticker import PercentFormatter
+
+
+def create_consistency_plot():
+    print("Loading datasets...")
+    df_mine = pd.read_csv(
+        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_results_deep-image-96-angular.csv"
+    )
+    df_base = pd.read_csv(
+        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_baseline_deep-image-96-angular.csv"
+    )
+
+    avg_recall_mine = df_mine["Recall"].mean()
+    if 500 in df_base["EF"].unique():
+        best_ef = 500
+    else:
+        best_ef = df_base["EF"].unique()[0]
+        min_diff = 1.0
+        for ef in df_base["EF"].unique():
+            r = df_base[df_base["EF"] == ef]["Recall"].mean()
+            if abs(r - avg_recall_mine) < min_diff:
+                min_diff = abs(r - avg_recall_mine)
+                best_ef = ef
+
+    df_base_best = df_base[df_base["EF"] == best_ef].copy()
+    df_merged = pd.merge(
+        df_base_best, df_mine, on="QueryID", suffixes=("_Base", "_Mine")
+    )
+
+    # Calculate key stats
+    std_base = df_merged["Recall_Base"].std()
+    std_mine = df_merged["Recall_Mine"].std()
+    p01_base = df_merged["Recall_Base"].quantile(0.01)
+    p01_mine = df_merged["Recall_Mine"].quantile(0.01)
+
+    # --- SETUP PLOT ---
+    plt.style.use("seaborn-v0_8-whitegrid")
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
+
+    color_base = "#7f8c8d"  # Gray
+    color_shiro = "#27ae60"  # Green
+
+    # --- PANEL 1: VIOLIN PLOT (Distribution of Quality) ---
+    data = [df_merged["Recall_Base"], df_merged["Recall_Mine"]]
+
+    parts = ax1.violinplot(data, showmeans=True, showextrema=True)
+
+    # Color customization for violin
+    parts["bodies"][0].set_facecolor(color_base)
+    parts["bodies"][1].set_facecolor(color_shiro)
+    for p in ["bodies"]:
+        for body in parts[p]:
+            body.set_alpha(0.7)
+    for partname in ("cbars", "cmins", "cmaxes", "cmeans"):
+        vp = parts[partname]
+        vp.set_edgecolor("black")
+        vp.set_linewidth(1.5)
+
+    ax1.set_xticks([1, 2])
+    ax1.set_xticklabels(
+        [f"Baseline (Fixed EF)", f"shiro-ef (Dynamic)"], fontsize=12, fontweight="bold"
+    )
+    ax1.set_ylabel("Recall Accuracy", fontsize=14, fontweight="bold")
+    ax1.set_title(
+        "Variance / Distribution of Quality", fontsize=16, fontweight="bold", pad=15
+    )
+
+    # Annotate Variance and Worst-Case Floor
+    ax1.annotate(
+        f"Long tail of failure\nWorst 1%: {p01_base:.3f}\nStdDev: {std_base:.3f}",
+        xy=(1, p01_base),
+        xytext=(50, -30),
+        textcoords="offset points",
+        ha="left",
+        color="black",
+        fontweight="bold",
+        fontsize=11,
+        arrowprops=dict(facecolor="black", shrink=0.05, width=1, headwidth=6),
+    )
+
+    ax1.annotate(
+        f"Tight, consistent quality\nWorst 1%: {p01_mine:.3f}\nStdDev: {std_mine:.3f}",
+        xy=(2, p01_mine),
+        xytext=(50, -30),
+        textcoords="offset points",
+        ha="left",
+        color="black",
+        fontweight="bold",
+        fontsize=11,
+        arrowprops=dict(facecolor="black", shrink=0.05, width=1, headwidth=6),
+    )
+
+    ax1.set_ylim(0.4, 1.05)
+
+    # --- PANEL 2: SLA GUARANTEE (Survival Curve) ---
+    # Sort data for survival curve
+    sorted_base = np.sort(df_merged["Recall_Base"])
+    sorted_mine = np.sort(df_merged["Recall_Mine"])
+
+    # Calculate % of queries >= X
+    yvals_base = 1.0 - np.arange(len(sorted_base)) / (len(sorted_base) - 1)
+    yvals_mine = 1.0 - np.arange(len(sorted_mine)) / (len(sorted_mine) - 1)
+
+    ax2.plot(
+        sorted_base,
+        yvals_base * 100,
+        color=color_base,
+        linewidth=4,
+        linestyle="--",
+        label="Baseline",
+    )
+    ax2.plot(
+        sorted_mine, yvals_mine * 100, color=color_shiro, linewidth=4, label="shiro-ef"
+    )
+
+    # Zoom in on the critical area (0.70 to 1.0)
+    ax2.set_xlim(0.70, 1.01)
+    ax2.set_ylim(50, 105)
+
+    # Add a target SLA line (e.g., 90% Recall)
+    target_recall = 0.90
+    pct_base_pass = (sorted_base >= target_recall).mean() * 100
+    pct_mine_pass = (sorted_mine >= target_recall).mean() * 100
+
+    ax2.axvline(target_recall, color="black", linestyle=":", linewidth=2, alpha=0.5)
+    ax2.plot(target_recall, pct_base_pass, marker="o", color=color_base, markersize=10)
+    ax2.plot(target_recall, pct_mine_pass, marker="o", color=color_shiro, markersize=10)
+
+    ax2.annotate(
+        f"{pct_base_pass:.1f}% of traffic\nhits 0.90 SLA",
+        xy=(target_recall, pct_base_pass),
+        xytext=(-20, -50),
+        textcoords="offset points",
+        ha="right",
+        color=color_base,
+        fontweight="bold",
+        fontsize=11,
+    )
+
+    ax2.annotate(
+        f"{pct_mine_pass:.1f}% of traffic\nhits 0.90 SLA",
+        xy=(target_recall, pct_mine_pass),
+        xytext=(20, 20),
+        textcoords="offset points",
+        ha="left",
+        color=color_shiro,
+        fontweight="bold",
+        fontsize=11,
+    )
+
+    ax2.set_xlabel("Target Recall Guarantee (SLA)", fontsize=14, fontweight="bold")
+    ax2.set_ylabel("% of Queries Achieving Target", fontsize=14, fontweight="bold")
+    ax2.set_title(
+        "Reliability: Service Level Agreement (SLA)",
+        fontsize=16,
+        fontweight="bold",
+        pad=15,
+    )
+    ax2.yaxis.set_major_formatter(PercentFormatter())
+    ax2.legend(loc="lower left", fontsize=12)
+
+    plt.tight_layout(pad=3.0)
+
+    out_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_consistency_visuals.png"
+    plt.savefig(out_path, dpi=300, bbox_inches="tight")
+    print(f"Saved Consistency Visuals to: {out_path}")
+
+
+if __name__ == "__main__":
+    create_consistency_plot()

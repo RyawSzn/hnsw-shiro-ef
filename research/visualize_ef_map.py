@@ -217,7 +217,7 @@ if __name__ == "__main__":
     replace_mode = replace_str == "y" or replace_str == "yes"
 
     # Prepare output path directory
-    out_dir = Path("research/img")
+    out_dir = Path("research/img/heatmap")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     for selected_file in files_to_process:

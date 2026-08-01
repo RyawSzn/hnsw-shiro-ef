@@ -313,7 +313,7 @@ def plot_ablation(name, cfg, base_data, out_dir):
 
 def main():
     requested = sys.argv[1:] if len(sys.argv) > 1 else list(ABLATIONS.keys())
-    out_dir = "research/img"
+    out_dir = "research/img/ablation"
     os.makedirs(out_dir, exist_ok=True)
     base_data = parse_baseline(BASE_LOG) if os.path.exists(BASE_LOG) else {}
 
