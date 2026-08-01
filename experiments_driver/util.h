@@ -588,80 +588,119 @@ void adaptive_search_per_query_result(
     const size_t k,
     hnswdis::Sketch &sketch,
     const size_t statics_length,
-    const float expected_recall)
+    const float expected_recall,
+    const size_t repeat)
 {
     // Force purely single-threaded execution for accurate search latency
     Eigen::setNbThreads(1);
 
     const int num_queries = query_vectors.rows();
-    std::vector<std::vector<size_t>> result(num_queries, std::vector<size_t>(k, 0));
 
-    std::vector<int64_t> latencies_ns(num_queries);
-    std::vector<float> recalls(num_queries);
+    struct IterationResult {
+        double avg_latency;
+        std::vector<int64_t> latencies_ns;
+        std::vector<float> recalls;
+    };
+    std::vector<IterationResult> iter_results(repeat);
 
-    for (int j = 0; j < num_queries; ++j)
-    {
-        auto start = std::chrono::high_resolution_clock::now();
+    for (size_t rep = 0; rep < repeat; rep++) {
+        std::vector<std::vector<size_t>> result(num_queries, std::vector<size_t>(k, 0));
+        std::vector<int64_t> latencies_ns(num_queries);
+        std::vector<float> recalls(num_queries);
 
-        auto pq = alg_hnsw.adaptiveSearchKnnTest(
-            query_vectors.row(j).data(), k, statics_length, score_cal, &sketch);
-
-        auto end = std::chrono::high_resolution_clock::now();
-        auto latency_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-        latencies_ns[j] = latency_ns;
-
-        // Extract top-k results
-        size_t count = pq.size();
-        while (!pq.empty())
+        for (int j = 0; j < num_queries; ++j)
         {
-            result[j][--count] = pq.top().second;
-            pq.pop();
-        }
+            auto start = std::chrono::high_resolution_clock::now();
 
-        // Compute recall for this query
-        int correct = 0;
-        for (size_t id : result[j])
-        {
-            for (int gt_idx = 0; gt_idx < k; ++gt_idx)
+            auto pq = alg_hnsw.adaptiveSearchKnnTest(
+                query_vectors.row(j).data(), k, statics_length, score_cal, &sketch);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto latency_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+            latencies_ns[j] = latency_ns;
+
+            // Extract top-k results
+            size_t count = pq.size();
+            while (!pq.empty())
             {
-                if (id == ground_truth(j, gt_idx))
+                result[j][--count] = pq.top().second;
+                pq.pop();
+            }
+
+            // Compute recall for this query
+            int correct = 0;
+            for (size_t id : result[j])
+            {
+                for (int gt_idx = 0; gt_idx < k; ++gt_idx)
                 {
-                    correct++;
-                    break;
+                    if (id == ground_truth(j, gt_idx))
+                    {
+                        correct++;
+                        break;
+                    }
                 }
             }
+            recalls[j] = static_cast<float>(correct) / k;
         }
-        recalls[j] = static_cast<float>(correct) / k;
+
+        double avg_latency = std::accumulate(latencies_ns.begin(), latencies_ns.end(), 0.0) / num_queries;
+        iter_results[rep] = {avg_latency, latencies_ns, recalls};
+        
+        double avg_recall = std::accumulate(recalls.begin(), recalls.end(), 0.0) / num_queries;
+        double total_latency_seconds = std::accumulate(latencies_ns.begin(), latencies_ns.end(), 0.0) / 1e9;
+        
+        std::cout << "\n=== Summary (Iteration " << rep + 1 << "/" << repeat << ") ===" << std::endl;
+        std::cout << "Average Latency: " << avg_latency << " ns" << std::endl;
+        std::cout << "Average Recall: " << avg_recall << std::endl;
+        std::cout << "Total Latency: " << total_latency_seconds << " seconds" << std::endl;
     }
 
-    // === Summary statistics ===
-    double total_latency_seconds = std::accumulate(latencies_ns.begin(), latencies_ns.end(), 0.0) / 1e9;
-    double avg_latency = std::accumulate(latencies_ns.begin(), latencies_ns.end(), 0.0) / num_queries;
-    double avg_recall = std::accumulate(recalls.begin(), recalls.end(), 0.0) / num_queries;
+    std::vector<std::pair<double, size_t>> latency_pairs;
+    for (size_t rep = 0; rep < repeat; rep++) {
+        latency_pairs.push_back({iter_results[rep].avg_latency, rep});
+    }
+    std::sort(latency_pairs.begin(), latency_pairs.end());
+    size_t median_idx = latency_pairs[repeat / 2].second;
 
-    // Output per-query results to a CSV file
+    const auto& median_iter = iter_results[median_idx];
+
     std::string csv_filename = "per_query_results_" + dataset + ".csv";
     std::ofstream csv_file(csv_filename);
     if (csv_file.is_open()) {
-        csv_file << "QueryID,Latency(ns),Recall\n"; // Write the header
+        csv_file << "QueryID,Latency(ns),Recall\n"; 
         for (int j = 0; j < num_queries; ++j) {
-            csv_file << j << "," << latencies_ns[j] << "," << recalls[j] << "\n"; // Write each query's results
+            csv_file << j << "," << median_iter.latencies_ns[j] << "," << median_iter.recalls[j] << "\n"; 
         }
         csv_file.close();
-        std::cout << "Per-query results have been written to " << csv_filename << std::endl;
+        std::cout << "\nPer-query results (from median iteration " << median_idx + 1 << ") have been written to " << csv_filename << std::endl;
     } else {
         std::cerr << "Error: Unable to open file for writing." << std::endl;
     }
 
-    std::cout << "\n=== Summary ===" << std::endl;
-    std::cout << "Average Latency: " << avg_latency << " ns" << std::endl;
-    std::cout << "Average Recall: " << avg_recall << std::endl;
-    std::cout << "Total Latency: " << total_latency_seconds << " seconds" << std::endl;
+    double median_avg_recall = std::accumulate(median_iter.recalls.begin(), median_iter.recalls.end(), 0.0) / num_queries;
+    double median_total_latency_seconds = std::accumulate(median_iter.latencies_ns.begin(), median_iter.latencies_ns.end(), 0.0) / 1e9;
 
-    std::vector<int64_t> sorted_latencies = latencies_ns;
-    std::sort(sorted_latencies.begin(), sorted_latencies.end());
-    std::cout << "95th percentile latency: " << sorted_latencies[(int)(num_queries * 0.95)] << " ns" << std::endl;
-    std::cout << "99th percentile latency: " << sorted_latencies[(int)(num_queries * 0.99)] << " ns" << std::endl;
+    std::cout << "\n=== Final Summary (Median Iteration) ===" << std::endl;
+    std::cout << "Average Latency: " << median_iter.avg_latency << " ns" << std::endl;
+    std::cout << "Average Recall: " << median_avg_recall << std::endl;
+    std::cout << "Total Latency: " << median_total_latency_seconds << " seconds" << std::endl;
+
+    std::vector<int64_t> sorted_median_latencies = median_iter.latencies_ns;
+    std::sort(sorted_median_latencies.begin(), sorted_median_latencies.end());
+
+    std::vector<float> sorted_median_recalls = median_iter.recalls;
+    std::sort(sorted_median_recalls.begin(), sorted_median_recalls.end());
+
+    int idx_1st_rec = (int)(num_queries * 0.01);
+    int idx_5th_rec = (int)(num_queries * 0.05);
+    int idx_95th_lat = (int)(num_queries * 0.95);
+    int idx_99th_lat = (int)(num_queries * 0.99);
+
+    std::cout << "1st percentile recall: " << sorted_median_recalls[idx_1st_rec] << std::endl;
+    std::cout << "5th percentile recall: " << sorted_median_recalls[idx_5th_rec] << std::endl;
+    
+    std::cout << "95th percentile latency: " << sorted_median_latencies[idx_95th_lat] << " ns" << std::endl;
+    std::cout << "99th percentile latency: " << sorted_median_latencies[idx_99th_lat] << " ns" << std::endl;
 
     std::cout << "Experiment finished." << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));

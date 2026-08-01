@@ -25,15 +25,15 @@ struct ExperimentConfig {
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_convergence_buckets, min_q, statics_length
     {"deep-image-96-angular",      "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"cohere",                     "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"cluster_mg_uniform_100d",    "cd", 1000, 0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"cluster_mg_zipf_100d",       "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
+    // {"glove-100-angular",          "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"word2vec-300-angular",       "cd", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"sift10m-128-euclidean",      "l2", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"gist-960-euclidean",         "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"tiny5m-384-euclidean",       "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"msmarco",                    "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                     "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_uniform_100d",    "cd", 1000, 0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_zipf_100d",       "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
     // {"laion_image",                "cd", 1000, 0.5f, 12.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"laion_text",                 "cd", 1000, 0.5f, 12.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
 };
@@ -1650,7 +1650,7 @@ void per_query_result_exp()
 
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
-                  << "Quantile step: " << alpha << std::endl;
+                  << "Truncation Ratio: " << alpha << std::endl;
 
         int repeat = 3;
 
@@ -1677,8 +1677,8 @@ void per_query_result_exp()
         }
 
         // the followings are for adaptive ef experiments
-        std::string ef_adaptor_path = (root / "estimation_table_o3" / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
-        // std::string samplings_path = (root / "sampling_o3" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
+        std::string ef_adaptor_path = (root / "estimation_table" / (dataset + "-ef_adaptor-" + "-k" + std::to_string(k) + "-ef.bin")).string(); // path for estimation table
+        std::string samplings_path = (root / "sampling" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();           // path for sampling (queries and ground truth)
 
         auto start = std::chrono::high_resolution_clock::now();
         auto end = std::chrono::high_resolution_clock::now();
@@ -1695,12 +1695,9 @@ void per_query_result_exp()
         hnswdis::Sketch sketch = make_sketch(*ef_adapter_ptr, expected_recall);
         const float wae = ef_adapter_ptr->get_wae();
         std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
-                hnsw->setEf(wae);
-        for (size_t i = 0; i < repeat; i++)
-        {
-            adaptive_search_per_query_result(dataset, *hnsw, *query, *data, *ground_truth, score_cal, k, sketch, statics_length, expected_recall);
-        }
-
+        hnsw->setEf(wae);
+        
+        adaptive_search_per_query_result(dataset, *hnsw, *query, *data, *ground_truth, score_cal, k, sketch, statics_length, expected_recall, repeat);
     }
 }
 
@@ -1719,14 +1716,14 @@ int main() {
     }
     std::cout << "EXPERIMENTS_ROOT: " << root_path << std::endl;
 
-    indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
+    // indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
-    online_exp();           // onine search experiments
+    // offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
+    // online_exp();           // onine search experiments
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
-    ablation_study_visited_list_size();      // ablation study on distance list size
+    // ablation_study_visited_list_size();      // ablation study on distance list size
     // ablation_study_sampling_size();           // ablation study on sampling size
     // ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
     // ablation_study_truncation_ratio();
