@@ -1163,7 +1163,6 @@ void ablation_study_visited_list_size()
         2000,
         1 + 32,                          // 1-hop neighbors on the base layer: M = 16
         1 + 32 + 31 * 32,                // 2-hop neighbors on the base layer: M = 16
-        1 + 32 + 31 * 32 + 31 * 32 * 32, // 3-hop neighbors on the base layer: M = 16
     };
 
     for (const auto& conf : g_experiments)
