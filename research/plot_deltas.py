@@ -11,23 +11,29 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     df_mine = pd.read_csv(mine_csv)
     df_base = pd.read_csv(base_csv)
 
-    summary_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/summary_metrics.csv"
+    summary_path = (
+        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/summary_metrics.csv"
+    )
     if os.path.exists(summary_path):
         sum_df = pd.read_csv(summary_path)
         ds_sum = sum_df[sum_df["dataset"] == dataset_name]
         adapt_rec = ds_sum[ds_sum["method"] == "adaptive"]["avg_recall"].values[0]
-        
+
         base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
         base_df["ef"] = pd.to_numeric(base_df["ef"])
         valid_bases = base_df[base_df["avg_recall"] < adapt_rec]
-        
+
         if not valid_bases.empty:
             best_ef = int(valid_bases["ef"].max())
         else:
             best_ef = int(base_df["ef"].min())
     else:
         adapt_rec = df_mine["Recall"].mean()
-        valid_efs = [ef for ef in df_base["EF"].unique() if df_base[df_base["EF"] == ef]["Recall"].mean() < adapt_rec]
+        valid_efs = [
+            ef
+            for ef in df_base["EF"].unique()
+            if df_base[df_base["EF"] == ef]["Recall"].mean() < adapt_rec
+        ]
         best_ef = int(max(valid_efs)) if valid_efs else int(df_base["EF"].min())
 
     df_base_best = df_base[df_base["EF"] == best_ef].copy()
@@ -43,7 +49,9 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     x_percentile = np.linspace(0, 100, total_queries)
 
     # Smooth the deltas for a clean business visualization
-    window = max(1, total_queries // 50)
+    window = max(
+        1, total_queries // 200
+    )  # Adjust window size based on number of queries
 
     # Calculate exact mathematical areas (using raw data, not smoothed, for accuracy)
     raw_lat_diff = (
@@ -116,19 +124,27 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
     ax1.text(
         0.98,
-        0.05,
+        0.95,
         roi_text_lat,
         transform=ax1.transAxes,
         ha="right",
-        va="bottom",
+        va="top",
         fontsize=12,
         fontweight="bold",
+        zorder=10,
         bbox=dict(
-            facecolor="#f8f9fa", alpha=0.9, edgecolor="black", boxstyle="round,pad=0.5"
+            facecolor="#f8f9fa", alpha=0.95, edgecolor="black", boxstyle="round,pad=0.5"
         ),
     )
 
-    ax1.legend(loc="upper right", bbox_to_anchor=(0.98, 0.95), fontsize=12)
+    ax1.legend(
+        loc="lower left",
+        bbox_to_anchor=(0.02, 0.05),
+        fontsize=12,
+        frameon=True,
+        facecolor="white",
+        framealpha=0.95,
+    )
 
     # --- BOTTOM PLOT: RECALL DELTA ---
     ax2.plot(x_percentile, recall_diff, color="black", linewidth=1, alpha=0.5)
@@ -166,7 +182,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     )
     ax2.set_ylabel("Recall Change", fontsize=14, fontweight="bold")
     ax2.set_xlabel(
-        "Query Difficulty Percentile (0% = Hardest, 100% = Easiest)",
+        "Query Recall Percentile (0% = Lowest, 100% = Highest)",
         fontsize=14,
         fontweight="bold",
         labelpad=10,
@@ -183,15 +199,16 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
     ax2.text(
         0.98,
-        0.05,
+        0.95,
         roi_text_rec,
         transform=ax2.transAxes,
         ha="right",
-        va="bottom",
+        va="top",
         fontsize=12,
         fontweight="bold",
+        zorder=10,
         bbox=dict(
-            facecolor="#f8f9fa", alpha=0.9, edgecolor="black", boxstyle="round,pad=0.5"
+            facecolor="#f8f9fa", alpha=0.95, edgecolor="black", boxstyle="round,pad=0.5"
         ),
     )
 
@@ -203,7 +220,14 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     if pd.isna(max_rec_diff) or max_rec_diff == 0:
         max_rec_diff = 0.05
     ax2.set_ylim(-max_rec_diff, max_rec_diff)
-    ax2.legend(loc="upper right", bbox_to_anchor=(0.98, 0.95), fontsize=12)
+    ax2.legend(
+        loc="lower left",
+        bbox_to_anchor=(0.02, 0.05),
+        fontsize=12,
+        frameon=True,
+        facecolor="white",
+        framealpha=0.95,
+    )
 
     plt.tight_layout(pad=3.0)
 
@@ -211,8 +235,8 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved Delta Impact Plot to: {out_path}")
-    
-    plt.close() # Close figure to avoid memory leaks when looping
+
+    plt.close()  # Close figure to avoid memory leaks when looping
 
 
 if __name__ == "__main__":
@@ -222,8 +246,10 @@ if __name__ == "__main__":
             dataset_name = file.replace("per_query_results_", "").replace(".csv", "")
             mine_csv = os.path.join(csv_dir, file)
             base_csv = os.path.join(csv_dir, f"per_query_baseline_{dataset_name}.csv")
-            
+
             if os.path.exists(base_csv):
                 create_delta_plot(dataset_name, mine_csv, base_csv)
             else:
-                print(f"Warning: Baseline CSV not found for {dataset_name} ({base_csv})")
+                print(
+                    f"Warning: Baseline CSV not found for {dataset_name} ({base_csv})"
+                )

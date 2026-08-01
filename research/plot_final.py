@@ -15,22 +15,22 @@ def generate_plot():
         return
 
     df = pd.read_csv(csv_path)
-    datasets = sorted(df['dataset'].unique())
+    datasets = sorted(df["dataset"].unique())
     num_ds = len(datasets)
 
     if num_ds == 0:
         print("No datasets found in summary_metrics.csv")
         return
 
-    # Setup figure layout
-    ncols = 3
+    # Setup figure layout dynamically to avoid empty subplots
+    ncols = min(num_ds, 3)
     nrows = math.ceil(num_ds / ncols)
-    fig, axes = plt.subplots(nrows, ncols, figsize=(6 * ncols, 6.5 * nrows))
-    
-    if num_ds > 1:
+    fig, axes = plt.subplots(nrows, ncols, figsize=(6.5 * ncols, 8.5 * nrows))
+
+    if isinstance(axes, np.ndarray):
         axes_flat = axes.flatten()
     else:
-        axes_flat = [axes] if not isinstance(axes, np.ndarray) else axes.flatten()
+        axes_flat = [axes]
 
     # Hide unused subplots
     for i in range(num_ds, len(axes_flat)):
@@ -38,55 +38,113 @@ def generate_plot():
 
     for idx, ds_name in enumerate(datasets):
         ax = axes_flat[idx]
-        ds_df = df[df['dataset'] == ds_name]
+        ds_df = df[df["dataset"] == ds_name]
 
         # 1. Baseline Data
-        base_df = ds_df[ds_df['method'] == 'baseline'].copy()
+        base_df = ds_df[ds_df["method"] == "baseline"].copy()
 
         # Plot Baseline lines using paired latencies
-        base_df_avg = base_df.sort_values('avg_lat(ns)')
-        ax.plot(base_df_avg['avg_lat(ns)'] / 1e6, base_df_avg['avg_recall'], "-", color="tab:blue", label="Baseline - Avg", linewidth=2)
+        base_df_avg = base_df.sort_values("avg_lat(ns)")
+        ax.plot(
+            base_df_avg["avg_lat(ns)"] / 1e6,
+            base_df_avg["avg_recall"],
+            "-",
+            color="tab:blue",
+            label="Baseline - Avg",
+            linewidth=2,
+        )
 
-        base_df_p05 = base_df.sort_values('lat_5th_rec')
-        ax.plot(base_df_p05['lat_5th_rec'] / 1e6, base_df_p05['5th_perc_recall'], "-", color="tab:green", label=r"Baseline - $\pi_{0.05}$", linewidth=2)
+        base_df_p05 = base_df.sort_values("lat_5th_rec")
+        ax.plot(
+            base_df_p05["lat_5th_rec"] / 1e6,
+            base_df_p05["5th_perc_recall"],
+            "-",
+            color="tab:green",
+            label=r"Baseline - $\pi_{0.05}$",
+            linewidth=2,
+        )
 
-        base_df_p01 = base_df.sort_values('lat_1st_rec')
-        ax.plot(base_df_p01['lat_1st_rec'] / 1e6, base_df_p01['1st_perc_recall'], "-", color="tab:orange", label=r"Baseline - $\pi_{0.01}$", linewidth=2)
+        base_df_p01 = base_df.sort_values("lat_1st_rec")
+        ax.plot(
+            base_df_p01["lat_1st_rec"] / 1e6,
+            base_df_p01["1st_perc_recall"],
+            "-",
+            color="tab:orange",
+            label=r"Baseline - $\pi_{0.01}$",
+            linewidth=2,
+        )
 
         # 2. Adaptive (Shiro) Data
-        ada_df = ds_df[ds_df['method'] == 'adaptive']
+        ada_df = ds_df[ds_df["method"] == "adaptive"]
         if not ada_df.empty:
-            s_time_avg = ada_df.iloc[0]['avg_lat(ns)'] / 1e6
-            s_time_p05 = ada_df.iloc[0]['lat_5th_rec'] / 1e6
-            s_time_p01 = ada_df.iloc[0]['lat_1st_rec'] / 1e6
+            s_time_avg = ada_df.iloc[0]["avg_lat(ns)"] / 1e6
+            s_time_p05 = ada_df.iloc[0]["lat_5th_rec"] / 1e6
+            s_time_p01 = ada_df.iloc[0]["lat_1st_rec"] / 1e6
 
-            s_avg = ada_df.iloc[0]['avg_recall']
-            s_p05 = ada_df.iloc[0]['5th_perc_recall']
-            s_p01 = ada_df.iloc[0]['1st_perc_recall']
+            s_avg = ada_df.iloc[0]["avg_recall"]
+            s_p05 = ada_df.iloc[0]["5th_perc_recall"]
+            s_p01 = ada_df.iloc[0]["1st_perc_recall"]
 
-            ax.scatter([s_time_avg], [s_avg], marker="*", s=350, color="blue", edgecolor="black", label=r"Shiro - Avg", zorder=5)
-            ax.scatter([s_time_p05], [s_p05], marker="*", s=350, color="green", edgecolor="black", label=r"Shiro - $\pi_{0.05}$", zorder=5)
-            ax.scatter([s_time_p01], [s_p01], marker="*", s=350, color="orange", edgecolor="black", label=r"Shiro - $\pi_{0.01}$", zorder=5)
+            ax.scatter(
+                [s_time_avg],
+                [s_avg],
+                marker="*",
+                s=350,
+                color="blue",
+                edgecolor="black",
+                label=r"Shiro - Avg",
+                zorder=5,
+            )
+            ax.scatter(
+                [s_time_p05],
+                [s_p05],
+                marker="*",
+                s=350,
+                color="green",
+                edgecolor="black",
+                label=r"Shiro - $\pi_{0.05}$",
+                zorder=5,
+            )
+            ax.scatter(
+                [s_time_p01],
+                [s_p01],
+                marker="*",
+                s=350,
+                color="orange",
+                edgecolor="black",
+                label=r"Shiro - $\pi_{0.01}$",
+                zorder=5,
+            )
 
         # 3. Formatting
-        max_ef = pd.to_numeric(base_df['ef'], errors='coerce').max()
-        ax.set_title(f"{ds_name}\nObserved ef_max = {int(max_ef) if pd.notna(max_ef) else 'Unknown'}", fontsize=14)
+        max_ef = pd.to_numeric(base_df["ef"], errors="coerce").max()
+        ax.set_title(
+            f"{ds_name}\nObserved ef_max = {int(max_ef) if pd.notna(max_ef) else 'Unknown'}",
+            fontsize=14,
+        )
 
-        ax.set_xlabel("Latency (ms)", fontsize=12)
+        ax.set_xlabel("Avg Latency (ms)", fontsize=12)
         ax.set_ylabel("Recall@100", fontsize=12)
 
         ax.yaxis.set_major_locator(MultipleLocator(0.05))
         ax.set_ylim(0.70, 1.01)
 
         # Set dynamic X limit based on all maximum latencies plotted
-        all_times = pd.concat([base_df['avg_lat(ns)'], base_df['lat_5th_rec'], base_df['lat_1st_rec']]) / 1e6
+        all_times = (
+            pd.concat(
+                [base_df["avg_lat(ns)"], base_df["lat_5th_rec"], base_df["lat_1st_rec"]]
+            )
+            / 1e6
+        )
         max_time = all_times.max() if not all_times.empty else 10
         if not ada_df.empty:
             max_time = max(max_time, s_time_avg, s_time_p05, s_time_p01)
         ax.set_xlim(0, max_time * 1.1)
 
         # ADD TARGET RECALL LINE
-        ax.axhline(y=0.95, color="tab:red", linestyle="-.", alpha=0.8, linewidth=1.5, zorder=1)
+        ax.axhline(
+            y=0.95, color="tab:red", linestyle="-.", alpha=0.8, linewidth=1.5, zorder=1
+        )
 
         # ADD TEXT STATING IT'S THE TARGET RECALL
         x_min, x_max = ax.get_xlim()
@@ -105,7 +163,7 @@ def generate_plot():
 
         ax.grid(True, linestyle="--", alpha=0.6)
 
-    plt.tight_layout(rect=(0, 0.03, 1, 1))
+    plt.tight_layout(rect=(0, 0.08, 1, 1))
 
     # Cleaned up Legend (Removed Ada and Progress)
     legend_handles = [
@@ -143,7 +201,7 @@ def generate_plot():
             label=r"Shiro – $\pi_{0.01}$",
         ),
     ]
-    
+
     fig.legend(
         handles=legend_handles,
         loc="lower center",
@@ -151,11 +209,13 @@ def generate_plot():
         fontsize=10,
         framealpha=0.95,
         edgecolor="#cccccc",
-        bbox_to_anchor=(0.5, 0.0),
+        bbox_to_anchor=(0.5, 0.01),
     )
 
     os.makedirs("/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img", exist_ok=True)
-    out_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/visualization_final.png"
+    out_path = (
+        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/visualization_final.png"
+    )
     plt.savefig(out_path, dpi=300)
     print(f"Saved to {out_path}")
 

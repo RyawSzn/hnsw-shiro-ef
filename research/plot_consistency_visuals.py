@@ -57,7 +57,7 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
     # --- PANEL 1: VIOLIN PLOT (Distribution of Quality) ---
     data = [df_merged["Recall_Base"], df_merged["Recall_Mine"]]
 
-    parts = ax1.violinplot(data, showmeans=True, showextrema=True)
+    parts = ax1.violinplot(data, showmeans=True, showextrema=True, bw_method=0.15)
 
     # Color customization for violin
     parts["bodies"][0].set_facecolor(color_base)
@@ -130,8 +130,7 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
         sorted_mine, yvals_mine * 100, color=color_shiro, linewidth=4, label="shiro-ef"
     )
 
-    # Zoom in on the critical area (0.70 to 1.0)
-    ax2.set_xlim(0.70, 1.01)
+    ax2.set_xlim(0.80, 1.01)
     ax2.set_ylim(50, 105)
 
     # Add a target SLA line (e.g., 90% Recall)
@@ -144,9 +143,9 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
     ax2.plot(target_recall, pct_mine_pass, marker="o", color=color_shiro, markersize=10)
 
     ax2.annotate(
-        f"{pct_base_pass:.1f}% of traffic\nhits 0.90 SLA",
+        f"Base: {pct_base_pass:.1f}%",
         xy=(target_recall, pct_base_pass),
-        xytext=(-20, -50),
+        xytext=(-15, -15),
         textcoords="offset points",
         ha="right",
         color=color_base,
@@ -155,9 +154,9 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
     )
 
     ax2.annotate(
-        f"{pct_mine_pass:.1f}% of traffic\nhits 0.90 SLA",
+        f"Shiro: {pct_mine_pass:.1f}%",
         xy=(target_recall, pct_mine_pass),
-        xytext=(20, 20),
+        xytext=(15, 10),
         textcoords="offset points",
         ha="left",
         color=color_shiro,
@@ -171,6 +170,30 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
     pct_mine_pass_exp = (sorted_mine >= target_exp).mean() * 100
 
     ax2.axvline(target_exp, color="#e74c3c", linestyle=":", linewidth=2.5, alpha=0.8)
+    ax2.plot(target_exp, pct_base_pass_exp, marker="o", color=color_base, markersize=10)
+    ax2.plot(target_exp, pct_mine_pass_exp, marker="o", color=color_shiro, markersize=10)
+
+    ax2.annotate(
+        f"Base: {pct_base_pass_exp:.1f}%",
+        xy=(target_exp, pct_base_pass_exp),
+        xytext=(-15, -15),
+        textcoords="offset points",
+        ha="right",
+        color=color_base,
+        fontweight="bold",
+        fontsize=11,
+    )
+
+    ax2.annotate(
+        f"Shiro: {pct_mine_pass_exp:.1f}%",
+        xy=(target_exp, pct_mine_pass_exp),
+        xytext=(15, 10),
+        textcoords="offset points",
+        ha="left",
+        color=color_shiro,
+        fontweight="bold",
+        fontsize=11,
+    )
 
     ax2.set_xlabel("Target Recall Guarantee (SLA)", fontsize=14, fontweight="bold")
     ax2.set_ylabel("% of Queries Achieving Target", fontsize=14, fontweight="bold")
