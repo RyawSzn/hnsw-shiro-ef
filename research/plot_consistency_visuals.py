@@ -6,26 +6,35 @@ import pandas as pd
 from matplotlib.ticker import PercentFormatter
 
 
-def create_consistency_plot():
-    print("Loading datasets...")
-    df_mine = pd.read_csv(
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_results_deep-image-96-angular.csv"
-    )
-    df_base = pd.read_csv(
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_baseline_deep-image-96-angular.csv"
-    )
+def create_consistency_plot(dataset_name, mine_csv, base_csv):
+    print(f"Loading datasets for {dataset_name}...")
+    df_mine = pd.read_csv(mine_csv)
+    df_base = pd.read_csv(base_csv)
 
-    avg_recall_mine = df_mine["Recall"].mean()
-    if 500 in df_base["EF"].unique():
-        best_ef = 500
+    summary_path = (
+        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/summary_metrics.csv"
+    )
+    if os.path.exists(summary_path):
+        sum_df = pd.read_csv(summary_path)
+        ds_sum = sum_df[sum_df["dataset"] == dataset_name]
+        adapt_rec = ds_sum[ds_sum["method"] == "adaptive"]["avg_recall"].values[0]
+
+        base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
+        base_df["ef"] = pd.to_numeric(base_df["ef"])
+        valid_bases = base_df[base_df["avg_recall"] < adapt_rec]
+
+        if not valid_bases.empty:
+            best_ef = int(valid_bases["ef"].max())
+        else:
+            best_ef = int(base_df["ef"].min())
     else:
-        best_ef = df_base["EF"].unique()[0]
-        min_diff = 1.0
-        for ef in df_base["EF"].unique():
-            r = df_base[df_base["EF"] == ef]["Recall"].mean()
-            if abs(r - avg_recall_mine) < min_diff:
-                min_diff = abs(r - avg_recall_mine)
-                best_ef = ef
+        adapt_rec = df_mine["Recall"].mean()
+        valid_efs = [
+            ef
+            for ef in df_base["EF"].unique()
+            if df_base[df_base["EF"] == ef]["Recall"].mean() < adapt_rec
+        ]
+        best_ef = int(max(valid_efs)) if valid_efs else int(df_base["EF"].min())
 
     df_base_best = df_base[df_base["EF"] == best_ef].copy()
     df_merged = pd.merge(
@@ -67,7 +76,10 @@ def create_consistency_plot():
     )
     ax1.set_ylabel("Recall Accuracy", fontsize=14, fontweight="bold")
     ax1.set_title(
-        "Variance / Distribution of Quality", fontsize=16, fontweight="bold", pad=15
+        f"Variance / Distribution of Quality [{dataset_name}]",
+        fontsize=16,
+        fontweight="bold",
+        pad=15,
     )
 
     # Annotate Variance and Worst-Case Floor
@@ -153,10 +165,17 @@ def create_consistency_plot():
         fontsize=11,
     )
 
+    # Add the experimental target recall line (0.95)
+    target_exp = 0.95
+    pct_base_pass_exp = (sorted_base >= target_exp).mean() * 100
+    pct_mine_pass_exp = (sorted_mine >= target_exp).mean() * 100
+
+    ax2.axvline(target_exp, color="#e74c3c", linestyle=":", linewidth=2.5, alpha=0.8)
+
     ax2.set_xlabel("Target Recall Guarantee (SLA)", fontsize=14, fontweight="bold")
     ax2.set_ylabel("% of Queries Achieving Target", fontsize=14, fontweight="bold")
     ax2.set_title(
-        "Reliability: Service Level Agreement (SLA)",
+        f"Reliability: Service Level Agreement (SLA) [{dataset_name}]",
         fontsize=16,
         fontweight="bold",
         pad=15,
@@ -166,10 +185,25 @@ def create_consistency_plot():
 
     plt.tight_layout(pad=3.0)
 
-    out_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_consistency_visuals.png"
+    out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_consistency_visuals_{dataset_name}.png"
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved Consistency Visuals to: {out_path}")
 
+    plt.close()  # Close figure to avoid memory leaks
+
 
 if __name__ == "__main__":
-    create_consistency_plot()
+    csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv"
+    for file in os.listdir(csv_dir):
+        if file.startswith("per_query_results_") and file.endswith(".csv"):
+            dataset_name = file.replace("per_query_results_", "").replace(".csv", "")
+            mine_csv = os.path.join(csv_dir, file)
+            base_csv = os.path.join(csv_dir, f"per_query_baseline_{dataset_name}.csv")
+
+            if os.path.exists(base_csv):
+                create_consistency_plot(dataset_name, mine_csv, base_csv)
+            else:
+                print(
+                    f"Warning: Baseline CSV not found for {dataset_name} ({base_csv})"
+                )

@@ -6,27 +6,29 @@ import pandas as pd
 from matplotlib.ticker import FuncFormatter
 
 
-def create_delta_plot():
-    print("Loading datasets...")
-    df_mine = pd.read_csv(
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_results_deep-image-96-angular.csv"
-    )
-    df_base = pd.read_csv(
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_baseline_deep-image-96-angular.csv"
-    )
+def create_delta_plot(dataset_name, mine_csv, base_csv):
+    print(f"Loading datasets for {dataset_name}...")
+    df_mine = pd.read_csv(mine_csv)
+    df_base = pd.read_csv(base_csv)
 
-    # Match average recall to find best baseline EF
-    avg_recall_mine = df_mine["Recall"].mean()
-    if 450 in df_base["EF"].unique():
-        best_ef = 450
+    summary_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/summary_metrics.csv"
+    if os.path.exists(summary_path):
+        sum_df = pd.read_csv(summary_path)
+        ds_sum = sum_df[sum_df["dataset"] == dataset_name]
+        adapt_rec = ds_sum[ds_sum["method"] == "adaptive"]["avg_recall"].values[0]
+        
+        base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
+        base_df["ef"] = pd.to_numeric(base_df["ef"])
+        valid_bases = base_df[base_df["avg_recall"] < adapt_rec]
+        
+        if not valid_bases.empty:
+            best_ef = int(valid_bases["ef"].max())
+        else:
+            best_ef = int(base_df["ef"].min())
     else:
-        best_ef = df_base["EF"].unique()[0]
-        min_diff = 1.0
-        for ef in df_base["EF"].unique():
-            r = df_base[df_base["EF"] == ef]["Recall"].mean()
-            if abs(r - avg_recall_mine) < min_diff:
-                min_diff = abs(r - avg_recall_mine)
-                best_ef = ef
+        adapt_rec = df_mine["Recall"].mean()
+        valid_efs = [ef for ef in df_base["EF"].unique() if df_base[df_base["EF"] == ef]["Recall"].mean() < adapt_rec]
+        best_ef = int(max(valid_efs)) if valid_efs else int(df_base["EF"].min())
 
     df_base_best = df_base[df_base["EF"] == best_ef].copy()
     df_merged = pd.merge(
@@ -96,7 +98,7 @@ def create_delta_plot():
 
     ax1.axhline(0, color="black", linewidth=1.5, linestyle="--")
     ax1.set_title(
-        f"Cost Impact: Latency Delta (shiro-ef vs Baseline EF={best_ef})",
+        f"Cost Impact: Latency Delta [{dataset_name}] (shiro-ef vs Baseline EF={best_ef})",
         fontsize=16,
         fontweight="bold",
         pad=15,
@@ -157,7 +159,7 @@ def create_delta_plot():
 
     ax2.axhline(0, color="black", linewidth=1.5, linestyle="--")
     ax2.set_title(
-        f"Quality Impact: Recall Delta (shiro-ef vs Baseline EF={best_ef})",
+        f"Quality Impact: Recall Delta [{dataset_name}] (shiro-ef vs Baseline EF={best_ef})",
         fontsize=16,
         fontweight="bold",
         pad=15,
@@ -205,10 +207,23 @@ def create_delta_plot():
 
     plt.tight_layout(pad=3.0)
 
-    out_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_deltas.png"
+    out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_deltas_{dataset_name}.png"
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved Delta Impact Plot to: {out_path}")
+    
+    plt.close() # Close figure to avoid memory leaks when looping
 
 
 if __name__ == "__main__":
-    create_delta_plot()
+    csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv"
+    for file in os.listdir(csv_dir):
+        if file.startswith("per_query_results_") and file.endswith(".csv"):
+            dataset_name = file.replace("per_query_results_", "").replace(".csv", "")
+            mine_csv = os.path.join(csv_dir, file)
+            base_csv = os.path.join(csv_dir, f"per_query_baseline_{dataset_name}.csv")
+            
+            if os.path.exists(base_csv):
+                create_delta_plot(dataset_name, mine_csv, base_csv)
+            else:
+                print(f"Warning: Baseline CSV not found for {dataset_name} ({base_csv})")

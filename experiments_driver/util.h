@@ -668,9 +668,9 @@ void adaptive_search_per_query_result(
     std::string csv_filename = "research/csv/per_query_results_" + dataset + ".csv";
     std::ofstream csv_file(csv_filename);
     if (csv_file.is_open()) {
-        csv_file << "QueryID,Latency(ns),Recall\n";
+        csv_file << "QueryID,EF,Latency(ns),Recall\n";
         for (int j = 0; j < num_queries; ++j) {
-            csv_file << j << "," << median_iter.latencies_ns[j] << "," << median_iter.recalls[j] << "\n";
+            csv_file << j << "," << ef << "," << median_iter.latencies_ns[j] << "," << median_iter.recalls[j] << "\n";
         }
         csv_file.close();
         std::cout << "\nPer-query results (from median iteration " << median_idx + 1 << ") have been written to " << csv_filename << std::endl;
@@ -683,7 +683,6 @@ void adaptive_search_per_query_result(
 
     std::cout << "\n=== Final Summary (Median Iteration) ===" << std::endl;
     std::cout << "Average Latency: " << median_iter.avg_latency << " ns" << std::endl;
-    std::cout << "Average Recall: " << median_avg_recall << std::endl;
     std::cout << "Total Latency: " << median_total_latency_seconds << " seconds" << std::endl;
 
     std::vector<std::pair<float, int64_t>> recall_latency_pairs;
@@ -698,30 +697,10 @@ void adaptive_search_per_query_result(
 
     int idx_1st = (int)(num_queries * 0.01);
     int idx_5th = (int)(num_queries * 0.05);
-    int idx_95th = (int)(num_queries * 0.95);
-    int idx_99th = (int)(num_queries * 0.99);
 
     std::cout << "Average Recall: " << median_avg_recall << std::endl;
     std::cout << "5th percentile recall: " << recall_latency_pairs[idx_5th].first << std::endl;
     std::cout << "1st percentile recall: " << recall_latency_pairs[idx_1st].first << std::endl;
-    std::cout << "\nTotal Latency: " << median_total_latency_seconds << " seconds" << std::endl;
-    std::cout << "Average Latency: " << median_iter.avg_latency << " ns" << std::endl;
-    std::cout << "Latency for 99th percentile recall queries: " << recall_latency_pairs[idx_99th].second << " ns" << std::endl;
-    std::cout << "Latency for 95th percentile recall queries: " << recall_latency_pairs[idx_95th].second << " ns" << std::endl;
-    std::cout << "Latency for 5th percentile recall queries: " << recall_latency_pairs[idx_5th].second << " ns" << std::endl;
-    std::cout << "Latency for 1st percentile recall queries: " << recall_latency_pairs[idx_1st].second << " ns" << std::endl;
-
-    std::cout << "\n" << dataset << " adaptive per-query experiment results:" << std::endl;
-    std::cout << "ef, avg_recall, 5th_perc_recall, 1st_perc_recall, avg_lat(ns), lat_99th_rec, lat_95th_rec, lat_5th_rec, lat_1st_rec" << std::endl;
-    std::cout << ef << ", "
-              << median_avg_recall << ", "
-              << recall_latency_pairs[idx_5th].first << ", "
-              << recall_latency_pairs[idx_1st].first << ", "
-              << median_iter.avg_latency << ", "
-              << recall_latency_pairs[idx_99th].second << ", "
-              << recall_latency_pairs[idx_95th].second << ", "
-              << recall_latency_pairs[idx_5th].second << ", "
-              << recall_latency_pairs[idx_1st].second << std::endl;
 
     std::cout << "Experiment finished." << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
@@ -855,15 +834,9 @@ void per_query_baseline_exp(
 
         int idx_1st = (int)(num_queries * 0.01);
         int idx_5th = (int)(num_queries * 0.05);
-        int idx_95th = (int)(num_queries * 0.95);
-        int idx_99th = (int)(num_queries * 0.99);
 
         float percentile_1 = recall_latency_pairs[idx_1st].first;
         float percentile_5 = recall_latency_pairs[idx_5th].first;
-        int64_t lat_99 = recall_latency_pairs[idx_99th].second;
-        int64_t lat_95 = recall_latency_pairs[idx_95th].second;
-        int64_t lat_5 = recall_latency_pairs[idx_5th].second;
-        int64_t lat_1 = recall_latency_pairs[idx_1st].second;
 
         std::cout << "\n=== Summary for ef " << ef << " ===" << std::endl;
         std::cout << "Average Recall: " << iter_avg_recall << std::endl;
@@ -871,22 +844,6 @@ void per_query_baseline_exp(
         std::cout << "1st percentile recall: " << percentile_1 << std::endl;
         std::cout << "\nTotal Latency: " << iter_total_latency_seconds << " seconds" << std::endl;
         std::cout << "Average Latency: " << median_iter.avg_latency << " ns" << std::endl;
-        std::cout << "Latency for 99th percentile recall queries: " << lat_99 << " ns" << std::endl;
-        std::cout << "Latency for 95th percentile recall queries: " << lat_95 << " ns" << std::endl;
-        std::cout << "Latency for 5th percentile recall queries: " << lat_5 << " ns" << std::endl;
-        std::cout << "Latency for 1st percentile recall queries: " << lat_1 << " ns" << std::endl;
-
-        std::get<0>(exp_record) = ef;
-        std::get<1>(exp_record) = iter_avg_recall;
-        std::get<2>(exp_record) = percentile_5;
-        std::get<3>(exp_record) = percentile_1;
-        std::get<4>(exp_record) = median_iter.avg_latency;
-        std::get<5>(exp_record) = lat_99;
-        std::get<6>(exp_record) = lat_95;
-        std::get<7>(exp_record) = lat_5;
-        std::get<8>(exp_record) = lat_1;
-
-        exp_results.push_back(exp_record);
 
         if (ef > ef_upper_bound)
         {
@@ -903,20 +860,6 @@ void per_query_baseline_exp(
         }
     }
 
-    std::cout << "\n" << dataset << " baseline per-query experiment results:" << std::endl;
-    std::cout << "ef, avg_recall, 5th_perc_recall, 1st_perc_recall, avg_lat(ns), lat_99th_rec, lat_95th_rec, lat_5th_rec, lat_1st_rec" << std::endl;
-    for (const auto &result : exp_results)
-    {
-        std::cout << std::get<0>(result) << ", "
-                  << std::get<1>(result) << ", "
-                  << std::get<2>(result) << ", "
-                  << std::get<3>(result) << ", "
-                  << std::get<4>(result) << ", "
-                  << std::get<5>(result) << ", "
-                  << std::get<6>(result) << ", "
-                  << std::get<7>(result) << ", "
-                  << std::get<8>(result) << std::endl;
-    }
     std::cout << "Experiment finished" << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 }
