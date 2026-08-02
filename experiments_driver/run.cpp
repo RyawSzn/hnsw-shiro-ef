@@ -24,10 +24,10 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_convergence_buckets, min_q, statics_length
-    {"deep-image-96-angular",      "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"word2vec-300-angular",       "cd", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"sift10m-128-euclidean",      "l2", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"deep-image-96-angular",      "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"glove-100-angular",          "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"gist-960-euclidean",         "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"tiny5m-384-euclidean",       "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"msmarco",                    "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},

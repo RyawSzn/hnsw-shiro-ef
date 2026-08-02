@@ -852,11 +852,15 @@ void per_query_baseline_exp(
 
         if (ef >= 1600)
         {
+            ef += 400;
+        }
+        else if (ef >= 800)
+        {
             ef += 200;
         }
         else
         {
-            ef += 50;
+            ef += 100;
         }
     }
 
@@ -994,11 +998,15 @@ void baseline_search(
 
         if (ef >= 1600)
         {
+            ef += 400;
+        }
+        else if (ef >= 800)
+        {
             ef += 200;
         }
         else
         {
-            ef += 50;
+            ef += 100;
         }
     }
 

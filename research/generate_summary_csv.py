@@ -38,20 +38,20 @@ def generate_summary():
                 p05_rec = group["Recall"].quantile(0.05, interpolation="nearest")
                 p01_rec = group["Recall"].quantile(0.01, interpolation="nearest")
 
-                # Pull the exact subset of queries that achieved this specific recall and take their median latency
+                # Pull the exact subset of queries that achieved this specific recall and take their mean latency
                 # (using np.isclose to safely match floating point numbers)
                 lat_5th_rec = int(
                     round(
                         group[np.isclose(group["Recall"], p05_rec)][
                             "Latency(ns)"
-                        ].median()
+                        ].mean()
                     )
                 )
                 lat_1st_rec = int(
                     round(
                         group[np.isclose(group["Recall"], p01_rec)][
                             "Latency(ns)"
-                        ].median()
+                        ].mean()
                     )
                 )
 
