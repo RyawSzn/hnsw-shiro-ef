@@ -1,0 +1,13 @@
+dataset,method,ef,avg_recall,5th_perc_recall,1st_perc_recall,avg_lat(ns),lat_5th_rec,lat_1st_rec
+deep-image-96-angular,adaptive,258,0.9809,0.93,0.89,1355612,1801661,2381718
+deep-image-96-angular,baseline,100,0.85845,0.61,0.46,328063,387015,377867
+deep-image-96-angular,baseline,200,0.93546,0.76,0.62,596681,687389,701654
+deep-image-96-angular,baseline,300,0.96196,0.84,0.71,855554,986975,1011667
+deep-image-96-angular,baseline,400,0.97461,0.88,0.78,1140607,1330915,1378359
+deep-image-96-angular,baseline,500,0.9817,0.91,0.81,1402908,1646715,1713009
+deep-image-96-angular,baseline,600,0.98614,0.93,0.85,1654115,1915540,2006953
+deep-image-96-angular,baseline,700,0.98909,0.94,0.87,1904173,2217952,2341594
+deep-image-96-angular,baseline,800,0.99122,0.95,0.89,2149710,2497295,2555392
+deep-image-96-angular,baseline,1000,0.99398,0.97,0.92,2699411,3112824,3256515
+deep-image-96-angular,baseline,1200,0.99563,0.97,0.93,3410649,4030393,4301941
+deep-image-96-angular,baseline,1400,0.99662,0.98,0.94,3885733,4533078,4713101

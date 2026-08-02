@@ -42,16 +42,19 @@ def generate_plot():
 
         # 1. Baseline Data
         base_df = ds_df[ds_df["method"] == "baseline"].copy()
-        
+
         # Sort by EF to smooth along the parameter sweep
         base_df["ef"] = pd.to_numeric(base_df["ef"], errors="coerce")
         base_df = base_df.sort_values("ef")
-        
+
         window_size = max(5, len(base_df) // 10)
 
         # Plot Baseline lines using paired latencies (latency smoothed, recall exact)
         ax.plot(
-            base_df["avg_lat(ns)"].rolling(window=window_size, min_periods=1, center=True).mean() / 1e6,
+            base_df["avg_lat(ns)"]
+            .rolling(window=window_size, min_periods=1, center=True)
+            .mean()
+            / 1e6,
             base_df["avg_recall"],
             "-",
             color="tab:blue",
@@ -60,7 +63,10 @@ def generate_plot():
         )
 
         ax.plot(
-            base_df["lat_5th_rec"].rolling(window=window_size, min_periods=1, center=True).mean() / 1e6,
+            base_df["lat_5th_rec"]
+            .rolling(window=window_size, min_periods=1, center=True)
+            .mean()
+            / 1e6,
             base_df["5th_perc_recall"],
             "-",
             color="tab:green",
@@ -69,7 +75,10 @@ def generate_plot():
         )
 
         ax.plot(
-            base_df["lat_1st_rec"].rolling(window=window_size, min_periods=1, center=True).mean() / 1e6,
+            base_df["lat_1st_rec"]
+            .rolling(window=window_size, min_periods=1, center=True)
+            .mean()
+            / 1e6,
             base_df["1st_perc_recall"],
             "-",
             color="tab:orange",
@@ -105,7 +114,7 @@ def generate_plot():
                 s=350,
                 color="green",
                 edgecolor="black",
-                label=r"Shiro - $<\pi_{0.05}$",
+                label=r"Shiro - $\pi_{0.05}$",
                 zorder=5,
             )
             ax.scatter(
@@ -115,7 +124,7 @@ def generate_plot():
                 s=350,
                 color="orange",
                 edgecolor="black",
-                label=r"Shiro - $<\pi_{0.01}$",
+                label=r"Shiro - $\pi_{0.01}$",
                 zorder=5,
             )
 
