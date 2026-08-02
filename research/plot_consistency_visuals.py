@@ -21,20 +21,17 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
 
         base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
         base_df["ef"] = pd.to_numeric(base_df["ef"])
-        valid_bases = base_df[base_df["avg_recall"] < adapt_rec]
-
-        if not valid_bases.empty:
-            best_ef = int(valid_bases["ef"].max())
-        else:
-            best_ef = int(base_df["ef"].min())
+        
+        # Find the baseline EF with the avg_recall closest to adapt_rec
+        base_df["recall_diff"] = (base_df["avg_recall"] - adapt_rec).abs()
+        best_ef = int(base_df.loc[base_df["recall_diff"].idxmin()]["ef"])
     else:
         adapt_rec = df_mine["Recall"].mean()
-        valid_efs = [
-            ef
-            for ef in df_base["EF"].unique()
-            if df_base[df_base["EF"] == ef]["Recall"].mean() < adapt_rec
-        ]
-        best_ef = int(max(valid_efs)) if valid_efs else int(df_base["EF"].min())
+        
+        # Find the baseline EF with the avg_recall closest to adapt_rec
+        unique_efs = df_base["EF"].unique()
+        ef_recalls = {ef: df_base[df_base["EF"] == ef]["Recall"].mean() for ef in unique_efs}
+        best_ef = int(min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec)))
 
     df_base_best = df_base[df_base["EF"] == best_ef].copy()
     df_merged = pd.merge(
