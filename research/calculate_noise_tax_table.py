@@ -52,11 +52,3 @@ for file in sorted(os.listdir(csv_dir)):
 
 df_results = pd.DataFrame(results)
 df_results.to_csv(os.path.join(csv_dir, "noise_tax_table_all_efs.csv"), index=False)
-
-# Let's print out a formatted version for the output
-for dataset in df_results["Dataset"].unique():
-    print(f"\n### Dataset: {dataset}")
-    df_ds = df_results[df_results["Dataset"] == dataset].copy()
-    # print top 5 and bottom 5 EFs if there are many, or all if < 10
-    print(df_ds[["Global EF (ef*)", "Total Latency (ms)", "Noise Tax (ms)", "Noise Tax %"]].to_string(index=False, float_format="{:.2f}".format))
-
