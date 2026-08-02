@@ -12,13 +12,13 @@ constexpr int SAMPLING_METHOD = 1; // 0: Normal Random, 1: Hard First
 
 namespace hnswdis
 {
-    std::vector<std::tuple<std::vector<size_t>, float, float>> hnsw_search_score_and_cv(
+    std::vector<std::tuple<std::vector<size_t>, float, float>> hnsw_search_rv_and_cv(
         const hnswlib::HierarchicalNSW<float> &alg_hnsw,
         const hnswdis::MatrixXf &query_vectors,
         const hnswdis::MatrixXf &data_vectors,
         const hnswdis::ApproximatedScoreCalculator &score_cal,
         const size_t k,
-        const size_t statics_length)
+        const size_t stats_length)
     {
         std::vector<std::tuple<std::vector<size_t>, float, float>> result;
         result.reserve(query_vectors.rows());
@@ -27,7 +27,7 @@ namespace hnswdis
         {
             float cv = 0.0f;
             auto ret = alg_hnsw.adaptiveSearchKnn(
-                query_vectors.row(i).data(), k, statics_length, score_cal, nullptr, &cv);
+                query_vectors.row(i).data(), k, stats_length, score_cal, nullptr, &cv);
 
             auto &pq = ret.first;
             size_t count = pq.size();
@@ -49,9 +49,9 @@ namespace hnswdis
         const hnswdis::MatrixXf &data_vectors,
         const hnswdis::ApproximatedScoreCalculator &score_cal,
         const size_t k,
-        const size_t statics_length)
+        const size_t stats_length)
     {
-        // size_t statics_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
+        // size_t stats_length = 1 + 32 + 31 * 32; // 2-hop neighbors on the base layer
 
         std::vector<std::pair<std::vector<size_t>, float>> result;
         result.reserve(query_vectors.rows());
@@ -59,7 +59,7 @@ namespace hnswdis
         for (int i = 0; i < query_vectors.rows(); ++i)
         {
             auto ret = alg_hnsw.adaptiveSearchKnn(
-                query_vectors.row(i).data(), k, statics_length, score_cal);
+                query_vectors.row(i).data(), k, stats_length, score_cal);
 
             auto &pq = ret.first;
             size_t count = pq.size();
@@ -82,11 +82,11 @@ namespace hnswdis
         const std::string &metric,
         const size_t k,
         const float alpha, const float gamma,
-        const size_t statics_length)
+        const size_t stats_length)
     {
         hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
-        return hnsw_search_and_score(alg_hnsw, query_vectors, data_vectors, score_cal, k, statics_length);
+        return hnsw_search_and_score(alg_hnsw, query_vectors, data_vectors, score_cal, k, stats_length);
     }
 
     std::vector<std::vector<size_t>> hnsw_search(
@@ -422,7 +422,7 @@ namespace hnswdis
     // This function is a parallelized version of the compute_ground_truth function
     // It is able to fully leverage the power of multi-threading by using Eigen's matrix multiplication.
     // But if the number of queries is large, it will consume a lot of memory. In this case, cutting the data into batches is recommended.
-    MatrixXi compute_ground_truth_batch_parallel4(
+    MatrixXi compute_ground_truth_batch_parallel(
         const MatrixXf &query_vectors,
         const MatrixXf &data_vectors,
         const std::string &metric,
@@ -513,7 +513,7 @@ namespace hnswdis
     }
 
 
-    std::pair<Eigen::MatrixXi, Eigen::MatrixXf> compute_ground_truth_batch_parallel4_with_dist(
+    std::pair<Eigen::MatrixXi, Eigen::MatrixXf> compute_ground_truth_batch_parallel_with_dist(
         const MatrixXf &query_vectors,
         const MatrixXf &data_vectors,
         const std::string &metric,
@@ -806,11 +806,11 @@ namespace hnswdis
         {
             const hnswdis::RowVectorXi gt = ground_truth.row(i);
 
-            std::unordered_set<int> get_set;
+            std::unordered_set<int> gt_set;
             // Insert ground truth into the set, only the first k elements
             for (int j = 0; j < k; ++j)
             {
-                get_set.insert(gt(j));
+                gt_set.insert(gt(j));
             }
 
             int correct = 0;
@@ -819,7 +819,7 @@ namespace hnswdis
 
             for (const auto &item : sr)
             {
-                if (get_set.count(item))
+                if (gt_set.count(item))
                 {
                     correct++;
                 }
@@ -893,7 +893,7 @@ namespace hnswdis
         const size_t                                       sample_size,
         const hnswdis::ApproximatedScoreCalculator        &score_cal,
         const size_t                                       k,
-        const size_t                                       probe_statics_length = 1024,
+        const size_t                                       probe_stats_length = 1024,
         const size_t                                       pool_size            = 0,
         const uint32_t                                     seed                 = 123456789,
         size_t                                            *out_hard_count       = nullptr)
@@ -922,7 +922,7 @@ namespace hnswdis
             float cv = 0.0f;
             auto ret = alg_hnsw.adaptiveSearchKnn(
                 data_vectors.row(pool_idx[i]).data(), k,
-                probe_statics_length, score_cal, nullptr, &cv);
+                probe_stats_length, score_cal, nullptr, &cv);
             raw_cv[i] = cv;
             raw_rv[i] = ret.second;
         }
@@ -996,13 +996,13 @@ namespace hnswdis
                   const size_t k,
                   const hnswdis::ApproximatedScoreCalculator &score_cal,
                   const size_t ef,
-                  const size_t statics_length,
+                  const size_t stats_length,
                   const int min_queries_per_score,
                   const bool verbose = false)
         {
             alg_hnsw->setEf(ef);
 
-            std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnsw_search_score_and_cv(*alg_hnsw, *query_vectors, *data_vectors, score_cal, k, statics_length);
+            std::vector<std::tuple<std::vector<size_t>, float, float>> search_score_result = hnsw_search_rv_and_cv(*alg_hnsw, *query_vectors, *data_vectors, score_cal, k, stats_length);
 
             std::vector<float> score_list;
             score_list.reserve(query_vectors->rows());
@@ -1107,11 +1107,11 @@ namespace hnswdis
             const std::string &metric,
             const size_t ef,
             const float alpha, const float gamma,
-            const size_t statics_length,
+            const size_t stats_length,
             const int min_queries_per_score)
         {
             std::shared_ptr<hnswdis::MatrixXf> query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
-            MatrixXi ground_truth = compute_ground_truth_batch_parallel4(*query_vectors, *data_vectors, metric, k);
+            MatrixXi ground_truth = compute_ground_truth_batch_parallel(*query_vectors, *data_vectors, metric, k);
 
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
@@ -1122,7 +1122,7 @@ namespace hnswdis
                  k,
                  score_cal,
                  ef,
-                 statics_length,
+                 stats_length,
                  min_queries_per_score);
         }
 
@@ -1134,7 +1134,7 @@ namespace hnswdis
             size_t k,
             hnswdis::ApproximatedScoreCalculator &score_cal,
             const size_t ef,
-            const size_t statics_length,
+            const size_t stats_length,
             const int min_queries_per_score)
         {
             init(alg_hnsw,
@@ -1144,7 +1144,7 @@ namespace hnswdis
                  k,
                  score_cal,
                  ef,
-                 statics_length,
+                 stats_length,
                  min_queries_per_score);
         }
 
@@ -1186,7 +1186,7 @@ namespace hnswdis
             return std::get<1>(*it); // 25th percentile
         }
 
-        void save_satistics(const std::string &filename)
+        void save_statistics(const std::string &filename)
         {
             std::ofstream file(filename);
             file << "Score,Average Recall,Median Recall,25th Percentile Recall,5th Percentile Recall,Count\n";
@@ -1235,7 +1235,7 @@ namespace hnswdis
         const size_t sample_size)
     {
         std::shared_ptr<hnswdis::MatrixXf> sample_query_vectors = hnswdis::sample_data(*data_vectors, sample_size);
-        MatrixXi sample_ground_truth = compute_ground_truth_batch_parallel4(*sample_query_vectors, *data_vectors, metric, k);
+        MatrixXi sample_ground_truth = compute_ground_truth_batch_parallel(*sample_query_vectors, *data_vectors, metric, k);
         return {*sample_query_vectors, sample_ground_truth};
     }
 
@@ -1247,7 +1247,7 @@ namespace hnswdis
         const size_t sample_size,
         const float alpha,
         const float gamma,
-        const size_t statics_length,
+        const size_t stats_length,
         const size_t pool_size = 0,
         size_t *out_hard_count = nullptr)
     {
@@ -1258,8 +1258,8 @@ namespace hnswdis
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             std::shared_ptr<hnswdis::MatrixXf> sample_query_vectors =
                 hnswdis::sample_data_hard_first(*alg_hnsw, *data_vectors, sample_size,
-                                         score_cal, k, statics_length, pool_size, 123456789, out_hard_count);
-            MatrixXi sample_ground_truth = compute_ground_truth_batch_parallel4(
+                                         score_cal, k, stats_length, pool_size, 123456789, out_hard_count);
+            MatrixXi sample_ground_truth = compute_ground_truth_batch_parallel(
                 *sample_query_vectors, *data_vectors, metric, k);
             return {*sample_query_vectors, sample_ground_truth};
         } else {
@@ -1383,7 +1383,7 @@ namespace hnswdis
     class EfAdapter
     {
     private:
-        EfRecallTable ef_recall_estimators;
+        EfRecallTable ef_recall_table;
 
         std::vector<EfRecallTable> convergence_buckets;
         std::vector<float>         convergence_centers;
@@ -1398,13 +1398,13 @@ namespace hnswdis
             const MatrixXf &query_vectors,
             const hnswdis::ApproximatedScoreCalculator &score_cal,
             const size_t k,
-            const size_t statics_length)
+            const size_t stats_length)
         {
             std::vector<float> cvs;
             cvs.reserve(query_vectors.rows());
             for (int i = 0; i < query_vectors.rows(); ++i) {
                 float cv = 0.0f;
-                auto ret = alg_hnsw.adaptiveSearchKnn(query_vectors.row(i).data(), k, statics_length, score_cal, nullptr, &cv);
+                auto ret = alg_hnsw.adaptiveSearchKnn(query_vectors.row(i).data(), k, stats_length, score_cal, nullptr, &cv);
                 cvs.push_back(ret.second); // We now push back RV for bucketing
             }
             return cvs;
@@ -1415,7 +1415,7 @@ namespace hnswdis
                   const size_t k,
                   const std::string metric,
                   const float alpha, const float gamma,
-                  const size_t statics_length,
+                  const size_t stats_length,
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
                   EfRecallTable &out_table,
@@ -1426,12 +1426,12 @@ namespace hnswdis
             size_t first_ef = k;
             size_t second_ef = static_cast<size_t>(1.5 * first_ef);
 
-            RecallEstimator first_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, first_ef, statics_length, min_queries_per_score);
+            RecallEstimator first_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, first_ef, stats_length, min_queries_per_score);
             add_ef_recall(first_ef, first_recall_estimator, out_table, min_queries_per_score);
             float first_average_recall = compute_average_recall(first_recall_estimator);
             std::cout << "Initial average recall with ef=" << first_ef << ": " << first_average_recall << std::endl;
 
-            RecallEstimator second_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, second_ef, statics_length, min_queries_per_score);
+            RecallEstimator second_recall_estimator(alg_hnsw, data_vectors, query_vectors, ground_truth_ptr, k, score_cal, second_ef, stats_length, min_queries_per_score);
             add_ef_recall(second_ef, second_recall_estimator, out_table, min_queries_per_score);
             float second_average_recall = compute_average_recall(second_recall_estimator);
             std::cout << "Initial average recall with ef=" << second_ef << ": " << second_average_recall << std::endl;
@@ -1480,13 +1480,13 @@ namespace hnswdis
                             }
 
                             const hnswdis::RowVectorXi gt = ground_truth_ptr->row(query_index);
-                            std::unordered_set<int> get_set;
+                            std::unordered_set<int> gt_set;
                             for (int j = 0; j < (int)k; ++j)
-                                get_set.insert(gt(j));
+                                gt_set.insert(gt(j));
 
                             int correct = 0;
                             for (const auto &item : labels)
-                                if (get_set.count(item))
+                                if (gt_set.count(item))
                                     correct++;
 
                             recalls_ori.push_back(static_cast<float>(correct) / k);
@@ -1770,7 +1770,7 @@ namespace hnswdis
                             efs[s] = score_to_ef[s];
                         } else {
                             // LDW (Inverse Distance Weighting) for Holes
-                            // or linear inpotation?
+                            // or linear interpolation?
                             float sum_w = 0.0f;
                             float sum_ef = 0.0f;
                             for (auto const& pair : score_to_ef) {
@@ -1894,7 +1894,7 @@ namespace hnswdis
             const std::string metric,
             const float expected_recall,
             const float alpha, const float gamma,
-            const size_t statics_length,
+            const size_t stats_length,
             const std::string &samplings_filename,
             int ef_upper_bound,
             int sampling_size,
@@ -1920,7 +1920,7 @@ namespace hnswdis
             else
             {
                 std::cout << "Sampling data and computing ground truth (LHS)..." << std::endl;
-                auto pair = compute_samplings(alg_hnsw, data_vectors, metric, k, sampling_size, alpha, gamma, statics_length);
+                auto pair = compute_samplings(alg_hnsw, data_vectors, metric, k, sampling_size, alpha, gamma, stats_length);
                 MatrixXf sample_query_vectors = pair.first;
                 MatrixXi sample_ground_truth = pair.second;
                 serialize_samplings(samplings_filename, sample_query_vectors, sample_ground_truth);
@@ -1929,7 +1929,7 @@ namespace hnswdis
                 sample_ground_truth_ptr = std::make_shared<hnswdis::MatrixXi>(sample_ground_truth);
             }
 
-            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_recall_estimators, min_queries_per_score);
+            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, stats_length, sample_query_vectors_ptr, sample_ground_truth_ptr, ef_recall_table, min_queries_per_score);
         }
 
         EfAdapter(
@@ -1939,13 +1939,13 @@ namespace hnswdis
             const std::string metric,
             const float expected_recall,
             const float alpha, const float gamma,
-            const size_t statics_length,
+            const size_t stats_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             int ef_upper_bound,
             int min_queries_per_score) : expected_recall(expected_recall), ef_upper_bound(ef_upper_bound)
         {
-            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length, query_vectors, ground_truth_ptr, ef_recall_estimators, min_queries_per_score);
+            init(alg_hnsw, data_vectors, k, metric, alpha, gamma, stats_length, query_vectors, ground_truth_ptr, ef_recall_table, min_queries_per_score);
         }
 
         EfAdapter(
@@ -1960,7 +1960,7 @@ namespace hnswdis
             const size_t k,
             const std::string metric,
             const float alpha, const float gamma,
-            const size_t statics_length,
+            const size_t stats_length,
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             const int n_convergence_buckets,
@@ -1969,7 +1969,7 @@ namespace hnswdis
             const int n = query_vectors->rows();
 
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
-            std::vector<float> cvs = collect_cv(*alg_hnsw, *query_vectors, score_cal, k, statics_length);
+            std::vector<float> cvs = collect_cv(*alg_hnsw, *query_vectors, score_cal, k, stats_length);
 
             std::vector<int> order(n);
             std::iota(order.begin(), order.end(), 0);
@@ -2010,7 +2010,7 @@ namespace hnswdis
 
                     std::cout << "Training absolute cv-matrix bin " << cv_score << " with " << bucket_size << " queries." << std::endl;
 
-                    init(alg_hnsw, data_vectors, k, metric, alpha, gamma, statics_length,
+                    init(alg_hnsw, data_vectors, k, metric, alpha, gamma, stats_length,
                          std::make_shared<MatrixXf>(bucket_queries),
                          std::make_shared<MatrixXi>(bucket_gt),
                          convergence_buckets[t], min_queries_per_score);
@@ -2052,7 +2052,7 @@ namespace hnswdis
 
                     init(alg_hnsw,
                          data_vectors,
-                         k, metric, alpha, gamma, statics_length,
+                         k, metric, alpha, gamma, stats_length,
                          std::make_shared<MatrixXf>(bucket_queries),
                          std::make_shared<MatrixXi>(bucket_gt),
                          convergence_buckets[t], min_queries_per_score);
@@ -2188,16 +2188,16 @@ namespace hnswdis
 
         size_t estimate_ef(float score)
         {
-            auto entry = std::lower_bound(ef_recall_estimators.begin(), ef_recall_estimators.end(), score, [](const auto &a, const float &b)
+            auto entry = std::lower_bound(ef_recall_table.begin(), ef_recall_table.end(), score, [](const auto &a, const float &b)
                                           { return a.first < b; });
 
-            if (entry == ef_recall_estimators.begin())
+            if (entry == ef_recall_table.begin())
             {
-                entry = ef_recall_estimators.begin();
+                entry = ef_recall_table.begin();
             }
-            else if (entry == ef_recall_estimators.end())
+            else if (entry == ef_recall_table.end())
             {
-                entry = std::prev(ef_recall_estimators.end());
+                entry = std::prev(ef_recall_table.end());
             }
 
             for (const auto &ef_recall : entry->second)
@@ -2252,7 +2252,7 @@ namespace hnswdis
             if (!out)
                 throw std::runtime_error("Failed to open file for writing: " + filename);
 
-            write_table(out, ef_recall_estimators);
+            write_table(out, ef_recall_table);
 
             hnswlib::writeBinaryPOD(out, expected_recall);
             hnswlib::writeBinaryPOD(out, wae);
@@ -2276,7 +2276,7 @@ namespace hnswdis
             if (!in)
                 throw std::runtime_error("Failed to open file for reading: " + filename);
 
-            read_table(in, ef_recall_estimators);
+            read_table(in, ef_recall_table);
 
             hnswlib::readBinaryPOD(in, expected_recall);
             hnswlib::readBinaryPOD(in, wae);
@@ -2298,7 +2298,7 @@ namespace hnswdis
 
         void print() const
         {
-            for (const auto &entry : ef_recall_estimators)
+            for (const auto &entry : ef_recall_table)
             {
                 std::cout << "Score: " << entry.first << std::endl;
                 for (const auto &ef_recall : entry.second)
@@ -2306,7 +2306,7 @@ namespace hnswdis
             }
         }
 
-        const EfRecallTable &get_ef_recall_estimators() const { return ef_recall_estimators; }
+        const EfRecallTable &get_ef_recall_table() const { return ef_recall_table; }
 
         const std::vector<EfRecallTable> &get_all_tables() const { return convergence_buckets; }
 

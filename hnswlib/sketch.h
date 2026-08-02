@@ -14,7 +14,7 @@ namespace hnswdis
     class Sketch
     {
     private:
-        const EfRecallTable *ef_recall_estimators_single{nullptr};
+        const EfRecallTable *ef_recall_table_single{nullptr};
 
         const std::vector<EfRecallTable> *tables_{nullptr};
         // convergence_centers_[i] is the upper boundary of bucket i (cv < threshold[i] → bucket i).
@@ -83,12 +83,12 @@ namespace hnswdis
         }
 
     public:
-        Sketch(const EfRecallTable &ef_recall_estimators,
+        Sketch(const EfRecallTable &ef_recall_table,
                float expected_recall)
-            : ef_recall_estimators_single(&ef_recall_estimators),
+            : ef_recall_table_single(&ef_recall_table),
               expected_recall(expected_recall)
         {
-            all_links.push_back(build_links(ef_recall_estimators));
+            all_links.push_back(build_links(ef_recall_table));
         }
 
         Sketch(const std::vector<EfRecallTable> &tables,
@@ -133,7 +133,7 @@ namespace hnswdis
 
                 return static_cast<size_t>(ef0 * (1.0f - w) + ef1 * w + 0.5f);
             }
-            return smoothed_ef(*ef_recall_estimators_single, all_links[0], score);
+            return smoothed_ef(*ef_recall_table_single, all_links[0], score);
         }
 
 
@@ -142,12 +142,12 @@ namespace hnswdis
         {
             if (tables_ != nullptr)
                 return lookup_ef((*tables_)[0], all_links[0], score);
-            return lookup_ef(*ef_recall_estimators_single, all_links[0], score);
+            return lookup_ef(*ef_recall_table_single, all_links[0], score);
         }
 
         size_t get_entry(float score) const
         {
-            const EfRecallTable &table = tables_ ? (*tables_)[0] : *ef_recall_estimators_single;
+            const EfRecallTable &table = tables_ ? (*tables_)[0] : *ef_recall_table_single;
             auto entry = std::lower_bound(table.begin(), table.end(), score,
                                           [](const auto &a, float b) { return a.first < b; });
             if (entry == table.begin())       entry = table.begin();
@@ -182,7 +182,7 @@ namespace hnswdis
                     print_table((*tables_)[i]);
                 }
             }
-            else { print_table(*ef_recall_estimators_single); }
+            else { print_table(*ef_recall_table_single); }
         }
     };
 }

@@ -401,7 +401,7 @@ void search_and_score(
     const hnswdis::MatrixXf &data_vectors,
     const std::string &metric,
     const size_t k,
-    const size_t statics_length,
+    const size_t stats_length,
     const float quantile_step)
 {
 
@@ -421,7 +421,7 @@ void search_and_score(
     for (int i = 0; i < query_vectors.rows(); i++)
     {
         auto ret = alg_hnsw.adaptiveSearchKnn(
-            query_vectors.row(i).data(), k, statics_length, score_cal);
+            query_vectors.row(i).data(), k, stats_length, score_cal);
         score_list.push_back(ret.second);
     }
     end_time = std::chrono::high_resolution_clock::now();
@@ -465,7 +465,7 @@ void adaptive_search(
     const hnswdis::ApproximatedScoreCalculator &score_cal,
     const size_t k,
     hnswdis::Sketch &sketch,
-    const size_t statics_length,
+    const size_t stats_length,
     const float expected_recall)
 {
     // Force purely single-threaded execution for accurate search latency
@@ -475,7 +475,7 @@ void adaptive_search(
     time.reserve(repeat);
 
     std::tuple<size_t, size_t, float, float, float, int, int, int> exp_record =
-        std::make_tuple(statics_length, 0, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+        std::make_tuple(stats_length, 0, 0.0f, 0.0f, 0.0f, 0, 0, 0);
 
     for (int i = 0; i < repeat; ++i)
     {
@@ -489,7 +489,7 @@ void adaptive_search(
         for (int j = 0; j < query_vectors.rows(); ++j)
         {
             auto pq = alg_hnsw.adaptiveSearchKnnTest(
-                query_vectors.row(j).data(), k, statics_length, score_cal, &sketch);
+                query_vectors.row(j).data(), k, stats_length, score_cal, &sketch);
             std::vector<size_t> &labels = result[j];
             {
                 size_t count = pq.size();
@@ -588,7 +588,7 @@ void adaptive_search_per_query_result(
     const hnswdis::ApproximatedScoreCalculator &score_cal,
     const size_t k,
     hnswdis::Sketch &sketch,
-    const size_t statics_length,
+    const size_t stats_length,
     const float expected_recall,
     const size_t repeat,
     const size_t ef)
@@ -618,7 +618,7 @@ void adaptive_search_per_query_result(
 
             size_t query_ef = ef;
             auto pq = alg_hnsw.adaptiveSearchKnnTest(
-                query_vectors.row(j).data(), k, statics_length, score_cal, &sketch, nullptr, &query_ef);
+                query_vectors.row(j).data(), k, stats_length, score_cal, &sketch, nullptr, &query_ef);
             efs[j] = query_ef;
 
             auto end = std::chrono::high_resolution_clock::now();
@@ -939,13 +939,13 @@ void adaptive_ef_analysis(
     const hnswdis::ApproximatedScoreCalculator &score_cal,
     const size_t k,
     hnswdis::Sketch &sketch,
-    const size_t statics_length)
+    const size_t stats_length)
 {
     std::cout << "Adaptive EF Analysis for dataset: " << dataset << std::endl;
     for (int j = 0; j < query_vectors.rows(); ++j)
     {
         alg_hnsw.adaptiveSearchKnn(
-            query_vectors.row(j).data(), k, statics_length, score_cal, &sketch);
+            query_vectors.row(j).data(), k, stats_length, score_cal, &sketch);
     }
     std::cout << std::endl;
 }
