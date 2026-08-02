@@ -896,6 +896,12 @@ void per_query_baseline_exp(
         std::cout << "\nTotal Latency: " << iter_total_latency_seconds << " seconds" << std::endl;
         std::cout << "Average Latency: " << median_iter.avg_latency << " ns" << std::endl;
 
+        std::get<1>(exp_record) = iter_avg_recall;
+        std::get<2>(exp_record) = percentile_5;
+        std::get<3>(exp_record) = percentile_1;
+        std::get<4>(exp_record) = median_iter.avg_latency;
+        exp_results.push_back(exp_record);
+
         if (ef > ef_upper_bound)
         {
             break;
