@@ -14,6 +14,9 @@
 #define USE_SSE
 #ifdef __AVX__
 #define USE_AVX
+#ifdef __AVX2__
+#define USE_AVX2
+#endif
 #ifdef __AVX512F__
 #define USE_AVX512
 #endif
@@ -87,6 +90,26 @@ static bool AVXCapable() {
     return HW_AVX && avxSupported;
 }
 
+static bool AVX2Capable() {
+    if (!AVXCapable()) return false;
+
+    int cpuInfo[4];
+
+    // CPU support (AVX2 is reported via extended feature flags, leaf 7)
+    cpuid(cpuInfo, 0, 0);
+    int nIds = cpuInfo[0];
+
+    bool HW_AVX2 = false;
+    if (nIds >= 0x00000007) {
+        cpuid(cpuInfo, 0x00000007, 0);
+        HW_AVX2 = (cpuInfo[1] & ((int)1 << 5)) != 0;  // EBX bit 5
+    }
+
+    // AVX2 uses the same YMM OS state as AVX, so the xgetbv/XCR0 check
+    // already performed inside AVXCapable() is sufficient here.
+    return HW_AVX2;
+}
+
 static bool AVX512Capable() {
     if (!AVXCapable()) return false;
 
@@ -115,6 +138,26 @@ static bool AVX512Capable() {
     }
     return HW_AVX512F && avx512Supported;
 }
+
+#if defined(USE_AVX2)
+#include <immintrin.h>
+// AVX2 kernels are written against FMA3 (3-operand fused multiply-add).
+// FMA3 is technically a separate CPUID feature bit from AVX2, but in
+// practice every AVX2-capable x86 CPU also implements FMA3, and most build
+// setups that pass -mavx2 (or /arch:AVX2) also enable -mfma. To stay
+// correct even if that's not the case, fall back to a mul+add emulation
+// when the compiler wasn't told FMA3 is available.
+#if defined(__FMA__)
+static inline __m256 hnsw_mm256_fmadd_ps(__m256 a, __m256 b, __m256 c) {
+    return _mm256_fmadd_ps(a, b, c);
+}
+#else
+static inline __m256 hnsw_mm256_fmadd_ps(__m256 a, __m256 b, __m256 c) {
+    return _mm256_add_ps(_mm256_mul_ps(a, b), c);
+}
+#endif
+#endif
+
 #endif
 
 #include <queue>
