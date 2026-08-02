@@ -1719,7 +1719,7 @@ int main() {
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
+    // offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
     per_query_result_exp(); // per-query result experiments
 
     // online_exp();           // onine search experiments

@@ -14,18 +14,14 @@ def create_annotated_plot_with_stats():
         "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_baseline_deep-image-96-angular.csv"
     )
 
-    # Prefer EF=500 to match the user's uploaded chart
-    if 500 in df_base["EF"].unique():
-        best_ef = 500
-    else:
-        avg_recall_mine = df_mine["Recall"].mean()
-        best_ef = df_base["EF"].unique()[0]
-        min_diff = 1.0
-        for ef in df_base["EF"].unique():
-            r = df_base[df_base["EF"] == ef]["Recall"].mean()
-            if abs(r - avg_recall_mine) < min_diff:
-                min_diff = abs(r - avg_recall_mine)
-                best_ef = ef
+    avg_recall_mine = df_mine["Recall"].mean()
+    best_ef = df_base["EF"].unique()[0]
+    min_diff = 1.0
+    for ef in df_base["EF"].unique():
+        r = df_base[df_base["EF"] == ef]["Recall"].mean()
+        if abs(r - avg_recall_mine) < min_diff:
+            min_diff = abs(r - avg_recall_mine)
+            best_ef = ef
 
     df_base_best = df_base[df_base["EF"] == best_ef].copy()
     df_merged = pd.merge(

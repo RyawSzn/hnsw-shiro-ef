@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -lrt -DHAVE_CXX0X -march=native -fpic -w -fopenmp -ftree-vectorize -ftree-vectorizer-verbose=5 -g CMakeFiles/run.dir/experiments_driver/run.cpp.o -o run  -Wl,-rpath,/home/ryawszn/miniforge3/lib /home/ryawszn/miniforge3/lib/libhdf5_cpp.so.320.1.0 /home/ryawszn/miniforge3/lib/libhdf5.so.320.1.0 

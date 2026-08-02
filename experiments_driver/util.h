@@ -602,6 +602,7 @@ void adaptive_search_per_query_result(
         double avg_latency;
         std::vector<int64_t> latencies_ns;
         std::vector<float> recalls;
+        std::vector<size_t> efs;
     };
     std::vector<IterationResult> iter_results(repeat);
 
@@ -609,13 +610,16 @@ void adaptive_search_per_query_result(
         std::vector<std::vector<size_t>> result(num_queries, std::vector<size_t>(k, 0));
         std::vector<int64_t> latencies_ns(num_queries);
         std::vector<float> recalls(num_queries);
+        std::vector<size_t> efs(num_queries);
 
         for (int j = 0; j < num_queries; ++j)
         {
             auto start = std::chrono::high_resolution_clock::now();
 
+            size_t query_ef = ef;
             auto pq = alg_hnsw.adaptiveSearchKnnTest(
-                query_vectors.row(j).data(), k, statics_length, score_cal, &sketch);
+                query_vectors.row(j).data(), k, statics_length, score_cal, &sketch, nullptr, &query_ef);
+            efs[j] = query_ef;
 
             auto end = std::chrono::high_resolution_clock::now();
             auto latency_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
@@ -646,7 +650,7 @@ void adaptive_search_per_query_result(
         }
 
         double avg_latency = std::accumulate(latencies_ns.begin(), latencies_ns.end(), 0.0) / num_queries;
-        iter_results[rep] = {avg_latency, latencies_ns, recalls};
+        iter_results[rep] = {avg_latency, latencies_ns, recalls, efs};
 
         double avg_recall = std::accumulate(recalls.begin(), recalls.end(), 0.0) / num_queries;
         double total_latency_seconds = std::accumulate(latencies_ns.begin(), latencies_ns.end(), 0.0) / 1e9;
@@ -664,7 +668,7 @@ void adaptive_search_per_query_result(
         if (attempt_file.is_open()) {
             attempt_file << "QueryID,EF,Latency(ns),Recall\n";
             for (int j = 0; j < num_queries; ++j) {
-                attempt_file << j << "," << ef << "," << iter_results[rep].latencies_ns[j] << "," << iter_results[rep].recalls[j] << "\n";
+                attempt_file << j << "," << iter_results[rep].efs[j] << "," << iter_results[rep].latencies_ns[j] << "," << iter_results[rep].recalls[j] << "\n";
             }
             attempt_file.close();
         }
@@ -673,6 +677,7 @@ void adaptive_search_per_query_result(
     IterationResult median_iter;
     median_iter.latencies_ns.resize(num_queries);
     median_iter.recalls.resize(num_queries);
+    median_iter.efs.resize(num_queries);
     double total_lat = 0;
     for (int j = 0; j < num_queries; ++j) {
         std::vector<int64_t> q_lats;
@@ -683,6 +688,7 @@ void adaptive_search_per_query_result(
         std::sort(q_lats.begin(), q_lats.end());
         median_iter.latencies_ns[j] = q_lats[repeat / 2];
         median_iter.recalls[j] = iter_results[0].recalls[j];
+        median_iter.efs[j] = iter_results[0].efs[j];
         total_lat += median_iter.latencies_ns[j];
     }
     median_iter.avg_latency = total_lat / num_queries;
@@ -692,7 +698,7 @@ void adaptive_search_per_query_result(
     if (csv_file.is_open()) {
         csv_file << "QueryID,EF,Latency(ns),Recall\n";
         for (int j = 0; j < num_queries; ++j) {
-            csv_file << j << "," << ef << "," << median_iter.latencies_ns[j] << "," << median_iter.recalls[j] << "\n";
+            csv_file << j << "," << median_iter.efs[j] << "," << median_iter.latencies_ns[j] << "," << median_iter.recalls[j] << "\n";
         }
         csv_file.close();
         std::cout << "\nPer-query results (median latency per query) have been written to " << csv_filename << std::endl;
@@ -896,6 +902,7 @@ void per_query_baseline_exp(
         std::cout << "\nTotal Latency: " << iter_total_latency_seconds << " seconds" << std::endl;
         std::cout << "Average Latency: " << median_iter.avg_latency << " ns" << std::endl;
 
+        std::get<0>(exp_record) = ef;
         std::get<1>(exp_record) = iter_avg_recall;
         std::get<2>(exp_record) = percentile_5;
         std::get<3>(exp_record) = percentile_1;

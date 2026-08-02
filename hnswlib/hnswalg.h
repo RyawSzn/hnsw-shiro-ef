@@ -1639,6 +1639,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
         const hnswdis::ApproximatedScoreCalculator& score_calculator,
         hnswdis::Sketch* sketch = nullptr,
         float* out_cv = nullptr,
+        size_t* out_ef = nullptr,
         BaseFilterFunctor* isIdAllowed = nullptr) const {
 
         std::priority_queue<std::pair<dist_t, labeltype >> result;
@@ -1685,11 +1686,11 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
 
         if (bare_bone_search) {
             top_candidates = adaptiveSearchBaseLayerST2<true>(
-                    currObj, query_data, std::max(ef_, k), statics_length, score_calculator, sketch, out_cv, isIdAllowed);
+                    currObj, query_data, std::max(ef_, k), statics_length, score_calculator, sketch, out_cv, out_ef, isIdAllowed);
 
         } else {
             top_candidates = adaptiveSearchBaseLayerST2<false>(
-                    currObj, query_data, std::max(ef_, k), statics_length, score_calculator, sketch, out_cv, isIdAllowed);
+                    currObj, query_data, std::max(ef_, k), statics_length, score_calculator, sketch, out_cv, out_ef, isIdAllowed);
 
         }
 
@@ -1716,6 +1717,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
         const hnswdis::ApproximatedScoreCalculator& score_calculator,
         hnswdis::Sketch* sketch,
         float* out_cv = nullptr,
+        size_t* out_ef = nullptr,
         BaseFilterFunctor* isIdAllowed = nullptr,
         BaseSearchStopCondition<dist_t>* stop_condition = nullptr) const {
 
@@ -1845,6 +1847,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                         } else {
                             ef = ef_copy;
                         }
+                        if (out_ef) *out_ef = ef;
                         while (top_candidates.size() > ef) {
                             top_candidates.pop();
                         }
