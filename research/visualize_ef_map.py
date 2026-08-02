@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
     # Search specifically in EXPERIMENTS_ROOT/estimation_table
     base_dir = os.environ.get("EXPERIMENTS_ROOT", ".")
-    target_dir = Path(base_dir) / "estimation_table_ada"
+    target_dir = Path(base_dir) / "estimation_table"
 
     if not target_dir.exists() or not target_dir.is_dir():
         print(f"Directory not found: {target_dir}")

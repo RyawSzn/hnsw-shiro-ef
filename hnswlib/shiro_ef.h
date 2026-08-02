@@ -1455,9 +1455,9 @@ namespace hnswdis
                     int patience = 0;
                     const int MAX_PATIENCE = 1;
 
-                    while (expected_recall - latest_agg_recall > 1e-4f)
+                    while (expected_recall - latest_agg_recall > 1e-3f)
                     {
-                        ef_diff = std::max((int)(ef_diff * (expected_recall - latest_agg_recall) / std::max(recall_diff, 1e-4f)), (int)(k * 0.5));
+                        ef_diff = std::max((int)(ef_diff * (expected_recall - latest_agg_recall) / std::max(recall_diff, 1e-3f)), (int)(k * 0.5));
                         int ef = latest_ef + ef_diff;
 
                         if (ef > ef_upper_bound)
@@ -1507,7 +1507,7 @@ namespace hnswdis
                         latest_ef = ef;
                         latest_agg_recall = agg_recall;
 
-                        if (recall_diff < 1e-4f)
+                        if (recall_diff < 1e-3f)
                         {
                             patience++;
                             if (patience >= MAX_PATIENCE) {

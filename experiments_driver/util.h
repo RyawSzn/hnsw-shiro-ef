@@ -1,6 +1,7 @@
 #pragma once
 
 #include <H5Cpp.h>
+#include <filesystem>
 #include "../hnswlib/shiro_ef.h"
 
 void load_hdf5(const std::string &path,
@@ -656,14 +657,35 @@ void adaptive_search_per_query_result(
         std::cout << "Total Latency: " << total_latency_seconds << " seconds" << std::endl;
     }
 
-    std::vector<std::pair<double, size_t>> latency_pairs;
+    std::filesystem::create_directories("research/csv/attempts");
     for (size_t rep = 0; rep < repeat; rep++) {
-        latency_pairs.push_back({iter_results[rep].avg_latency, rep});
+        std::string attempt_filename = "research/csv/attempts/per_query_results_" + dataset + "_rep" + std::to_string(rep) + ".csv";
+        std::ofstream attempt_file(attempt_filename);
+        if (attempt_file.is_open()) {
+            attempt_file << "QueryID,EF,Latency(ns),Recall\n";
+            for (int j = 0; j < num_queries; ++j) {
+                attempt_file << j << "," << ef << "," << iter_results[rep].latencies_ns[j] << "," << iter_results[rep].recalls[j] << "\n";
+            }
+            attempt_file.close();
+        }
     }
-    std::sort(latency_pairs.begin(), latency_pairs.end());
-    size_t median_idx = latency_pairs[repeat / 2].second;
 
-    const auto& median_iter = iter_results[median_idx];
+    IterationResult median_iter;
+    median_iter.latencies_ns.resize(num_queries);
+    median_iter.recalls.resize(num_queries);
+    double total_lat = 0;
+    for (int j = 0; j < num_queries; ++j) {
+        std::vector<int64_t> q_lats;
+        q_lats.reserve(repeat);
+        for (size_t rep = 0; rep < repeat; rep++) {
+            q_lats.push_back(iter_results[rep].latencies_ns[j]);
+        }
+        std::sort(q_lats.begin(), q_lats.end());
+        median_iter.latencies_ns[j] = q_lats[repeat / 2];
+        median_iter.recalls[j] = iter_results[0].recalls[j];
+        total_lat += median_iter.latencies_ns[j];
+    }
+    median_iter.avg_latency = total_lat / num_queries;
 
     std::string csv_filename = "research/csv/per_query_results_" + dataset + ".csv";
     std::ofstream csv_file(csv_filename);
@@ -673,7 +695,7 @@ void adaptive_search_per_query_result(
             csv_file << j << "," << ef << "," << median_iter.latencies_ns[j] << "," << median_iter.recalls[j] << "\n";
         }
         csv_file.close();
-        std::cout << "\nPer-query results (from median iteration " << median_idx + 1 << ") have been written to " << csv_filename << std::endl;
+        std::cout << "\nPer-query results (median latency per query) have been written to " << csv_filename << std::endl;
     } else {
         std::cerr << "Error: Unable to open file for writing." << std::endl;
     }
@@ -732,6 +754,16 @@ void per_query_baseline_exp(
         csv_file.close();
     } else {
         std::cerr << "Error: Unable to open file for writing." << std::endl;
+    }
+
+    std::filesystem::create_directories("research/csv/attempts");
+    for (int rep = 0; rep < repeat; rep++) {
+        std::string attempt_filename = "research/csv/attempts/per_query_baseline_" + dataset + "_rep" + std::to_string(rep) + ".csv";
+        std::ofstream attempt_file(attempt_filename);
+        if (attempt_file.is_open()) {
+            attempt_file << "QueryID,EF,Latency(ns),Recall\n";
+            attempt_file.close();
+        }
     }
 
     while (exp_results.size() < 3 || global_avg_recall < 0.99)
@@ -798,14 +830,33 @@ void per_query_baseline_exp(
             iter_results[rep] = {avg_latency, iter_duration_ms, latencies_ns, recalls};
         }
 
-        std::vector<std::pair<double, size_t>> latency_pairs;
         for (int rep = 0; rep < repeat; rep++) {
-            latency_pairs.push_back({iter_results[rep].avg_latency, rep});
+            std::string attempt_filename = "research/csv/attempts/per_query_baseline_" + dataset + "_rep" + std::to_string(rep) + ".csv";
+            std::ofstream attempt_file(attempt_filename, std::ios_base::app);
+            if (attempt_file.is_open()) {
+                for (int j = 0; j < num_queries; ++j) {
+                    attempt_file << j << "," << ef << "," << iter_results[rep].latencies_ns[j] << "," << iter_results[rep].recalls[j] << "\n";
+                }
+                attempt_file.close();
+            }
         }
-        std::sort(latency_pairs.begin(), latency_pairs.end());
-        size_t median_idx = latency_pairs[repeat / 2].second;
 
-        const auto& median_iter = iter_results[median_idx];
+        IterationResult median_iter;
+        median_iter.latencies_ns.resize(num_queries);
+        median_iter.recalls.resize(num_queries);
+        double total_lat = 0;
+        for (int j = 0; j < num_queries; ++j) {
+            std::vector<int64_t> q_lats;
+            q_lats.reserve(repeat);
+            for (int rep = 0; rep < repeat; rep++) {
+                q_lats.push_back(iter_results[rep].latencies_ns[j]);
+            }
+            std::sort(q_lats.begin(), q_lats.end());
+            median_iter.latencies_ns[j] = q_lats[repeat / 2];
+            median_iter.recalls[j] = iter_results[0].recalls[j];
+            total_lat += median_iter.latencies_ns[j];
+        }
+        median_iter.avg_latency = total_lat / num_queries;
 
         std::ofstream csv_file_app(csv_filename, std::ios_base::app);
         if (csv_file_app.is_open()) {
