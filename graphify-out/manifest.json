@@ -15,12 +15,12 @@
     "semantic_hash": "64ccd3c03dbfe0980b6095766f5c4e52"
   },
   "benchmarking-darth/c_api/AutoTune_c.cpp": {
-    "mtime": 1780316731.695696,
+    "mtime": 1784915315.887801,
     "ast_hash": "d370fb4c137c45957c9602b8bc46998d",
     "semantic_hash": "d370fb4c137c45957c9602b8bc46998d"
   },
   "benchmarking-darth/c_api/AutoTune_c.h": {
-    "mtime": 1780316731.695696,
+    "mtime": 1784915315.8997915,
     "ast_hash": "5f32450f3aa02ccb695fcab6c6b14c91",
     "semantic_hash": "5f32450f3aa02ccb695fcab6c6b14c91"
   },
@@ -35,157 +35,157 @@
     "semantic_hash": "3faf21d2eac53d4df59565e29228eb75"
   },
   "benchmarking-darth/c_api/Clustering_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8997915,
     "ast_hash": "c649edb7910a18649859dea694983b24",
     "semantic_hash": "c649edb7910a18649859dea694983b24"
   },
   "benchmarking-darth/c_api/Clustering_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.903788,
     "ast_hash": "8e91f84d26479fee40294b75abcd59fb",
     "semantic_hash": "8e91f84d26479fee40294b75abcd59fb"
   },
   "benchmarking-darth/c_api/IndexBinary_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.903788,
     "ast_hash": "44e0e2f7c68a68706b8118731663aec0",
     "semantic_hash": "44e0e2f7c68a68706b8118731663aec0"
   },
   "benchmarking-darth/c_api/IndexBinary_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.903788,
     "ast_hash": "8785fe205d1a5e7f40c6000646e105ba",
     "semantic_hash": "8785fe205d1a5e7f40c6000646e105ba"
   },
   "benchmarking-darth/c_api/IndexFlat_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8838043,
     "ast_hash": "99979dee4431bdbbfd29acaf2c8afaca",
     "semantic_hash": "99979dee4431bdbbfd29acaf2c8afaca"
   },
   "benchmarking-darth/c_api/IndexFlat_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "fa5ae0a6819cb920522828703a900ad2",
     "semantic_hash": "fa5ae0a6819cb920522828703a900ad2"
   },
   "benchmarking-darth/c_api/IndexIVFFlat_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8798075,
     "ast_hash": "d4bdb97209aab2cbc451c1e008c12d1f",
     "semantic_hash": "d4bdb97209aab2cbc451c1e008c12d1f"
   },
   "benchmarking-darth/c_api/IndexIVFFlat_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "4365033e4b9889b8fbfe2f1c95a7cc23",
     "semantic_hash": "4365033e4b9889b8fbfe2f1c95a7cc23"
   },
   "benchmarking-darth/c_api/IndexIVF_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8997915,
     "ast_hash": "e5106b8d1548a6605d7837d2cdf5ebe1",
     "semantic_hash": "e5106b8d1548a6605d7837d2cdf5ebe1"
   },
   "benchmarking-darth/c_api/IndexIVF_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9157786,
     "ast_hash": "a1c18a192842a39fd6dfed152036855d",
     "semantic_hash": "a1c18a192842a39fd6dfed152036855d"
   },
   "benchmarking-darth/c_api/IndexLSH_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8798075,
     "ast_hash": "2473f0d7e79138aeffe2d74ab6903f15",
     "semantic_hash": "2473f0d7e79138aeffe2d74ab6903f15"
   },
   "benchmarking-darth/c_api/IndexLSH_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "314a632e573b18faa57908f2d12fb5b3",
     "semantic_hash": "314a632e573b18faa57908f2d12fb5b3"
   },
   "benchmarking-darth/c_api/IndexPreTransform_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9197752,
     "ast_hash": "46b1b78199bd5ea75e62688d46f0ad8a",
     "semantic_hash": "46b1b78199bd5ea75e62688d46f0ad8a"
   },
   "benchmarking-darth/c_api/IndexPreTransform_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.887801,
     "ast_hash": "52d9eb76b6eb83e23e38d676b2b58ca8",
     "semantic_hash": "52d9eb76b6eb83e23e38d676b2b58ca8"
   },
   "benchmarking-darth/c_api/IndexReplicas_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "5bcc545319330f7b69149c1b86e77426",
     "semantic_hash": "5bcc545319330f7b69149c1b86e77426"
   },
   "benchmarking-darth/c_api/IndexReplicas_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "a3b5a660845d7cf7b0526a07592ce886",
     "semantic_hash": "a3b5a660845d7cf7b0526a07592ce886"
   },
   "benchmarking-darth/c_api/IndexScalarQuantizer_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "e8a83772fd43930406399b8264bffbff",
     "semantic_hash": "e8a83772fd43930406399b8264bffbff"
   },
   "benchmarking-darth/c_api/IndexScalarQuantizer_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.887801,
     "ast_hash": "c8f7b3e8f37eb8db008c23f807a0884a",
     "semantic_hash": "c8f7b3e8f37eb8db008c23f807a0884a"
   },
   "benchmarking-darth/c_api/IndexShards_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8798075,
     "ast_hash": "93b92474e2e2831faf848ef536678cbc",
     "semantic_hash": "93b92474e2e2831faf848ef536678cbc"
   },
   "benchmarking-darth/c_api/IndexShards_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8798075,
     "ast_hash": "ddcc0735c372c1a7de969668f6a424b7",
     "semantic_hash": "ddcc0735c372c1a7de969668f6a424b7"
   },
   "benchmarking-darth/c_api/Index_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8838043,
     "ast_hash": "8229deb2b26f3bacccd19700385adc78",
     "semantic_hash": "8229deb2b26f3bacccd19700385adc78"
   },
   "benchmarking-darth/c_api/Index_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8838043,
     "ast_hash": "6bd7cc18d8da9c79f277a70f5144e3e5",
     "semantic_hash": "6bd7cc18d8da9c79f277a70f5144e3e5"
   },
   "benchmarking-darth/c_api/MetaIndexes_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8798075,
     "ast_hash": "c8141f7fb6ee4619fc1bd18c646641e1",
     "semantic_hash": "c8141f7fb6ee4619fc1bd18c646641e1"
   },
   "benchmarking-darth/c_api/MetaIndexes_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9197752,
     "ast_hash": "c5310af12761b7c9f0927f665b13abd3",
     "semantic_hash": "c5310af12761b7c9f0927f665b13abd3"
   },
   "benchmarking-darth/c_api/VectorTransform_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "0a24e370f55ff0ab8f7dbece1de206f7",
     "semantic_hash": "0a24e370f55ff0ab8f7dbece1de206f7"
   },
   "benchmarking-darth/c_api/VectorTransform_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8997915,
     "ast_hash": "bb3b5bbea1d2d6ca1f07ed74068d2fdd",
     "semantic_hash": "bb3b5bbea1d2d6ca1f07ed74068d2fdd"
   },
   "benchmarking-darth/c_api/clone_index_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.903788,
     "ast_hash": "6298a154532c16f3bfb68254600f0cba",
     "semantic_hash": "6298a154532c16f3bfb68254600f0cba"
   },
   "benchmarking-darth/c_api/clone_index_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8838043,
     "ast_hash": "81b177a0f6f1794da6985a06bfb762ae",
     "semantic_hash": "81b177a0f6f1794da6985a06bfb762ae"
   },
   "benchmarking-darth/c_api/error_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9197752,
     "ast_hash": "135de8479dee42c96339ade401336a9c",
     "semantic_hash": "135de8479dee42c96339ade401336a9c"
   },
   "benchmarking-darth/c_api/error_impl.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "714716f2c4f5c74ad582d85630d0533d",
     "semantic_hash": "714716f2c4f5c74ad582d85630d0533d"
   },
   "benchmarking-darth/c_api/error_impl.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9117818,
     "ast_hash": "9870e5d7b80f78831b1436d755789d7e",
     "semantic_hash": "9870e5d7b80f78831b1436d755789d7e"
   },
@@ -195,72 +195,72 @@
     "semantic_hash": "8d1ff6dece11a5f06f63e462b5682a88"
   },
   "benchmarking-darth/c_api/faiss_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.903788,
     "ast_hash": "6c486c63f3ea8b2c3c62aed592af04fa",
     "semantic_hash": "6c486c63f3ea8b2c3c62aed592af04fa"
   },
   "benchmarking-darth/c_api/gpu/DeviceUtils_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8917978,
     "ast_hash": "5216d0f6befb3c2b27fd25b94931292c",
     "semantic_hash": "5216d0f6befb3c2b27fd25b94931292c"
   },
   "benchmarking-darth/c_api/gpu/DeviceUtils_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.887801,
     "ast_hash": "7cf413e83e7039d6b84f65f60a1d0a4a",
     "semantic_hash": "7cf413e83e7039d6b84f65f60a1d0a4a"
   },
   "benchmarking-darth/c_api/gpu/GpuAutoTune_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8957946,
     "ast_hash": "0a9fb1450def807aad27ac52a77ed9a5",
     "semantic_hash": "0a9fb1450def807aad27ac52a77ed9a5"
   },
   "benchmarking-darth/c_api/gpu/GpuAutoTune_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8957946,
     "ast_hash": "e791c170772103bc3ff8804a1ec6a587",
     "semantic_hash": "e791c170772103bc3ff8804a1ec6a587"
   },
   "benchmarking-darth/c_api/gpu/GpuClonerOptions_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8917978,
     "ast_hash": "f1d06e53d7102de28dc87487c17f9af6",
     "semantic_hash": "f1d06e53d7102de28dc87487c17f9af6"
   },
   "benchmarking-darth/c_api/gpu/GpuClonerOptions_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8917978,
     "ast_hash": "99ccdf086fd590ecb7baa4f863f781f6",
     "semantic_hash": "99ccdf086fd590ecb7baa4f863f781f6"
   },
   "benchmarking-darth/c_api/gpu/GpuIndex_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8957946,
     "ast_hash": "9b69c6f36f56368b7366798be2f8c752",
     "semantic_hash": "9b69c6f36f56368b7366798be2f8c752"
   },
   "benchmarking-darth/c_api/gpu/GpuIndex_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8917978,
     "ast_hash": "a14cabbc9b8873f27c81d1ac8d030aff",
     "semantic_hash": "a14cabbc9b8873f27c81d1ac8d030aff"
   },
   "benchmarking-darth/c_api/gpu/GpuIndicesOptions_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8957946,
     "ast_hash": "ef41b185cb21ed899116f7e0c5ac8e74",
     "semantic_hash": "ef41b185cb21ed899116f7e0c5ac8e74"
   },
   "benchmarking-darth/c_api/gpu/GpuResources_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8917978,
     "ast_hash": "d8d2f63dada9fff82909304706479a2a",
     "semantic_hash": "d8d2f63dada9fff82909304706479a2a"
   },
   "benchmarking-darth/c_api/gpu/GpuResources_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8957946,
     "ast_hash": "eacf62217676689bd61718b11a667879",
     "semantic_hash": "eacf62217676689bd61718b11a667879"
   },
   "benchmarking-darth/c_api/gpu/StandardGpuResources_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8957946,
     "ast_hash": "614ceb02baed8a2751de365cdb452fc3",
     "semantic_hash": "614ceb02baed8a2751de365cdb452fc3"
   },
   "benchmarking-darth/c_api/gpu/StandardGpuResources_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8957946,
     "ast_hash": "251d4dd2e60ba09dbb23cb2593d5cc7e",
     "semantic_hash": "251d4dd2e60ba09dbb23cb2593d5cc7e"
   },
@@ -270,52 +270,52 @@
     "semantic_hash": "2290321aa56f43cd1b32b4e10404c068"
   },
   "benchmarking-darth/c_api/gpu/macros_impl.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8917978,
     "ast_hash": "e54d0f557f5fb032d19379ed88036755",
     "semantic_hash": "e54d0f557f5fb032d19379ed88036755"
   },
   "benchmarking-darth/c_api/impl/AuxIndexStructures_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9157786,
     "ast_hash": "1384082823f9f712f1f514c7f5e0e8fa",
     "semantic_hash": "1384082823f9f712f1f514c7f5e0e8fa"
   },
   "benchmarking-darth/c_api/impl/AuxIndexStructures_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9157786,
     "ast_hash": "f5a3bc1728b37105fee44f320674dbf2",
     "semantic_hash": "f5a3bc1728b37105fee44f320674dbf2"
   },
   "benchmarking-darth/c_api/index_factory_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9197752,
     "ast_hash": "9347db573a4c481c1233b932a4e69928",
     "semantic_hash": "9347db573a4c481c1233b932a4e69928"
   },
   "benchmarking-darth/c_api/index_factory_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.907785,
     "ast_hash": "c92859706d80b1f3e2be4d3d29eeaab5",
     "semantic_hash": "c92859706d80b1f3e2be4d3d29eeaab5"
   },
   "benchmarking-darth/c_api/index_io_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8838043,
     "ast_hash": "381cc7b399785e102173fc7d70b1d5bc",
     "semantic_hash": "381cc7b399785e102173fc7d70b1d5bc"
   },
   "benchmarking-darth/c_api/index_io_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.9157786,
     "ast_hash": "e8a2452204fbb54211163356a952a266",
     "semantic_hash": "e8a2452204fbb54211163356a952a266"
   },
   "benchmarking-darth/c_api/macros_impl.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.8798075,
     "ast_hash": "f6062c5fc7e8dc879c6d5a4f8427fdbc",
     "semantic_hash": "f6062c5fc7e8dc879c6d5a4f8427fdbc"
   },
   "benchmarking-darth/c_api/utils/distances_c.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.887801,
     "ast_hash": "a43368aff73cf26a567ea27c6d5c19ea",
     "semantic_hash": "a43368aff73cf26a567ea27c6d5c19ea"
   },
   "benchmarking-darth/c_api/utils/distances_c.h": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.887801,
     "ast_hash": "d298f90055d4d5f7e04b6c1626c6051e",
     "semantic_hash": "d298f90055d4d5f7e04b6c1626c6051e"
   },
@@ -365,22 +365,22 @@
     "semantic_hash": "a4535055d0275cb76b2eb70d0d463fb4"
   },
   "benchmarking-darth/demos/demo_imi_flat.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.923772,
     "ast_hash": "2d49eebd05d897271615b157f5218024",
     "semantic_hash": "2d49eebd05d897271615b157f5218024"
   },
   "benchmarking-darth/demos/demo_imi_pq.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.923772,
     "ast_hash": "8cf65cbb8fb1b62c901b5dd16b3c75cf",
     "semantic_hash": "8cf65cbb8fb1b62c901b5dd16b3c75cf"
   },
   "benchmarking-darth/demos/demo_ivfpq_indexing.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.927769,
     "ast_hash": "5a3b56102b1eaf31200b8e7c29958f1d",
     "semantic_hash": "5a3b56102b1eaf31200b8e7c29958f1d"
   },
   "benchmarking-darth/demos/demo_nndescent.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.923772,
     "ast_hash": "576a1a2a95f540ff6930ec26302f7808",
     "semantic_hash": "576a1a2a95f540ff6930ec26302f7808"
   },
@@ -390,17 +390,17 @@
     "semantic_hash": "d27931e218802db963f37275a121e82a"
   },
   "benchmarking-darth/demos/demo_residual_quantizer.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.923772,
     "ast_hash": "3b5b5d19135ddc7aa7b26073be2779ad",
     "semantic_hash": "3b5b5d19135ddc7aa7b26073be2779ad"
   },
   "benchmarking-darth/demos/demo_sift1M.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.927769,
     "ast_hash": "5cca15ee6922e8555e5c3850b4b7cbb6",
     "semantic_hash": "5cca15ee6922e8555e5c3850b4b7cbb6"
   },
   "benchmarking-darth/demos/demo_weighted_kmeans.cpp": {
-    "mtime": 1780316731.6993623,
+    "mtime": 1784915315.927769,
     "ast_hash": "dff6c57ae758692c250c6414edff4f81",
     "semantic_hash": "dff6c57ae758692c250c6414edff4f81"
   },
@@ -455,17 +455,17 @@
     "semantic_hash": "eb2b74623ccbcf243a7f7d3024f225ca"
   },
   "benchmarking-darth/demos/rocksdb_ivf/RocksDBInvertedLists.cpp": {
-    "mtime": 1780316731.7030287,
+    "mtime": 1784915315.923772,
     "ast_hash": "38de68f0b40d8fe494137fdd8e6089f0",
     "semantic_hash": "38de68f0b40d8fe494137fdd8e6089f0"
   },
   "benchmarking-darth/demos/rocksdb_ivf/RocksDBInvertedLists.h": {
-    "mtime": 1780316731.7030287,
+    "mtime": 1784915315.923772,
     "ast_hash": "ca889e6b5edec7bcbbcc8b841e7f2536",
     "semantic_hash": "ca889e6b5edec7bcbbcc8b841e7f2536"
   },
   "benchmarking-darth/demos/rocksdb_ivf/demo_rocksdb_ivf.cpp": {
-    "mtime": 1780316731.7030287,
+    "mtime": 1784915315.923772,
     "ast_hash": "86ff8e6cf9a2ad50efc856cc16eddac4",
     "semantic_hash": "86ff8e6cf9a2ad50efc856cc16eddac4"
   },
@@ -550,662 +550,662 @@
     "semantic_hash": "f1b7aa36f7435a2862e11baa57df0ab8"
   },
   "benchmarking-darth/faiss/AutoTune.cpp": {
-    "mtime": 1782404965.2233677,
+    "mtime": 1784915315.7798877,
     "ast_hash": "c754cc061ef1739801a4fb979b3f4422",
     "semantic_hash": "c754cc061ef1739801a4fb979b3f4422"
   },
   "benchmarking-darth/faiss/AutoTune.h": {
-    "mtime": 1782404965.2233677,
+    "mtime": 1784915315.7519102,
     "ast_hash": "29aa01422a019fe2f6104a7bdd4dac38",
     "semantic_hash": "29aa01422a019fe2f6104a7bdd4dac38"
   },
   "benchmarking-darth/faiss/Clustering.cpp": {
-    "mtime": 1782404965.2233677,
+    "mtime": 1784915315.85183,
     "ast_hash": "974ff34694232aab7f6fa3db9ecc2495",
     "semantic_hash": "974ff34694232aab7f6fa3db9ecc2495"
   },
   "benchmarking-darth/faiss/Clustering.h": {
-    "mtime": 1782404965.2233677,
+    "mtime": 1784915315.6479938,
     "ast_hash": "6ad937bc926bca9f74db2ff83e7c62d8",
     "semantic_hash": "6ad937bc926bca9f74db2ff83e7c62d8"
   },
   "benchmarking-darth/faiss/IVFlib.cpp": {
-    "mtime": 1782404965.2233677,
+    "mtime": 1784915315.7678974,
     "ast_hash": "d11bdd1233a28cfedab6ceb9462db095",
     "semantic_hash": "d11bdd1233a28cfedab6ceb9462db095"
   },
   "benchmarking-darth/faiss/IVFlib.h": {
-    "mtime": 1782404965.2233677,
+    "mtime": 1784915315.7599037,
     "ast_hash": "79f7bec9a69932f22b9fd82b495dde10",
     "semantic_hash": "79f7bec9a69932f22b9fd82b495dde10"
   },
   "benchmarking-darth/faiss/Index.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6000323,
     "ast_hash": "8336db308db2939b9f494797c0c3bd65",
     "semantic_hash": "8336db308db2939b9f494797c0c3bd65"
   },
   "benchmarking-darth/faiss/Index.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.643997,
     "ast_hash": "65cf35309d0281184b6457568073b167",
     "semantic_hash": "65cf35309d0281184b6457568073b167"
   },
   "benchmarking-darth/faiss/Index2Layer.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.7718942,
     "ast_hash": "4d78024ec75d2f9cd06328f2e606b517",
     "semantic_hash": "4d78024ec75d2f9cd06328f2e606b517"
   },
   "benchmarking-darth/faiss/Index2Layer.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6080258,
     "ast_hash": "2cb92d8b59fa13840278c459b02b5f1e",
     "semantic_hash": "2cb92d8b59fa13840278c459b02b5f1e"
   },
   "benchmarking-darth/faiss/IndexAdditiveQuantizer.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6080258,
     "ast_hash": "ba20c0dafe35439aeff4656efe3af532",
     "semantic_hash": "ba20c0dafe35439aeff4656efe3af532"
   },
   "benchmarking-darth/faiss/IndexAdditiveQuantizer.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.85183,
     "ast_hash": "052f5d541851dee16444f02355503864",
     "semantic_hash": "052f5d541851dee16444f02355503864"
   },
   "benchmarking-darth/faiss/IndexAdditiveQuantizerFastScan.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.755907,
     "ast_hash": "a6d25b25f6a30bd21844869f9222c664",
     "semantic_hash": "a6d25b25f6a30bd21844869f9222c664"
   },
   "benchmarking-darth/faiss/IndexAdditiveQuantizerFastScan.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.604029,
     "ast_hash": "2b0fb5dd17ea0ab725a4d3a68b7638c3",
     "semantic_hash": "2b0fb5dd17ea0ab725a4d3a68b7638c3"
   },
   "benchmarking-darth/faiss/IndexBinary.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6160195,
     "ast_hash": "03c3c16219d3b6cfc3e2e8007c12d67f",
     "semantic_hash": "03c3c16219d3b6cfc3e2e8007c12d67f"
   },
   "benchmarking-darth/faiss/IndexBinary.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.791878,
     "ast_hash": "3156edf303145ed365628e9352bee911",
     "semantic_hash": "3156edf303145ed365628e9352bee911"
   },
   "benchmarking-darth/faiss/IndexBinaryFlat.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.755907,
     "ast_hash": "c8c11a2e99af1702ed395fb0a15da301",
     "semantic_hash": "c8c11a2e99af1702ed395fb0a15da301"
   },
   "benchmarking-darth/faiss/IndexBinaryFlat.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6000323,
     "ast_hash": "acddeb1cb49511a42b456709eb26e5e5",
     "semantic_hash": "acddeb1cb49511a42b456709eb26e5e5"
   },
   "benchmarking-darth/faiss/IndexBinaryFromFloat.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.85183,
     "ast_hash": "1fb0831b47181c55a1f7612303830192",
     "semantic_hash": "1fb0831b47181c55a1f7612303830192"
   },
   "benchmarking-darth/faiss/IndexBinaryFromFloat.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.7878814,
     "ast_hash": "ff73b983edd515b40a132aee4a38d1b2",
     "semantic_hash": "ff73b983edd515b40a132aee4a38d1b2"
   },
   "benchmarking-darth/faiss/IndexBinaryHNSW.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.7639005,
     "ast_hash": "532fcb85b5dbccf95469e6e30a843a52",
     "semantic_hash": "532fcb85b5dbccf95469e6e30a843a52"
   },
   "benchmarking-darth/faiss/IndexBinaryHNSW.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.620016,
     "ast_hash": "aacca91834129c96f7603be089c9b562",
     "semantic_hash": "aacca91834129c96f7603be089c9b562"
   },
   "benchmarking-darth/faiss/IndexBinaryHash.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.620016,
     "ast_hash": "61aaa30debf0d3ea2e3e95eee2396cc9",
     "semantic_hash": "61aaa30debf0d3ea2e3e95eee2396cc9"
   },
   "benchmarking-darth/faiss/IndexBinaryHash.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.8478332,
     "ast_hash": "957b458b970e0922e956dbf3a54e9bec",
     "semantic_hash": "957b458b970e0922e956dbf3a54e9bec"
   },
   "benchmarking-darth/faiss/IndexBinaryIVF.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.643997,
     "ast_hash": "212b5e0055563370a71e6bedc75d284b",
     "semantic_hash": "212b5e0055563370a71e6bedc75d284b"
   },
   "benchmarking-darth/faiss/IndexBinaryIVF.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.735923,
     "ast_hash": "d154514c7660a4eb5936ccadb22b5eef",
     "semantic_hash": "d154514c7660a4eb5936ccadb22b5eef"
   },
   "benchmarking-darth/faiss/IndexFastScan.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6479938,
     "ast_hash": "d6bc08195d8a0be079a9b51b0e652d4f",
     "semantic_hash": "d6bc08195d8a0be079a9b51b0e652d4f"
   },
   "benchmarking-darth/faiss/IndexFastScan.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.699952,
     "ast_hash": "94d38a68424950fccd079103c3e72002",
     "semantic_hash": "94d38a68424950fccd079103c3e72002"
   },
   "benchmarking-darth/faiss/IndexFlat.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.8438363,
     "ast_hash": "99891855422179ad848f469063415500",
     "semantic_hash": "99891855422179ad848f469063415500"
   },
   "benchmarking-darth/faiss/IndexFlat.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6479938,
     "ast_hash": "1129b4fb24c88e5fe7117b705d7c0c7f",
     "semantic_hash": "1129b4fb24c88e5fe7117b705d7c0c7f"
   },
   "benchmarking-darth/faiss/IndexFlatCodes.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.8438363,
     "ast_hash": "e78e18f1de2abf7f2e6c6c140d2886cc",
     "semantic_hash": "e78e18f1de2abf7f2e6c6c140d2886cc"
   },
   "benchmarking-darth/faiss/IndexFlatCodes.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.7479134,
     "ast_hash": "b8a8649732977c2c85de390b7b0495da",
     "semantic_hash": "b8a8649732977c2c85de390b7b0495da"
   },
   "benchmarking-darth/faiss/IndexHNSW.cpp": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.735923,
     "ast_hash": "6a52f1862628d005e646bd13ce21add2",
     "semantic_hash": "6a52f1862628d005e646bd13ce21add2"
   },
   "benchmarking-darth/faiss/IndexHNSW.h": {
-    "mtime": 1782404965.2273934,
+    "mtime": 1784915315.6479938,
     "ast_hash": "58715c768d24e4993a2f8638aae4a74e",
     "semantic_hash": "58715c768d24e4993a2f8638aae4a74e"
   },
   "benchmarking-darth/faiss/IndexIDMap.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7039487,
     "ast_hash": "9b63fcc60392b8b91ba5e7df36f55c53",
     "semantic_hash": "9b63fcc60392b8b91ba5e7df36f55c53"
   },
   "benchmarking-darth/faiss/IndexIDMap.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.64,
     "ast_hash": "00929971262a34938f8c89afb7d636f4",
     "semantic_hash": "00929971262a34938f8c89afb7d636f4"
   },
   "benchmarking-darth/faiss/IndexIVF.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.755907,
     "ast_hash": "86a6bd703d7b26e3c0be880f42cf24a2",
     "semantic_hash": "86a6bd703d7b26e3c0be880f42cf24a2"
   },
   "benchmarking-darth/faiss/IndexIVF.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7439165,
     "ast_hash": "68ba8b3fd0ff0f8c3d9b10edbce3bcfe",
     "semantic_hash": "68ba8b3fd0ff0f8c3d9b10edbce3bcfe"
   },
   "benchmarking-darth/faiss/IndexIVFAdditiveQuantizer.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7798877,
     "ast_hash": "19948979ef1c022a9c3e7013d0c3a706",
     "semantic_hash": "19948979ef1c022a9c3e7013d0c3a706"
   },
   "benchmarking-darth/faiss/IndexIVFAdditiveQuantizer.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.735923,
     "ast_hash": "fa5d6850c8b97fbfbb5e906c2659c80f",
     "semantic_hash": "fa5d6850c8b97fbfbb5e906c2659c80f"
   },
   "benchmarking-darth/faiss/IndexIVFAdditiveQuantizerFastScan.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7878814,
     "ast_hash": "34f6bf566ebb16b3e27d7ad1ff78fe10",
     "semantic_hash": "34f6bf566ebb16b3e27d7ad1ff78fe10"
   },
   "benchmarking-darth/faiss/IndexIVFAdditiveQuantizerFastScan.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.73992,
     "ast_hash": "78151ff10cdc3b106ebd778519bfdcd2",
     "semantic_hash": "78151ff10cdc3b106ebd778519bfdcd2"
   },
   "benchmarking-darth/faiss/IndexIVFFastScan.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.6160195,
     "ast_hash": "30732e7c31fcbccba29cc664337f18b7",
     "semantic_hash": "30732e7c31fcbccba29cc664337f18b7"
   },
   "benchmarking-darth/faiss/IndexIVFFastScan.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.73992,
     "ast_hash": "38bc1a2f876fb6b5e17ff0128d3677bd",
     "semantic_hash": "38bc1a2f876fb6b5e17ff0128d3677bd"
   },
   "benchmarking-darth/faiss/IndexIVFFlat.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.643997,
     "ast_hash": "d78ca992dea491e2dfc3cd1708f300ea",
     "semantic_hash": "d78ca992dea491e2dfc3cd1708f300ea"
   },
   "benchmarking-darth/faiss/IndexIVFFlat.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.8398395,
     "ast_hash": "d9547601007f07893ae7517068a5050e",
     "semantic_hash": "d9547601007f07893ae7517068a5050e"
   },
   "benchmarking-darth/faiss/IndexIVFIndependentQuantizer.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7878814,
     "ast_hash": "c04fb2d4ec764e3a3dd7e1a782180db7",
     "semantic_hash": "c04fb2d4ec764e3a3dd7e1a782180db7"
   },
   "benchmarking-darth/faiss/IndexIVFIndependentQuantizer.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.73992,
     "ast_hash": "168e78e2add0ace66ab6651594355b5e",
     "semantic_hash": "168e78e2add0ace66ab6651594355b5e"
   },
   "benchmarking-darth/faiss/IndexIVFPQ.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.6000323,
     "ast_hash": "494f36faf3b4272489c44fb46f4bb76b",
     "semantic_hash": "494f36faf3b4272489c44fb46f4bb76b"
   },
   "benchmarking-darth/faiss/IndexIVFPQ.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7479134,
     "ast_hash": "2a7cc7013cc673e6733cc8b0c5b7d7a0",
     "semantic_hash": "2a7cc7013cc673e6733cc8b0c5b7d7a0"
   },
   "benchmarking-darth/faiss/IndexIVFPQFastScan.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.604029,
     "ast_hash": "f49ff12b033c2b838c66011e72ba3c2f",
     "semantic_hash": "f49ff12b033c2b838c66011e72ba3c2f"
   },
   "benchmarking-darth/faiss/IndexIVFPQFastScan.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7678974,
     "ast_hash": "4deaa209f827da97fc0a9ab486a76c76",
     "semantic_hash": "4deaa209f827da97fc0a9ab486a76c76"
   },
   "benchmarking-darth/faiss/IndexIVFPQR.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7678974,
     "ast_hash": "7774345b2b8c7074172214526102c73e",
     "semantic_hash": "7774345b2b8c7074172214526102c73e"
   },
   "benchmarking-darth/faiss/IndexIVFPQR.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.699952,
     "ast_hash": "e1069192b2698945cc4618a15470bee1",
     "semantic_hash": "e1069192b2698945cc4618a15470bee1"
   },
   "benchmarking-darth/faiss/IndexIVFSpectralHash.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7639005,
     "ast_hash": "644addf7bfa858d06ab0589337d5e21e",
     "semantic_hash": "644addf7bfa858d06ab0589337d5e21e"
   },
   "benchmarking-darth/faiss/IndexIVFSpectralHash.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.6120226,
     "ast_hash": "cac053594de9a5c8dcf02d815cdf1244",
     "semantic_hash": "cac053594de9a5c8dcf02d815cdf1244"
   },
   "benchmarking-darth/faiss/IndexLSH.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.791878,
     "ast_hash": "d6db64d40b142c8b8435fbc6e5819601",
     "semantic_hash": "d6db64d40b142c8b8435fbc6e5819601"
   },
   "benchmarking-darth/faiss/IndexLSH.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.6479938,
     "ast_hash": "863eb195ccde15af96ddd5ff72c8552c",
     "semantic_hash": "863eb195ccde15af96ddd5ff72c8552c"
   },
   "benchmarking-darth/faiss/IndexLattice.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.8398395,
     "ast_hash": "efebba9afaccb7a405e4d56f09a79784",
     "semantic_hash": "efebba9afaccb7a405e4d56f09a79784"
   },
   "benchmarking-darth/faiss/IndexLattice.h": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.7798877,
     "ast_hash": "a68de98c5b6fa84e4e9ac6a0d4f87703",
     "semantic_hash": "a68de98c5b6fa84e4e9ac6a0d4f87703"
   },
   "benchmarking-darth/faiss/IndexNNDescent.cpp": {
-    "mtime": 1782404965.2314193,
+    "mtime": 1784915315.604029,
     "ast_hash": "eb7cc88478fc031eabc84250ac4cbcd6",
     "semantic_hash": "eb7cc88478fc031eabc84250ac4cbcd6"
   },
   "benchmarking-darth/faiss/IndexNNDescent.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.6080258,
     "ast_hash": "674c83732a22c56cd335d9425cef2411",
     "semantic_hash": "674c83732a22c56cd335d9425cef2411"
   },
   "benchmarking-darth/faiss/IndexNSG.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7479134,
     "ast_hash": "9784f9e576e4c259930f08c50704c74e",
     "semantic_hash": "9784f9e576e4c259930f08c50704c74e"
   },
   "benchmarking-darth/faiss/IndexNSG.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.6080258,
     "ast_hash": "2d19b5ea11b60448d412ba042ceac9d6",
     "semantic_hash": "2d19b5ea11b60448d412ba042ceac9d6"
   },
   "benchmarking-darth/faiss/IndexPQ.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.8478332,
     "ast_hash": "4cd865ce4b360f1148c6ff9199071983",
     "semantic_hash": "4cd865ce4b360f1148c6ff9199071983"
   },
   "benchmarking-darth/faiss/IndexPQ.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7439165,
     "ast_hash": "0d4a68600a17811b3a147c5f323a6fb4",
     "semantic_hash": "0d4a68600a17811b3a147c5f323a6fb4"
   },
   "benchmarking-darth/faiss/IndexPQFastScan.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.8478332,
     "ast_hash": "b0649c9bc91b479ed68155473b8901a7",
     "semantic_hash": "b0649c9bc91b479ed68155473b8901a7"
   },
   "benchmarking-darth/faiss/IndexPQFastScan.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.6000323,
     "ast_hash": "d1511877f1a313c9dd6f79946085ca47",
     "semantic_hash": "d1511877f1a313c9dd6f79946085ca47"
   },
   "benchmarking-darth/faiss/IndexPreTransform.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.6120226,
     "ast_hash": "6a3ccc8b0f1d7bdb3bbc6ecd3750b506",
     "semantic_hash": "6a3ccc8b0f1d7bdb3bbc6ecd3750b506"
   },
   "benchmarking-darth/faiss/IndexPreTransform.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.604029,
     "ast_hash": "b5d5263bfb020839b35b42f597b1eded",
     "semantic_hash": "b5d5263bfb020839b35b42f597b1eded"
   },
   "benchmarking-darth/faiss/IndexRefine.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.643997,
     "ast_hash": "cb6f06426450c09ee54d6d984432db85",
     "semantic_hash": "cb6f06426450c09ee54d6d984432db85"
   },
   "benchmarking-darth/faiss/IndexRefine.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7519102,
     "ast_hash": "1feb1efa224389f4901408c025390d95",
     "semantic_hash": "1feb1efa224389f4901408c025390d95"
   },
   "benchmarking-darth/faiss/IndexReplicas.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.8478332,
     "ast_hash": "e8eaa754d43d8c3ae5e8f38fc20fb2c1",
     "semantic_hash": "e8eaa754d43d8c3ae5e8f38fc20fb2c1"
   },
   "benchmarking-darth/faiss/IndexReplicas.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7798877,
     "ast_hash": "df01792b50049b215177798d3a4d9dfe",
     "semantic_hash": "df01792b50049b215177798d3a4d9dfe"
   },
   "benchmarking-darth/faiss/IndexRowwiseMinMax.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.604029,
     "ast_hash": "f80b1e045892d5dca008fc9579576653",
     "semantic_hash": "f80b1e045892d5dca008fc9579576653"
   },
   "benchmarking-darth/faiss/IndexRowwiseMinMax.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.64,
     "ast_hash": "e0d135f968043e305dc58dcad0c4b771",
     "semantic_hash": "e0d135f968043e305dc58dcad0c4b771"
   },
   "benchmarking-darth/faiss/IndexScalarQuantizer.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7798877,
     "ast_hash": "be90cfb341573a28b2079010562c5a0a",
     "semantic_hash": "be90cfb341573a28b2079010562c5a0a"
   },
   "benchmarking-darth/faiss/IndexScalarQuantizer.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7439165,
     "ast_hash": "9e496ba50c3ca32a2d552dfd3aefe0b0",
     "semantic_hash": "9e496ba50c3ca32a2d552dfd3aefe0b0"
   },
   "benchmarking-darth/faiss/IndexShards.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7798877,
     "ast_hash": "c954b328eececa3bea5b633ce62cc634",
     "semantic_hash": "c954b328eececa3bea5b633ce62cc634"
   },
   "benchmarking-darth/faiss/IndexShards.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7479134,
     "ast_hash": "89ac293c52f88648f0b8d6f9faa164ef",
     "semantic_hash": "89ac293c52f88648f0b8d6f9faa164ef"
   },
   "benchmarking-darth/faiss/IndexShardsIVF.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.85183,
     "ast_hash": "ee208cc1f1a5ef74144f8b2ff91ad0ef",
     "semantic_hash": "ee208cc1f1a5ef74144f8b2ff91ad0ef"
   },
   "benchmarking-darth/faiss/IndexShardsIVF.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.7639005,
     "ast_hash": "d14c7d6ecc2856c6a602f52e58fbe334",
     "semantic_hash": "d14c7d6ecc2856c6a602f52e58fbe334"
   },
   "benchmarking-darth/faiss/MatrixStats.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.755907,
     "ast_hash": "bfc52d14907a855897a6bd4af2838673",
     "semantic_hash": "bfc52d14907a855897a6bd4af2838673"
   },
   "benchmarking-darth/faiss/MatrixStats.h": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.64,
     "ast_hash": "0a7a916ed031988c6a53ff239853c5fb",
     "semantic_hash": "0a7a916ed031988c6a53ff239853c5fb"
   },
   "benchmarking-darth/faiss/MetaIndexes.cpp": {
-    "mtime": 1782404965.2354453,
+    "mtime": 1784915315.85183,
     "ast_hash": "2f46aa85857ad6fdf0f0bf05783faf9c",
     "semantic_hash": "2f46aa85857ad6fdf0f0bf05783faf9c"
   },
   "benchmarking-darth/faiss/MetaIndexes.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.6160195,
     "ast_hash": "e7d689678b1be763bd76ffbfcaab0295",
     "semantic_hash": "e7d689678b1be763bd76ffbfcaab0295"
   },
   "benchmarking-darth/faiss/MetricType.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.7678974,
     "ast_hash": "5c0bfd0fc6b505dbc3e97a9edf662d1d",
     "semantic_hash": "5c0bfd0fc6b505dbc3e97a9edf662d1d"
   },
   "benchmarking-darth/faiss/VectorTransform.cpp": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.8438363,
     "ast_hash": "783d443825710f0bb0e189245d4f8350",
     "semantic_hash": "783d443825710f0bb0e189245d4f8350"
   },
   "benchmarking-darth/faiss/VectorTransform.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.7838845,
     "ast_hash": "ae0584080c509c4643bb18a99cdcfc02",
     "semantic_hash": "ae0584080c509c4643bb18a99cdcfc02"
   },
   "benchmarking-darth/faiss/clone_index.cpp": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.755907,
     "ast_hash": "7f00b43108e256e9162e1f221ec66ae7",
     "semantic_hash": "7f00b43108e256e9162e1f221ec66ae7"
   },
   "benchmarking-darth/faiss/clone_index.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.7639005,
     "ast_hash": "2bc9ae3351ec69fda9d20e325044f204",
     "semantic_hash": "2bc9ae3351ec69fda9d20e325044f204"
   },
   "benchmarking-darth/faiss/cppcontrib/SaDecodeKernels.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.620016,
     "ast_hash": "3301e4cdbbde6d3ed991d4dcbe5e390e",
     "semantic_hash": "3301e4cdbbde6d3ed991d4dcbe5e390e"
   },
   "benchmarking-darth/faiss/cppcontrib/detail/CoarseBitType.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.64,
     "ast_hash": "81fb6e6d22ff2ed5d767b4f3fd1326f6",
     "semantic_hash": "81fb6e6d22ff2ed5d767b4f3fd1326f6"
   },
   "benchmarking-darth/faiss/cppcontrib/detail/UintReader.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.64,
     "ast_hash": "2ec983a7e68255b34b8520a6654dfa2e",
     "semantic_hash": "2ec983a7e68255b34b8520a6654dfa2e"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/Level2-avx2-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.6320066,
     "ast_hash": "8c65a3ee68431cac90570e93b91da71f",
     "semantic_hash": "8c65a3ee68431cac90570e93b91da71f"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/Level2-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.6280098,
     "ast_hash": "c31eb96e077dd449c318ed1b4f0038f9",
     "semantic_hash": "c31eb96e077dd449c318ed1b4f0038f9"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/Level2-neon-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.624013,
     "ast_hash": "c9eeba5dbb735e600be7386875e40582",
     "semantic_hash": "c9eeba5dbb735e600be7386875e40582"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/MinMax-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.64,
     "ast_hash": "e14fd76f60b1c7541cc996c60cb1d542",
     "semantic_hash": "e14fd76f60b1c7541cc996c60cb1d542"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/MinMaxFP16-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.620016,
     "ast_hash": "5e6117ffac4692f6966ea7dfbac0e493",
     "semantic_hash": "5e6117ffac4692f6966ea7dfbac0e493"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/PQ-avx2-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.6360033,
     "ast_hash": "cf16b9404933e44c52397a601cfd36be",
     "semantic_hash": "cf16b9404933e44c52397a601cfd36be"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/PQ-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.6320066,
     "ast_hash": "9a82c47e9e0d1479ff560200be9fdafb",
     "semantic_hash": "9a82c47e9e0d1479ff560200be9fdafb"
   },
   "benchmarking-darth/faiss/cppcontrib/sa_decode/PQ-neon-inl.h": {
-    "mtime": 1782404965.239471,
+    "mtime": 1784915315.6360033,
     "ast_hash": "df3031cee1552f54777b93103c0fffa8",
     "semantic_hash": "df3031cee1552f54777b93103c0fffa8"
   },
   "benchmarking-darth/faiss/gpu/GpuAutoTune.cpp": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.715939,
     "ast_hash": "9596ba78906b9dc85e6cdad90d1576c0",
     "semantic_hash": "9596ba78906b9dc85e6cdad90d1576c0"
   },
   "benchmarking-darth/faiss/gpu/GpuAutoTune.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7239327,
     "ast_hash": "14ee46874a04bdd7dec507676323f3c6",
     "semantic_hash": "14ee46874a04bdd7dec507676323f3c6"
   },
   "benchmarking-darth/faiss/gpu/GpuCloner.cpp": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.715939,
     "ast_hash": "49eac8e14f5497e43508b949f86e24b7",
     "semantic_hash": "49eac8e14f5497e43508b949f86e24b7"
   },
   "benchmarking-darth/faiss/gpu/GpuCloner.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7319262,
     "ast_hash": "8446275cb3c295dfbdec7d3f785ae07d",
     "semantic_hash": "8446275cb3c295dfbdec7d3f785ae07d"
   },
   "benchmarking-darth/faiss/gpu/GpuClonerOptions.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7239327,
     "ast_hash": "9d05aa7c09669d6bcef0035681a32442",
     "semantic_hash": "9d05aa7c09669d6bcef0035681a32442"
   },
   "benchmarking-darth/faiss/gpu/GpuDistance.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7279296,
     "ast_hash": "27e36f265e9e242e85dbe719ac6944c7",
     "semantic_hash": "27e36f265e9e242e85dbe719ac6944c7"
   },
   "benchmarking-darth/faiss/gpu/GpuFaissAssert.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.715939,
     "ast_hash": "bcd51736b7c9d0f8bd8599710ee1999f",
     "semantic_hash": "bcd51736b7c9d0f8bd8599710ee1999f"
   },
   "benchmarking-darth/faiss/gpu/GpuIcmEncoder.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.715939,
     "ast_hash": "850b67db8965da21c3642660c235adb2",
     "semantic_hash": "850b67db8965da21c3642660c235adb2"
   },
   "benchmarking-darth/faiss/gpu/GpuIndex.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7239327,
     "ast_hash": "cddd9b32f7e6d0ff1c2756db14242d77",
     "semantic_hash": "cddd9b32f7e6d0ff1c2756db14242d77"
   },
   "benchmarking-darth/faiss/gpu/GpuIndexBinaryFlat.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7239327,
     "ast_hash": "b2dc7619a35137cc59b1aa5dea287c84",
     "semantic_hash": "b2dc7619a35137cc59b1aa5dea287c84"
   },
   "benchmarking-darth/faiss/gpu/GpuIndexFlat.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.715939,
     "ast_hash": "0cfd8b3eb7d3b612fdd851099e64725e",
     "semantic_hash": "0cfd8b3eb7d3b612fdd851099e64725e"
   },
   "benchmarking-darth/faiss/gpu/GpuIndexIVF.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7279296,
     "ast_hash": "6498e33894573cc090adf41768788c54",
     "semantic_hash": "6498e33894573cc090adf41768788c54"
   },
   "benchmarking-darth/faiss/gpu/GpuIndexIVFFlat.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7279296,
     "ast_hash": "b62f5c0bc2896807da95772e8d228ae5",
     "semantic_hash": "b62f5c0bc2896807da95772e8d228ae5"
   },
   "benchmarking-darth/faiss/gpu/GpuIndexIVFPQ.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7279296,
     "ast_hash": "b7d8770a7fd27d5aa052db79fc5b1f1e",
     "semantic_hash": "b7d8770a7fd27d5aa052db79fc5b1f1e"
   },
   "benchmarking-darth/faiss/gpu/GpuIndexIVFScalarQuantizer.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7279296,
     "ast_hash": "20bee8c70090853bbb30e33aaaac1283",
     "semantic_hash": "20bee8c70090853bbb30e33aaaac1283"
   },
   "benchmarking-darth/faiss/gpu/GpuIndicesOptions.h": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7279296,
     "ast_hash": "cb168a6ed7e8a5c16dc684280da9e46f",
     "semantic_hash": "cb168a6ed7e8a5c16dc684280da9e46f"
   },
   "benchmarking-darth/faiss/gpu/GpuResources.cpp": {
-    "mtime": 1782404965.243497,
+    "mtime": 1784915315.7319262,
     "ast_hash": "d09d4b9b1d76bc6d480032602eb28bc6",
     "semantic_hash": "d09d4b9b1d76bc6d480032602eb28bc6"
   },
   "benchmarking-darth/faiss/gpu/GpuResources.h": {
-    "mtime": 1782404965.2475226,
+    "mtime": 1784915315.7319262,
     "ast_hash": "db7754d24cd16ce7ffb27f355b6b7cb3",
     "semantic_hash": "db7754d24cd16ce7ffb27f355b6b7cb3"
   },
   "benchmarking-darth/faiss/gpu/StandardGpuResources.cpp": {
-    "mtime": 1782404965.2475226,
+    "mtime": 1784915315.735923,
     "ast_hash": "1953706dfcb24cf0d0c748d4d9a9e2cd",
     "semantic_hash": "1953706dfcb24cf0d0c748d4d9a9e2cd"
   },
   "benchmarking-darth/faiss/gpu/StandardGpuResources.h": {
-    "mtime": 1782404965.2475226,
+    "mtime": 1784915315.7239327,
     "ast_hash": "66e2980f5737ab20cd9833b2d20ae302",
     "semantic_hash": "66e2980f5737ab20cd9833b2d20ae302"
   },
   "benchmarking-darth/faiss/gpu/impl/IndexUtils.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7279296,
     "ast_hash": "f9d8370b97636a5653e9b3b8d00ff168",
     "semantic_hash": "f9d8370b97636a5653e9b3b8d00ff168"
   },
   "benchmarking-darth/faiss/gpu/impl/InterleavedCodes.cpp": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7279296,
     "ast_hash": "ca9294cd0678adc38848b43f0a194dd0",
     "semantic_hash": "ca9294cd0678adc38848b43f0a194dd0"
   },
   "benchmarking-darth/faiss/gpu/impl/InterleavedCodes.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7279296,
     "ast_hash": "acd70c93f2f191d1717e4a1ca42ff9d9",
     "semantic_hash": "acd70c93f2f191d1717e4a1ca42ff9d9"
   },
   "benchmarking-darth/faiss/gpu/impl/RemapIndices.cpp": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7279296,
     "ast_hash": "2e00045ed6bd8a6941c0aa11fb2a28f2",
     "semantic_hash": "2e00045ed6bd8a6941c0aa11fb2a28f2"
   },
   "benchmarking-darth/faiss/gpu/impl/RemapIndices.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7279296,
     "ast_hash": "86af183c3d59aeb319fbe79fbe1ba513",
     "semantic_hash": "86af183c3d59aeb319fbe79fbe1ba513"
   },
   "benchmarking-darth/faiss/gpu/perf/IndexWrapper-inl.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7319262,
     "ast_hash": "cb6aef8e7e43b4362ef800af685c51c8",
     "semantic_hash": "cb6aef8e7e43b4362ef800af685c51c8"
   },
   "benchmarking-darth/faiss/gpu/perf/IndexWrapper.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7319262,
     "ast_hash": "c035c6eacba6496f58919850d5d63fe2",
     "semantic_hash": "c035c6eacba6496f58919850d5d63fe2"
   },
   "benchmarking-darth/faiss/gpu/perf/PerfClustering.cpp": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7319262,
     "ast_hash": "0fa77074cbae879a04897aece89f656f",
     "semantic_hash": "0fa77074cbae879a04897aece89f656f"
   },
   "benchmarking-darth/faiss/gpu/perf/PerfIVFPQAdd.cpp": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7319262,
     "ast_hash": "a7855679454a7eda9e1493168fe408b7",
     "semantic_hash": "a7855679454a7eda9e1493168fe408b7"
   },
   "benchmarking-darth/faiss/gpu/perf/WriteIndex.cpp": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7319262,
     "ast_hash": "45e6f70cf7a96891be19fe9ea5ab61d8",
     "semantic_hash": "45e6f70cf7a96891be19fe9ea5ab61d8"
   },
@@ -1215,52 +1215,52 @@
     "semantic_hash": "eb11eeee6e073d31a28a842d91d901fe"
   },
   "benchmarking-darth/faiss/gpu/test/TestCodePacking.cpp": {
-    "mtime": 1782404965.2555745,
+    "mtime": 1784915315.7119424,
     "ast_hash": "0a17a81886820ee6e320bae67fa0e37d",
     "semantic_hash": "0a17a81886820ee6e320bae67fa0e37d"
   },
   "benchmarking-darth/faiss/gpu/test/TestGpuIndexBinaryFlat.cpp": {
-    "mtime": 1782404965.2555745,
+    "mtime": 1784915315.715939,
     "ast_hash": "92b27fe8407df43e07af1773e2868a42",
     "semantic_hash": "92b27fe8407df43e07af1773e2868a42"
   },
   "benchmarking-darth/faiss/gpu/test/TestGpuIndexFlat.cpp": {
-    "mtime": 1782404965.2555745,
+    "mtime": 1784915315.7119424,
     "ast_hash": "e37f5a4b68c3adf4978937e57daf19fe",
     "semantic_hash": "e37f5a4b68c3adf4978937e57daf19fe"
   },
   "benchmarking-darth/faiss/gpu/test/TestGpuIndexIVFFlat.cpp": {
-    "mtime": 1782404965.2555745,
+    "mtime": 1784915315.7079456,
     "ast_hash": "5cfbaf549f43270bba5213cafd6ee1f2",
     "semantic_hash": "5cfbaf549f43270bba5213cafd6ee1f2"
   },
   "benchmarking-darth/faiss/gpu/test/TestGpuIndexIVFPQ.cpp": {
-    "mtime": 1782404965.2555745,
+    "mtime": 1784915315.7079456,
     "ast_hash": "7ce6006f01f7f2d5c53e1d05f5ec4cf3",
     "semantic_hash": "7ce6006f01f7f2d5c53e1d05f5ec4cf3"
   },
   "benchmarking-darth/faiss/gpu/test/TestGpuIndexIVFScalarQuantizer.cpp": {
-    "mtime": 1782404965.2555745,
+    "mtime": 1784915315.7039487,
     "ast_hash": "784f25467cc65d1b0f756d36d7020c95",
     "semantic_hash": "784f25467cc65d1b0f756d36d7020c95"
   },
   "benchmarking-darth/faiss/gpu/test/TestGpuMemoryException.cpp": {
-    "mtime": 1782404965.2555745,
+    "mtime": 1784915315.7039487,
     "ast_hash": "8cd4ae7e32c36686712d15f99b3a87c4",
     "semantic_hash": "8cd4ae7e32c36686712d15f99b3a87c4"
   },
   "benchmarking-darth/faiss/gpu/test/TestUtils.cpp": {
-    "mtime": 1782404965.2596004,
+    "mtime": 1784915315.7119424,
     "ast_hash": "89692e9731eee1427e1d02b52fc2c647",
     "semantic_hash": "89692e9731eee1427e1d02b52fc2c647"
   },
   "benchmarking-darth/faiss/gpu/test/TestUtils.h": {
-    "mtime": 1782404965.2596004,
+    "mtime": 1784915315.7119424,
     "ast_hash": "6a3436eb94e6797266786c388ac69f29",
     "semantic_hash": "6a3436eb94e6797266786c388ac69f29"
   },
   "benchmarking-darth/faiss/gpu/test/demo_ivfpq_indexing_gpu.cpp": {
-    "mtime": 1782404965.2596004,
+    "mtime": 1784915315.7079456,
     "ast_hash": "b2862ad1dd95403ebd8ae3a07d92998f",
     "semantic_hash": "b2862ad1dd95403ebd8ae3a07d92998f"
   },
@@ -1315,397 +1315,397 @@
     "semantic_hash": "9c50753cbb26b494b196262a27b7e8fa"
   },
   "benchmarking-darth/faiss/gpu/utils/DeviceUtils.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.719936,
     "ast_hash": "548c1c9e3bb8f5ff586e86e7c4f1c647",
     "semantic_hash": "548c1c9e3bb8f5ff586e86e7c4f1c647"
   },
   "benchmarking-darth/faiss/gpu/utils/RaftUtils.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7239327,
     "ast_hash": "3e472bdfd651af7f266a1f7a245f72f7",
     "semantic_hash": "3e472bdfd651af7f266a1f7a245f72f7"
   },
   "benchmarking-darth/faiss/gpu/utils/StackDeviceMemory.cpp": {
-    "mtime": 1782404965.263626,
+    "mtime": 1784915315.719936,
     "ast_hash": "711d36def7709a4172405cee2b7adf6d",
     "semantic_hash": "711d36def7709a4172405cee2b7adf6d"
   },
   "benchmarking-darth/faiss/gpu/utils/StackDeviceMemory.h": {
-    "mtime": 1782404965.263626,
+    "mtime": 1784915315.719936,
     "ast_hash": "61c4ad91c8cf4bcf7360ab1aca3623c5",
     "semantic_hash": "61c4ad91c8cf4bcf7360ab1aca3623c5"
   },
   "benchmarking-darth/faiss/gpu/utils/StaticUtils.h": {
-    "mtime": 1782404965.263626,
+    "mtime": 1784915315.719936,
     "ast_hash": "8d34361a4205658058ba2d09fb42e541",
     "semantic_hash": "8d34361a4205658058ba2d09fb42e541"
   },
   "benchmarking-darth/faiss/gpu/utils/Timer.cpp": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.7239327,
     "ast_hash": "e7fc75a0164d437f071b7d5eac6a9168",
     "semantic_hash": "e7fc75a0164d437f071b7d5eac6a9168"
   },
   "benchmarking-darth/faiss/gpu/utils/Timer.h": {
-    "mtime": 1780316731.7103612,
+    "mtime": 1784915315.719936,
     "ast_hash": "6188363db182eef391f63239c1ad6360",
     "semantic_hash": "6188363db182eef391f63239c1ad6360"
   },
   "benchmarking-darth/faiss/impl/AdditiveQuantizer.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8198557,
     "ast_hash": "89c90466b93c0fe6d7407847d3eb2d25",
     "semantic_hash": "89c90466b93c0fe6d7407847d3eb2d25"
   },
   "benchmarking-darth/faiss/impl/AdditiveQuantizer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8038685,
     "ast_hash": "97e95095e4aa17757f9b34ba35971fc9",
     "semantic_hash": "97e95095e4aa17757f9b34ba35971fc9"
   },
   "benchmarking-darth/faiss/impl/AuxIndexStructures.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.831846,
     "ast_hash": "f1ac03285ff2fe2051a6cf8b4c53f873",
     "semantic_hash": "f1ac03285ff2fe2051a6cf8b4c53f873"
   },
   "benchmarking-darth/faiss/impl/AuxIndexStructures.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8238523,
     "ast_hash": "2d34ada1c7c018be5e5c7a27c32f5ae4",
     "semantic_hash": "2d34ada1c7c018be5e5c7a27c32f5ae4"
   },
   "benchmarking-darth/faiss/impl/CodePacker.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "c150e7b8fd6e224322dcde7d0a61fd36",
     "semantic_hash": "c150e7b8fd6e224322dcde7d0a61fd36"
   },
   "benchmarking-darth/faiss/impl/CodePacker.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8038685,
     "ast_hash": "ead29ec8b3563ee7aa6347cbe453b363",
     "semantic_hash": "ead29ec8b3563ee7aa6347cbe453b363"
   },
   "benchmarking-darth/faiss/impl/DeclarativeRecall.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7998717,
     "ast_hash": "f3d97bbee5e35c2e7df497116c9b3af1",
     "semantic_hash": "f3d97bbee5e35c2e7df497116c9b3af1"
   },
   "benchmarking-darth/faiss/impl/DeclarativeRecall.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.811862,
     "ast_hash": "f8a855eb07ef2fa278e6b8c7859135a1",
     "semantic_hash": "f8a855eb07ef2fa278e6b8c7859135a1"
   },
   "benchmarking-darth/faiss/impl/DistanceComputer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.831846,
     "ast_hash": "3680b0cd831180b92e572d98faca24d2",
     "semantic_hash": "3680b0cd831180b92e572d98faca24d2"
   },
   "benchmarking-darth/faiss/impl/FaissAssert.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8038685,
     "ast_hash": "a28eb324602dc6bb161ecf472e48af20",
     "semantic_hash": "a28eb324602dc6bb161ecf472e48af20"
   },
   "benchmarking-darth/faiss/impl/FaissException.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "11dc94644f77f32216f2927cea6fdbf0",
     "semantic_hash": "11dc94644f77f32216f2927cea6fdbf0"
   },
   "benchmarking-darth/faiss/impl/FaissException.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7958748,
     "ast_hash": "8004b14310bfabfcea84689b145ee9dc",
     "semantic_hash": "8004b14310bfabfcea84689b145ee9dc"
   },
   "benchmarking-darth/faiss/impl/HNSW.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8238523,
     "ast_hash": "23d78bc4311d1b588feca44afad5d531",
     "semantic_hash": "23d78bc4311d1b588feca44afad5d531"
   },
   "benchmarking-darth/faiss/impl/HNSW.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8238523,
     "ast_hash": "0b8a47654cc19523dd6c98e9340d09d1",
     "semantic_hash": "0b8a47654cc19523dd6c98e9340d09d1"
   },
   "benchmarking-darth/faiss/impl/IDSelector.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8038685,
     "ast_hash": "2f94790e07ce4b3cf22a505a1025097c",
     "semantic_hash": "2f94790e07ce4b3cf22a505a1025097c"
   },
   "benchmarking-darth/faiss/impl/IDSelector.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.831846,
     "ast_hash": "48a2bf09bd528a2f2289892916128f0b",
     "semantic_hash": "48a2bf09bd528a2f2289892916128f0b"
   },
   "benchmarking-darth/faiss/impl/LocalSearchQuantizer.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7998717,
     "ast_hash": "15c0a4a1a5dca45a61c437906a7dffbd",
     "semantic_hash": "15c0a4a1a5dca45a61c437906a7dffbd"
   },
   "benchmarking-darth/faiss/impl/LocalSearchQuantizer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8198557,
     "ast_hash": "1996c2e29454a6ef098a0a97ae91cec0",
     "semantic_hash": "1996c2e29454a6ef098a0a97ae91cec0"
   },
   "benchmarking-darth/faiss/impl/LookupTableScaler.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7958748,
     "ast_hash": "f7469248397d2737d7f61980098b64a5",
     "semantic_hash": "f7469248397d2737d7f61980098b64a5"
   },
   "benchmarking-darth/faiss/impl/NNDescent.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.831846,
     "ast_hash": "1e6b1f16922299f435e21a609fb0d9f3",
     "semantic_hash": "1e6b1f16922299f435e21a609fb0d9f3"
   },
   "benchmarking-darth/faiss/impl/NNDescent.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7958748,
     "ast_hash": "4b2447efdff3cf25f06239800fb61f71",
     "semantic_hash": "4b2447efdff3cf25f06239800fb61f71"
   },
   "benchmarking-darth/faiss/impl/NSG.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8158588,
     "ast_hash": "3dd9acd7a3f64c7d4842da6af7c264e4",
     "semantic_hash": "3dd9acd7a3f64c7d4842da6af7c264e4"
   },
   "benchmarking-darth/faiss/impl/NSG.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8278491,
     "ast_hash": "cc4f4ce2c7813431f4da60360f16a678",
     "semantic_hash": "cc4f4ce2c7813431f4da60360f16a678"
   },
   "benchmarking-darth/faiss/impl/PolysemousTraining.cpp": {
-    "mtime": 1783153129.1248174,
+    "mtime": 1784915315.8398395,
     "ast_hash": "9be234a6d2811889515e963a3ffd0b2a",
     "semantic_hash": "9be234a6d2811889515e963a3ffd0b2a"
   },
   "benchmarking-darth/faiss/impl/PolysemousTraining.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8198557,
     "ast_hash": "5c070ba704f74a768d80080bb8682f68",
     "semantic_hash": "5c070ba704f74a768d80080bb8682f68"
   },
   "benchmarking-darth/faiss/impl/ProductAdditiveQuantizer.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7998717,
     "ast_hash": "d50d5526d7850b16e63326da8a3d8b7e",
     "semantic_hash": "d50d5526d7850b16e63326da8a3d8b7e"
   },
   "benchmarking-darth/faiss/impl/ProductAdditiveQuantizer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.831846,
     "ast_hash": "359f56a52d60ec37715c224ae05197c9",
     "semantic_hash": "359f56a52d60ec37715c224ae05197c9"
   },
   "benchmarking-darth/faiss/impl/ProductQuantizer-inl.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8278491,
     "ast_hash": "309d941e3b22f55f8ab0189cb56b43c9",
     "semantic_hash": "309d941e3b22f55f8ab0189cb56b43c9"
   },
   "benchmarking-darth/faiss/impl/ProductQuantizer.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8078651,
     "ast_hash": "ed79495cec7d7b7b02cd4a4a00ed57ea",
     "semantic_hash": "ed79495cec7d7b7b02cd4a4a00ed57ea"
   },
   "benchmarking-darth/faiss/impl/ProductQuantizer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8078651,
     "ast_hash": "9cf752ae6bedaf3f78575213b6d4d53b",
     "semantic_hash": "9cf752ae6bedaf3f78575213b6d4d53b"
   },
   "benchmarking-darth/faiss/impl/Quantizer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8158588,
     "ast_hash": "b3b7964157b4a416991d034faef33a04",
     "semantic_hash": "b3b7964157b4a416991d034faef33a04"
   },
   "benchmarking-darth/faiss/impl/ResidualQuantizer.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.831846,
     "ast_hash": "8e3d4b275cc8d89c19398e478dd7253d",
     "semantic_hash": "8e3d4b275cc8d89c19398e478dd7253d"
   },
   "benchmarking-darth/faiss/impl/ResidualQuantizer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8158588,
     "ast_hash": "9cb97daaf0a9146eb9bfff0a61335677",
     "semantic_hash": "9cb97daaf0a9146eb9bfff0a61335677"
   },
   "benchmarking-darth/faiss/impl/ResultHandler.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8038685,
     "ast_hash": "fb0be381b9895d322e8bff583f7d4280",
     "semantic_hash": "fb0be381b9895d322e8bff583f7d4280"
   },
   "benchmarking-darth/faiss/impl/ScalarQuantizer.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7958748,
     "ast_hash": "d7dcf42654883f7e8e5b8acbc75afc51",
     "semantic_hash": "d7dcf42654883f7e8e5b8acbc75afc51"
   },
   "benchmarking-darth/faiss/impl/ScalarQuantizer.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.811862,
     "ast_hash": "e6b84eff31948c88aeb76aadf5fe0fce",
     "semantic_hash": "e6b84eff31948c88aeb76aadf5fe0fce"
   },
   "benchmarking-darth/faiss/impl/ThreadedIndex-inl.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "66c95526339c35ee7f7494b472f401d5",
     "semantic_hash": "66c95526339c35ee7f7494b472f401d5"
   },
   "benchmarking-darth/faiss/impl/ThreadedIndex.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8078651,
     "ast_hash": "d779a682358c0f023d0441f049136726",
     "semantic_hash": "d779a682358c0f023d0441f049136726"
   },
   "benchmarking-darth/faiss/impl/code_distance/code_distance-avx2.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "b5e2b91188d0d7a94737faa3589c8c03",
     "semantic_hash": "b5e2b91188d0d7a94737faa3589c8c03"
   },
   "benchmarking-darth/faiss/impl/code_distance/code_distance-generic.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "4b750d936dd25cbee91c3e435bab908d",
     "semantic_hash": "4b750d936dd25cbee91c3e435bab908d"
   },
   "benchmarking-darth/faiss/impl/code_distance/code_distance.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "1956f6732c93649dc2bee019daea5b87",
     "semantic_hash": "1956f6732c93649dc2bee019daea5b87"
   },
   "benchmarking-darth/faiss/impl/code_distance/code_distance_avx512.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "83000afca81d76d79ef70ab1ea8c911c",
     "semantic_hash": "83000afca81d76d79ef70ab1ea8c911c"
   },
   "benchmarking-darth/faiss/impl/index_read.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.791878,
     "ast_hash": "c2d0adf83ab5e0ea649cce8f0b5b53d2",
     "semantic_hash": "c2d0adf83ab5e0ea649cce8f0b5b53d2"
   },
   "benchmarking-darth/faiss/impl/index_write.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8158588,
     "ast_hash": "7eedaf128133528c5ef8b94ef724e8c4",
     "semantic_hash": "7eedaf128133528c5ef8b94ef724e8c4"
   },
   "benchmarking-darth/faiss/impl/io.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8278491,
     "ast_hash": "f675e785a66fc42d5d6301fe96c2bd79",
     "semantic_hash": "f675e785a66fc42d5d6301fe96c2bd79"
   },
   "benchmarking-darth/faiss/impl/io.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8398395,
     "ast_hash": "68ae42464b7106a0472ab19b86f43e12",
     "semantic_hash": "68ae42464b7106a0472ab19b86f43e12"
   },
   "benchmarking-darth/faiss/impl/io_macros.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7998717,
     "ast_hash": "9b74270c0af00a81fe4cf5936780edeb",
     "semantic_hash": "9b74270c0af00a81fe4cf5936780edeb"
   },
   "benchmarking-darth/faiss/impl/kmeans1d.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7998717,
     "ast_hash": "487896515340717ff46be741b73e20c4",
     "semantic_hash": "487896515340717ff46be741b73e20c4"
   },
   "benchmarking-darth/faiss/impl/kmeans1d.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8038685,
     "ast_hash": "a952f68e9cfc18eb0c7f15c35b256613",
     "semantic_hash": "a952f68e9cfc18eb0c7f15c35b256613"
   },
   "benchmarking-darth/faiss/impl/lattice_Zn.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.811862,
     "ast_hash": "c7975cd5753de0233b80dea30e09ea00",
     "semantic_hash": "c7975cd5753de0233b80dea30e09ea00"
   },
   "benchmarking-darth/faiss/impl/lattice_Zn.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8358428,
     "ast_hash": "f10fba8f15f35f2e4c54873ed55ee172",
     "semantic_hash": "f10fba8f15f35f2e4c54873ed55ee172"
   },
   "benchmarking-darth/faiss/impl/platform_macros.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.811862,
     "ast_hash": "7641cbe30c47a549e0488409c7b57fa8",
     "semantic_hash": "7641cbe30c47a549e0488409c7b57fa8"
   },
   "benchmarking-darth/faiss/impl/pq4_fast_scan.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.831846,
     "ast_hash": "3d55d03497256dc8685a391043a5958d",
     "semantic_hash": "3d55d03497256dc8685a391043a5958d"
   },
   "benchmarking-darth/faiss/impl/pq4_fast_scan.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.811862,
     "ast_hash": "8696d396125a4453805dcb7f39f3ad71",
     "semantic_hash": "8696d396125a4453805dcb7f39f3ad71"
   },
   "benchmarking-darth/faiss/impl/pq4_fast_scan_search_1.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8038685,
     "ast_hash": "ed0c9b7cc64987d130246d30e94ff203",
     "semantic_hash": "ed0c9b7cc64987d130246d30e94ff203"
   },
   "benchmarking-darth/faiss/impl/pq4_fast_scan_search_qbs.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8278491,
     "ast_hash": "6735b3f2b4ad76e7d535083266358649",
     "semantic_hash": "6735b3f2b4ad76e7d535083266358649"
   },
   "benchmarking-darth/faiss/impl/residual_quantizer_encode_steps.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8398395,
     "ast_hash": "00e15c0191cfe86a1696947e307ecb30",
     "semantic_hash": "00e15c0191cfe86a1696947e307ecb30"
   },
   "benchmarking-darth/faiss/impl/residual_quantizer_encode_steps.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8278491,
     "ast_hash": "7fa5b5572fb69763296ead098b975065",
     "semantic_hash": "7fa5b5572fb69763296ead098b975065"
   },
   "benchmarking-darth/faiss/impl/simd_result_handlers.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.8198557,
     "ast_hash": "6fcf51293dbac8b437e7055fe0b32045",
     "semantic_hash": "6fcf51293dbac8b437e7055fe0b32045"
   },
   "benchmarking-darth/faiss/index_factory.cpp": {
-    "mtime": 1782404965.2797296,
+    "mtime": 1784915315.7599037,
     "ast_hash": "8f8ac96e6865629040ba7621fd35510a",
     "semantic_hash": "8f8ac96e6865629040ba7621fd35510a"
   },
   "benchmarking-darth/faiss/index_factory.h": {
-    "mtime": 1782404965.2797296,
+    "mtime": 1784915315.73992,
     "ast_hash": "020043c14b806974601fa4023cbb009e",
     "semantic_hash": "020043c14b806974601fa4023cbb009e"
   },
   "benchmarking-darth/faiss/index_io.h": {
-    "mtime": 1782404965.2797296,
+    "mtime": 1784915315.7639005,
     "ast_hash": "a25a2274740c31bd51832bf8debdb3e4",
     "semantic_hash": "a25a2274740c31bd51832bf8debdb3e4"
   },
   "benchmarking-darth/faiss/invlists/BlockInvertedLists.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7758908,
     "ast_hash": "78c1bc9462b08b451add1699f7548332",
     "semantic_hash": "78c1bc9462b08b451add1699f7548332"
   },
   "benchmarking-darth/faiss/invlists/BlockInvertedLists.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7798877,
     "ast_hash": "a000443a82b69f0400e66f5f93b5f557",
     "semantic_hash": "a000443a82b69f0400e66f5f93b5f557"
   },
   "benchmarking-darth/faiss/invlists/DirectMap.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7758908,
     "ast_hash": "590732f236ebda35400d32d287049eb8",
     "semantic_hash": "590732f236ebda35400d32d287049eb8"
   },
   "benchmarking-darth/faiss/invlists/DirectMap.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7718942,
     "ast_hash": "66bb40daf08476f2a3507b921b8d5218",
     "semantic_hash": "66bb40daf08476f2a3507b921b8d5218"
   },
   "benchmarking-darth/faiss/invlists/InvertedLists.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7758908,
     "ast_hash": "c4cbcb14b86ffc1b7ab8f7ec518987da",
     "semantic_hash": "c4cbcb14b86ffc1b7ab8f7ec518987da"
   },
   "benchmarking-darth/faiss/invlists/InvertedLists.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7718942,
     "ast_hash": "890253a57706e0589de03d953f3fcdac",
     "semantic_hash": "890253a57706e0589de03d953f3fcdac"
   },
   "benchmarking-darth/faiss/invlists/InvertedListsIOHook.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7758908,
     "ast_hash": "c99ad9e414b8765ac9d893ff5315fff9",
     "semantic_hash": "c99ad9e414b8765ac9d893ff5315fff9"
   },
   "benchmarking-darth/faiss/invlists/InvertedListsIOHook.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7718942,
     "ast_hash": "8c300ce852e61d2903640a7c6519a753",
     "semantic_hash": "8c300ce852e61d2903640a7c6519a753"
   },
   "benchmarking-darth/faiss/invlists/OnDiskInvertedLists.cpp": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7758908,
     "ast_hash": "eee13b4f287b677de3b6e693007e9e15",
     "semantic_hash": "eee13b4f287b677de3b6e693007e9e15"
   },
   "benchmarking-darth/faiss/invlists/OnDiskInvertedLists.h": {
-    "mtime": 1780316731.7140274,
+    "mtime": 1784915315.7718942,
     "ast_hash": "b5b7d7214cc31bcc7c77993dbf700444",
     "semantic_hash": "b5b7d7214cc31bcc7c77993dbf700444"
   },
@@ -1845,12 +1845,12 @@
     "semantic_hash": "366f44bd5b38f7fec8c00f1c1feb9410"
   },
   "benchmarking-darth/faiss/python/python_callbacks.cpp": {
-    "mtime": 1780316731.7176938,
+    "mtime": 1784915315.7838845,
     "ast_hash": "d3fe56be3c306c977fca4c0a30b55661",
     "semantic_hash": "d3fe56be3c306c977fca4c0a30b55661"
   },
   "benchmarking-darth/faiss/python/python_callbacks.h": {
-    "mtime": 1780316731.7176938,
+    "mtime": 1784915315.7838845,
     "ast_hash": "72a317cdc25b79f143281aa9790b20e6",
     "semantic_hash": "72a317cdc25b79f143281aa9790b20e6"
   },
@@ -1860,272 +1860,272 @@
     "semantic_hash": "d4445dabbc0b46299c3780ae56c071ad"
   },
   "benchmarking-darth/faiss/utils/AlignedTable.h": {
-    "mtime": 1782404965.2958329,
+    "mtime": 1784915315.6559873,
     "ast_hash": "125e95a6aef2a8fce3608afb265ff09e",
     "semantic_hash": "125e95a6aef2a8fce3608afb265ff09e"
   },
   "benchmarking-darth/faiss/utils/Heap.cpp": {
-    "mtime": 1782404965.2958329,
+    "mtime": 1784915315.6879616,
     "ast_hash": "6b7c628e9e2ba83f9f0d3486e08c3d03",
     "semantic_hash": "6b7c628e9e2ba83f9f0d3486e08c3d03"
   },
   "benchmarking-darth/faiss/utils/Heap.h": {
-    "mtime": 1782404965.2958329,
+    "mtime": 1784915315.6679776,
     "ast_hash": "ff08dd86743392906ecb115858432014",
     "semantic_hash": "ff08dd86743392906ecb115858432014"
   },
   "benchmarking-darth/faiss/utils/WorkerThread.cpp": {
-    "mtime": 1782404965.2958329,
+    "mtime": 1784915315.6479938,
     "ast_hash": "756ef6c8f0c3646e0183d5f393589d7e",
     "semantic_hash": "756ef6c8f0c3646e0183d5f393589d7e"
   },
   "benchmarking-darth/faiss/utils/WorkerThread.h": {
-    "mtime": 1782404965.2958329,
+    "mtime": 1784915315.663981,
     "ast_hash": "6f29d447745f9f5a9ec44a826c3df5e9",
     "semantic_hash": "6f29d447745f9f5a9ec44a826c3df5e9"
   },
   "benchmarking-darth/faiss/utils/approx_topk/approx_topk.h": {
-    "mtime": 1782404965.2958329,
+    "mtime": 1784915315.6879616,
     "ast_hash": "0d7834899a30d6ea3a1beaf43939feaf",
     "semantic_hash": "0d7834899a30d6ea3a1beaf43939feaf"
   },
   "benchmarking-darth/faiss/utils/approx_topk/avx2-inl.h": {
-    "mtime": 1782404965.2958329,
+    "mtime": 1784915315.6879616,
     "ast_hash": "888afac1e7dd7c4563cb69e2547369e3",
     "semantic_hash": "888afac1e7dd7c4563cb69e2547369e3"
   },
   "benchmarking-darth/faiss/utils/approx_topk/generic.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6879616,
     "ast_hash": "38e4903cd1a7fe53585471ffd70c81d4",
     "semantic_hash": "38e4903cd1a7fe53585471ffd70c81d4"
   },
   "benchmarking-darth/faiss/utils/approx_topk/mode.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6879616,
     "ast_hash": "5c38e494ba89bd09ec23f935342ad596",
     "semantic_hash": "5c38e494ba89bd09ec23f935342ad596"
   },
   "benchmarking-darth/faiss/utils/approx_topk_hamming/approx_topk_hamming.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6559873,
     "ast_hash": "391f35e7da87032c1397295e35f4b7ac",
     "semantic_hash": "391f35e7da87032c1397295e35f4b7ac"
   },
   "benchmarking-darth/faiss/utils/bf16.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6559873,
     "ast_hash": "bfbd0b23e98f78b234cbe3f1e186bfb6",
     "semantic_hash": "bfbd0b23e98f78b234cbe3f1e186bfb6"
   },
   "benchmarking-darth/faiss/utils/distances.cpp": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.663981,
     "ast_hash": "27db1d75794e13bc9947494d9784e74f",
     "semantic_hash": "27db1d75794e13bc9947494d9784e74f"
   },
   "benchmarking-darth/faiss/utils/distances.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6679776,
     "ast_hash": "761a0c612dcabdc8fe6016bbb18e4dfb",
     "semantic_hash": "761a0c612dcabdc8fe6016bbb18e4dfb"
   },
   "benchmarking-darth/faiss/utils/distances_fused/avx512.cpp": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6919584,
     "ast_hash": "08f78ebdfd6285582dd18405a8a1f5f1",
     "semantic_hash": "08f78ebdfd6285582dd18405a8a1f5f1"
   },
   "benchmarking-darth/faiss/utils/distances_fused/avx512.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6959553,
     "ast_hash": "13d0a1a74d373cb858214534288eb092",
     "semantic_hash": "13d0a1a74d373cb858214534288eb092"
   },
   "benchmarking-darth/faiss/utils/distances_fused/distances_fused.cpp": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6919584,
     "ast_hash": "efb9556e79f821f02f9ae6187fa4d3fa",
     "semantic_hash": "efb9556e79f821f02f9ae6187fa4d3fa"
   },
   "benchmarking-darth/faiss/utils/distances_fused/distances_fused.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6959553,
     "ast_hash": "f3beec32b5f8f299aa9d8d4e36d5bd47",
     "semantic_hash": "f3beec32b5f8f299aa9d8d4e36d5bd47"
   },
   "benchmarking-darth/faiss/utils/distances_fused/simdlib_based.cpp": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6919584,
     "ast_hash": "5d58bbf0b68146a9081a6c8739bcd382",
     "semantic_hash": "5d58bbf0b68146a9081a6c8739bcd382"
   },
   "benchmarking-darth/faiss/utils/distances_fused/simdlib_based.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6919584,
     "ast_hash": "ef8011682a5f019e6ab25acbfd6b11d2",
     "semantic_hash": "ef8011682a5f019e6ab25acbfd6b11d2"
   },
   "benchmarking-darth/faiss/utils/distances_simd.cpp": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6839647,
     "ast_hash": "1cdcecd0e3102efca8a4385a2c202c08",
     "semantic_hash": "1cdcecd0e3102efca8a4385a2c202c08"
   },
   "benchmarking-darth/faiss/utils/extra_distances-inl.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6679776,
     "ast_hash": "23f771051c065e18b3505d105362a7cb",
     "semantic_hash": "23f771051c065e18b3505d105362a7cb"
   },
   "benchmarking-darth/faiss/utils/extra_distances.cpp": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6519904,
     "ast_hash": "b0997e541a613bea9baa3b5ef061d445",
     "semantic_hash": "b0997e541a613bea9baa3b5ef061d445"
   },
   "benchmarking-darth/faiss/utils/extra_distances.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6479938,
     "ast_hash": "728ec6a68b8435842a52f86ffee1cfda",
     "semantic_hash": "728ec6a68b8435842a52f86ffee1cfda"
   },
   "benchmarking-darth/faiss/utils/fp16-arm.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6879616,
     "ast_hash": "8b5094dcf1b76e12a0ca8a49b4ef86df",
     "semantic_hash": "8b5094dcf1b76e12a0ca8a49b4ef86df"
   },
   "benchmarking-darth/faiss/utils/fp16-fp16c.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6959553,
     "ast_hash": "2d80c25d30fc5566ed5c665be01d1d03",
     "semantic_hash": "2d80c25d30fc5566ed5c665be01d1d03"
   },
   "benchmarking-darth/faiss/utils/fp16-inl.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6479938,
     "ast_hash": "67fe3137bd309bc4f52767dbc18785c2",
     "semantic_hash": "67fe3137bd309bc4f52767dbc18785c2"
   },
   "benchmarking-darth/faiss/utils/fp16.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6519904,
     "ast_hash": "d50208c1e214af803c83c354cb686b3f",
     "semantic_hash": "d50208c1e214af803c83c354cb686b3f"
   },
   "benchmarking-darth/faiss/utils/hamming-inl.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.679968,
     "ast_hash": "2e6f066c1cd7246f8ca2314c06256fea",
     "semantic_hash": "2e6f066c1cd7246f8ca2314c06256fea"
   },
   "benchmarking-darth/faiss/utils/hamming.cpp": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.663981,
     "ast_hash": "cb014f0dbf0de6e01543ecbe4d014ac6",
     "semantic_hash": "cb014f0dbf0de6e01543ecbe4d014ac6"
   },
   "benchmarking-darth/faiss/utils/hamming.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6519904,
     "ast_hash": "28a7c432a75937d185fcdf3a948c1719",
     "semantic_hash": "28a7c432a75937d185fcdf3a948c1719"
   },
   "benchmarking-darth/faiss/utils/hamming_distance/avx2-inl.h": {
-    "mtime": 1782404965.2998588,
+    "mtime": 1784915315.6719744,
     "ast_hash": "e16d45e19175fb2628ceaf49bcfbcab1",
     "semantic_hash": "e16d45e19175fb2628ceaf49bcfbcab1"
   },
   "benchmarking-darth/faiss/utils/hamming_distance/common.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6679776,
     "ast_hash": "844c48be51aaa13ad646d02d471dadfd",
     "semantic_hash": "844c48be51aaa13ad646d02d471dadfd"
   },
   "benchmarking-darth/faiss/utils/hamming_distance/generic-inl.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6719744,
     "ast_hash": "b25625808284f122a86b7403b59029f7",
     "semantic_hash": "b25625808284f122a86b7403b59029f7"
   },
   "benchmarking-darth/faiss/utils/hamming_distance/hamdis-inl.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6719744,
     "ast_hash": "efbdfd9c6ecd94e4e156c4c803aa75a1",
     "semantic_hash": "efbdfd9c6ecd94e4e156c4c803aa75a1"
   },
   "benchmarking-darth/faiss/utils/hamming_distance/neon-inl.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6719744,
     "ast_hash": "4fbd35ff6c9d8e5f724b8f31fbe2e0b9",
     "semantic_hash": "4fbd35ff6c9d8e5f724b8f31fbe2e0b9"
   },
   "benchmarking-darth/faiss/utils/ordered_key_value.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6519904,
     "ast_hash": "2656c5b6bfcc29e0f3562757e2909e29",
     "semantic_hash": "2656c5b6bfcc29e0f3562757e2909e29"
   },
   "benchmarking-darth/faiss/utils/partitioning.cpp": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.659984,
     "ast_hash": "c0ec2014f2f44cf13ee39fa0101c9131",
     "semantic_hash": "c0ec2014f2f44cf13ee39fa0101c9131"
   },
   "benchmarking-darth/faiss/utils/partitioning.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6959553,
     "ast_hash": "05cc7435c7856fe71ba252a011f82420",
     "semantic_hash": "05cc7435c7856fe71ba252a011f82420"
   },
   "benchmarking-darth/faiss/utils/prefetch.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6759713,
     "ast_hash": "67ac13cf1664ba835c27f12bae7bf24f",
     "semantic_hash": "67ac13cf1664ba835c27f12bae7bf24f"
   },
   "benchmarking-darth/faiss/utils/quantize_lut.cpp": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6759713,
     "ast_hash": "36e5a79e3abb294544011b53ca630b66",
     "semantic_hash": "36e5a79e3abb294544011b53ca630b66"
   },
   "benchmarking-darth/faiss/utils/quantize_lut.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.659984,
     "ast_hash": "fa7f4611390e94ca80a90e565e47a8c2",
     "semantic_hash": "fa7f4611390e94ca80a90e565e47a8c2"
   },
   "benchmarking-darth/faiss/utils/random.cpp": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6519904,
     "ast_hash": "2afe2f9cbe66d19e98b444e205a87a5a",
     "semantic_hash": "2afe2f9cbe66d19e98b444e205a87a5a"
   },
   "benchmarking-darth/faiss/utils/random.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6959553,
     "ast_hash": "207d73b1c04f4c937fabfa9a5cb23830",
     "semantic_hash": "207d73b1c04f4c937fabfa9a5cb23830"
   },
   "benchmarking-darth/faiss/utils/simdlib.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6479938,
     "ast_hash": "2138a768970516272492911fd49b5322",
     "semantic_hash": "2138a768970516272492911fd49b5322"
   },
   "benchmarking-darth/faiss/utils/simdlib_avx2.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.679968,
     "ast_hash": "1930dd4a0a17ca1b36f4745023e9b03e",
     "semantic_hash": "1930dd4a0a17ca1b36f4745023e9b03e"
   },
   "benchmarking-darth/faiss/utils/simdlib_avx512.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6679776,
     "ast_hash": "e8b66959799377d348462d1fc85b8e44",
     "semantic_hash": "e8b66959799377d348462d1fc85b8e44"
   },
   "benchmarking-darth/faiss/utils/simdlib_emulated.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6559873,
     "ast_hash": "f434b189aac2389bf14f74ae8de1dc91",
     "semantic_hash": "f434b189aac2389bf14f74ae8de1dc91"
   },
   "benchmarking-darth/faiss/utils/simdlib_neon.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.679968,
     "ast_hash": "688e4fd8263ff46e9299f505738f6609",
     "semantic_hash": "688e4fd8263ff46e9299f505738f6609"
   },
   "benchmarking-darth/faiss/utils/simdlib_ppc64.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6519904,
     "ast_hash": "572eb6bae205d9edf71f19fa7ecc7222",
     "semantic_hash": "572eb6bae205d9edf71f19fa7ecc7222"
   },
   "benchmarking-darth/faiss/utils/sorting.cpp": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.699952,
     "ast_hash": "32a4088f542fefc493252e125c06ba89",
     "semantic_hash": "32a4088f542fefc493252e125c06ba89"
   },
   "benchmarking-darth/faiss/utils/sorting.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.699952,
     "ast_hash": "5f90d194750879a557d015a87a5d9e5b",
     "semantic_hash": "5f90d194750879a557d015a87a5d9e5b"
   },
   "benchmarking-darth/faiss/utils/transpose/transpose-avx2-inl.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6559873,
     "ast_hash": "cabca2211238320b3e69f4d3b07593d5",
     "semantic_hash": "cabca2211238320b3e69f4d3b07593d5"
   },
   "benchmarking-darth/faiss/utils/utils.cpp": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.6759713,
     "ast_hash": "8fa8967654ba4d3fdf8a11d8c1b8f92d",
     "semantic_hash": "8fa8967654ba4d3fdf8a11d8c1b8f92d"
   },
   "benchmarking-darth/faiss/utils/utils.h": {
-    "mtime": 1782404965.3038845,
+    "mtime": 1784915315.659984,
     "ast_hash": "3749b0f494d696a5ec49430a3ec01628",
     "semantic_hash": "3749b0f494d696a5ec49430a3ec01628"
   },
@@ -2135,32 +2135,32 @@
     "semantic_hash": "6816e12fb568c9ebd518a691418d2f63"
   },
   "benchmarking-darth/hnsw-test/ComUtil.cpp": {
-    "mtime": 1780316731.72136,
+    "mtime": 1784915315.9197752,
     "ast_hash": "d477ef4eb2bce3db22dea587cbf34e53",
     "semantic_hash": "d477ef4eb2bce3db22dea587cbf34e53"
   },
   "benchmarking-darth/hnsw-test/ComUtil.h": {
-    "mtime": 1780316731.72136,
+    "mtime": 1784915315.9197752,
     "ast_hash": "bf568915cc44d7faddd8241937faffb9",
     "semantic_hash": "bf568915cc44d7faddd8241937faffb9"
   },
   "benchmarking-darth/hnsw-test/VectorDataLoader.cpp": {
-    "mtime": 1780316731.72136,
+    "mtime": 1784915315.9197752,
     "ast_hash": "a724124a365a849f899c9bf8606a9ff4",
     "semantic_hash": "a724124a365a849f899c9bf8606a9ff4"
   },
   "benchmarking-darth/hnsw-test/VectorDataLoader.h": {
-    "mtime": 1780316731.72136,
+    "mtime": 1784915315.923772,
     "ast_hash": "515583095a16586362de8781107179b7",
     "semantic_hash": "515583095a16586362de8781107179b7"
   },
   "benchmarking-darth/hnsw-test/hnsw_test.cpp": {
-    "mtime": 1780316731.72136,
+    "mtime": 1784915315.9197752,
     "ast_hash": "08045ec3730ada4ff66af3885c2e10f0",
     "semantic_hash": "08045ec3730ada4ff66af3885c2e10f0"
   },
   "benchmarking-darth/hnsw-test/ivf_test.cpp": {
-    "mtime": 1780316731.72136,
+    "mtime": 1784915315.9197752,
     "ast_hash": "21d719d97f4191006f1582199f99a49a",
     "semantic_hash": "21d719d97f4191006f1582199f99a49a"
   },
@@ -2245,12 +2245,12 @@
     "semantic_hash": "38d6317cde539771f48edee805a3c557"
   },
   "benchmarking-darth/tests/test_RCQ_cropping.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8558266,
     "ast_hash": "4776bdb2488022a982b84c312f4effed",
     "semantic_hash": "4776bdb2488022a982b84c312f4effed"
   },
   "benchmarking-darth/tests/test_approx_topk.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8718138,
     "ast_hash": "01c9ff94e2fc5abb219172828c6d16d2",
     "semantic_hash": "01c9ff94e2fc5abb219172828c6d16d2"
   },
@@ -2265,7 +2265,7 @@
     "semantic_hash": "bb2f7a8cec0404b0b14bde694164a21e"
   },
   "benchmarking-darth/tests/test_binary_flat.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8638203,
     "ast_hash": "9bf72bbded2bfef23356f492f2bb1be3",
     "semantic_hash": "9bf72bbded2bfef23356f492f2bb1be3"
   },
@@ -2285,7 +2285,7 @@
     "semantic_hash": "ed9f08126c9668e10a5e0e017ffa0177"
   },
   "benchmarking-darth/tests/test_callback.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8638203,
     "ast_hash": "d45061371c5f9e8d62d857e9076aa33d",
     "semantic_hash": "d45061371c5f9e8d62d857e9076aa33d"
   },
@@ -2305,12 +2305,12 @@
     "semantic_hash": "621e027da71ec65acee603fed7958d74"
   },
   "benchmarking-darth/tests/test_code_distance.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8638203,
     "ast_hash": "2a838cddd0e4e32f1a26e51936e9fc29",
     "semantic_hash": "2a838cddd0e4e32f1a26e51936e9fc29"
   },
   "benchmarking-darth/tests/test_common_ivf_empty_index.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8718138,
     "ast_hash": "d85df535c90b29f903ee86df6075374f",
     "semantic_hash": "d85df535c90b29f903ee86df6075374f"
   },
@@ -2325,27 +2325,27 @@
     "semantic_hash": "6aefa98155daef6a0b423f7607b151a0"
   },
   "benchmarking-darth/tests/test_cppcontrib_sa_decode.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8758106,
     "ast_hash": "e8a962d20ac3cb166ab3d32e7be378c5",
     "semantic_hash": "e8a962d20ac3cb166ab3d32e7be378c5"
   },
   "benchmarking-darth/tests/test_cppcontrib_uintreader.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8718138,
     "ast_hash": "9268904f4348a384e868ab05ac5f369f",
     "semantic_hash": "9268904f4348a384e868ab05ac5f369f"
   },
   "benchmarking-darth/tests/test_dealloc_invlists.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8678172,
     "ast_hash": "38476455d674490e6984cd131a273e9e",
     "semantic_hash": "38476455d674490e6984cd131a273e9e"
   },
   "benchmarking-darth/tests/test_disable_pq_sdc_tables.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8758106,
     "ast_hash": "dd9cf11fd1e0ea99d583dfa8d81e31f6",
     "semantic_hash": "dd9cf11fd1e0ea99d583dfa8d81e31f6"
   },
   "benchmarking-darth/tests/test_distances_simd.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8758106,
     "ast_hash": "125cc1fa2106908baeca1b08a1051650",
     "semantic_hash": "125cc1fa2106908baeca1b08a1051650"
   },
@@ -2380,7 +2380,7 @@
     "semantic_hash": "1736aea5d26443bb6568f82c61fb1fe2"
   },
   "benchmarking-darth/tests/test_fastscan_perf.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8718138,
     "ast_hash": "0eac318a8c580b203193979c0345e892",
     "semantic_hash": "0eac318a8c580b203193979c0345e892"
   },
@@ -2390,12 +2390,12 @@
     "semantic_hash": "37a1ba5160464d0e71e0afeee7a8bcc0"
   },
   "benchmarking-darth/tests/test_heap.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8678172,
     "ast_hash": "80bd8a0d40d9a13134435effa0ad6551",
     "semantic_hash": "80bd8a0d40d9a13134435effa0ad6551"
   },
   "benchmarking-darth/tests/test_hnsw.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8798075,
     "ast_hash": "d10379b43181a8bd0c006a02081c938d",
     "semantic_hash": "d10379b43181a8bd0c006a02081c938d"
   },
@@ -2430,7 +2430,7 @@
     "semantic_hash": "733f19f6a104c3cf8f9e07c3866508b3"
   },
   "benchmarking-darth/tests/test_ivf_index.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8718138,
     "ast_hash": "4e47bf2dca1df0920e662578eced3f63",
     "semantic_hash": "4e47bf2dca1df0920e662578eced3f63"
   },
@@ -2440,12 +2440,12 @@
     "semantic_hash": "f5c6bba481c993fcc7bb78b4ba8f72f9"
   },
   "benchmarking-darth/tests/test_ivfpq_codec.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8558266,
     "ast_hash": "187fc55df6347a506471405e84431b53",
     "semantic_hash": "187fc55df6347a506471405e84431b53"
   },
   "benchmarking-darth/tests/test_ivfpq_indexing.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8758106,
     "ast_hash": "0cefa00108b6474cd3e5c2f380192a80",
     "semantic_hash": "0cefa00108b6474cd3e5c2f380192a80"
   },
@@ -2455,17 +2455,17 @@
     "semantic_hash": "ebe3cb7f5c5ae0fb0ebf36099f186c00"
   },
   "benchmarking-darth/tests/test_lowlevel_ivf.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8678172,
     "ast_hash": "35c99e5b115f0438a1af8d481d289592",
     "semantic_hash": "35c99e5b115f0438a1af8d481d289592"
   },
   "benchmarking-darth/tests/test_mem_leak.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8558266,
     "ast_hash": "ff2a4e34d4a916aaa1f78270e96026bc",
     "semantic_hash": "ff2a4e34d4a916aaa1f78270e96026bc"
   },
   "benchmarking-darth/tests/test_merge.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8798075,
     "ast_hash": "12a82bddbdd45efb4bcf0dfac790a4f1",
     "semantic_hash": "12a82bddbdd45efb4bcf0dfac790a4f1"
   },
@@ -2480,7 +2480,7 @@
     "semantic_hash": "3bd24d26665aa294fc6c322e0861a349"
   },
   "benchmarking-darth/tests/test_omp_threads.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8598235,
     "ast_hash": "b2fe5b4cfe15d5dd82a86465da5b5097",
     "semantic_hash": "b2fe5b4cfe15d5dd82a86465da5b5097"
   },
@@ -2490,7 +2490,7 @@
     "semantic_hash": "74fa90f69519c68b49a5e193e4822959"
   },
   "benchmarking-darth/tests/test_ondisk_ivf.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8558266,
     "ast_hash": "fd7d8c624688683007540b93dc10154c",
     "semantic_hash": "fd7d8c624688683007540b93dc10154c"
   },
@@ -2500,12 +2500,12 @@
     "semantic_hash": "59256d828774707cd4c3faadd1eca4db"
   },
   "benchmarking-darth/tests/test_pairs_decoding.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8598235,
     "ast_hash": "e4ad8936fb27ab21394ea779f6c240de",
     "semantic_hash": "e4ad8936fb27ab21394ea779f6c240de"
   },
   "benchmarking-darth/tests/test_params_override.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8678172,
     "ast_hash": "2118ea9296a4fa97c7390df6f726335f",
     "semantic_hash": "2118ea9296a4fa97c7390df6f726335f"
   },
@@ -2515,12 +2515,12 @@
     "semantic_hash": "1dbdb788fccceb86dd5727d85c29792b"
   },
   "benchmarking-darth/tests/test_partitioning.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8558266,
     "ast_hash": "601cc803515aa4dfb61af9ac35687a5d",
     "semantic_hash": "601cc803515aa4dfb61af9ac35687a5d"
   },
   "benchmarking-darth/tests/test_pq_encoding.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8598235,
     "ast_hash": "2f4ae10209f18f6d88616113c32b8a79",
     "semantic_hash": "2f4ae10209f18f6d88616113c32b8a79"
   },
@@ -2555,12 +2555,12 @@
     "semantic_hash": "63e1577c8c99c3cebd04439b5f7b4151"
   },
   "benchmarking-darth/tests/test_simdlib.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8598235,
     "ast_hash": "bdbfbc8573e8e235baab6503213c20a1",
     "semantic_hash": "bdbfbc8573e8e235baab6503213c20a1"
   },
   "benchmarking-darth/tests/test_sliding_ivf.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8558266,
     "ast_hash": "14fc07b4cb70515960776339382821c3",
     "semantic_hash": "14fc07b4cb70515960776339382821c3"
   },
@@ -2570,17 +2570,17 @@
     "semantic_hash": "25c1fa292b739c8b77ae9d57db8e4cbf"
   },
   "benchmarking-darth/tests/test_threaded_index.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8638203,
     "ast_hash": "1adcdf8ea025557df401cf9bef53f0f9",
     "semantic_hash": "1adcdf8ea025557df401cf9bef53f0f9"
   },
   "benchmarking-darth/tests/test_transfer_invlists.cpp": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8678172,
     "ast_hash": "2f01071ff091797b73faa813cc760aab",
     "semantic_hash": "2f01071ff091797b73faa813cc760aab"
   },
   "benchmarking-darth/tests/test_util.h": {
-    "mtime": 1780316731.7286925,
+    "mtime": 1784915315.8558266,
     "ast_hash": "4c903d50b6b044f66b80afb9ee9b3396",
     "semantic_hash": "4c903d50b6b044f66b80afb9ee9b3396"
   },
@@ -2590,47 +2590,47 @@
     "semantic_hash": "3a4f94a6ed9995967ca6b05177ae1fb4"
   },
   "benchmarking-darth/tutorial/cpp/1-Flat.cpp": {
-    "mtime": 1782404965.324014,
+    "mtime": 1784915315.6000323,
     "ast_hash": "2f4ba0b2873a00b8fc1bce97edf3fbca",
     "semantic_hash": "2f4ba0b2873a00b8fc1bce97edf3fbca"
   },
   "benchmarking-darth/tutorial/cpp/2-IVFFlat.cpp": {
-    "mtime": 1782404965.324014,
+    "mtime": 1784915315.5960355,
     "ast_hash": "c0a284d36b7d27b48bfbfcd0ebc80c86",
     "semantic_hash": "c0a284d36b7d27b48bfbfcd0ebc80c86"
   },
   "benchmarking-darth/tutorial/cpp/3-IVFPQ.cpp": {
-    "mtime": 1782404965.324014,
+    "mtime": 1784915315.5960355,
     "ast_hash": "a770929541fb68a5e41e16529748ad1d",
     "semantic_hash": "a770929541fb68a5e41e16529748ad1d"
   },
   "benchmarking-darth/tutorial/cpp/4-GPU.cpp": {
-    "mtime": 1782404965.324014,
+    "mtime": 1784915315.5960355,
     "ast_hash": "38f6bf697e7d6ed8c7c46e7b5d6d5bc0",
     "semantic_hash": "38f6bf697e7d6ed8c7c46e7b5d6d5bc0"
   },
   "benchmarking-darth/tutorial/cpp/5-Multiple-GPUs.cpp": {
-    "mtime": 1782404965.3280396,
+    "mtime": 1784915315.5960355,
     "ast_hash": "61a533c074917524e6e373868ba88e31",
     "semantic_hash": "61a533c074917524e6e373868ba88e31"
   },
   "benchmarking-darth/tutorial/cpp/6-HNSW.cpp": {
-    "mtime": 1782404965.3280396,
+    "mtime": 1784915315.5960355,
     "ast_hash": "e0733b63eef0d59374b87ca0e0d766c9",
     "semantic_hash": "e0733b63eef0d59374b87ca0e0d766c9"
   },
   "benchmarking-darth/tutorial/cpp/7-PQFastScan.cpp": {
-    "mtime": 1782404965.3280396,
+    "mtime": 1784915315.5960355,
     "ast_hash": "baa58ffff4fe15079e7115dbc94c2f76",
     "semantic_hash": "baa58ffff4fe15079e7115dbc94c2f76"
   },
   "benchmarking-darth/tutorial/cpp/8-PQFastScanRefine.cpp": {
-    "mtime": 1782404965.3280396,
+    "mtime": 1784915315.6000323,
     "ast_hash": "5588c8e954339b1ada8e8d8923647cf2",
     "semantic_hash": "5588c8e954339b1ada8e8d8923647cf2"
   },
   "benchmarking-darth/tutorial/cpp/9-RefineComparison.cpp": {
-    "mtime": 1782404965.3280396,
+    "mtime": 1784915315.5960355,
     "ast_hash": "df5afbe050efce8d2511c0a752bd3238",
     "semantic_hash": "df5afbe050efce8d2511c0a752bd3238"
   },
@@ -2720,42 +2720,42 @@
     "semantic_hash": "cec3479338d06446a329ff0bf9948e3a"
   },
   "examples/cpp/example_epsilon_search.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5880418,
     "ast_hash": "3fff53df2905ac030d5b26e02e1b2abc",
     "semantic_hash": "3fff53df2905ac030d5b26e02e1b2abc"
   },
   "examples/cpp/example_filter.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5880418,
     "ast_hash": "a02804e5f49f8fb9e9a2d85806505a2c",
     "semantic_hash": "a02804e5f49f8fb9e9a2d85806505a2c"
   },
   "examples/cpp/example_mt_filter.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5840452,
     "ast_hash": "90ad6cbe326a25189a7a0d6c45df2d2f",
     "semantic_hash": "90ad6cbe326a25189a7a0d6c45df2d2f"
   },
   "examples/cpp/example_mt_replace_deleted.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5840452,
     "ast_hash": "cbeb7345f73578dcaa2a65dd2ea2e35d",
     "semantic_hash": "cbeb7345f73578dcaa2a65dd2ea2e35d"
   },
   "examples/cpp/example_mt_search.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5880418,
     "ast_hash": "9d58993d7da45f17b530c76ed1aa58ed",
     "semantic_hash": "9d58993d7da45f17b530c76ed1aa58ed"
   },
   "examples/cpp/example_multivector_search.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5840452,
     "ast_hash": "a4b59eaf527cd3d4a885cc4bf58ac4bf",
     "semantic_hash": "a4b59eaf527cd3d4a885cc4bf58ac4bf"
   },
   "examples/cpp/example_replace_deleted.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5880418,
     "ast_hash": "45c530867e71efdb6c3ad1a107f342d7",
     "semantic_hash": "45c530867e71efdb6c3ad1a107f342d7"
   },
   "examples/cpp/example_search.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.5840452,
     "ast_hash": "8831ff84b98e715e5661e4c70624978f",
     "semantic_hash": "8831ff84b98e715e5661e4c70624978f"
   },
@@ -2789,58 +2789,53 @@
     "ast_hash": "bb4e3edfb0cd55d05efbecc1ee0e2e5d",
     "semantic_hash": "bb4e3edfb0cd55d05efbecc1ee0e2e5d"
   },
-  "experiments_driver/patch.py": {
-    "mtime": 1781331647.5963335,
-    "ast_hash": "91376ca56333857763b844a522d9879a",
-    "semantic_hash": "91376ca56333857763b844a522d9879a"
-  },
   "experiments_driver/run.cpp": {
-    "mtime": 1784010985.63251,
-    "ast_hash": "ad9f6077478fd0c535d1db1619f6e824",
-    "semantic_hash": "ad9f6077478fd0c535d1db1619f6e824"
+    "mtime": 1785679316.8318615,
+    "ast_hash": "de8ce770a8e6d84bed17ee58e0ecc874",
+    "semantic_hash": "de8ce770a8e6d84bed17ee58e0ecc874"
   },
   "experiments_driver/util.h": {
-    "mtime": 1784008131.878843,
-    "ast_hash": "07f3ba57e6301d55d849810abf9e3920",
-    "semantic_hash": "07f3ba57e6301d55d849810abf9e3920"
+    "mtime": 1785679316.8318615,
+    "ast_hash": "3958dda3b08726684bb49c2627916636",
+    "semantic_hash": "3958dda3b08726684bb49c2627916636"
   },
   "hnswlib/bruteforce.h": {
-    "mtime": 1783156726.264092,
+    "mtime": 1784915315.947753,
     "ast_hash": "dbb8a38c5b1dd3c849512e00d900087d",
     "semantic_hash": "dbb8a38c5b1dd3c849512e00d900087d"
   },
   "hnswlib/hnswalg.h": {
-    "mtime": 1783161019.313942,
-    "ast_hash": "8532091a507de217ea4defdbb8c9e507",
-    "semantic_hash": "8532091a507de217ea4defdbb8c9e507"
+    "mtime": 1784915315.9397593,
+    "ast_hash": "62070cb49ad81684c4fa256e318413d5",
+    "semantic_hash": "62070cb49ad81684c4fa256e318413d5"
   },
   "hnswlib/hnswlib.h": {
-    "mtime": 1783156726.2714252,
-    "ast_hash": "aeace46710f4eef50de7a3468fd49e1c",
-    "semantic_hash": "aeace46710f4eef50de7a3468fd49e1c"
+    "mtime": 1785679316.8318615,
+    "ast_hash": "2d0564c60f32db620cd77a8b0cf9855e",
+    "semantic_hash": "2d0564c60f32db620cd77a8b0cf9855e"
   },
   "hnswlib/sketch.h": {
-    "mtime": 1783161019.313942,
-    "ast_hash": "0522b1dfe5169ee328306906e19a4ea7",
-    "semantic_hash": "0522b1dfe5169ee328306906e19a4ea7"
+    "mtime": 1785000900.6324158,
+    "ast_hash": "4a6643afa9bfe4b039844def4bfdb4ac",
+    "semantic_hash": "4a6643afa9bfe4b039844def4bfdb4ac"
   },
   "hnswlib/space_ip.h": {
-    "mtime": 1783161019.313942,
-    "ast_hash": "66f380193ab7fda18bb3a88b64078913",
-    "semantic_hash": "66f380193ab7fda18bb3a88b64078913"
+    "mtime": 1785679316.8318615,
+    "ast_hash": "f55d39bb6b81312946d963a5c143c4dc",
+    "semantic_hash": "f55d39bb6b81312946d963a5c143c4dc"
   },
   "hnswlib/space_l2.h": {
-    "mtime": 1783156726.2787585,
-    "ast_hash": "413140f571b4c572b50b17769a62362e",
-    "semantic_hash": "413140f571b4c572b50b17769a62362e"
+    "mtime": 1785679316.8318615,
+    "ast_hash": "322394058e9e1fd0f4d7d7ca1a207dd2",
+    "semantic_hash": "322394058e9e1fd0f4d7d7ca1a207dd2"
   },
   "hnswlib/stop_condition.h": {
-    "mtime": 1783156726.2787585,
-    "ast_hash": "dcc5c5515b6b717dbcff6bd01307e310",
-    "semantic_hash": "dcc5c5515b6b717dbcff6bd01307e310"
+    "mtime": 1785679316.8318615,
+    "ast_hash": "67f9eb9e13bf50702ace63c7aa2ea334",
+    "semantic_hash": "67f9eb9e13bf50702ace63c7aa2ea334"
   },
   "hnswlib/visited_list_pool.h": {
-    "mtime": 1783156726.2787585,
+    "mtime": 1784915315.9317658,
     "ast_hash": "569d0f3cd24120c3f8532cb71265167e",
     "semantic_hash": "569d0f3cd24120c3f8532cb71265167e"
   },
@@ -2855,7 +2850,7 @@
     "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
   },
   "python_bindings/bindings.cpp": {
-    "mtime": 1780316731.732359,
+    "mtime": 1784915315.947753,
     "ast_hash": "f8fb8b3b2e3a1261dde0b2e38b02a864",
     "semantic_hash": "f8fb8b3b2e3a1261dde0b2e38b02a864"
   },
@@ -2875,9 +2870,9 @@
     "semantic_hash": "ae10a226952081d67ba6c69c5371bfbd"
   },
   "setup.sh": {
-    "mtime": 1783876686.7811322,
-    "ast_hash": "31aa5deec95fb2f77995a1ea98c91a7e",
-    "semantic_hash": "31aa5deec95fb2f77995a1ea98c91a7e"
+    "mtime": 1785039263.2771814,
+    "ast_hash": "ca55f2ed867c1b175d48d0e35be083c0",
+    "semantic_hash": "ca55f2ed867c1b175d48d0e35be083c0"
   },
   "AGENTS.md": {
     "mtime": 1781702180.9071188,
@@ -2890,7 +2885,7 @@
     "semantic_hash": "54cb6908e11e985b9eb693abd3f956a8"
   },
   "CMakeLists.txt": {
-    "mtime": 1783951406.7494316,
+    "mtime": 1785667021.5547,
     "ast_hash": "441c3c060501c16bfa47153762b2d77a",
     "semantic_hash": "441c3c060501c16bfa47153762b2d77a"
   },
@@ -3810,14 +3805,9 @@
     "semantic_hash": "05ee685d92e0510b0d63e564c3271074"
   },
   "hnswlib/estimator.h": {
-    "mtime": 1784008131.9070225,
+    "mtime": 1784915315.9317658,
     "ast_hash": "b20fb3042e11f1d8fb85792773daf132",
     "semantic_hash": "b20fb3042e11f1d8fb85792773daf132"
-  },
-  "research/visualize_ef.cpp": {
-    "mtime": 1783154390.2720053,
-    "ast_hash": "126551d208dafe9505b252d6b027fd41",
-    "semantic_hash": "126551d208dafe9505b252d6b027fd41"
   },
   ".omo/run-continuation/ses_0d3b485ffffe0GlKViwkDN1J2y.json": {
     "mtime": 1783154591.0780067,
@@ -3945,14 +3935,9 @@
     "semantic_hash": "91a78a93498ed163551a45dda1f8f7e8"
   },
   "research/visualize_ef_map.py": {
-    "mtime": 1783185047.992295,
-    "ast_hash": "42bb958be885a5e9c360f78216a53fb8",
-    "semantic_hash": "42bb958be885a5e9c360f78216a53fb8"
-  },
-  "research/README_heatmap.md": {
-    "mtime": 1783154390.2440054,
-    "ast_hash": "7f4fa3c583124186707f7ba18f3d5dc8",
-    "semantic_hash": "7f4fa3c583124186707f7ba18f3d5dc8"
+    "mtime": 1785679317.1358624,
+    "ast_hash": "0b0752acad20acfcd6e3c61c6774525f",
+    "semantic_hash": "0b0752acad20acfcd6e3c61c6774525f"
   },
   ".omo/run-continuation/ses_0a0981fb0ffeBl02vbxsfvQhXw.json": {
     "mtime": 1784012121.4842448,
@@ -3995,34 +3980,14 @@
     "semantic_hash": "6e7987556f29cb30613da3c965928421"
   },
   "hnswlib/shiro_ef.h": {
-    "mtime": 1784008131.89092,
-    "ast_hash": "255d827c8af3dd157d9b427f8e674676",
-    "semantic_hash": "255d827c8af3dd157d9b427f8e674676"
-  },
-  "research/final_plot.py": {
-    "mtime": 1783961303.5643604,
-    "ast_hash": "6021ec8520e81be4795048a3220f4121",
-    "semantic_hash": "6021ec8520e81be4795048a3220f4121"
-  },
-  "research/visualize_ablation.py": {
-    "mtime": 1783911715.3384933,
-    "ast_hash": "8b2635f1b5186bda7cf13070b9e5b370",
-    "semantic_hash": "8b2635f1b5186bda7cf13070b9e5b370"
+    "mtime": 1785679316.8318615,
+    "ast_hash": "882b7101e23d2b64d67da45b09f4a78a",
+    "semantic_hash": "882b7101e23d2b64d67da45b09f4a78a"
   },
   "README.md": {
-    "mtime": 1783962744.0268784,
-    "ast_hash": "cfcf167ab10c7b36ab55162b5e7d395a",
-    "semantic_hash": "cfcf167ab10c7b36ab55162b5e7d395a"
-  },
-  "research/img/ablation_alpha_plot.png": {
-    "mtime": 1783916001.332579,
-    "ast_hash": "0565291d4ea537a4c266b152615dbbc8",
-    "semantic_hash": "0565291d4ea537a4c266b152615dbbc8"
-  },
-  "research/img/ablation_gamma_plot.png": {
-    "mtime": 1783916000.7312195,
-    "ast_hash": "7c62af1e6e0071b95c58785ba36f38dd",
-    "semantic_hash": "7c62af1e6e0071b95c58785ba36f38dd"
+    "mtime": 1785344086.3549857,
+    "ast_hash": "e8d6ce24503947247b73a2752ffad4fc",
+    "semantic_hash": "e8d6ce24503947247b73a2752ffad4fc"
   },
   "research/img/deepIm_recall_distribution_100.png": {
     "mtime": 1783140235.9822586,
@@ -4044,44 +4009,279 @@
     "ast_hash": "e7393ded1a46d7bcbc756f2b7ab90ee6",
     "semantic_hash": "e7393ded1a46d7bcbc756f2b7ab90ee6"
   },
-  "research/img/output_heatmap_deep.png": {
-    "mtime": 1782910730.2565348,
-    "ast_hash": "e364eff0512cfd18f90d03fb3a15adda",
-    "semantic_hash": "e364eff0512cfd18f90d03fb3a15adda"
-  },
-  "research/img/output_heatmap_glove.png": {
-    "mtime": 1782906142.4542832,
-    "ast_hash": "6624d66dbc6739cb6444ec2a86029328",
-    "semantic_hash": "6624d66dbc6739cb6444ec2a86029328"
-  },
-  "research/img/output_heatmap_glove_final.png": {
-    "mtime": 1783006954.3994853,
-    "ast_hash": "d611837dd6a3852c357e9cb8e90b8376",
-    "semantic_hash": "d611837dd6a3852c357e9cb8e90b8376"
-  },
-  "research/img/output_heatmap_glove_fixed.png": {
-    "mtime": 1782998069.1490796,
-    "ast_hash": "784ccf96f87e1973e6daa6498a8f978b",
-    "semantic_hash": "784ccf96f87e1973e6daa6498a8f978b"
-  },
-  "research/img/output_heatmap_glove_sparse.png": {
-    "mtime": 1782998970.362706,
-    "ast_hash": "058c74b9e663eef80e1296fcd8800101",
-    "semantic_hash": "058c74b9e663eef80e1296fcd8800101"
-  },
-  "research/img/output_heatmap_sift.png": {
-    "mtime": 1782997782.6137702,
-    "ast_hash": "b8e25457921e9b8ec1dc02a292b9a06b",
-    "semantic_hash": "b8e25457921e9b8ec1dc02a292b9a06b"
-  },
   "research/img/visualization_final.png": {
-    "mtime": 1783960758.7738535,
-    "ast_hash": "54fb76c8897bc6480805a8094077f071",
-    "semantic_hash": "54fb76c8897bc6480805a8094077f071"
+    "mtime": 1785679317.1238623,
+    "ast_hash": "5c7bcf453e6b4b99aac3e9587bde101a",
+    "semantic_hash": "5c7bcf453e6b4b99aac3e9587bde101a"
   },
   "research/img/visualization_progress.png": {
-    "mtime": 1783220692.9273067,
+    "mtime": 1784039226.1993077,
     "ast_hash": "bf83bfa28c3bdebf69081a73716cfbcc",
     "semantic_hash": "bf83bfa28c3bdebf69081a73716cfbcc"
+  },
+  "research/build_msmarco_v1.py": {
+    "mtime": 1785125963.9771874,
+    "ast_hash": "12e03a9dd0e604e6332c9c78b63a4bcf",
+    "semantic_hash": "12e03a9dd0e604e6332c9c78b63a4bcf"
+  },
+  "research/build_msmarco_v2.py": {
+    "mtime": 1785308727.6479762,
+    "ast_hash": "9e63d0cd58f4d28dba424abeab35da2c",
+    "semantic_hash": "9e63d0cd58f4d28dba424abeab35da2c"
+  },
+  "research/compare_sampling.py": {
+    "mtime": 1785000900.6324158,
+    "ast_hash": "a481fdae2be6e2407dbe4ac4ae7c220f",
+    "semantic_hash": "a481fdae2be6e2407dbe4ac4ae7c220f"
+  },
+  "research/convert_fvecs_to_hdf5.py": {
+    "mtime": 1785039717.0007164,
+    "ast_hash": "d5655e0db57d7463adfa340545fc4076",
+    "semantic_hash": "d5655e0db57d7463adfa340545fc4076"
+  },
+  "research/generate_summary_csv.py": {
+    "mtime": 1785679317.0238621,
+    "ast_hash": "b9bb4e2ec4e32a2365a5262270477cbd",
+    "semantic_hash": "b9bb4e2ec4e32a2365a5262270477cbd"
+  },
+  "research/plot_ablation.py": {
+    "mtime": 1785679317.1358624,
+    "ast_hash": "cf80ca1cc9cd2bb8b9b62777ea6cb568",
+    "semantic_hash": "cf80ca1cc9cd2bb8b9b62777ea6cb568"
+  },
+  "research/plot_consistency_visuals.py": {
+    "mtime": 1785679317.1358624,
+    "ast_hash": "1dd12d814591c8dfb6f8700895163de4",
+    "semantic_hash": "1dd12d814591c8dfb6f8700895163de4"
+  },
+  "research/plot_deltas.py": {
+    "mtime": 1785679317.1358624,
+    "ast_hash": "d81c9a5099e637569e0ae1dec6741139",
+    "semantic_hash": "d81c9a5099e637569e0ae1dec6741139"
+  },
+  "research/plot_distribution.py": {
+    "mtime": 1785679510.9123015,
+    "ast_hash": "9583008a37927c6c58d820249e0ee333",
+    "semantic_hash": "9583008a37927c6c58d820249e0ee333"
+  },
+  "research/plot_final.py": {
+    "mtime": 1785679317.1358624,
+    "ast_hash": "48ab44a0aa4e3dd1b325366b315e4ea6",
+    "semantic_hash": "48ab44a0aa4e3dd1b325366b315e4ea6"
+  },
+  "research/visualize_distribution.py": {
+    "mtime": 1785679317.1358624,
+    "ast_hash": "a15132ce4a981839269bc70de03fb146",
+    "semantic_hash": "a15132ce4a981839269bc70de03fb146"
+  },
+  "sync.sh": {
+    "mtime": 1785307396.6122742,
+    "ast_hash": "180a71c6164e1bd74b9f2d5c9755aa57",
+    "semantic_hash": "180a71c6164e1bd74b9f2d5c9755aa57"
+  },
+  "research/prompt_tex.md": {
+    "mtime": 1785000900.6690803,
+    "ast_hash": "c9729485f5f6ca20278eef7f87adeb1e",
+    "semantic_hash": "c9729485f5f6ca20278eef7f87adeb1e"
+  },
+  "research/distribution_visualization.png": {
+    "mtime": 1785679317.0238621,
+    "ast_hash": "d695f6659b87068be7f7ad11707f3b9b",
+    "semantic_hash": "d695f6659b87068be7f7ad11707f3b9b"
+  },
+  "research/img/ablation/ablation_alpha.png": {
+    "mtime": 1785679317.027862,
+    "ast_hash": "804cf4e26207d2f3417bdc33647a2a27",
+    "semantic_hash": "804cf4e26207d2f3417bdc33647a2a27"
+  },
+  "research/img/ablation/ablation_gamma.png": {
+    "mtime": 1785679317.031862,
+    "ast_hash": "389695bce8ec1fb05435b35de9577ebf",
+    "semantic_hash": "389695bce8ec1fb05435b35de9577ebf"
+  },
+  "research/img/ablation/ablation_hops.png": {
+    "mtime": 1785679317.031862,
+    "ast_hash": "42b915f24044b41d5ad299933c7d8a82",
+    "semantic_hash": "42b915f24044b41d5ad299933c7d8a82"
+  },
+  "research/img/ablation/ablation_min_q.png": {
+    "mtime": 1785679317.0358622,
+    "ast_hash": "01c9f4fa06ddc67d173c86b590f8bb75",
+    "semantic_hash": "01c9f4fa06ddc67d173c86b590f8bb75"
+  },
+  "research/img/ablation/ablation_n_convergence_buckets.png": {
+    "mtime": 1785679317.0398622,
+    "ast_hash": "4632d676c173690bc6b7b69bb345a81d",
+    "semantic_hash": "4632d676c173690bc6b7b69bb345a81d"
+  },
+  "research/img/ablation/ablation_sampling_size.png": {
+    "mtime": 1785679317.0398622,
+    "ast_hash": "8e671108473130e940d6846163e5fc93",
+    "semantic_hash": "8e671108473130e940d6846163e5fc93"
+  },
+  "research/img/compare_sampling.png": {
+    "mtime": 1785000900.6397488,
+    "ast_hash": "34da2596033d01c7b0a966682f8245b0",
+    "semantic_hash": "34da2596033d01c7b0a966682f8245b0"
+  },
+  "research/img/heatmap/output_heatmap_cluster_mg_uniform_100d.png": {
+    "mtime": 1785679317.0398622,
+    "ast_hash": "0a9954b6d0be998c53aea13756451eec",
+    "semantic_hash": "0a9954b6d0be998c53aea13756451eec"
+  },
+  "research/img/heatmap/output_heatmap_cluster_mg_zipf_100d.png": {
+    "mtime": 1785679317.043862,
+    "ast_hash": "cbaf83e98dd332f086e4a43dba877387",
+    "semantic_hash": "cbaf83e98dd332f086e4a43dba877387"
+  },
+  "research/img/heatmap/output_heatmap_deep-image-96-angular.png": {
+    "mtime": 1785679317.043862,
+    "ast_hash": "020c489c6deec32f545808f92f639ff6",
+    "semantic_hash": "020c489c6deec32f545808f92f639ff6"
+  },
+  "research/img/heatmap/output_heatmap_deep-image-96-angular_1.png": {
+    "mtime": 1785679317.043862,
+    "ast_hash": "006bbe8c15ab590b453e04010e34622c",
+    "semantic_hash": "006bbe8c15ab590b453e04010e34622c"
+  },
+  "research/img/heatmap/output_heatmap_gist-960-euclidean.png": {
+    "mtime": 1785679317.043862,
+    "ast_hash": "cebc9d3ff5b3aed91277f4513e0ae448",
+    "semantic_hash": "cebc9d3ff5b3aed91277f4513e0ae448"
+  },
+  "research/img/heatmap/output_heatmap_glove-100-angular.png": {
+    "mtime": 1785679317.047862,
+    "ast_hash": "88bbb24f1d1248c21baa9a6d9104de84",
+    "semantic_hash": "88bbb24f1d1248c21baa9a6d9104de84"
+  },
+  "research/img/heatmap/output_heatmap_glove-100-angular_sampling0_filling0.png": {
+    "mtime": 1785679317.047862,
+    "ast_hash": "fe71c0ce05212e54efd2aa817fa22015",
+    "semantic_hash": "fe71c0ce05212e54efd2aa817fa22015"
+  },
+  "research/img/heatmap/output_heatmap_glove-100-angular_sampling1_filling0.png": {
+    "mtime": 1785679317.047862,
+    "ast_hash": "a4e190ee47fa2613b3ca8dd826174037",
+    "semantic_hash": "a4e190ee47fa2613b3ca8dd826174037"
+  },
+  "research/img/heatmap/output_heatmap_sift10m-128-euclidean.png": {
+    "mtime": 1785679317.0518622,
+    "ast_hash": "aee7181eae530194cd3327e101e8e234",
+    "semantic_hash": "aee7181eae530194cd3327e101e8e234"
+  },
+  "research/img/heatmap/output_heatmap_tiny5m-384-euclidean.png": {
+    "mtime": 1785679317.0518622,
+    "ast_hash": "8ad9b8806b8c13dbfcadf00c7d3ff210",
+    "semantic_hash": "8ad9b8806b8c13dbfcadf00c7d3ff210"
+  },
+  "research/img/heatmap/output_heatmap_word2vec-300-angular.png": {
+    "mtime": 1785679317.0518622,
+    "ast_hash": "5b47c12ece6554267bc08eefc475f08c",
+    "semantic_hash": "5b47c12ece6554267bc08eefc475f08c"
+  },
+  "research/img/story/story_consistency_visuals_deep-image-96-angular.png": {
+    "mtime": 1785679317.0558622,
+    "ast_hash": "c5af898fbc65b172f29d044b15411133",
+    "semantic_hash": "c5af898fbc65b172f29d044b15411133"
+  },
+  "research/img/story/story_consistency_visuals_gist-960-euclidean.png": {
+    "mtime": 1785679317.0598621,
+    "ast_hash": "de44b4300026b2c892a7e61c171d9f15",
+    "semantic_hash": "de44b4300026b2c892a7e61c171d9f15"
+  },
+  "research/img/story/story_consistency_visuals_glove-100-angular.png": {
+    "mtime": 1785679317.063862,
+    "ast_hash": "de5596ea7c9b1f4ef117a5af634be900",
+    "semantic_hash": "de5596ea7c9b1f4ef117a5af634be900"
+  },
+  "research/img/story/story_consistency_visuals_msmarco.png": {
+    "mtime": 1785679317.0678623,
+    "ast_hash": "e748a06006aa5dad08346c8fbc91c877",
+    "semantic_hash": "e748a06006aa5dad08346c8fbc91c877"
+  },
+  "research/img/story/story_consistency_visuals_sift10m-128-euclidean.png": {
+    "mtime": 1785679317.0718622,
+    "ast_hash": "5e606c00f1bd272200eec3c28c7dff21",
+    "semantic_hash": "5e606c00f1bd272200eec3c28c7dff21"
+  },
+  "research/img/story/story_consistency_visuals_tiny5m-384-euclidean.png": {
+    "mtime": 1785679317.0718622,
+    "ast_hash": "af9fc4f3140a9a57c1ad732ebbb5cf78",
+    "semantic_hash": "af9fc4f3140a9a57c1ad732ebbb5cf78"
+  },
+  "research/img/story/story_consistency_visuals_word2vec-300-angular.png": {
+    "mtime": 1785679317.0758622,
+    "ast_hash": "ebe116d5082e1be571686aa7a326f2a9",
+    "semantic_hash": "ebe116d5082e1be571686aa7a326f2a9"
+  },
+  "research/img/story/story_continuous_deep-image-96-angular.png": {
+    "mtime": 1785679519.3654938,
+    "ast_hash": "2608d74484f0fed0559e7cb85f06ac54",
+    "semantic_hash": "2608d74484f0fed0559e7cb85f06ac54"
+  },
+  "research/img/story/story_continuous_gist-960-euclidean.png": {
+    "mtime": 1785679518.7641609,
+    "ast_hash": "81d845086e7d221cbee37bdafb81daba",
+    "semantic_hash": "81d845086e7d221cbee37bdafb81daba"
+  },
+  "research/img/story/story_continuous_msmarco.png": {
+    "mtime": 1785679518.225161,
+    "ast_hash": "b416a61622d91b228a36b3ab541c005b",
+    "semantic_hash": "b416a61622d91b228a36b3ab541c005b"
+  },
+  "research/img/story/story_continuous_sift10m-128-euclidean.png": {
+    "mtime": 1785679521.026493,
+    "ast_hash": "31aa339ae1574e84d10c6ebdf31d2cf6",
+    "semantic_hash": "31aa339ae1574e84d10c6ebdf31d2cf6"
+  },
+  "research/img/story/story_continuous_tiny5m-384-euclidean.png": {
+    "mtime": 1785679519.8824937,
+    "ast_hash": "2609b0e3ffed6237d675293f87621d09",
+    "semantic_hash": "2609b0e3ffed6237d675293f87621d09"
+  },
+  "research/img/story/story_continuous_word2vec-300-angular.png": {
+    "mtime": 1785679520.4251602,
+    "ast_hash": "b2521850c193842a226be74ffcd6ec49",
+    "semantic_hash": "b2521850c193842a226be74ffcd6ec49"
+  },
+  "research/img/story/story_deltas_deep-image-96-angular.png": {
+    "mtime": 1785679317.0798624,
+    "ast_hash": "a8c4cdb0dffc419a88ae51d6b1cc526d",
+    "semantic_hash": "a8c4cdb0dffc419a88ae51d6b1cc526d"
+  },
+  "research/img/story/story_deltas_gist-960-euclidean.png": {
+    "mtime": 1785679317.0878623,
+    "ast_hash": "1be9e2b307b323384697bba110ec0255",
+    "semantic_hash": "1be9e2b307b323384697bba110ec0255"
+  },
+  "research/img/story/story_deltas_glove-100-angular.png": {
+    "mtime": 1785679317.0958624,
+    "ast_hash": "2a6b9b9e06d5f97e5cce4820822ab218",
+    "semantic_hash": "2a6b9b9e06d5f97e5cce4820822ab218"
+  },
+  "research/img/story/story_deltas_msmarco.png": {
+    "mtime": 1785679317.1038623,
+    "ast_hash": "2b842c31b1e309fc1346a483850b4037",
+    "semantic_hash": "2b842c31b1e309fc1346a483850b4037"
+  },
+  "research/img/story/story_deltas_sift10m-128-euclidean.png": {
+    "mtime": 1785679317.1078622,
+    "ast_hash": "9fc9296243477720d89fbd31db1085f4",
+    "semantic_hash": "9fc9296243477720d89fbd31db1085f4"
+  },
+  "research/img/story/story_deltas_tiny5m-384-euclidean.png": {
+    "mtime": 1785679317.1158624,
+    "ast_hash": "05f74627b0a9b9557d1f2c1c166bae6e",
+    "semantic_hash": "05f74627b0a9b9557d1f2c1c166bae6e"
+  },
+  "research/img/story/story_deltas_word2vec-300-angular.png": {
+    "mtime": 1785679317.1198623,
+    "ast_hash": "2767b9026f28e533a2be9a99b10fed02",
+    "semantic_hash": "2767b9026f28e533a2be9a99b10fed02"
+  },
+  "research/img/visualization_local.png": {
+    "mtime": 1785679317.1358624,
+    "ast_hash": "7fe9ea58af0278fa249adbf0bf9baa31",
+    "semantic_hash": "7fe9ea58af0278fa249adbf0bf9baa31"
   }
 }
