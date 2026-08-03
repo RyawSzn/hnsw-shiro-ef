@@ -12,7 +12,7 @@ BASE_LOG = "research/log/output_shiro_k100.log"
 
 ABLATIONS = {
     "hops": {
-        "log": "research/log/output_shiro_k100.log",
+        "log": "research/log/output_shiro_hops.log",
         "title": "Visited List Size (1-hop / 2-hop / 3-hop)",
         "marker_re": r"^Visited list size:\s+(\d+)",
         "data_re": r"^\d+,\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),",
