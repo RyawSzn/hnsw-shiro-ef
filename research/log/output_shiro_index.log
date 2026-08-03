@@ -1,0 +1,73 @@
+Starting experiments for Shiro-ef hnswdis library...
+
+
+EXPERIMENTS_ROOT: /home/yc.shea/experiments/shiro-ef
+Dataset: deep-image-96-angular
+[Query vectors] rows: 10000, cols: 96
+[Data vectors]  rows: 9990000, cols: 96
+[Neighbors] rows: 10000, cols: 100
+Using AVX2 Inner Product distance
+Index built in 2211814 ms
+First 1k Data Points Recall: 0.927
+Last 1k Data Points Recall: 0.978
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/deep-image-96-angular-M16-efc-500-parallel.hnsw
+Dataset: glove-100-angular
+[Query vectors] rows: 10000, cols: 100
+[Data vectors]  rows: 1183514, cols: 100
+[Neighbors] rows: 10000, cols: 100
+Using AVX2 Inner Product distance
+Index built in 250619 ms
+First 1k Data Points Recall: 0.732
+Last 1k Data Points Recall: 0.829
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/glove-100-angular-M16-efc-500-parallel.hnsw
+Dataset: word2vec-300-angular
+[Query vectors] rows: 1000, cols: 300
+[Data vectors]  rows: 1000000, cols: 300
+[Neighbors] rows: 1000, cols: 100
+Using AVX2 Inner Product distance
+Index built in 321880 ms
+First 1k Data Points Recall: 0.747
+Last 1k Data Points Recall: 0.819
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/word2vec-300-angular-M16-efc-500-parallel.hnsw
+Dataset: sift10m-128-euclidean
+[Query vectors] rows: 1000, cols: 128
+[Data vectors]  rows: 10000000, cols: 128
+[Neighbors] rows: 1000, cols: 100
+Index built in 2572222 ms
+First 1k Data Points Recall: 0.966
+Last 1k Data Points Recall: 0.995
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/sift10m-128-euclidean-M16-efc-500-parallel.hnsw
+Dataset: gist-960-euclidean
+[Query vectors] rows: 1000, cols: 960
+[Data vectors]  rows: 1000000, cols: 960
+[Neighbors] rows: 1000, cols: 100
+Index built in 815118 ms
+First 1k Data Points Recall: 0.566
+Last 1k Data Points Recall: 0.624
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/gist-960-euclidean-M16-efc-500-parallel.hnsw
+Dataset: tiny5m-384-euclidean
+[Query vectors] rows: 1000, cols: 384
+[Data vectors]  rows: 5000000, cols: 384
+[Neighbors] rows: 1000, cols: 100
+Index built in 2924459 ms
+First 1k Data Points Recall: 0.431
+Last 1k Data Points Recall: 0.71
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/tiny5m-384-euclidean-M16-efc-500-parallel.hnsw
+Dataset: msmarco
+[Query vectors] rows: 6980, cols: 1536
+[Data vectors]  rows: 8841823, cols: 1536
+[Neighbors] rows: 6980, cols: 1000
+Using AVX2 Inner Product distance
+Index built in 8737752 ms
+First 1k Data Points Recall: 0.987
+Last 1k Data Points Recall: 0.979
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/msmarco-M16-efc-500-parallel.hnsw
+Dataset: cohere
+[Query vectors] rows: 1677, cols: 1024
+[Data vectors]  rows: 18380565, cols: 1024
+[Neighbors] rows: 1677, cols: 1000
+Using AVX2 Inner Product distance
+Index built in 12405988 ms
+First 1k Data Points Recall: 0.789
+Last 1k Data Points Recall: 0.945
+The index have been saved to: /home/yc.shea/experiments/shiro-ef/index/cohere-M16-efc-500-parallel.hnsw

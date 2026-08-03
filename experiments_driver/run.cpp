@@ -24,18 +24,18 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_rv_buckets, min_q, stats_length
-    {"deep-image-96-angular",      "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"msmarco",                    "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cohere",                     "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_uniform_100d",    "cd", 1000, 0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d",       "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
-    // {"laion_image",                "cd", 1000, 0.5f, 12.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"laion_text",                 "cd", 1000, 0.5f, 12.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
+    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
+    // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"laion_text",                 "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -402,6 +402,76 @@ void offline_exp()
 
     for (const auto& conf : g_experiments) {
         process_offline_conf(conf);
+    }
+}
+
+void table_build()
+{
+    std::cout << "Starting offline table construction...\n\n" << std::endl;
+    Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
+
+    for (const auto& conf : g_experiments)
+    {
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+        float alpha = conf.alpha;
+        float gamma = conf.gamma;
+        size_t k = conf.k;
+        float expected_recall = conf.expected_recall;
+        int ef_upper_bound = conf.ef_upper_bound;
+        int sampling_size = conf.sampling_size;
+        int n_convergence_buckets = conf.n_convergence_buckets;
+        int min_queries_per_score = conf.min_queries_per_score;
+        size_t stats_length = conf.stats_length;
+        int repeat = 3;
+
+        std::cout << "\n\nDataset: " << dataset << "\n" << "Metric: " << metric << std::endl;
+
+        std::shared_ptr<hnswlib::HierarchicalNSW<float>> hnsw;
+        std::shared_ptr<hnswdis::MatrixXf> query;
+        std::shared_ptr<hnswdis::MatrixXf> data;
+        std::shared_ptr<hnswdis::MatrixXi> ground_truth;
+        std::shared_ptr<hnswlib::SpaceInterface<float>> space;
+
+        std::string hdf5_path = (root / "data" / (dataset + ".hdf5")).string();
+        std::string index_path = (root / "index" / (dataset + "-M16-efc-500-parallel.hnsw")).string();
+        auto tuple = load_index_and_data(hdf5_path, index_path, metric);
+        hnsw = std::get<0>(tuple);
+        query = std::get<1>(tuple);
+        data = std::get<2>(tuple);
+        ground_truth = std::get<3>(tuple);
+        space = std::get<4>(tuple);
+
+        std::string samplings_path = (root / "sampling" / (dataset + "-samplings-" + "-k" + std::to_string(k) + "-ef.bin")).string();
+        hnswdis::MatrixXf sample_query_vectors;
+        hnswdis::MatrixXi sample_ground_truth;
+        hnswdis::MatrixXf sample_ground_truth_dist;
+        try {
+            hnswdis::deserialize_samplings(samplings_path, sample_query_vectors, sample_ground_truth, sample_ground_truth_dist);
+        } catch (...) {
+            hnswdis::deserialize_samplings(samplings_path, sample_query_vectors, sample_ground_truth);
+        }
+
+        hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
+
+        std::string ef_adapter_path = (root / "estimation_table" / (dataset + "-ef_adapter-" + "-k" + std::to_string(k) + "-ef.bin")).string();
+
+        auto start = std::chrono::high_resolution_clock::now();
+        hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, stats_length, samplings_path, ef_upper_bound, conf.sampling_size, min_queries_per_score);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+        train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length,
+                         std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
+                         std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
+                         ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
+
+        ef_adapter.serialize(ef_adapter_path);
+
+        hnswdis::Sketch sketch = make_sketch(ef_adapter, expected_recall);
+        const float wae = ef_adapter.get_wae();
+        std::cout << "****Weighted average ef: " << (size_t)wae << std::endl;
+        hnsw->setEf(wae);
     }
 }
 
@@ -1416,7 +1486,7 @@ void ablation_study_truncation_ratio()
     std::cout << "Starting ablation study tests: truncation ratio (alpha)...\n\n" << std::endl;
     Eigen::setNbThreads(std::max(1u, std::thread::hardware_concurrency() / 4));
 
-    std::vector<float> alphas = {0.25f, 0.5f, 0.75f};
+    std::vector<float> alphas = {0.25f, 0.5f, 0.75f, 1.0f};
 
     for (const auto& conf : g_experiments)
     {
@@ -1719,18 +1789,20 @@ int main() {
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
+    table_build(); // build the estimation table for all datasets and save to disk
     per_query_result_exp(); // per-query result experiments
 
+    // offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
     // online_exp();           // onine search experiments
+
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
-    ablation_study_visited_list_size();      // ablation study on distance list size
-    ablation_study_sampling_size();           // ablation study on sampling size
-    ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
-    ablation_study_truncation_ratio();
-    ablation_study_n_convergence_buckets();
-    ablation_study_min_queries_per_score();        // ablation study on truncation ratio
+    // ablation_study_visited_list_size();      // ablation study on distance list size
+    // ablation_study_sampling_size();           // ablation study on sampling size
+    // ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
+    // ablation_study_truncation_ratio();
+    // ablation_study_n_convergence_buckets();
+    // ablation_study_min_queries_per_score();        // ablation study on truncation ratio
 
     // insert_exp(true); // insert experiment with setup
     // delete_exp(true); // delete experiment with setup

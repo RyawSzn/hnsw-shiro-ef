@@ -44,14 +44,14 @@ def generate_summary():
                     round(
                         group[np.isclose(group["Recall"], p05_rec)][
                             "Latency(ns)"
-                        ].mean()
+                        ].median()
                     )
                 )
                 lat_1st_rec = int(
                     round(
                         group[np.isclose(group["Recall"], p01_rec)][
                             "Latency(ns)"
-                        ].mean()
+                        ].median()
                     )
                 )
 
