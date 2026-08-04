@@ -49,7 +49,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
     # Smooth the deltas for a clean business visualization
     window = max(
-        1, total_queries // 200
+        1, total_queries // 100
     )  # Adjust window size based on number of queries
 
     # Calculate exact mathematical areas (using raw data, not smoothed, for accuracy)
