@@ -76,62 +76,6 @@ InnerProductDistanceSIMD4ExtAVX(const void *pVect1v, const void *pVect2v, const 
 
 #endif
 
-#if defined(USE_AVX2)
-
-// AVX2 + FMA3 path: identical shape to InnerProductSIMD4ExtAVX, but each
-// 8-wide multiply-accumulate is done as a single fused multiply-add.
-static float
-InnerProductSIMD4ExtAVX2(const void *pVect1v, const void *pVect2v, const void *qty_ptr) {
-    float PORTABLE_ALIGN32 TmpRes[8];
-    float *pVect1 = (float *) pVect1v;
-    float *pVect2 = (float *) pVect2v;
-    size_t qty = *((size_t *) qty_ptr);
-
-    size_t qty16 = qty / 16;
-    size_t qty4 = qty / 4;
-
-    const float *pEnd1 = pVect1 + 16 * qty16;
-    const float *pEnd2 = pVect1 + 4 * qty4;
-
-    __m256 sum256 = _mm256_set1_ps(0);
-
-    while (pVect1 < pEnd1) {
-        __m256 v1 = _mm256_loadu_ps(pVect1);
-        pVect1 += 8;
-        __m256 v2 = _mm256_loadu_ps(pVect2);
-        pVect2 += 8;
-        sum256 = hnsw_mm256_fmadd_ps(v1, v2, sum256);
-
-        v1 = _mm256_loadu_ps(pVect1);
-        pVect1 += 8;
-        v2 = _mm256_loadu_ps(pVect2);
-        pVect2 += 8;
-        sum256 = hnsw_mm256_fmadd_ps(v1, v2, sum256);
-    }
-
-    __m128 v1, v2;
-    __m128 sum_prod = _mm_add_ps(_mm256_extractf128_ps(sum256, 0), _mm256_extractf128_ps(sum256, 1));
-
-    while (pVect1 < pEnd2) {
-        v1 = _mm_loadu_ps(pVect1);
-        pVect1 += 4;
-        v2 = _mm_loadu_ps(pVect2);
-        pVect2 += 4;
-        sum_prod = _mm_add_ps(sum_prod, _mm_mul_ps(v1, v2));
-    }
-
-    _mm_store_ps(TmpRes, sum_prod);
-    float sum = TmpRes[0] + TmpRes[1] + TmpRes[2] + TmpRes[3];
-    return sum;
-}
-
-static float
-InnerProductDistanceSIMD4ExtAVX2(const void *pVect1v, const void *pVect2v, const void *qty_ptr) {
-    return 1.0f - InnerProductSIMD4ExtAVX2(pVect1v, pVect2v, qty_ptr);
-}
-
-#endif
-
 #if defined(USE_SSE)
 
 static float
@@ -258,51 +202,6 @@ InnerProductSIMD16ExtAVX512(const void *pVect1v, const void *pVect2v, const void
 static float
 InnerProductDistanceSIMD16ExtAVX512(const void *pVect1v, const void *pVect2v, const void *qty_ptr) {
     return 1.0f - InnerProductSIMD16ExtAVX512(pVect1v, pVect2v, qty_ptr);
-}
-
-#endif
-
-#if defined(USE_AVX2)
-
-// AVX2 + FMA3 path: same 16-wide-per-iteration shape as the AVX kernel
-// below, but accumulates with a fused multiply-add instead of a separate
-// multiply and add.
-static float
-InnerProductSIMD16ExtAVX2(const void *pVect1v, const void *pVect2v, const void *qty_ptr) {
-    float PORTABLE_ALIGN32 TmpRes[8];
-    float *pVect1 = (float *) pVect1v;
-    float *pVect2 = (float *) pVect2v;
-    size_t qty = *((size_t *) qty_ptr);
-
-    size_t qty16 = qty / 16;
-
-    const float *pEnd1 = pVect1 + 16 * qty16;
-
-    __m256 sum256 = _mm256_set1_ps(0);
-
-    while (pVect1 < pEnd1) {
-        __m256 v1 = _mm256_loadu_ps(pVect1);
-        pVect1 += 8;
-        __m256 v2 = _mm256_loadu_ps(pVect2);
-        pVect2 += 8;
-        sum256 = hnsw_mm256_fmadd_ps(v1, v2, sum256);
-
-        v1 = _mm256_loadu_ps(pVect1);
-        pVect1 += 8;
-        v2 = _mm256_loadu_ps(pVect2);
-        pVect2 += 8;
-        sum256 = hnsw_mm256_fmadd_ps(v1, v2, sum256);
-    }
-
-    _mm256_store_ps(TmpRes, sum256);
-    float sum = TmpRes[0] + TmpRes[1] + TmpRes[2] + TmpRes[3] + TmpRes[4] + TmpRes[5] + TmpRes[6] + TmpRes[7];
-
-    return sum;
-}
-
-static float
-InnerProductDistanceSIMD16ExtAVX2(const void *pVect1v, const void *pVect2v, const void *qty_ptr) {
-    return 1.0f - InnerProductSIMD16ExtAVX2(pVect1v, pVect2v, qty_ptr);
 }
 
 #endif
@@ -455,20 +354,6 @@ class InnerProductSpace : public SpaceInterface<float> {
             InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX512;
             InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX512;
             std::cout << "Using AVX512 Inner Product distance" << std::endl;
-        } else if (AVX2Capable()) {
-            InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX2;
-            InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX2;
-            std::cout << "Using AVX2 Inner Product distance" << std::endl;
-        } else if (AVXCapable()) {
-            InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX;
-            InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX;
-            std::cout << "Using AVX Inner Product distance" << std::endl;
-        }
-    #elif defined(USE_AVX2)
-        if (AVX2Capable()) {
-            InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX2;
-            InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX2;
-            std::cout << "Using AVX2 Inner Product distance" << std::endl;
         } else if (AVXCapable()) {
             InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX;
             InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX;
@@ -481,15 +366,7 @@ class InnerProductSpace : public SpaceInterface<float> {
             std::cout << "Using AVX Inner Product distance" << std::endl;
         }
     #endif
-    #if defined(USE_AVX2)
-        if (AVX2Capable()) {
-            InnerProductSIMD4Ext = InnerProductSIMD4ExtAVX2;
-            InnerProductDistanceSIMD4Ext = InnerProductDistanceSIMD4ExtAVX2;
-        } else if (AVXCapable()) {
-            InnerProductSIMD4Ext = InnerProductSIMD4ExtAVX;
-            InnerProductDistanceSIMD4Ext = InnerProductDistanceSIMD4ExtAVX;
-        }
-    #elif defined(USE_AVX)
+    #if defined(USE_AVX)
         if (AVXCapable()) {
             InnerProductSIMD4Ext = InnerProductSIMD4ExtAVX;
             InnerProductDistanceSIMD4Ext = InnerProductDistanceSIMD4ExtAVX;

@@ -55,47 +55,6 @@ L2SqrSIMD16ExtAVX512(const void *pVect1v, const void *pVect2v, const void *qty_p
 }
 #endif
 
-#if defined(USE_AVX2)
-
-// AVX2 + FMA3 path: same 16-wide-per-iteration shape as the AVX kernel
-// below, but folds the subtract+multiply+accumulate into a single fused
-// multiply-add per 8-wide lane, halving the number of arithmetic ops
-// issued versus the plain-AVX version.
-static float
-L2SqrSIMD16ExtAVX2(const void *pVect1v, const void *pVect2v, const void *qty_ptr) {
-    float *pVect1 = (float *) pVect1v;
-    float *pVect2 = (float *) pVect2v;
-    size_t qty = *((size_t *) qty_ptr);
-    float PORTABLE_ALIGN32 TmpRes[8];
-    size_t qty16 = qty >> 4;
-
-    const float *pEnd1 = pVect1 + (qty16 << 4);
-
-    __m256 diff, v1, v2;
-    __m256 sum = _mm256_set1_ps(0);
-
-    while (pVect1 < pEnd1) {
-        v1 = _mm256_loadu_ps(pVect1);
-        pVect1 += 8;
-        v2 = _mm256_loadu_ps(pVect2);
-        pVect2 += 8;
-        diff = _mm256_sub_ps(v1, v2);
-        sum = hnsw_mm256_fmadd_ps(diff, diff, sum);
-
-        v1 = _mm256_loadu_ps(pVect1);
-        pVect1 += 8;
-        v2 = _mm256_loadu_ps(pVect2);
-        pVect2 += 8;
-        diff = _mm256_sub_ps(v1, v2);
-        sum = hnsw_mm256_fmadd_ps(diff, diff, sum);
-    }
-
-    _mm256_store_ps(TmpRes, sum);
-    return TmpRes[0] + TmpRes[1] + TmpRes[2] + TmpRes[3] + TmpRes[4] + TmpRes[5] + TmpRes[6] + TmpRes[7];
-}
-
-#endif
-
 #if defined(USE_AVX)
 
 // Favor using AVX if available.
@@ -259,13 +218,6 @@ class L2Space : public SpaceInterface<float> {
     #if defined(USE_AVX512)
         if (AVX512Capable())
             L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX512;
-        else if (AVX2Capable())
-            L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX2;
-        else if (AVXCapable())
-            L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX;
-    #elif defined(USE_AVX2)
-        if (AVX2Capable())
-            L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX2;
         else if (AVXCapable())
             L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX;
     #elif defined(USE_AVX)

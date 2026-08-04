@@ -30,13 +30,6 @@ class MultiVectorL2Space : public BaseMultiVectorSpace<DOCIDTYPE> {
     #if defined(USE_AVX512)
         if (AVX512Capable())
             L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX512;
-        else if (AVX2Capable())
-            L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX2;
-        else if (AVXCapable())
-            L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX;
-    #elif defined(USE_AVX2)
-        if (AVX2Capable())
-            L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX2;
         else if (AVXCapable())
             L2SqrSIMD16Ext = L2SqrSIMD16ExtAVX;
     #elif defined(USE_AVX)
@@ -97,17 +90,6 @@ class MultiVectorInnerProductSpace : public BaseMultiVectorSpace<DOCIDTYPE> {
         if (AVX512Capable()) {
             InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX512;
             InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX512;
-        } else if (AVX2Capable()) {
-            InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX2;
-            InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX2;
-        } else if (AVXCapable()) {
-            InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX;
-            InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX;
-        }
-    #elif defined(USE_AVX2)
-        if (AVX2Capable()) {
-            InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX2;
-            InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX2;
         } else if (AVXCapable()) {
             InnerProductSIMD16Ext = InnerProductSIMD16ExtAVX;
             InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX;
@@ -118,15 +100,7 @@ class MultiVectorInnerProductSpace : public BaseMultiVectorSpace<DOCIDTYPE> {
             InnerProductDistanceSIMD16Ext = InnerProductDistanceSIMD16ExtAVX;
         }
     #endif
-    #if defined(USE_AVX2)
-        if (AVX2Capable()) {
-            InnerProductSIMD4Ext = InnerProductSIMD4ExtAVX2;
-            InnerProductDistanceSIMD4Ext = InnerProductDistanceSIMD4ExtAVX2;
-        } else if (AVXCapable()) {
-            InnerProductSIMD4Ext = InnerProductSIMD4ExtAVX;
-            InnerProductDistanceSIMD4Ext = InnerProductDistanceSIMD4ExtAVX;
-        }
-    #elif defined(USE_AVX)
+    #if defined(USE_AVX)
         if (AVXCapable()) {
             InnerProductSIMD4Ext = InnerProductSIMD4ExtAVX;
             InnerProductDistanceSIMD4Ext = InnerProductDistanceSIMD4ExtAVX;

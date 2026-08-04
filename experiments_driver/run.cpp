@@ -24,14 +24,14 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_rv_buckets, min_q, stats_length
-    {"deep-image-96-angular",      "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  0.5f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"cohere",                     "cd", 1000, 0.5f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
     // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
@@ -1848,10 +1848,10 @@ int main() {
     index_build(); // build the indexes for all datasets and save to disk
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
-    table_build(); // build the estimation table for all datasets and save to disk
-    per_query_result_exp(); // per-query result experiments
+    // table_build(); // build the estimation table for all datasets and save to disk
+    offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
 
-    // offline_exp();      // offline computation of estimator, samplings, and ef-adaptor
+    per_query_result_exp(); // per-query result experiments
     // online_exp();       // onine search experiments
 
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
