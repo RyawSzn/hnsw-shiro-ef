@@ -84,8 +84,12 @@ static void train_convergence_buckets(
         }
 
         if (num_hard_queries > 0 && num_hard_queries <= query_vectors->rows()) {
-            float ef_hard_sum = 0;
-            float ef_easy_sum = 0;
+
+            std::vector<size_t> ef_hard_sum(101, 0);
+            std::vector<size_t> ef_easy_sum(101, 0);
+            std::vector<size_t> ef_hard_cnt(101, 0);
+            std::vector<size_t> ef_easy_cnt(101, 0);
+
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             hnswdis::Sketch temp_sketch(adapter.get_all_tables(), adapter.get_convergence_centers(), adapter.get_expected_recall());
 
@@ -94,17 +98,47 @@ static void train_convergence_buckets(
                 auto ret = hnsw->adaptiveSearchKnn(query_vectors->row(i).data(), k, stats_length, score_cal, nullptr, &cv);
                 int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 400.0f)));
                 size_t est_ef = temp_sketch.estimate_ef2(cv_score, ret.second);
-                if (i < num_hard_queries) ef_hard_sum += est_ef;
-                else ef_easy_sum += est_ef;
+                if (i < num_hard_queries) {
+                    ef_hard_sum[cv_score] += est_ef;
+                    ef_hard_cnt[cv_score]++;
+                }
+                else {
+                    ef_easy_sum[cv_score] += est_ef;
+                    ef_easy_cnt[cv_score]++;
+                }
             }
 
-            float ef_hard = ef_hard_sum / num_hard_queries;
-            float ef_easy = (query_vectors->rows() - num_hard_queries) > 0 ? ef_easy_sum / (query_vectors->rows() - num_hard_queries) : 0;
+            float avg_ef_hard = 0.0f;
+            if (num_hard_queries > 0) {
+                for (int s = 0; s <= 100; ++s) {
+                    if (ef_hard_cnt[s] > 0) {
+                        float ef_star_s = static_cast<float>(ef_hard_sum[s]) / static_cast<float>(ef_hard_cnt[s]);
+                        float weight = static_cast<float>(ef_hard_cnt[s]) / static_cast<float>(num_hard_queries);
+                        avg_ef_hard += weight * ef_star_s;
+                    }
+                }
+            }
+
+            // Compute average ef for Easy group (bucketed, Equation 1 per group)
+            float avg_ef_easy = 0.0f;
+            if (query_vectors->rows() - num_hard_queries > 0) {
+                for (int s = 0; s <= 100; ++s) {
+                    if (ef_easy_cnt[s] > 0) {
+                        float ef_star_s = static_cast<float>(ef_easy_sum[s]) / static_cast<float>(ef_easy_cnt[s]);
+                        float weight = static_cast<float>(ef_easy_cnt[s]) / static_cast<float>(query_vectors->rows() - num_hard_queries);;
+                        avg_ef_easy += weight * ef_star_s;
+                    }
+                }
+            }
+
             float hard_pct = static_cast<float>(num_hard_queries) / static_cast<float>(query_vectors->rows() * 10);
-            float true_wae = hard_pct * ef_hard + (1.0f - hard_pct) * ef_easy;
+            float true_wae = hard_pct * avg_ef_hard + (1.0f - hard_pct) * avg_ef_easy;
 
             adapter.set_wae(true_wae);
             std::cout << "Reconstructed True WAE: " << true_wae << " (Hard Pct: " << hard_pct << ")" << std::endl;
+            std::cout << "  Avg Ef Hard (bucketed): " << avg_ef_hard
+                      << " | Avg Ef Easy (bucketed): " << avg_ef_easy << std::endl;
+
         }
     }
 }
@@ -242,6 +276,29 @@ void indexing_exp()
         std::string index_path = (root / "index" / (dataset + "-M16-efc-500-parallel.hnsw")).string();
 
         build_index(hdf5_path, index_path, 16, 500, metric, std::max(1u, std::thread::hardware_concurrency() / 4));
+    }
+}
+
+void index_build()
+{
+    unsigned hw = std::max(1u, std::thread::hardware_concurrency());
+    unsigned concurrent_builds = std::max(1u, std::min<unsigned>(hw / 4, g_experiments.size()));
+    unsigned threads_per_build = std::max(1u, hw / concurrent_builds);
+
+    #pragma omp parallel for num_threads(concurrent_builds) schedule(dynamic)
+    for (int i = 0; i < static_cast<int>(g_experiments.size()); ++i)
+    {
+        const auto& conf = g_experiments[i];
+        std::string dataset = conf.dataset;
+        std::string metric = conf.metric;
+
+        #pragma omp critical
+        std::cout << "Dataset: " << dataset << std::endl;
+
+        std::string hdf5_path = (root / "data" / (dataset + ".hdf5")).string();
+        std::string index_path = (root / "index" / (dataset + "-M16-efc-500-parallel.hnsw")).string();
+
+        build_index(hdf5_path, index_path, 16, 500, metric, threads_per_build);
     }
 }
 
@@ -1788,6 +1845,7 @@ int main() {
     std::cout << "EXPERIMENTS_ROOT: " << root_path << std::endl;
 
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
+    index_build(); // build the indexes for all datasets and save to disk
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
     table_build(); // build the estimation table for all datasets and save to disk
@@ -1798,12 +1856,12 @@ int main() {
 
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
-    ablation_study_visited_list_size();       // ablation study on distance list size
-    ablation_study_sampling_size();           // ablation study on sampling size
-    ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
-    ablation_study_truncation_ratio();        // ablation study on truncation ratio
-    ablation_study_n_convergence_buckets();   // ablation study on convergence buckets
-    ablation_study_min_queries_per_score();   // ablation study on truncation ratio
+    // ablation_study_visited_list_size();       // ablation study on distance list size
+    // ablation_study_sampling_size();           // ablation study on sampling size
+    // ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
+    // ablation_study_truncation_ratio();        // ablation study on truncation ratio
+    // ablation_study_n_convergence_buckets();   // ablation study on convergence buckets
+    // ablation_study_min_queries_per_score();   // ablation study on truncation ratio
 
     // insert_exp(true); // insert experiment with setup
     // delete_exp(true); // delete experiment with setup
