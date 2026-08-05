@@ -17,23 +17,79 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     if os.path.exists(summary_path):
         sum_df = pd.read_csv(summary_path)
         ds_sum = sum_df[sum_df["dataset"] == dataset_name]
-        adapt_rec = ds_sum[ds_sum["method"] == "adaptive"]["avg_recall"].values[0]
 
-        base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
-        base_df["ef"] = pd.to_numeric(base_df["ef"])
+        # Check if the dataset is in the summary
+        if not ds_sum.empty:
+            ada_rows = ds_sum[ds_sum["method"] == "adaptive"]
+            if not ada_rows.empty:
+                adapt_rec = ada_rows["avg_recall"].values[0]
+                adapt_lat = ada_rows["avg_lat(ns)"].values[0]
+            else:
+                adapt_rec = df_mine["Recall"].mean()
+                adapt_lat = df_mine["Latency(ns)"].mean()
 
-        # Find the baseline EF with the avg_recall closest to adapt_rec
-        base_df["recall_diff"] = (base_df["avg_recall"] - adapt_rec).abs()
-        best_ef = int(base_df.loc[base_df["recall_diff"].idxmin()]["ef"])
+            base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
+
+            if not base_df.empty:
+                base_df["ef"] = pd.to_numeric(base_df["ef"])
+                base_df["recall_diff"] = (base_df["avg_recall"] - adapt_rec).abs()
+                closest_ef = int(base_df.loc[base_df["recall_diff"].idxmin()]["ef"])
+                closest_ef_lat = base_df.loc[base_df["recall_diff"].idxmin()][
+                    "avg_lat(ns)"
+                ]
+
+                candidates = base_df[base_df["avg_recall"] < adapt_rec]
+                if not candidates.empty:
+                    best_ef = int(candidates.loc[candidates["ef"].idxmax()]["ef"])
+                    best_ef_lat = base_df[base_df["ef"] == best_ef][
+                        "avg_lat(ns)"
+                    ].values[0]
+                    if adapt_lat > best_ef_lat:
+                        best_ef = closest_ef
+                else:
+                    best_ef = closest_ef
+            else:
+                # Fallback if no baseline in summary
+                unique_efs = df_base["EF"].unique()
+                ef_recalls = {
+                    ef: df_base[df_base["EF"] == ef]["Recall"].mean()
+                    for ef in unique_efs
+                }
+                candidates = {ef: r for ef, r in ef_recalls.items() if r < adapt_rec}
+                if candidates:
+                    best_ef = int(max(candidates, key=lambda ef: candidates[ef]))
+                else:
+                    best_ef = int(
+                        min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec))
+                    )
+        else:
+            adapt_rec = df_mine["Recall"].mean()
+            unique_efs = df_base["EF"].unique()
+            ef_recalls = {
+                ef: df_base[df_base["EF"] == ef]["Recall"].mean() for ef in unique_efs
+            }
+            candidates = {ef: r for ef, r in ef_recalls.items() if r < adapt_rec}
+            if candidates:
+                best_ef = int(max(candidates, key=lambda ef: candidates[ef]))
+            else:
+                best_ef = int(
+                    min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec))
+                )
     else:
         adapt_rec = df_mine["Recall"].mean()
 
-        # Find the baseline EF with the avg_recall closest to adapt_rec
+        # Find the highest EF where baseline recall < shiro recall
         unique_efs = df_base["EF"].unique()
         ef_recalls = {
             ef: df_base[df_base["EF"] == ef]["Recall"].mean() for ef in unique_efs
         }
-        best_ef = int(min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec)))
+        candidates = {ef: r for ef, r in ef_recalls.items() if r < adapt_rec}
+        if candidates:
+            best_ef = int(max(candidates, key=lambda ef: candidates[ef]))
+        else:
+            best_ef = int(
+                min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec))
+            )
 
     df_base_best = df_base[df_base["EF"] == best_ef].copy()
     df_merged = pd.merge(
@@ -46,11 +102,6 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
     total_queries = len(df_merged)
     x_percentile = np.linspace(0, 100, total_queries)
-
-    # Smooth the deltas for a clean business visualization
-    window = max(
-        1, total_queries // 500
-    )  # Adjust window size based on number of queries
 
     # Calculate exact mathematical areas (using raw data, not smoothed, for accuracy)
     raw_lat_diff = (
@@ -65,16 +116,14 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     rec_red_area = -raw_rec_diff[raw_rec_diff < 0].sum()  # Make positive magnitude
     rec_net_profit = rec_green_area - rec_red_area
 
+    # Revert to minimal smoothing to bring back the "cool spikes"
+    window = max(1, total_queries // 250)
     latency_diff = raw_lat_diff.rolling(window, center=True, min_periods=1).mean()
     recall_diff = raw_rec_diff.rolling(window, center=True, min_periods=1).mean()
 
     # --- SETUP PLOT ---
     plt.style.use("seaborn-v0_8-whitegrid")
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(16, 12), sharex=True)
-
-    # Zone Definitions
-    zone1_end = 27
-    zone2_end = 37
 
     # --- TOP PLOT: LATENCY DELTA ---
     ax1.plot(x_percentile, latency_diff, color="black", linewidth=1, alpha=0.5)

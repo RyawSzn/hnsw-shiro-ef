@@ -47,43 +47,69 @@ def generate_plot():
         base_df["ef"] = pd.to_numeric(base_df["ef"], errors="coerce")
         base_df = base_df.sort_values("ef")
 
-        window_size = max(5, len(base_df) // 10)
+        # REDUCED SMOOTHING: Very small window size
+        window_size = 3
 
-        # Plot Baseline lines using paired latencies (latency smoothed, recall exact)
-        ax.plot(
+        # Smooth BOTH latency (x) and recall (y) using pandas rolling mean with a small window
+        x_avg_s = (
             base_df["avg_lat(ns)"]
             .rolling(window=window_size, min_periods=1, center=True)
             .mean()
-            / 1e6,
-            base_df["avg_recall"],
-            "-",
-            color="tab:blue",
-            label="Baseline - Avg",
-            linewidth=2,
+            / 1e6
+        )
+        y_avg_s = (
+            base_df["avg_recall"]
+            .rolling(window=window_size, min_periods=1, center=True)
+            .mean()
         )
 
-        ax.plot(
+        x_p05_s = (
             base_df["lat_5th_rec"]
             .rolling(window=window_size, min_periods=1, center=True)
             .mean()
-            / 1e6,
-            base_df["5th_perc_recall"],
-            "-",
-            color="tab:green",
-            label=r"Baseline - $\pi_{0.05}$",
-            linewidth=2,
+            / 1e6
+        )
+        y_p05_s = (
+            base_df["5th_perc_recall"]
+            .rolling(window=window_size, min_periods=1, center=True)
+            .mean()
         )
 
-        ax.plot(
+        x_p01_s = (
             base_df["lat_1st_rec"]
             .rolling(window=window_size, min_periods=1, center=True)
             .mean()
-            / 1e6,
-            base_df["1st_perc_recall"],
+            / 1e6
+        )
+        y_p01_s = (
+            base_df["1st_perc_recall"]
+            .rolling(window=window_size, min_periods=1, center=True)
+            .mean()
+        )
+
+        ax.plot(
+            x_avg_s,
+            y_avg_s,
+            "-",
+            color="tab:blue",
+            label="Baseline - Avg",
+            linewidth=2.5,
+        )
+        ax.plot(
+            x_p05_s,
+            y_p05_s,
+            "-",
+            color="tab:green",
+            label=r"Baseline - $\pi_{0.05}$",
+            linewidth=2.5,
+        )
+        ax.plot(
+            x_p01_s,
+            y_p01_s,
             "-",
             color="tab:orange",
             label=r"Baseline - $\pi_{0.01}$",
-            linewidth=2,
+            linewidth=2.5,
         )
 
         # 2. Adaptive (Shiro) Data
@@ -172,7 +198,6 @@ def generate_plot():
             va="bottom",
             zorder=6,
         )
-
         ax.grid(True, linestyle="--", alpha=0.6)
 
     plt.tight_layout(rect=(0, 0.08, 1, 1))

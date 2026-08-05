@@ -1,4 +1,4 @@
-Dataset,Global EF (ef*),Total Latency (ms),Noise Tax (ms),Noise Tax %
+Dataset,Global EF (ef),Total Latency (ms),Noise Tax (ms),Noise Tax %
 deep-image-96-angular,100,3206.90267,0.0,0.0
 deep-image-96-angular,200,6000.869968,169.479839,2.8242544814962067
 deep-image-96-angular,300,8839.923042,883.036365,9.989186114002823
