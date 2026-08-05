@@ -11,7 +11,7 @@ from matplotlib.ticker import MultipleLocator
 def generate_plot():
     csv_shiro = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro/summary_metrics.csv"
     csv_ada   = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_ada/summary_metrics.csv"
-
+a
     for p in (csv_shiro, csv_ada):
         if not os.path.exists(p):
             print(f"Error: {p} not found. Please run generate_summary_csv.py first.")
