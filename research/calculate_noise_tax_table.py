@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv"
+csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_ada"
 
 results = []
 

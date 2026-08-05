@@ -12,7 +12,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
     df_base = pd.read_csv(base_csv)
 
     summary_path = (
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/summary_metrics.csv"
+        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro/summary_metrics.csv"
     )
     if os.path.exists(summary_path):
         sum_df = pd.read_csv(summary_path)
@@ -167,7 +167,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
         f"Total Savings (Green): {lat_green_area:,.1f} ms\n"
         f"Total Investment (Red): -{lat_red_area:,.1f} ms\n"
         f"──────────────────────\n"
-        f"Net Profit (Green - Red): +{lat_net_profit:,.1f} ms"
+        f"Net Profit (Green - Red): {lat_net_profit:,.1f} ms"
     )
 
     ax1.text(
@@ -242,7 +242,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
         f"Accuracy Gained (Green): +{rec_green_area:,.1f}\n"
         f"Accuracy Lost (Red): -{rec_red_area:,.1f}\n"
         f"──────────────────────\n"
-        f"Net Profit (Green - Red): +{rec_net_profit:,.1f}"
+        f"Net Profit (Green - Red): {rec_net_profit:,.1f}"
     )
 
     ax2.text(
@@ -288,7 +288,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
 
 if __name__ == "__main__":
-    csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv"
+    csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro"
     for file in os.listdir(csv_dir):
         if file.startswith("per_query_results_") and file.endswith(".csv"):
             dataset_name = file.replace("per_query_results_", "").replace(".csv", "")

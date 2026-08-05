@@ -9,12 +9,19 @@ from matplotlib.ticker import MultipleLocator
 
 
 def generate_plot():
-    csv_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/summary_metrics.csv"
-    if not os.path.exists(csv_path):
-        print(f"Error: {csv_path} not found. Please run generate_summary_csv.py first.")
-        return
+    csv_shiro = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro/summary_metrics.csv"
+    csv_ada   = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_ada/summary_metrics.csv"
 
-    df = pd.read_csv(csv_path)
+    for p in (csv_shiro, csv_ada):
+        if not os.path.exists(p):
+            print(f"Error: {p} not found. Please run generate_summary_csv.py first.")
+            return
+
+    df_shiro = pd.read_csv(csv_shiro)
+    df_ada   = pd.read_csv(csv_ada)
+
+    # baseline always comes from csv_shiro
+    df = df_shiro
     datasets = sorted(df["dataset"].unique())
     num_ds = len(datasets)
 
@@ -112,47 +119,27 @@ def generate_plot():
             linewidth=2.5,
         )
 
-        # 2. Adaptive (Shiro) Data
-        ada_df = ds_df[ds_df["method"] == "adaptive"]
-        if not ada_df.empty:
-            s_time_avg = ada_df.iloc[0]["avg_lat(ns)"] / 1e6
-            s_time_p05 = ada_df.iloc[0]["lat_5th_rec"] / 1e6
-            s_time_p01 = ada_df.iloc[0]["lat_1st_rec"] / 1e6
+        # 2a. shiro-ef adaptive → star (★)
+        shiro_ada = df_shiro[(df_shiro["dataset"] == ds_name) & (df_shiro["method"] == "adaptive")]
+        if not shiro_ada.empty:
+            r = shiro_ada.iloc[0]
+            ax.scatter([r["avg_lat(ns)"] / 1e6], [r["avg_recall"]],
+                       marker="*", s=350, color="blue", edgecolor="black", zorder=5)
+            ax.scatter([r["lat_5th_rec"] / 1e6], [r["5th_perc_recall"]],
+                       marker="*", s=350, color="green", edgecolor="black", zorder=5)
+            ax.scatter([r["lat_1st_rec"] / 1e6], [r["1st_perc_recall"]],
+                       marker="*", s=350, color="orange", edgecolor="black", zorder=5)
 
-            s_avg = ada_df.iloc[0]["avg_recall"]
-            s_p05 = ada_df.iloc[0]["5th_perc_recall"]
-            s_p01 = ada_df.iloc[0]["1st_perc_recall"]
-
-            ax.scatter(
-                [s_time_avg],
-                [s_avg],
-                marker="*",
-                s=350,
-                color="blue",
-                edgecolor="black",
-                label=r"Shiro - Avg",
-                zorder=5,
-            )
-            ax.scatter(
-                [s_time_p05],
-                [s_p05],
-                marker="*",
-                s=350,
-                color="green",
-                edgecolor="black",
-                label=r"Shiro - $\pi_{0.05}$",
-                zorder=5,
-            )
-            ax.scatter(
-                [s_time_p01],
-                [s_p01],
-                marker="*",
-                s=350,
-                color="orange",
-                edgecolor="black",
-                label=r"Shiro - $\pi_{0.01}$",
-                zorder=5,
-            )
+        # 2b. ada adaptive → cross (x)
+        ada_row = df_ada[(df_ada["dataset"] == ds_name) & (df_ada["method"] == "adaptive")]
+        if not ada_row.empty:
+            r = ada_row.iloc[0]
+            ax.scatter([r["avg_lat(ns)"] / 1e6], [r["avg_recall"]],
+                       marker="x", s=180, color="blue", linewidths=2.5, zorder=5)
+            ax.scatter([r["lat_5th_rec"] / 1e6], [r["5th_perc_recall"]],
+                       marker="x", s=180, color="green", linewidths=2.5, zorder=5)
+            ax.scatter([r["lat_1st_rec"] / 1e6], [r["1st_perc_recall"]],
+                       marker="x", s=180, color="orange", linewidths=2.5, zorder=5)
 
         # 3. Formatting
         max_ef = pd.to_numeric(base_df["ef"], errors="coerce").max()
@@ -167,7 +154,6 @@ def generate_plot():
         ax.yaxis.set_major_locator(MultipleLocator(0.05))
         ax.set_ylim(0.70, 1.01)
 
-        # Set dynamic X limit based on all maximum latencies plotted
         all_times = (
             pd.concat(
                 [base_df["avg_lat(ns)"], base_df["lat_5th_rec"], base_df["lat_1st_rec"]]
@@ -175,8 +161,13 @@ def generate_plot():
             / 1e6
         )
         max_time = all_times.max() if not all_times.empty else 10
-        if not ada_df.empty:
-            max_time = max(max_time, s_time_avg, s_time_p05, s_time_p01)
+        for src in (shiro_ada, ada_row):
+            if not src.empty:
+                r = src.iloc[0]
+                max_time = max(max_time,
+                               r["avg_lat(ns)"] / 1e6,
+                               r["lat_5th_rec"] / 1e6,
+                               r["lat_1st_rec"] / 1e6)
         ax.set_xlim(0, max_time * 1.1)
 
         # ADD TARGET RECALL LINE
@@ -202,41 +193,22 @@ def generate_plot():
 
     plt.tight_layout(rect=(0, 0.08, 1, 1))
 
-    # Cleaned up Legend (Removed Ada and Progress)
     legend_handles = [
-        Line2D([0], [0], color="tab:blue", lw=2.5, label="Baseline – Avg"),
-        Line2D([0], [0], color="tab:green", lw=2.5, label=r"Baseline – $\pi_{0.05}$"),
+        Line2D([0], [0], color="tab:blue",   lw=2.5, label="Baseline – Avg"),
+        Line2D([0], [0], color="tab:green",  lw=2.5, label=r"Baseline – $\pi_{0.05}$"),
         Line2D([0], [0], color="tab:orange", lw=2.5, label=r"Baseline – $\pi_{0.01}$"),
-        Line2D(
-            [0],
-            [0],
-            marker="*",
-            color="w",
-            markerfacecolor="blue",
-            markersize=11,
-            markeredgecolor="black",
-            label="Shiro – Avg",
-        ),
-        Line2D(
-            [0],
-            [0],
-            marker="*",
-            color="w",
-            markerfacecolor="green",
-            markersize=11,
-            markeredgecolor="black",
-            label=r"Shiro – $\pi_{0.05}$",
-        ),
-        Line2D(
-            [0],
-            [0],
-            marker="*",
-            color="w",
-            markerfacecolor="orange",
-            markersize=11,
-            markeredgecolor="black",
-            label=r"Shiro – $\pi_{0.01}$",
-        ),
+        Line2D([0], [0], marker="*", color="w", markerfacecolor="blue",
+               markersize=13, markeredgecolor="black", label="Shiro-EF – Avg"),
+        Line2D([0], [0], marker="*", color="w", markerfacecolor="green",
+               markersize=13, markeredgecolor="black", label=r"Shiro-EF – $\pi_{0.05}$"),
+        Line2D([0], [0], marker="*", color="w", markerfacecolor="orange",
+               markersize=13, markeredgecolor="black", label=r"Shiro-EF – $\pi_{0.01}$"),
+        Line2D([0], [0], marker="x", color="blue",   markersize=10,
+               linewidth=0, markeredgewidth=2.5, label="Ada – Avg"),
+        Line2D([0], [0], marker="x", color="green",  markersize=10,
+               linewidth=0, markeredgewidth=2.5, label=r"Ada – $\pi_{0.05}$"),
+        Line2D([0], [0], marker="x", color="orange", markersize=10,
+               linewidth=0, markeredgewidth=2.5, label=r"Ada – $\pi_{0.01}$"),
     ]
 
     fig.legend(

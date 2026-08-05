@@ -1,0 +1,5 @@
+dataset,method,ef,avg_recall,5th_perc_recall,1st_perc_recall,avg_lat(ns),lat_5th_rec,lat_1st_rec
+deep-image-96-angular,adaptive,262,0.96839,0.8342,0.74416,1017926,1268389,1184403
+glove-100-angular,adaptive,4447,0.97957,0.88538,0.85097,6209865,10264211,10440912
+msmarco,adaptive,2586,0.97496,0.89857,0.85863,18822125,38671084,45650871
+word2vec-300-angular,adaptive,297,0.96778,0.8075,0.72786,1656566,2017569,1935948

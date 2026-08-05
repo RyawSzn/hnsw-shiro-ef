@@ -39,13 +39,13 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--attempts-dir",
         type=Path,
-        default=Path(__file__).parent / "csv" / "attempts",
+        default=Path(__file__).parent / "csv_ada" / "attempts",
         help="Directory containing per_query_*_rep*.csv files",
     )
     p.add_argument(
         "--output-dir",
         type=Path,
-        default=Path(__file__).parent / "csv",
+        default=Path(__file__).parent / "csv_ada",
         help="Directory to write aggregated CSVs",
     )
     p.add_argument(
@@ -118,13 +118,12 @@ def aggregate(rep_files: list[Path], strategy: str) -> list[dict]:
             mean_lat = sum(float(r[LATENCY_COL]) for r in rows) / len(rows)
             file_means.append(mean_lat)
             file_rows.append(rows)
-        
+
         median_mean = statistics.median(file_means)
         idx = file_means.index(median_mean)
-        
+
         sorted_keys = sorted(
-            file_rows[idx],
-            key=lambda x: (int(x[EF_COL]), int(x[QUERYID_COL]))
+            file_rows[idx], key=lambda x: (int(x[EF_COL]), int(x[QUERYID_COL]))
         )
         return sorted_keys
 
@@ -138,10 +137,7 @@ def aggregate(rep_files: list[Path], strategy: str) -> list[dict]:
             if key not in representative:
                 representative[key] = row
 
-    sorted_keys = sorted(
-        representative.keys(),
-        key=lambda x: (int(x[1]), int(x[0]))
-    )
+    sorted_keys = sorted(representative.keys(), key=lambda x: (int(x[1]), int(x[0])))
 
     result = []
     for key in sorted_keys:
