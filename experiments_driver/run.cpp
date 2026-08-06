@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <cstdlib>
 
+const int WAE_METHOD = 1; // 0: use the weighted average ef computed from the sampling, 1: use the reconstructed true wae from the hard and easy queries
+
 // ============================================================================
 // GLOBAL CONFIGURATION
 // Easily configure parameters here instead of modifying them in each function.
@@ -24,18 +26,18 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_rv_buckets, min_q, stats_length
-    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 1000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
-    // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"laion_text",                 "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 3, 2000, 10, 3, 1 + 32 + 31 * 32}
+    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.97f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.97f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
+    // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"laion_text",                 "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -85,10 +87,13 @@ static void train_convergence_buckets(
 
         if (num_hard_queries > 0 && num_hard_queries <= query_vectors->rows()) {
 
-            std::vector<size_t> ef_hard_sum(101, 0);
-            std::vector<size_t> ef_easy_sum(101, 0);
+            std::vector<size_t> ef_hard_set(101, 0);
+            std::vector<size_t> ef_easy_set(101, 0);
             std::vector<size_t> ef_hard_cnt(101, 0);
             std::vector<size_t> ef_easy_cnt(101, 0);
+
+            std::vector<size_t> ef_all_set(101, 0);
+            std::vector<size_t> ef_all_cnt(101, 0);
 
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
             hnswdis::Sketch temp_sketch(adapter.get_all_tables(), adapter.get_convergence_centers(), adapter.get_expected_recall());
@@ -99,22 +104,24 @@ static void train_convergence_buckets(
                 int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 400.0f)));
                 size_t est_ef = temp_sketch.estimate_ef2(cv_score, ret.second);
                 if (i < num_hard_queries) {
-                    ef_hard_sum[cv_score] += est_ef;
+                    ef_hard_set[cv_score] = ef_hard_set[cv_score] == 0 ? est_ef : std::min(ef_hard_set[cv_score], est_ef);
                     ef_hard_cnt[cv_score]++;
                 }
                 else {
-                    ef_easy_sum[cv_score] += est_ef;
+                    ef_easy_set[cv_score] = ef_easy_set[cv_score] == 0 ? est_ef : std::min(ef_easy_set[cv_score], est_ef);
                     ef_easy_cnt[cv_score]++;
                 }
+
+                ef_all_set[cv_score] = ef_all_set[cv_score] == 0 ? est_ef : std::min(ef_all_set[cv_score], est_ef);
+                ef_all_cnt[cv_score]++;
             }
 
             float avg_ef_hard = 0.0f;
             if (num_hard_queries > 0) {
                 for (int s = 0; s <= 100; ++s) {
                     if (ef_hard_cnt[s] > 0) {
-                        float ef_star_s = static_cast<float>(ef_hard_sum[s]) / static_cast<float>(ef_hard_cnt[s]);
                         float weight = static_cast<float>(ef_hard_cnt[s]) / static_cast<float>(num_hard_queries);
-                        avg_ef_hard += weight * ef_star_s;
+                        avg_ef_hard += weight * ef_hard_set[s];
                     }
                 }
             }
@@ -124,21 +131,33 @@ static void train_convergence_buckets(
             if (query_vectors->rows() - num_hard_queries > 0) {
                 for (int s = 0; s <= 100; ++s) {
                     if (ef_easy_cnt[s] > 0) {
-                        float ef_star_s = static_cast<float>(ef_easy_sum[s]) / static_cast<float>(ef_easy_cnt[s]);
                         float weight = static_cast<float>(ef_easy_cnt[s]) / static_cast<float>(query_vectors->rows() - num_hard_queries);;
-                        avg_ef_easy += weight * ef_star_s;
+                        avg_ef_easy += weight * ef_easy_set[s];
                     }
+                }
+            }
+
+            float avg_ef_all = 0.0f;
+            for (int s = 0; s <= 100; ++s) {
+                if (ef_all_set[s] > 0) {
+                    float weight = static_cast<float>(ef_all_cnt[s]) / static_cast<float>(query_vectors->rows());
+                    avg_ef_all += weight * ef_all_set[s];
                 }
             }
 
             float hard_pct = static_cast<float>(num_hard_queries) / static_cast<float>(query_vectors->rows() * 10);
             float true_wae = hard_pct * avg_ef_hard + (1.0f - hard_pct) * avg_ef_easy;
+            float wae = avg_ef_all;
 
-            adapter.set_wae(true_wae);
-            std::cout << "Reconstructed True WAE: " << true_wae << " (Hard Pct: " << hard_pct << ")" << std::endl;
-            std::cout << "  Avg Ef Hard (bucketed): " << avg_ef_hard
-                      << " | Avg Ef Easy (bucketed): " << avg_ef_easy << std::endl;
-
+            if (WAE_METHOD == 0) {
+                adapter.set_wae(wae);
+                std::cout << "Weighted Average ef: " << wae << std::endl;
+            } else if (WAE_METHOD == 1) {
+                adapter.set_wae(true_wae);
+                std::cout << "Reconstructed True WAE: " << true_wae << " (Hard Pct: " << hard_pct << ")" << std::endl;
+                std::cout << "  Avg Ef Hard (bucketed): " << avg_ef_hard
+                        << " | Avg Ef Easy (bucketed): " << avg_ef_easy << std::endl;
+            }
         }
     }
 }
@@ -1768,6 +1787,7 @@ void per_query_result_exp()
         float alpha = conf.alpha;
         size_t k = conf.k;
         float expected_recall = conf.expected_recall;
+        int repeat = conf.repeat;
         int ef_upper_bound = conf.ef_upper_bound;
         int sampling_size = conf.sampling_size;
         int n_convergence_buckets = conf.n_convergence_buckets;
@@ -1778,8 +1798,6 @@ void per_query_result_exp()
         std::cout << "Dataset: " << dataset << std::endl
                   << "Metric: " << metric << std::endl
                   << "Truncation Ratio: " << alpha << std::endl;
-
-        int repeat = 3;
 
         std::shared_ptr<hnswlib::HierarchicalNSW<float>> hnsw;
         std::shared_ptr<hnswdis::MatrixXf> query;
@@ -1845,7 +1863,7 @@ int main() {
     std::cout << "EXPERIMENTS_ROOT: " << root_path << std::endl;
 
     // indexing_exp(); // indexes are precomputed, uncomment to run if needed for the first run
-    index_build(); // build the indexes for all datasets and save to disk
+    // index_build(); // build the indexes for all datasets and save to disk
     // functions for computing groundtruth: compute_groundtruth_laion_text2image and compute_and_save_gound_truth
 
     // table_build(); // build the estimation table for all datasets and save to disk

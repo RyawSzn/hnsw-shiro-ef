@@ -109,7 +109,7 @@ def generate_plot():
             y_p05_s,
             "-",
             color="tab:green",
-            label=r"Baseline - $\pi_{0.05}$",
+            label=r"Baseline - $<\pi_{0.05}$",
             linewidth=2.5,
         )
         ax.plot(
@@ -117,7 +117,7 @@ def generate_plot():
             y_p01_s,
             "-",
             color="tab:orange",
-            label=r"Baseline - $\pi_{0.01}$",
+            label=r"Baseline - $<\pi_{0.01}$",
             linewidth=2.5,
         )
 
@@ -245,8 +245,8 @@ def generate_plot():
 
     legend_handles = [
         Line2D([0], [0], color="tab:blue", lw=2.5, label="Baseline – Avg"),
-        Line2D([0], [0], color="tab:green", lw=2.5, label=r"Baseline – $\pi_{0.05}$"),
-        Line2D([0], [0], color="tab:orange", lw=2.5, label=r"Baseline – $\pi_{0.01}$"),
+        Line2D([0], [0], color="tab:green", lw=2.5, label=r"Baseline – $<\pi_{0.05}$"),
+        Line2D([0], [0], color="tab:orange", lw=2.5, label=r"Baseline – $<\pi_{0.01}$"),
         Line2D(
             [0],
             [0],
@@ -265,7 +265,7 @@ def generate_plot():
             markerfacecolor="green",
             markersize=13,
             markeredgecolor="black",
-            label=r"Shiro-EF – $\pi_{0.05}$",
+            label=r"Shiro-EF – $<\pi_{0.05}$",
         ),
         Line2D(
             [0],
@@ -275,7 +275,7 @@ def generate_plot():
             markerfacecolor="orange",
             markersize=13,
             markeredgecolor="black",
-            label=r"Shiro-EF – $\pi_{0.01}$",
+            label=r"Shiro-EF – $<\pi_{0.01}$",
         ),
         Line2D(
             [0],
@@ -295,7 +295,7 @@ def generate_plot():
             markersize=10,
             linewidth=0,
             markeredgewidth=2.5,
-            label=r"Ada – $\pi_{0.05}$",
+            label=r"Ada – $<\pi_{0.05}$",
         ),
         Line2D(
             [0],
@@ -305,7 +305,7 @@ def generate_plot():
             markersize=10,
             linewidth=0,
             markeredgewidth=2.5,
-            label=r"Ada – $\pi_{0.01}$",
+            label=r"Ada – $<\pi_{0.01}$",
         ),
     ]
 

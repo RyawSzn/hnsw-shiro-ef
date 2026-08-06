@@ -772,7 +772,7 @@ void per_query_baseline_exp(
         }
     }
 
-    while (exp_results.size() < 3 || global_avg_recall < 0.99)
+    while (exp_results.size() < 3 || global_avg_recall < 1.0)
     {
         std::tuple<size_t, float, float, float, double, int64_t, int64_t, int64_t, int64_t> exp_record =
             std::make_tuple(ef, 0.0f, 0.0f, 0.0f, 0.0, 0, 0, 0, 0);
