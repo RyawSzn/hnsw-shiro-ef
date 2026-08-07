@@ -230,7 +230,7 @@ def generate_plot():
         offset = (x_max - x_min) * 0.02
         ax.text(
             x_min + offset,
-            0.952,
+            0.972,
             "Target Recall",
             color="tab:red",
             fontsize=10,
