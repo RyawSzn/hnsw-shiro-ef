@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 CSV_SHIRO = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro"
-CSV_ADA   = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_ada"
-IMG_DIR   = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story_ada"
+CSV_ADA = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_ada"
+IMG_DIR = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story"
 os.makedirs(IMG_DIR, exist_ok=True)
 
 tax_path = os.path.join(CSV_SHIRO, "noise_tax_table_all_efs.csv")
@@ -26,23 +26,27 @@ def adaptive_noise_tax(df_base, df_results):
 
     def min_ef_latency(grp):
         suff = grp[grp["Recall_base"] >= grp["Recall_mine"]]
-        return suff.iloc[0]["Latency(ns)_base"] if not suff.empty else grp.iloc[-1]["Latency(ns)_base"]
+        return (
+            suff.iloc[0]["Latency(ns)_base"]
+            if not suff.empty
+            else grp.iloc[-1]["Latency(ns)_base"]
+        )
 
     essential_ms = merged.groupby("QueryID").apply(min_ef_latency).sum() / 1e6
-    total_ms     = df_results["Latency(ns)"].sum() / 1e6
+    total_ms = df_results["Latency(ns)"].sum() / 1e6
     return max(0.0, total_ms - essential_ms), df_results["Recall"].mean()
 
 
 for dataset in df_tax["Dataset"].unique():
-    base_csv        = os.path.join(CSV_SHIRO, f"per_query_baseline_{dataset}.csv")
-    shiro_mine_csv  = os.path.join(CSV_SHIRO, f"per_query_results_{dataset}.csv")
-    ada_mine_csv    = os.path.join(CSV_ADA,   f"per_query_results_{dataset}.csv")
+    base_csv = os.path.join(CSV_SHIRO, f"per_query_baseline_{dataset}.csv")
+    shiro_mine_csv = os.path.join(CSV_SHIRO, f"per_query_results_{dataset}.csv")
+    ada_mine_csv = os.path.join(CSV_ADA, f"per_query_results_{dataset}.csv")
 
     if not os.path.exists(base_csv) or not os.path.exists(shiro_mine_csv):
         continue
 
-    df_base      = pd.read_csv(base_csv)
-    df_shiro     = pd.read_csv(shiro_mine_csv)
+    df_base = pd.read_csv(base_csv)
+    df_shiro = pd.read_csv(shiro_mine_csv)
 
     base_recalls = df_base.groupby("EF")["Recall"].mean().reset_index()
     base_recalls.rename(columns={"EF": "Global EF (ef)"}, inplace=True)
@@ -80,19 +84,35 @@ for dataset in df_tax["Dataset"].unique():
             fontsize=9,
         )
 
-    plt.scatter([shiro_recall], [shiro_tax_ms],
-                color="blue", marker="*", s=300, zorder=5, label="SHIRO-EF")
+    plt.scatter(
+        [shiro_recall],
+        [shiro_tax_ms],
+        color="blue",
+        marker="*",
+        s=300,
+        zorder=5,
+        label="SHIRO-EF",
+    )
     plt.axvline(x=shiro_recall, color="blue", linestyle=":", alpha=0.5)
     plt.axhline(y=shiro_tax_ms, color="blue", linestyle=":", alpha=0.5)
 
     if has_ada:
-        plt.scatter([ada_recall], [ada_tax_ms],
-                    color="darkorange", marker="x", s=200, linewidths=2.5,
-                    zorder=5, label="Ada-EF")
-        plt.axvline(x=ada_recall,  color="darkorange", linestyle=":", alpha=0.5)
-        plt.axhline(y=ada_tax_ms,  color="darkorange", linestyle=":", alpha=0.5)
+        plt.scatter(
+            [ada_recall],
+            [ada_tax_ms],
+            color="darkorange",
+            marker="x",
+            s=200,
+            linewidths=2.5,
+            zorder=5,
+            label="Ada-EF",
+        )
+        plt.axvline(x=ada_recall, color="darkorange", linestyle=":", alpha=0.5)
+        plt.axhline(y=ada_tax_ms, color="darkorange", linestyle=":", alpha=0.5)
 
-    plt.title(f"Noise Tax vs. Recall: {dataset}", fontsize=16, fontweight="bold", pad=15)
+    plt.title(
+        f"Noise Tax vs. Recall: {dataset}", fontsize=16, fontweight="bold", pad=15
+    )
     plt.xlabel("Mean Recall", fontsize=14, fontweight="bold")
     plt.ylabel("Noise Tax (Wasted Compute) in ms", fontsize=14, fontweight="bold")
     plt.legend(loc="upper left", fontsize=12)
