@@ -103,37 +103,37 @@ namespace hnswdis
                 all_links.push_back(build_links(t));
         }
 
-                size_t estimate_ef2(float score, float cv = 0) const
+                size_t estimate_ef2(float cv_score, float conv = 0) const
         {
             if (tables_ != nullptr && convergence_centers_->size() == tables_->size())
             {
                 int n_centers = convergence_centers_->size();
                 if (n_centers == 1) {
-                    return smoothed_ef((*tables_)[0], all_links[0], score);
+                    return smoothed_ef((*tables_)[0], all_links[0], cv_score);
                 }
 
-                if (cv <= (*convergence_centers_)[0]) {
-                    return smoothed_ef((*tables_)[0], all_links[0], score);
+                if (conv <= (*convergence_centers_)[0]) {
+                    return smoothed_ef((*tables_)[0], all_links[0], cv_score);
                 }
-                if (cv >= (*convergence_centers_)[n_centers - 1]) {
-                    return smoothed_ef((*tables_)[n_centers - 1], all_links[n_centers - 1], score);
+                if (conv >= (*convergence_centers_)[n_centers - 1]) {
+                    return smoothed_ef((*tables_)[n_centers - 1], all_links[n_centers - 1], cv_score);
                 }
 
                 int idx = 0;
-                while (idx < n_centers - 1 && cv > (*convergence_centers_)[idx + 1]) {
+                while (idx < n_centers - 1 && conv > (*convergence_centers_)[idx + 1]) {
                     idx++;
                 }
 
                 float c0 = (*convergence_centers_)[idx];
                 float c1 = (*convergence_centers_)[idx + 1];
-                float w = (cv - c0) / (c1 - c0);
+                float w = (conv - c0) / (c1 - c0);
 
-                size_t ef0 = smoothed_ef((*tables_)[idx], all_links[idx], score);
-                size_t ef1 = smoothed_ef((*tables_)[idx + 1], all_links[idx + 1], score);
+                size_t ef0 = smoothed_ef((*tables_)[idx], all_links[idx], cv_score);
+                size_t ef1 = smoothed_ef((*tables_)[idx + 1], all_links[idx + 1], cv_score);
 
                 return static_cast<size_t>(ef0 * (1.0f - w) + ef1 * w + 0.5f);
             }
-            return smoothed_ef(*ef_recall_table_single, all_links[0], score);
+            return smoothed_ef(*ef_recall_table_single, all_links[0], cv_score);
         }
 
 
