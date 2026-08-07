@@ -4,7 +4,6 @@
 #include <cstdlib>
 
 constexpr int WAE_METHOD = 1; // 0: use the weighted average ef computed from the sampling, 1: use the reconstructed true wae from the hard and easy queries
-constexpr int WAE_CALC_METHOD = 0; // 0: Uses min, 1: Uses avg
 
 // ============================================================================
 // GLOBAL CONFIGURATION
@@ -27,13 +26,13 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_rv_buckets, min_q, stats_length
-    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.97f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.97f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.97f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}

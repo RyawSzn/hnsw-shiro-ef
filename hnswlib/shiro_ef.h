@@ -10,7 +10,7 @@
 constexpr int FILLING_METHOD = 2; // 0: No Filling, 1: Fill with Pivots, 2: Fill with Pivots and LDW
 constexpr int SAMPLING_METHOD = 1; // 0: Normal Random, 1: Hard First
 constexpr int INTERSECT_METHOD = 0; // 0: Fixed 5% threshold intersection, 1: Progressive intersection for exactly 5%
-constexpr int WAE_CALC_METHOD = 0; // 0: Uses min, 1: Uses avg
+constexpr int WAE_CALC_METHOD = 1; // 0: Uses min, 1: Uses avg
 
 namespace hnswdis
 {
