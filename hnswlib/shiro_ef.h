@@ -9,6 +9,7 @@
 
 constexpr int FILLING_METHOD = 2; // 0: No Filling, 1: Fill with Pivots, 2: Fill with Pivots and LDW
 constexpr int SAMPLING_METHOD = 1; // 0: Normal Random, 1: Hard First
+constexpr int INTERSECT_METHOD = 0; // 0: Fixed 5% threshold intersection, 1: Progressive intersection for exactly 5%
 
 namespace hnswdis
 {
@@ -936,18 +937,48 @@ namespace hnswdis
         std::sort(rv_order.begin(), rv_order.end(),
                   [&](size_t a, size_t b){ return safe_less(raw_rv[a], raw_rv[b]); });
 
-        // ---- Step 4: Hard = intersection(bottom-5% CV, bottom-5% RV) ----
-        const size_t tail = static_cast<size_t>(std::round(0.05 * pool));
-
-        std::unordered_set<size_t> cv_tail_set;
-        cv_tail_set.reserve(tail);
-        for (size_t i = 0; i < tail; ++i) cv_tail_set.insert(cv_order[i]);
-
         std::unordered_set<size_t> hard_set;
-        hard_set.reserve(tail);
-        for (size_t i = 0; i < tail; ++i) {
-            if (cv_tail_set.count(rv_order[i])) {
-                hard_set.insert(rv_order[i]);
+
+        if constexpr (INTERSECT_METHOD == 1) {
+            // ---- Step 4: Hard = progressive intersection until exactly 5% of pool is found ----
+            const size_t target_hard_size = static_cast<size_t>(std::round(0.05 * pool));
+
+            std::unordered_set<size_t> cv_tail_set;
+            std::unordered_set<size_t> rv_tail_set;
+
+            cv_tail_set.reserve(pool);
+            rv_tail_set.reserve(pool);
+            hard_set.reserve(target_hard_size);
+
+            for (size_t k = 0; k < pool && hard_set.size() < target_hard_size; ++k) {
+                size_t cv_idx = cv_order[k];
+                size_t rv_idx = rv_order[k];
+
+                cv_tail_set.insert(cv_idx);
+                rv_tail_set.insert(rv_idx);
+
+                if (rv_tail_set.count(cv_idx)) {
+                    hard_set.insert(cv_idx);
+                    if (hard_set.size() == target_hard_size) break;
+                }
+                if (cv_tail_set.count(rv_idx)) {
+                    hard_set.insert(rv_idx);
+                    if (hard_set.size() == target_hard_size) break;
+                }
+            }
+        } else {
+            // ---- Step 4: Hard = intersection(bottom-5% CV, bottom-5% RV) ----
+            const size_t tail = static_cast<size_t>(std::round(0.05 * pool));
+
+            std::unordered_set<size_t> cv_tail_set;
+            cv_tail_set.reserve(tail);
+            for (size_t i = 0; i < tail; ++i) cv_tail_set.insert(cv_order[i]);
+
+            hard_set.reserve(tail);
+            for (size_t i = 0; i < tail; ++i) {
+                if (cv_tail_set.count(rv_order[i])) {
+                    hard_set.insert(rv_order[i]);
+                }
             }
         }
 

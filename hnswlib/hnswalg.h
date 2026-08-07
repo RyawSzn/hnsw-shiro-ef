@@ -18,7 +18,7 @@ namespace hnswlib {
 typedef unsigned int tableint;
 typedef unsigned int linklistsizeint;
 
-const int GROUND_WAE = 0;
+constexpr int GROUND_WAE = 0;
 
 template <class ADAPTER>
 const typename ADAPTER::container_type & get_container(const ADAPTER &a)
