@@ -10,7 +10,11 @@ csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv"
 img_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img"
 
 
-def plot_recall_distribution(dataset: str, ef: int):
+def plot_recall_distribution(dataset: str, ef: int, algo: str = None):
+    if algo:
+        csv_dir = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{algo}"
+    else:
+        csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv"
     path = os.path.join(csv_dir, f"per_query_baseline_{dataset}.csv")
     if not os.path.exists(path):
         print(f"File not found: {path}")
@@ -70,5 +74,6 @@ if __name__ == "__main__":
         "--dataset", required=True, help="Dataset name (e.g. deep-image-96-angular)"
     )
     parser.add_argument("--ef", required=True, type=int, help="EF value to plot")
+    parser.add_argument("--algo", type=str, choices=["shiro", "ada"], help="Algorithm dir to read from")
     args = parser.parse_args()
-    plot_recall_distribution(args.dataset, args.ef)
+    plot_recall_distribution(args.dataset, args.ef, args.algo)

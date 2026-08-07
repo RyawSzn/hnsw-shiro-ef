@@ -5,13 +5,14 @@ import numpy as np
 import pandas as pd
 
 
-def create_annotated_plot_with_stats():
-    print("Loading datasets...")
+def create_annotated_plot_with_stats(dataset_name: str, algo: str):
+    print(f"Loading datasets for {dataset_name} ({algo})...")
+    csv_dir = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{algo}"
     df_mine = pd.read_csv(
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_results_deep-image-96-angular.csv"
+        f"{csv_dir}/per_query_results_{dataset_name}.csv"
     )
     df_base = pd.read_csv(
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/per_query_baseline_deep-image-96-angular.csv"
+        f"{csv_dir}/per_query_baseline_{dataset_name}.csv"
     )
 
     avg_recall_mine = df_mine["Recall"].mean()
@@ -222,12 +223,16 @@ def create_annotated_plot_with_stats():
     )
 
     plt.tight_layout()
-    out_path = (
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/story_continuous_final.png"
-    )
+    out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_continuous_final_{algo}_{dataset_name}.png"
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
     plt.savefig(out_path, dpi=300)
     print(f"Saved Final Plot to: {out_path}")
 
 
 if __name__ == "__main__":
-    create_annotated_plot_with_stats()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dataset", required=True, help="Dataset name")
+    parser.add_argument("--algo", choices=["shiro", "ada"], default="shiro", help="Algorithm to process")
+    args = parser.parse_args()
+    create_annotated_plot_with_stats(args.dataset, args.algo)

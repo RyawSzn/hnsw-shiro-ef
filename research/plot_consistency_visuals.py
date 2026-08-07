@@ -6,13 +6,13 @@ import pandas as pd
 from matplotlib.ticker import PercentFormatter
 
 
-def create_consistency_plot(dataset_name, mine_csv, base_csv):
+def create_consistency_plot(dataset_name, mine_csv, base_csv, algo="shiro"):
     print(f"Loading datasets for {dataset_name}...")
     df_mine = pd.read_csv(mine_csv)
     df_base = pd.read_csv(base_csv)
 
     summary_path = (
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv/summary_metrics.csv"
+        f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{algo}/summary_metrics.csv"
     )
     if os.path.exists(summary_path):
         sum_df = pd.read_csv(summary_path)
@@ -69,7 +69,7 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
 
     ax1.set_xticks([1, 2])
     ax1.set_xticklabels(
-        [f"Baseline (Fixed EF)", f"shiro-ef (Dynamic)"], fontsize=12, fontweight="bold"
+        [f"Baseline (Fixed EF)", f"{algo}-ef (Dynamic)"], fontsize=12, fontweight="bold"
     )
     ax1.set_ylabel("Recall Accuracy", fontsize=14, fontweight="bold")
     ax1.set_title(
@@ -124,7 +124,7 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
         label="Baseline",
     )
     ax2.plot(
-        sorted_mine, yvals_mine * 100, color=color_shiro, linewidth=4, label="shiro-ef"
+        sorted_mine, yvals_mine * 100, color=color_shiro, linewidth=4, label=f"{algo}-ef"
     )
 
     ax2.set_xlim(0.80, 1.01)
@@ -151,7 +151,7 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
     )
 
     ax2.annotate(
-        f"Shiro: {pct_mine_pass:.1f}%",
+        f"{algo.capitalize()}: {pct_mine_pass:.1f}%",
         xy=(target_recall, pct_mine_pass),
         xytext=(15, 10),
         textcoords="offset points",
@@ -182,7 +182,7 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
     )
 
     ax2.annotate(
-        f"Shiro: {pct_mine_pass_exp:.1f}%",
+        f"{algo.capitalize()}: {pct_mine_pass_exp:.1f}%",
         xy=(target_exp, pct_mine_pass_exp),
         xytext=(15, 10),
         textcoords="offset points",
@@ -205,7 +205,7 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
 
     plt.tight_layout(pad=3.0)
 
-    out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_consistency_visuals_{dataset_name}.png"
+    out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_consistency_visuals_{algo}_{dataset_name}.png"
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved Consistency Visuals to: {out_path}")
@@ -214,7 +214,12 @@ def create_consistency_plot(dataset_name, mine_csv, base_csv):
 
 
 if __name__ == "__main__":
-    csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv"
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--algo", choices=["shiro", "ada"], default="shiro", help="Algorithm to process")
+    args = parser.parse_args()
+
+    csv_dir = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{args.algo}"
     for file in os.listdir(csv_dir):
         if file.startswith("per_query_results_") and file.endswith(".csv"):
             dataset_name = file.replace("per_query_results_", "").replace(".csv", "")
@@ -222,7 +227,7 @@ if __name__ == "__main__":
             base_csv = os.path.join(csv_dir, f"per_query_baseline_{dataset_name}.csv")
 
             if os.path.exists(base_csv):
-                create_consistency_plot(dataset_name, mine_csv, base_csv)
+                create_consistency_plot(dataset_name, mine_csv, base_csv, algo=args.algo)
             else:
                 print(
                     f"Warning: Baseline CSV not found for {dataset_name} ({base_csv})"

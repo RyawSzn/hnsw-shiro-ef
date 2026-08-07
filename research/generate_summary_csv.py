@@ -10,10 +10,10 @@ def _worst_query_ids(group: pd.DataFrame, percentile: float) -> pd.Index:
     return group.loc[group["Recall"] <= threshold, "QueryID"]
 
 
-def generate_summary() -> None:
-    csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro"
+def generate_summary(algo: str) -> None:
+    csv_dir = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{algo}"
     output_file = (
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro/summary_metrics.csv"
+        f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{algo}/summary_metrics.csv"
     )
 
     print(
@@ -181,6 +181,12 @@ def generate_summary() -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate summary metrics CSV.")
+    parser.add_argument(
+        "--algo",
+        choices=["shiro", "ada"],
+        default="shiro",
+        help="Algorithm to summarize (shiro or ada)",
+    )
     # --match-queries is kept for backward CLI compatibility but is now a no-op;
     # baseline-derived query sets are always used.
     parser.add_argument(
@@ -188,5 +194,5 @@ if __name__ == "__main__":
         action="store_true",
         help="(no-op, kept for compatibility) Query sets are always derived from the baseline.",
     )
-    parser.parse_args()
-    generate_summary()
+    args = parser.parse_args()
+    generate_summary(args.algo)

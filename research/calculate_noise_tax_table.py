@@ -1,8 +1,13 @@
+import argparse
 import os
 
 import pandas as pd
 
-csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro"
+parser = argparse.ArgumentParser()
+parser.add_argument("--algo", choices=["shiro", "ada"], default="shiro")
+args = parser.parse_args()
+
+csv_dir = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{args.algo}"
 
 results = []
 

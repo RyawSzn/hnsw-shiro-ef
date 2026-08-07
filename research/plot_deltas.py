@@ -6,13 +6,13 @@ import pandas as pd
 from matplotlib.ticker import FuncFormatter
 
 
-def create_delta_plot(dataset_name, mine_csv, base_csv):
+def create_delta_plot(dataset_name, mine_csv, base_csv, algo="shiro"):
     print(f"Loading datasets for {dataset_name}...")
     df_mine = pd.read_csv(mine_csv)
     df_base = pd.read_csv(base_csv)
 
     summary_path = (
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro/summary_metrics.csv"
+        f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{algo}/summary_metrics.csv"
     )
     if os.path.exists(summary_path):
         sum_df = pd.read_csv(summary_path)
@@ -154,7 +154,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
     ax1.axhline(0, color="black", linewidth=1.5, linestyle="--")
     ax1.set_title(
-        f"Cost Impact: Latency Delta [{dataset_name}] (shiro-ef vs Baseline EF={best_ef})",
+        f"Cost Impact: Latency Delta [{dataset_name}] ({algo}-ef vs Baseline EF={best_ef})",
         fontsize=16,
         fontweight="bold",
         pad=15,
@@ -223,7 +223,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
     ax2.axhline(0, color="black", linewidth=1.5, linestyle="--")
     ax2.set_title(
-        f"Quality Impact: Recall Delta [{dataset_name}] (shiro-ef vs Baseline EF={best_ef})",
+        f"Quality Impact: Recall Delta [{dataset_name}] ({algo}-ef vs Baseline EF={best_ef})",
         fontsize=16,
         fontweight="bold",
         pad=15,
@@ -279,7 +279,7 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
     plt.tight_layout(pad=3.0)
 
-    out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_deltas_{dataset_name}.png"
+    out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_deltas_{algo}_{dataset_name}.png"
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved Delta Impact Plot to: {out_path}")
@@ -288,7 +288,12 @@ def create_delta_plot(dataset_name, mine_csv, base_csv):
 
 
 if __name__ == "__main__":
-    csv_dir = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro"
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--algo", choices=["shiro", "ada"], default="shiro", help="Algorithm to plot")
+    args = parser.parse_args()
+    
+    csv_dir = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_{args.algo}"
     for file in os.listdir(csv_dir):
         if file.startswith("per_query_results_") and file.endswith(".csv"):
             dataset_name = file.replace("per_query_results_", "").replace(".csv", "")
@@ -296,7 +301,7 @@ if __name__ == "__main__":
             base_csv = os.path.join(csv_dir, f"per_query_baseline_{dataset_name}.csv")
 
             if os.path.exists(base_csv):
-                create_delta_plot(dataset_name, mine_csv, base_csv)
+                create_delta_plot(dataset_name, mine_csv, base_csv, algo=args.algo)
             else:
                 print(
                     f"Warning: Baseline CSV not found for {dataset_name} ({base_csv})"
