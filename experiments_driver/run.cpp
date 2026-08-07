@@ -3,7 +3,8 @@
 #include <filesystem>
 #include <cstdlib>
 
-const int WAE_METHOD = 1; // 0: use the weighted average ef computed from the sampling, 1: use the reconstructed true wae from the hard and easy queries
+constexpr int WAE_METHOD = 1; // 0: use the weighted average ef computed from the sampling, 1: use the reconstructed true wae from the hard and easy queries
+constexpr int WAE_CALC_METHOD = 0; // 0: Uses min, 1: Uses avg
 
 // ============================================================================
 // GLOBAL CONFIGURATION
@@ -104,15 +105,26 @@ static void train_convergence_buckets(
                 int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 400.0f)));
                 size_t est_ef = temp_sketch.estimate_ef2(cv_score, ret.second);
                 if (i < num_hard_queries) {
-                    ef_hard_set[cv_score] = ef_hard_set[cv_score] == 0 ? est_ef : std::min(ef_hard_set[cv_score], est_ef);
+                    if (WAE_CALC_METHOD == 0) {
+                        ef_hard_set[cv_score] = ef_hard_set[cv_score] == 0 ? est_ef : std::min(ef_hard_set[cv_score], est_ef);
+                    } else if (WAE_CALC_METHOD == 1) {
+                        ef_hard_set[cv_score] += est_ef;
+                    }
                     ef_hard_cnt[cv_score]++;
                 }
                 else {
-                    ef_easy_set[cv_score] = ef_easy_set[cv_score] == 0 ? est_ef : std::min(ef_easy_set[cv_score], est_ef);
+                    if (WAE_CALC_METHOD == 0) {
+                        ef_easy_set[cv_score] = ef_easy_set[cv_score] == 0 ? est_ef : std::min(ef_easy_set[cv_score], est_ef);
+                    } else if (WAE_CALC_METHOD == 1) {
+                        ef_easy_set[cv_score] += est_ef;
+                    }
                     ef_easy_cnt[cv_score]++;
                 }
-
-                ef_all_set[cv_score] = ef_all_set[cv_score] == 0 ? est_ef : std::min(ef_all_set[cv_score], est_ef);
+                if (WAE_CALC_METHOD == 0) {
+                    ef_all_set[cv_score] = ef_all_set[cv_score] == 0 ? est_ef : std::min(ef_all_set[cv_score], est_ef);
+                } else if (WAE_CALC_METHOD == 1) {
+                    ef_all_set[cv_score] += est_ef;
+                }
                 ef_all_cnt[cv_score]++;
             }
 
@@ -121,7 +133,11 @@ static void train_convergence_buckets(
                 for (int s = 0; s <= 100; ++s) {
                     if (ef_hard_cnt[s] > 0) {
                         float weight = static_cast<float>(ef_hard_cnt[s]) / static_cast<float>(num_hard_queries);
-                        avg_ef_hard += weight * ef_hard_set[s];
+                        if (WAE_CALC_METHOD == 0) {
+                            avg_ef_hard += weight * ef_hard_set[s];
+                        } else if (WAE_CALC_METHOD == 1) {
+                            avg_ef_hard += weight * static_cast<float>(ef_hard_set[s]) / static_cast<float>(ef_hard_cnt[s]);
+                        }
                     }
                 }
             }
@@ -132,7 +148,11 @@ static void train_convergence_buckets(
                 for (int s = 0; s <= 100; ++s) {
                     if (ef_easy_cnt[s] > 0) {
                         float weight = static_cast<float>(ef_easy_cnt[s]) / static_cast<float>(query_vectors->rows() - num_hard_queries);;
-                        avg_ef_easy += weight * ef_easy_set[s];
+                        if (WAE_CALC_METHOD == 0) {
+                            avg_ef_easy += weight * ef_easy_set[s];
+                        } else if (WAE_CALC_METHOD == 1) {
+                            avg_ef_easy += weight * static_cast<float>(ef_easy_set[s]) / static_cast<float>(ef_easy_cnt[s]);
+                        }
                     }
                 }
             }
@@ -141,7 +161,11 @@ static void train_convergence_buckets(
             for (int s = 0; s <= 100; ++s) {
                 if (ef_all_set[s] > 0) {
                     float weight = static_cast<float>(ef_all_cnt[s]) / static_cast<float>(query_vectors->rows());
-                    avg_ef_all += weight * ef_all_set[s];
+                    if (WAE_CALC_METHOD == 0) {
+                        avg_ef_all += weight * ef_all_set[s];
+                    } else if (WAE_CALC_METHOD == 1) {
+                        avg_ef_all += weight * static_cast<float>(ef_all_set[s]) / static_cast<float>(ef_all_cnt[s]);
+                    }
                 }
             }
 

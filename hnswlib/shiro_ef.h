@@ -10,6 +10,7 @@
 constexpr int FILLING_METHOD = 2; // 0: No Filling, 1: Fill with Pivots, 2: Fill with Pivots and LDW
 constexpr int SAMPLING_METHOD = 1; // 0: Normal Random, 1: Hard First
 constexpr int INTERSECT_METHOD = 0; // 0: Fixed 5% threshold intersection, 1: Progressive intersection for exactly 5%
+constexpr int WAE_CALC_METHOD = 0; // 0: Uses min, 1: Uses avg
 
 namespace hnswdis
 {
@@ -1578,13 +1579,45 @@ namespace hnswdis
                     int score = std::get<0>(stat[i]);
                     size_t cnt = std::get<5>(stat[i]);
                     size_t ef = out_table[i].second.back().first;
-                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
-                    {
-                        if (out_table[i].second[j].second >= expected_recall)
-                        {
-                            ef = out_table[i].second[j].first;
-                            break;
+
+                    if constexpr (WAE_CALC_METHOD == 0) {
+
+                        for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                ef = out_table[i].second[j].first;
+
+                                break;
+
+                            }
+
                         }
+
+                    } else if constexpr (WAE_CALC_METHOD == 1) {
+
+                        float sum_ef = 0;
+
+                        int valid_count = 0;
+
+                        for (size_t j = 0; j < out_table[i].second.size(); ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                sum_ef += out_table[i].second[j].first;
+
+                                valid_count++;
+
+                            }
+
+                        }
+
+                        if (valid_count > 0) {
+
+                            ef = std::round(sum_ef / valid_count);
+
+                        }
+
                     }
                     score_to_ef[score] = ef;
                     score_to_cnt[score] = cnt;
@@ -1613,13 +1646,45 @@ namespace hnswdis
                     int score = std::get<0>(stat[i]);
                     size_t cnt = std::get<5>(stat[i]);
                     size_t ef = out_table[i].second.back().first;
-                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j)
-                    {
-                        if (out_table[i].second[j].second >= expected_recall)
-                        {
-                            ef = out_table[i].second[j].first;
-                            break;
+
+                    if constexpr (WAE_CALC_METHOD == 0) {
+
+                        for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                ef = out_table[i].second[j].first;
+
+                                break;
+
+                            }
+
                         }
+
+                    } else if constexpr (WAE_CALC_METHOD == 1) {
+
+                        float sum_ef = 0;
+
+                        int valid_count = 0;
+
+                        for (size_t j = 0; j < out_table[i].second.size(); ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                sum_ef += out_table[i].second[j].first;
+
+                                valid_count++;
+
+                            }
+
+                        }
+
+                        if (valid_count > 0) {
+
+                            ef = std::round(sum_ef / valid_count);
+
+                        }
+
                     }
                     score_to_ef[score] = ef;
                     score_to_cnt[score] = cnt;
@@ -1723,11 +1788,45 @@ namespace hnswdis
                     int score = std::get<0>(stat[i]);
                     size_t cnt = std::get<5>(stat[i]);
                     size_t ef = out_table[i].second.back().first;
-                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
-                        if (out_table[i].second[j].second >= expected_recall) {
-                            ef = out_table[i].second[j].first;
-                            break;
+
+                    if constexpr (WAE_CALC_METHOD == 0) {
+
+                        for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                ef = out_table[i].second[j].first;
+
+                                break;
+
+                            }
+
                         }
+
+                    } else if constexpr (WAE_CALC_METHOD == 1) {
+
+                        float sum_ef = 0;
+
+                        int valid_count = 0;
+
+                        for (size_t j = 0; j < out_table[i].second.size(); ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                sum_ef += out_table[i].second[j].first;
+
+                                valid_count++;
+
+                            }
+
+                        }
+
+                        if (valid_count > 0) {
+
+                            ef = std::round(sum_ef / valid_count);
+
+                        }
+
                     }
                     score_to_ef[score] = ef;
                     score_to_cnt[score] = cnt;
@@ -1834,11 +1933,45 @@ namespace hnswdis
                     int score = std::get<0>(stat[i]);
                     size_t cnt = std::get<5>(stat[i]);
                     size_t ef = out_table[i].second.back().first;
-                    for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
-                        if (out_table[i].second[j].second >= expected_recall) {
-                            ef = out_table[i].second[j].first;
-                            break;
+
+                    if constexpr (WAE_CALC_METHOD == 0) {
+
+                        for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                ef = out_table[i].second[j].first;
+
+                                break;
+
+                            }
+
                         }
+
+                    } else if constexpr (WAE_CALC_METHOD == 1) {
+
+                        float sum_ef = 0;
+
+                        int valid_count = 0;
+
+                        for (size_t j = 0; j < out_table[i].second.size(); ++j) {
+
+                            if (out_table[i].second[j].second >= expected_recall) {
+
+                                sum_ef += out_table[i].second[j].first;
+
+                                valid_count++;
+
+                            }
+
+                        }
+
+                        if (valid_count > 0) {
+
+                            ef = std::round(sum_ef / valid_count);
+
+                        }
+
                     }
                     score_to_ef[score] = ef;
                     score_to_cnt[score] = cnt;
