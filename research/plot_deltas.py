@@ -28,8 +28,6 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
     num_cols = sum(x is not None for x in [df_shiro, df_ada])
     if num_cols == 0:
         return
-
-    plt.style.use("seaborn-v0_8-whitegrid")
     fig, axs = plt.subplots(
         2,
         num_cols,
@@ -175,14 +173,6 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
                 boxstyle="round,pad=0.5",
             ),
         )
-        if col_idx == 0:
-            ax1.legend(
-                loc="lower left",
-                fontsize=11,
-                frameon=True,
-                facecolor="white",
-                framealpha=0.95,
-            )
 
         # --- BOTTOM PLOT: RECALL DELTA ---
         ax2.plot(x_percentile, recall_diff, color="black", linewidth=1, alpha=0.5)
@@ -251,15 +241,6 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
         ax2.xaxis.set_major_formatter(FuncFormatter(lambda x, pos: f"{int(x)}%"))
         ax2.set_xlim(0, 100)
 
-        if col_idx == 0:
-            ax2.legend(
-                loc="lower left",
-                fontsize=11,
-                frameon=True,
-                facecolor="white",
-                framealpha=0.95,
-            )
-
         col_idx += 1
 
     # Ensure symmetrical y-limits for recall delta across all columns by finding max across both
@@ -276,9 +257,9 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
         axs[1, 0].set_ylim(-max_rec_diff, max_rec_diff)
 
     fig.suptitle(
-        f"Delta Impact Analysis: {dataset_name}", fontsize=18, fontweight="bold", y=0.98
+        f"Delta Impact Analysis: {dataset_name}", fontsize=18, fontweight="bold"
     )
-    plt.tight_layout(pad=3.0, rect=[0, 0, 1, 0.96])
+    plt.tight_layout(pad=1.5)
 
     out_path = f"/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story/story_deltas_combined_{dataset_name}.png"
     os.makedirs(os.path.dirname(out_path), exist_ok=True)

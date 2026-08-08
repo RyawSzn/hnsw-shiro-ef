@@ -3,10 +3,10 @@
 Aggregate per-query attempt CSVs (rep0/rep1/rep2) into a single CSV.
 
 Input directory structure:
-  <attempts_dir>/per_query_{kind}_{dataset}_rep{N}.csv
+  csv_<algo>/attempts/per_query_{kind}_{dataset}_rep{N}.csv
 
 Output directory:
-  <output_dir>/per_query_{kind}_{dataset}.csv
+  csv_<algo>/per_query_{kind}_{dataset}.csv
 
 Aggregation strategy (--agg):
   min    - minimum latency across reps  [default]
@@ -15,11 +15,9 @@ Aggregation strategy (--agg):
   file-median - calculate avg latency for each file, output the file that has the median avg latency
 
 Usage examples:
-  python aggregate_attempts.py
-  python aggregate_attempts.py --agg median
-  python aggregate_attempts.py --attempts-dir /path/to/attempts --output-dir /path/to/out
-  python aggregate_attempts.py --kind baseline --agg max
-  python aggregate_attempts.py --agg file-median
+  python aggregate_attempts.py --algo shiro
+  python aggregate_attempts.py --algo ada --agg median
+  python aggregate_attempts.py --algo shiro --kind baseline --agg max
 """
 
 import argparse
@@ -37,16 +35,10 @@ def parse_args() -> argparse.Namespace:
         epilog=__doc__,
     )
     p.add_argument(
-        "--attempts-dir",
-        type=Path,
-        default=Path(__file__).parent / "csv_shiro" / "attempts",
-        help="Directory containing per_query_*_rep*.csv files",
-    )
-    p.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path(__file__).parent / "csv_shiro",
-        help="Directory to write aggregated CSVs",
+        "--algo",
+        choices=["shiro", "ada"],
+        default="shiro",
+        help="Which algorithm to process. Determines input/output directories (csv_shiro or csv_ada).",
     )
     p.add_argument(
         "--agg",
@@ -165,8 +157,12 @@ def write_csv(rows: list[dict], output_path: Path) -> None:
 def main() -> None:
     args = parse_args()
 
-    attempts_dir: Path = args.attempts_dir
-    output_dir: Path = args.output_dir
+    algo_dir_name = f"csv_{args.algo}"
+    base_dir = Path(__file__).parent
+
+    attempts_dir: Path = base_dir / algo_dir_name / "attempts"
+    output_dir: Path = base_dir / algo_dir_name
+    
     strategy: str = args.agg
     kind_arg: str = args.kind
 
@@ -194,7 +190,7 @@ def main() -> None:
             any_processed = True
 
     if not any_processed:
-        sys.exit("No files were processed. Check --attempts-dir and --kind.")
+        sys.exit("No files were processed. Check --algo and --kind.")
 
     print(f"\nDone. Aggregation strategy: {strategy}")
 

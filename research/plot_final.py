@@ -24,17 +24,45 @@ def generate_plot():
 
     # baseline always comes from csv_shiro
     df = df_shiro
-    datasets = sorted(df["dataset"].unique())
-    num_ds = len(datasets)
+    all_datasets = sorted(df["dataset"].unique())
 
-    if num_ds == 0:
+    if len(all_datasets) == 0:
         print("No datasets found in summary_metrics.csv")
         return
 
-    # Setup figure layout dynamically to avoid empty subplots
-    ncols = min(num_ds, 3)
+    print("Available datasets:")
+    for i, ds in enumerate(all_datasets):
+        print(f"  [{i}] {ds}")
+
+    user_input = input("\nEnter dataset numbers to plot (comma-separated), or press Enter for all: ").strip()
+
+    if not user_input or user_input.lower() == 'all':
+        datasets = all_datasets
+    else:
+        selected_indices = []
+        for p in user_input.split(','):
+            p = p.strip()
+            if p.isdigit():
+                idx = int(p)
+                if 0 <= idx < len(all_datasets):
+                    selected_indices.append(idx)
+                else:
+                    print(f"Warning: Index {idx} out of bounds, skipping.")
+            else:
+                print(f"Warning: Invalid input '{p}', skipping.")
+        
+        # Preserve selection order and remove duplicates
+        datasets = [all_datasets[i] for i in dict.fromkeys(selected_indices)]
+
+    num_ds = len(datasets)
+    if num_ds == 0:
+        print("No datasets selected. Exiting.")
+        return
+
+    # Setup figure layout dynamically to match reference aspect ratio
+    ncols = min(num_ds, 4)
     nrows = math.ceil(num_ds / ncols)
-    fig, axes = plt.subplots(nrows, ncols, figsize=(6.5 * ncols, 8.5 * nrows))
+    fig, axes = plt.subplots(nrows, ncols, figsize=(4.5 * ncols, 5.2 * nrows))
 
     if isinstance(axes, np.ndarray):
         axes_flat = axes.flatten()
@@ -51,12 +79,9 @@ def generate_plot():
 
         # 1. Baseline Data
         base_df = ds_df[ds_df["method"] == "baseline"].copy()
-
-        # Sort by EF to smooth along the parameter sweep
         base_df["ef"] = pd.to_numeric(base_df["ef"], errors="coerce")
         base_df = base_df.sort_values("ef")
 
-        # REDUCED SMOOTHING: Very small window size
         window_size = 3
 
         # Smooth BOTH latency (x) and recall (y) using pandas rolling mean with a small window
@@ -96,111 +121,120 @@ def generate_plot():
             .mean()
         )
 
+        # Draw Lines matching reference style
+        # Avg -> Black Dash-Dot
         ax.plot(
-            x_avg_s,
-            y_avg_s,
-            "-",
-            color="tab:blue",
-            label="Baseline - Avg",
-            linewidth=2.5,
+            x_avg_s, y_avg_s, "-.", color="black", label="Baseline - Avg", linewidth=1.5
         )
+        # p05 -> Red Dashed
         ax.plot(
             x_p05_s,
             y_p05_s,
-            "-",
-            color="tab:green",
-            label=r"Baseline - $<\pi_{0.05}$",
-            linewidth=2.5,
+            "--",
+            color="red",
+            label=r"Baseline - $\leq\pi_{0.05}$",
+            linewidth=1.0,
         )
+        # p01 -> Red Dotted
         ax.plot(
             x_p01_s,
             y_p01_s,
-            "-",
-            color="tab:orange",
-            label=r"Baseline - $<\pi_{0.01}$",
-            linewidth=2.5,
+            ":",
+            color="red",
+            label=r"Baseline - $\leq\pi_{0.01}$",
+            linewidth=1.5,
         )
 
-        # 2a. shiro-ef adaptive → star (★)
+        # 2. Shiro-EF adaptive
         shiro_ada = df_shiro[
             (df_shiro["dataset"] == ds_name) & (df_shiro["method"] == "adaptive")
         ]
         if not shiro_ada.empty:
             r = shiro_ada.iloc[0]
+            # Avg -> Blue Star
             ax.scatter(
                 [r["avg_lat(ns)"] / 1e6],
                 [r["avg_recall"]],
                 marker="*",
-                s=350,
-                color="blue",
-                edgecolor="black",
-                zorder=5,
+                s=100,
+                color="tab:blue",
+                zorder=6,
             )
+            # p05 -> Blue Diamond
             ax.scatter(
                 [r["lat_5th_rec"] / 1e6],
                 [r["5th_perc_recall"]],
-                marker="*",
-                s=350,
-                color="green",
-                edgecolor="black",
+                marker="D",
+                s=40,
+                color="tab:blue",
                 zorder=5,
             )
+            # p01 -> Blue Down-Triangle
             ax.scatter(
                 [r["lat_1st_rec"] / 1e6],
                 [r["1st_perc_recall"]],
-                marker="*",
-                s=350,
-                color="orange",
-                edgecolor="black",
+                marker="v",
+                s=45,
+                color="tab:blue",
                 zorder=5,
             )
 
-        # 2b. ada adaptive → cross (x)
+        # 3. Ada-EF adaptive
         ada_row = df_ada[
             (df_ada["dataset"] == ds_name) & (df_ada["method"] == "adaptive")
         ]
         if not ada_row.empty:
             r = ada_row.iloc[0]
+            # Avg -> Orange Circle
             ax.scatter(
                 [r["avg_lat(ns)"] / 1e6],
                 [r["avg_recall"]],
-                marker="x",
-                s=180,
-                color="blue",
-                linewidths=2.5,
+                marker="o",
+                s=45,
+                color="tab:orange",
                 zorder=5,
             )
+            # p05 -> Orange Up-Triangle
             ax.scatter(
                 [r["lat_5th_rec"] / 1e6],
                 [r["5th_perc_recall"]],
-                marker="x",
-                s=180,
-                color="green",
-                linewidths=2.5,
+                marker="^",
+                s=45,
+                color="tab:orange",
                 zorder=5,
             )
+            # p01 -> Orange Pentagon
             ax.scatter(
                 [r["lat_1st_rec"] / 1e6],
                 [r["1st_perc_recall"]],
-                marker="x",
-                s=180,
-                color="orange",
-                linewidths=2.5,
+                marker="p",
+                s=45,
+                color="tab:orange",
                 zorder=5,
             )
 
-        # 3. Formatting
-        max_ef = pd.to_numeric(base_df["ef"], errors="coerce").max()
-        ax.set_title(
-            f"{ds_name}\nObserved ef_max = {int(max_ef) if pd.notna(max_ef) else 'Unknown'}",
-            fontsize=14,
+        # 4. Formatting to match reference image
+        ax.set_title(ds_name, fontsize=16)
+        ax.set_box_aspect(1)
+
+        ax.set_xlabel("Avg Latency (ms)", fontsize=16)
+        # Adapt Y label dynamically or fix to standard
+        y_label = (
+            "Recall@1000"
+            if "1000" in ds_name or "m" in ds_name.lower()
+            else "Recall@100"
         )
+        ax.set_ylabel(y_label, fontsize=16)
 
-        ax.set_xlabel("Avg Latency (ms)", fontsize=12)
-        ax.set_ylabel("Recall@100", fontsize=12)
+        # Rotate x labels 90 degrees
+        ax.tick_params(axis="x", labelrotation=90, labelsize=16)
+        ax.tick_params(axis="y", labelsize=16)
+        ax.yaxis.set_major_locator(MultipleLocator(0.1))
 
-        ax.yaxis.set_major_locator(MultipleLocator(0.05))
-        ax.set_ylim(0.70, 1.01)
+        ax.set_ylim(bottom=0.7, top=1.02)
+
+        ax.axhline(0.95, color="lightgray", linestyle="--", zorder=0)
+        ax.axhline(0.98, color="lightgray", linestyle="--", zorder=0)
 
         all_times = (
             pd.concat(
@@ -220,103 +254,95 @@ def generate_plot():
                 )
         ax.set_xlim(0, max_time * 1.1)
 
-        # ADD TARGET RECALL LINE
-        ax.axhline(
-            y=0.95, color="tab:red", linestyle="-.", alpha=0.8, linewidth=1.5, zorder=1
-        )
+    fig.align_xlabels()
+    plt.tight_layout(pad=0.5, w_pad=0.5, h_pad=1.0, rect=(0, 0.10, 1, 0.94))
 
-        # ADD TEXT STATING IT'S THE TARGET RECALL
-        x_min, x_max = ax.get_xlim()
-        offset = (x_max - x_min) * 0.02
-        ax.text(
-            x_min + offset,
-            0.972,
-            "Target Recall",
-            color="tab:red",
-            fontsize=10,
-            fontweight="bold",
-            ha="left",
-            va="bottom",
-            zorder=6,
-        )
-        ax.grid(True, linestyle="--", alpha=0.6)
-
-    plt.tight_layout(rect=(0, 0.08, 1, 1))
-
+    # Unified Legend matching the drawn elements
     legend_handles = [
-        Line2D([0], [0], color="tab:blue", lw=2.5, label="Baseline – Avg"),
-        Line2D([0], [0], color="tab:green", lw=2.5, label=r"Baseline – $<\pi_{0.05}$"),
-        Line2D([0], [0], color="tab:orange", lw=2.5, label=r"Baseline – $<\pi_{0.01}$"),
+        Line2D([0], [0], color="black", linestyle="-.", lw=1.5, label="Baseline – Avg"),
+        Line2D(
+            [0],
+            [0],
+            color="red",
+            linestyle="--",
+            lw=1.0,
+            label=r"Baseline – $\leq\pi_{0.05}$",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color="red",
+            linestyle=":",
+            lw=1.5,
+            label=r"Baseline – $\leq\pi_{0.01}$",
+        ),
         Line2D(
             [0],
             [0],
             marker="*",
             color="w",
-            markerfacecolor="blue",
+            markerfacecolor="tab:blue",
             markersize=13,
-            markeredgecolor="black",
             label="Shiro-EF – Avg",
         ),
         Line2D(
             [0],
             [0],
-            marker="*",
+            marker="D",
             color="w",
-            markerfacecolor="green",
-            markersize=13,
-            markeredgecolor="black",
-            label=r"Shiro-EF – $<\pi_{0.05}$",
+            markerfacecolor="tab:blue",
+            markersize=7,
+            label=r"Shiro-EF – $\leq\pi_{0.05}$",
         ),
         Line2D(
             [0],
             [0],
-            marker="*",
+            marker="v",
             color="w",
-            markerfacecolor="orange",
-            markersize=13,
-            markeredgecolor="black",
-            label=r"Shiro-EF – $<\pi_{0.01}$",
+            markerfacecolor="tab:blue",
+            markersize=9,
+            label=r"Shiro-EF – $\leq\pi_{0.01}$",
         ),
         Line2D(
             [0],
             [0],
-            marker="x",
-            color="blue",
-            markersize=10,
-            linewidth=0,
-            markeredgewidth=2.5,
+            marker="o",
+            color="w",
+            markerfacecolor="tab:orange",
+            markersize=8,
             label="Ada – Avg",
         ),
         Line2D(
             [0],
             [0],
-            marker="x",
-            color="green",
-            markersize=10,
-            linewidth=0,
-            markeredgewidth=2.5,
-            label=r"Ada – $<\pi_{0.05}$",
+            marker="^",
+            color="w",
+            markerfacecolor="tab:orange",
+            markersize=9,
+            label=r"Ada – $\leq\pi_{0.05}$",
         ),
         Line2D(
             [0],
             [0],
-            marker="x",
-            color="orange",
-            markersize=10,
-            linewidth=0,
-            markeredgewidth=2.5,
-            label=r"Ada – $<\pi_{0.01}$",
+            marker="p",
+            color="w",
+            markerfacecolor="tab:orange",
+            markersize=8,
+            label=r"Ada – $\leq\pi_{0.01}$",
         ),
     ]
 
     fig.legend(
         handles=legend_handles,
-        loc="lower center",
-        ncol=len(legend_handles),
-        fontsize=10,
-        framealpha=0.95,
-        edgecolor="#cccccc",
-        bbox_to_anchor=(0.5, 0.01),
+        loc="upper center",
+        ncol=9,  # Flat arrangement
+        fontsize=11,
+        frameon=True,
+        fancybox=False,
+        edgecolor="black",
+        bbox_to_anchor=(0.5, 0.08),
+        columnspacing=0.8,
+        handletextpad=0.3,
     )
 
     os.makedirs("/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img", exist_ok=True)
@@ -324,7 +350,7 @@ def generate_plot():
         "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/visualization_final.png"
     )
     plt.savefig(out_path, dpi=300)
-    print(f"Saved to {out_path}")
+    print(f"Saved styled plot to {out_path}")
 
 
 if __name__ == "__main__":
