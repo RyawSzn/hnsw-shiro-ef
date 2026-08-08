@@ -10,7 +10,7 @@
 constexpr int FILLING_METHOD = 2; // 0: No Filling, 1: Fill with Pivots, 2: Fill with Pivots and LDW
 constexpr int SAMPLING_METHOD = 1; // 0: Normal Random, 1: Hard First
 constexpr int INTERSECT_METHOD = 0; // 0: Fixed 5% threshold intersection, 1: Progressive intersection for exactly 5%
-constexpr int WAE_CALC_METHOD = 1; // 0: Uses min, 1: Uses avg
+constexpr int WAE_CALC_METHOD = 0; // 0: Uses min, 1: Uses avg
 
 namespace hnswdis
 {
@@ -1421,10 +1421,45 @@ namespace hnswdis
         std::vector<float>         convergence_centers;
 
         float expected_recall;
+        float easy_recall_{0.0f};
+
+        float conv_p20_{-1.0f};
+
         float wae;
         int ef_upper_bound;
 
-        // Collect d_ep for every query by running the greedy upper-layer search only.
+        // Returns the p-th percentile value (0-100) of a vector, sorted in-place.
+        static float percentile_inplace(std::vector<float> &v, float p)
+        {
+            if (v.empty()) return 0.0f;
+            std::sort(v.begin(), v.end());
+            size_t idx = static_cast<size_t>(p / 100.0f * (v.size() - 1) + 0.5f);
+            if (idx >= v.size()) idx = v.size() - 1;
+            return v[idx];
+        }
+
+        // Collect raw_cv and conv (RV/convergence score) for every query.
+        // Returns {cv_values, conv_values}.
+        static std::pair<std::vector<float>, std::vector<float>> collect_cv_and_conv(
+            const hnswlib::HierarchicalNSW<float> &alg_hnsw,
+            const MatrixXf &query_vectors,
+            const hnswdis::ApproximatedScoreCalculator &score_cal,
+            const size_t k,
+            const size_t stats_length)
+        {
+            std::vector<float> cvs, convs;
+            cvs.reserve(query_vectors.rows());
+            convs.reserve(query_vectors.rows());
+            for (int i = 0; i < query_vectors.rows(); ++i) {
+                float cv = 0.0f;
+                auto ret = alg_hnsw.adaptiveSearchKnn(query_vectors.row(i).data(), k, stats_length, score_cal, nullptr, &cv);
+                cvs.push_back(cv);
+                convs.push_back(ret.second);
+            }
+            return {cvs, convs};
+        }
+
+        // Legacy helper — returns only conv (RV) for bucketing (preserves old behaviour).
         static std::vector<float> collect_cv(
             const hnswlib::HierarchicalNSW<float> &alg_hnsw,
             const MatrixXf &query_vectors,
@@ -1432,14 +1467,8 @@ namespace hnswdis
             const size_t k,
             const size_t stats_length)
         {
-            std::vector<float> cvs;
-            cvs.reserve(query_vectors.rows());
-            for (int i = 0; i < query_vectors.rows(); ++i) {
-                float cv = 0.0f;
-                auto ret = alg_hnsw.adaptiveSearchKnn(query_vectors.row(i).data(), k, stats_length, score_cal, nullptr, &cv);
-                cvs.push_back(ret.second); // We now push back RV for bucketing
-            }
-            return cvs;
+            auto [cvs, convs] = collect_cv_and_conv(alg_hnsw, query_vectors, score_cal, k, stats_length);
+            return convs;
         }
 
         void init(const std::shared_ptr<hnswlib::HierarchicalNSW<float>> alg_hnsw,
@@ -1451,8 +1480,11 @@ namespace hnswdis
                   const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
                   const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
                   EfRecallTable &out_table,
-                  int min_queries_per_score)
+                  int min_queries_per_score,
+                  float target_recall = -1.0f)
         {
+            if (target_recall < 0.0f) target_recall = expected_recall;
+
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
 
             size_t first_ef = k;
@@ -1487,9 +1519,9 @@ namespace hnswdis
                     int patience = 0;
                     const int MAX_PATIENCE = 1;
 
-                    while (expected_recall - latest_agg_recall > 1e-4f)
+                    while (target_recall - latest_agg_recall > 1e-4f)
                     {
-                        ef_diff = std::max((int)(ef_diff * (expected_recall - latest_agg_recall) / std::max(recall_diff, 1e-4f)), (int)(k * 0.5));
+                        ef_diff = std::max((int)(ef_diff * (target_recall - latest_agg_recall) / std::max(recall_diff, 1e-4f)), (int)(k * 0.5));
                         int ef = latest_ef + ef_diff;
 
                         if (ef > ef_upper_bound)
@@ -1584,7 +1616,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 ef = out_table[i].second[j].first;
 
@@ -1602,7 +1634,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size(); ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 sum_ef += out_table[i].second[j].first;
 
@@ -1629,7 +1661,7 @@ namespace hnswdis
 
                     if (score_to_ef.count(s)) {
                         final_ef = score_to_ef[s];
-                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                        smoothed_table.push_back({s, {{(int)final_ef, target_recall}}});
                     }
 
                     if (cnt > 0 && final_ef > 0) {
@@ -1651,7 +1683,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 ef = out_table[i].second[j].first;
 
@@ -1669,7 +1701,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size(); ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 sum_ef += out_table[i].second[j].first;
 
@@ -1763,14 +1795,14 @@ namespace hnswdis
 
                     if (s < cont_start_score) {
                         final_ef = left_avg_ef;
-                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                        smoothed_table.push_back({s, {{(int)final_ef, target_recall}}});
                     } else if (s > cont_end_score) {
                         final_ef = right_avg_ef;
-                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                        smoothed_table.push_back({s, {{(int)final_ef, target_recall}}});
                     } else {
                         if (score_to_ef.count(s)) {
                             final_ef = score_to_ef[s];
-                            smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                            smoothed_table.push_back({s, {{(int)final_ef, target_recall}}});
                         }
                     }
 
@@ -1793,7 +1825,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 ef = out_table[i].second[j].first;
 
@@ -1811,7 +1843,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size(); ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 sum_ef += out_table[i].second[j].first;
 
@@ -1918,7 +1950,7 @@ namespace hnswdis
                 float total_queries = query_vectors->rows();
                 for (int s = 0; s <= 100; ++s) {
                     size_t final_ef = std::round(efs[s]);
-                    smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                    smoothed_table.push_back({s, {{(int)final_ef, target_recall}}});
 
                     if (score_to_cnt.count(s)) {
                         weighted_average_ef += score_to_cnt[s] * final_ef / total_queries;
@@ -1938,7 +1970,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size() - 1; ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 ef = out_table[i].second[j].first;
 
@@ -1956,7 +1988,7 @@ namespace hnswdis
 
                         for (size_t j = 0; j < out_table[i].second.size(); ++j) {
 
-                            if (out_table[i].second[j].second >= expected_recall) {
+                            if (out_table[i].second[j].second >= target_recall) {
 
                                 sum_ef += out_table[i].second[j].first;
 
@@ -1982,7 +2014,7 @@ namespace hnswdis
                 for (int s = 0; s <= 100; ++s) {
                     if (score_to_ef.count(s)) {
                         size_t final_ef = score_to_ef[s];
-                        smoothed_table.push_back({s, {{(int)final_ef, expected_recall}}});
+                        smoothed_table.push_back({s, {{(int)final_ef, target_recall}}});
                         if (score_to_cnt.count(s)) {
                             weighted_average_ef += score_to_cnt[s] * final_ef / total_queries;
                         }
@@ -2049,6 +2081,10 @@ namespace hnswdis
             }
             return sum / count;
         }
+
+        // Internal constructor used to build easy-recall tables inside init_with_convergence_buckets.
+        EfAdapter(float target_recall, int ef_ub)
+            : expected_recall(target_recall), ef_upper_bound(ef_ub) {}
 
     public:
         EfAdapter(
@@ -2128,12 +2164,25 @@ namespace hnswdis
             const std::shared_ptr<hnswdis::MatrixXf> query_vectors,
             const std::shared_ptr<hnswdis::MatrixXi> ground_truth_ptr,
             const int n_convergence_buckets,
-            int min_queries_per_score)
+            int min_queries_per_score,
+            float easy_recall = 0.99f)
         {
             const int n = query_vectors->rows();
 
             hnswdis::ApproximatedScoreCalculator score_cal(alpha, gamma);
-            std::vector<float> cvs = collect_cv(*alg_hnsw, *query_vectors, score_cal, k, stats_length);
+
+            auto [raw_cvs, raw_convs] = collect_cv_and_conv(*alg_hnsw, *query_vectors, score_cal, k, stats_length);
+
+            {
+                std::vector<float> conv_sorted = raw_convs;
+                conv_p20_ = percentile_inplace(conv_sorted, 20.0f);
+                easy_recall_ = easy_recall;
+            }
+            std::cout << "Per-bucket recall: conv_p20=" << conv_p20_
+                      << " hard_recall=" << expected_recall
+                      << " easy_recall=" << easy_recall_ << std::endl;
+
+            std::vector<float> cvs = raw_convs;
 
             std::vector<int> order(n);
             std::iota(order.begin(), order.end(), 0);
@@ -2161,7 +2210,8 @@ namespace hnswdis
 
                 int t = 0;
                 for (const auto &[cv_score, q_indices] : cv_groups) {
-                    convergence_centers.push_back(cv_score / 100.0f);
+                    float center = cv_score / 100.0f;
+                    convergence_centers.push_back(center);
                     int bucket_size = q_indices.size();
 
                     MatrixXf bucket_queries(bucket_size, query_vectors->cols());
@@ -2172,12 +2222,15 @@ namespace hnswdis
                         bucket_gt.row(i) = ground_truth_ptr->row(q_indices[i]);
                     }
 
-                    std::cout << "Training absolute cv-matrix bin " << cv_score << " with " << bucket_size << " queries." << std::endl;
+                    float bucket_recall = (center <= conv_p20_) ? expected_recall : easy_recall_;
+                    std::cout << "Training absolute cv-matrix bin " << cv_score
+                              << " with " << bucket_size << " queries"
+                              << " (recall=" << bucket_recall << ")." << std::endl;
 
                     init(alg_hnsw, data_vectors, k, metric, alpha, gamma, stats_length,
                          std::make_shared<MatrixXf>(bucket_queries),
                          std::make_shared<MatrixXi>(bucket_gt),
-                         convergence_buckets[t], min_queries_per_score);
+                         convergence_buckets[t], min_queries_per_score, bucket_recall);
 
                     accumulated_wae += wae * ((float)bucket_size / n);
                     t++;
@@ -2209,17 +2262,19 @@ namespace hnswdis
                         bucket_gt.row(r)      = ground_truth_ptr->row(order[lo + r]);
                     }
 
+                    float bucket_recall = (convergence_centers[t] <= conv_p20_) ? expected_recall : easy_recall_;
                     std::cout << "Training convergence-bucket " << t
                               << " [" << cvs[order[lo]] << ", "
                               << (t < actual_n_convergence_buckets - 1 ? cvs[order[hi]] : std::numeric_limits<float>::infinity())
-                              << ") with " << bucket_size << " queries." << std::endl;
+                              << ") with " << bucket_size << " queries"
+                              << " (recall=" << bucket_recall << ")." << std::endl;
 
                     init(alg_hnsw,
                          data_vectors,
                          k, metric, alpha, gamma, stats_length,
                          std::make_shared<MatrixXf>(bucket_queries),
                          std::make_shared<MatrixXi>(bucket_gt),
-                         convergence_buckets[t], min_queries_per_score);
+                         convergence_buckets[t], min_queries_per_score, bucket_recall);
 
                     accumulated_wae += wae * ((float)bucket_size / n);
                 }
@@ -2431,6 +2486,9 @@ namespace hnswdis
             for (float v : convergence_centers)
                 hnswlib::writeBinaryPOD(out, v);
 
+            hnswlib::writeBinaryPOD(out, easy_recall_);
+            hnswlib::writeBinaryPOD(out, conv_p20_);
+
             out.close();
         }
 
@@ -2457,6 +2515,30 @@ namespace hnswdis
             for (float &v : convergence_centers)
                 hnswlib::readBinaryPOD(in, v);
 
+            if (in.peek() != EOF)
+            {
+                hnswlib::readBinaryPOD(in, easy_recall_);
+                hnswlib::readBinaryPOD(in, conv_p20_);
+
+                if (in.peek() != EOF)
+                {
+                    size_t n_easy_cv;
+                    hnswlib::readBinaryPOD(in, n_easy_cv);
+                    std::vector<EfRecallTable> discard_tables(n_easy_cv);
+                    for (auto &t : discard_tables)
+                        read_table(in, t);
+
+                    if (in.peek() != EOF)
+                    {
+                        size_t n_easy_thresh;
+                        hnswlib::readBinaryPOD(in, n_easy_thresh);
+                        for (size_t i = 0; i < n_easy_thresh; ++i) {
+                            float v; hnswlib::readBinaryPOD(in, v);
+                        }
+                    }
+                }
+            }
+
             in.close();
         }
 
@@ -2473,12 +2555,13 @@ namespace hnswdis
         const EfRecallTable &get_ef_recall_table() const { return ef_recall_table; }
 
         const std::vector<EfRecallTable> &get_all_tables() const { return convergence_buckets; }
-
-        const std::vector<float> &get_convergence_centers() const { return convergence_centers; }
+        const std::vector<float>         &get_convergence_centers() const { return convergence_centers; }
 
         bool has_convergence_buckets() const { return !convergence_buckets.empty(); }
 
         float get_expected_recall() const { return expected_recall; }
+        float get_easy_recall()     const { return easy_recall_; }
+        float get_conv_p20()        const { return conv_p20_; }
 
         float get_wae() const { return wae; }
         void set_wae(float w) { wae = w; }

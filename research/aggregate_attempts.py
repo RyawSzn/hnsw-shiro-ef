@@ -39,13 +39,13 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--attempts-dir",
         type=Path,
-        default=Path(__file__).parent / "csv_ada" / "attempts",
+        default=Path(__file__).parent / "csv_shiro" / "attempts",
         help="Directory containing per_query_*_rep*.csv files",
     )
     p.add_argument(
         "--output-dir",
         type=Path,
-        default=Path(__file__).parent / "csv_ada",
+        default=Path(__file__).parent / "csv_shiro",
         help="Directory to write aggregated CSVs",
     )
     p.add_argument(

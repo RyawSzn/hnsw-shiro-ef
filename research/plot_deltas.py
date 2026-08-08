@@ -17,51 +17,13 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
         print("Both shiro and ada CSVs missing.")
         return
 
-    # Use shiro as reference for finding best EF if available, else ada
-    ref_df = df_shiro if df_shiro is not None else df_ada
-    adapt_rec = ref_df["Recall"].mean()
-    adapt_lat = ref_df["Latency(ns)"].mean()
-
     summary_path = (
         "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro/summary_metrics.csv"
     )
+    sum_df = None
     if os.path.exists(summary_path):
         sum_df = pd.read_csv(summary_path)
-        ds_sum = sum_df[sum_df["dataset"] == dataset_name]
 
-        if not ds_sum.empty:
-            base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
-            if not base_df.empty:
-                base_df["ef"] = pd.to_numeric(base_df["ef"])
-                base_df["recall_diff"] = (base_df["avg_recall"] - adapt_rec).abs()
-                closest_ef = int(base_df.loc[base_df["recall_diff"].idxmin()]["ef"])
-                
-                candidates = base_df[base_df["avg_recall"] < adapt_rec]
-                if not candidates.empty:
-                    best_ef = int(candidates.loc[candidates["ef"].idxmax()]["ef"])
-                    best_ef_lat = base_df[base_df["ef"] == best_ef]["avg_lat(ns)"].values[0]
-                    if adapt_lat > best_ef_lat:
-                        best_ef = closest_ef
-                else:
-                    best_ef = closest_ef
-            else:
-                unique_efs = df_base["EF"].unique()
-                ef_recalls = {ef: df_base[df_base["EF"] == ef]["Recall"].mean() for ef in unique_efs}
-                candidates = {ef: r for ef, r in ef_recalls.items() if r < adapt_rec}
-                best_ef = int(max(candidates, key=lambda ef: candidates[ef])) if candidates else int(min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec)))
-        else:
-            unique_efs = df_base["EF"].unique()
-            ef_recalls = {ef: df_base[df_base["EF"] == ef]["Recall"].mean() for ef in unique_efs}
-            candidates = {ef: r for ef, r in ef_recalls.items() if r < adapt_rec}
-            best_ef = int(max(candidates, key=lambda ef: candidates[ef])) if candidates else int(min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec)))
-    else:
-        unique_efs = df_base["EF"].unique()
-        ef_recalls = {ef: df_base[df_base["EF"] == ef]["Recall"].mean() for ef in unique_efs}
-        candidates = {ef: r for ef, r in ef_recalls.items() if r < adapt_rec}
-        best_ef = int(max(candidates, key=lambda ef: candidates[ef])) if candidates else int(min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec)))
-
-    df_base_best = df_base[df_base["EF"] == best_ef].copy()
-    
     # Setup subplots based on what's available
     num_cols = sum(x is not None for x in [df_shiro, df_ada])
     if num_cols == 0:
@@ -75,6 +37,38 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
         if df_mine is None:
             continue
             
+        adapt_rec = df_mine["Recall"].mean()
+        adapt_lat = df_mine["Latency(ns)"].mean()
+
+        best_ef = None
+        if sum_df is not None:
+            ds_sum = sum_df[sum_df["dataset"] == dataset_name]
+            if not ds_sum.empty:
+                base_df = ds_sum[ds_sum["method"] == "baseline"].copy()
+                if not base_df.empty:
+                    base_df["ef"] = pd.to_numeric(base_df["ef"])
+                    base_df["recall_diff"] = (base_df["avg_recall"] - adapt_rec).abs()
+                    closest_ef = int(base_df.loc[base_df["recall_diff"].idxmin()]["ef"])
+                    
+                    candidates = base_df[base_df["avg_recall"] < adapt_rec]
+                    if not candidates.empty:
+                        best_ef_cand = int(candidates.loc[candidates["ef"].idxmax()]["ef"])
+                        best_ef_lat = base_df[base_df["ef"] == best_ef_cand]["avg_lat(ns)"].values[0]
+                        if adapt_lat > best_ef_lat:
+                            best_ef = closest_ef
+                        else:
+                            best_ef = best_ef_cand
+                    else:
+                        best_ef = closest_ef
+        
+        if best_ef is None:
+            unique_efs = df_base["EF"].unique()
+            ef_recalls = {ef: df_base[df_base["EF"] == ef]["Recall"].mean() for ef in unique_efs}
+            candidates = {ef: r for ef, r in ef_recalls.items() if r < adapt_rec}
+            best_ef = int(max(candidates, key=lambda ef: candidates[ef])) if candidates else int(min(ef_recalls, key=lambda ef: abs(ef_recalls[ef] - adapt_rec)))
+
+        df_base_best = df_base[df_base["EF"] == best_ef].copy()
+        
         df_merged = pd.merge(df_base_best, df_mine, on="QueryID", suffixes=("_Base", "_Mine"))
         df_merged.sort_values(["Recall_Base", "Latency(ns)_Base"], ascending=[True, False], inplace=True)
         df_merged.reset_index(drop=True, inplace=True)

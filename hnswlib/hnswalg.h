@@ -18,7 +18,7 @@ namespace hnswlib {
 typedef unsigned int tableint;
 typedef unsigned int linklistsizeint;
 
-constexpr int GROUND_WAE = 0;
+constexpr int GROUND_WAE = 0; // ground truth for WAE (Weighted Average EF) estimation
 
 template <class ADAPTER>
 const typename ADAPTER::container_type & get_container(const ADAPTER &a)
@@ -1554,7 +1554,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                         if (out_cv) *out_cv = cv;
                         if (sketch) {
                             int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 400.0f)));
-                            ef = sketch->estimate_ef2(cv_score, score); // mapped CV as X axis, RV as Y axis (bucket)
+                            ef = sketch->estimate_ef2(cv_score, score);
                             if (GROUND_WAE == 1 && ef < ef_copy) {
                                 ef = ef_copy;
                             }
@@ -1841,7 +1841,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                         if (out_cv) *out_cv = cv;
                         if (sketch) {
                             int cv_score = std::max(0, std::min(100, static_cast<int>(cv * 400.0f)));
-                            ef = sketch->estimate_ef2(cv_score, score);  // mapped CV as X axis, RV as Y axis (bucket)
+                            ef = sketch->estimate_ef2(cv_score, score);
                             if (GROUND_WAE == 1 && ef < ef_copy) {
                                 ef = ef_copy;
                             }

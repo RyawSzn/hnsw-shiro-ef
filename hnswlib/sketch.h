@@ -1,9 +1,9 @@
-// ada-ef
 #pragma once
 
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <limits>
 
 constexpr int SMOOTHING_METHOD = 1; // 0: No Smoothing, 1: Simple Smoothing
 
@@ -17,8 +17,6 @@ namespace hnswdis
         const EfRecallTable *ef_recall_table_single{nullptr};
 
         const std::vector<EfRecallTable> *tables_{nullptr};
-        // convergence_centers_[i] is the upper boundary of bucket i (cv < threshold[i] → bucket i).
-        // size == tables_.size() - 1; last bucket has no upper bound.
         const std::vector<float>         *convergence_centers_{nullptr};
 
         const float expected_recall;
@@ -50,7 +48,8 @@ namespace hnswdis
 
         size_t lookup_ef(const EfRecallTable &table,
                          const std::vector<int> &links,
-                         float score) const
+                         float score,
+                         float target_recall) const
         {
             int clamped = static_cast<int>(score);
             if (clamped < 0)   clamped = 0;
@@ -59,16 +58,24 @@ namespace hnswdis
             int index = links[clamped];
             const auto &ef_recalls = table[index].second;
             for (const auto &er : ef_recalls)
-                if (er.second >= expected_recall)
+                if (er.second >= target_recall)
                     return er.first;
             return ef_recalls.back().first;
         }
 
+        size_t lookup_ef(const EfRecallTable &table,
+                         const std::vector<int> &links,
+                         float score) const
+        {
+            return lookup_ef(table, links, score, expected_recall);
+        }
+
         size_t smoothed_ef(const EfRecallTable &table,
                            const std::vector<int> &links,
-                           float score) const
+                           float score,
+                           float target_recall) const
         {
-            size_t first = lookup_ef(table, links, score);
+            size_t first = lookup_ef(table, links, score, target_recall);
 
             if constexpr (SMOOTHING_METHOD == 0)
             {
@@ -78,8 +85,48 @@ namespace hnswdis
             {
                 if (score < 1 || score >= 100)
                     return first;
-                return (first + lookup_ef(table, links, score - 1) + lookup_ef(table, links, score + 1)) / 3;
+                return (first
+                        + lookup_ef(table, links, score - 1, target_recall)
+                        + lookup_ef(table, links, score + 1, target_recall)) / 3;
             }
+        }
+
+        size_t smoothed_ef(const EfRecallTable &table,
+                           const std::vector<int> &links,
+                           float score) const
+        {
+            return smoothed_ef(table, links, score, expected_recall);
+        }
+
+        size_t interpolate_conv_buckets(
+            const std::vector<EfRecallTable> &tables,
+            const std::vector<float>         &centers,
+            const std::vector<std::vector<int>> &links,
+            float cv_score,
+            float conv,
+            float target_recall) const
+        {
+            int n_centers = static_cast<int>(centers.size());
+            if (n_centers == 1)
+                return smoothed_ef(tables[0], links[0], cv_score, target_recall);
+
+            if (conv <= centers[0])
+                return smoothed_ef(tables[0], links[0], cv_score, target_recall);
+            if (conv >= centers[n_centers - 1])
+                return smoothed_ef(tables[n_centers - 1], links[n_centers - 1], cv_score, target_recall);
+
+            int idx = 0;
+            while (idx < n_centers - 1 && conv > centers[idx + 1])
+                ++idx;
+
+            float c0 = centers[idx];
+            float c1 = centers[idx + 1];
+            float w  = (conv - c0) / (c1 - c0);
+
+            size_t ef0 = smoothed_ef(tables[idx],     links[idx],     cv_score, target_recall);
+            size_t ef1 = smoothed_ef(tables[idx + 1], links[idx + 1], cv_score, target_recall);
+
+            return static_cast<size_t>(ef0 * (1.0f - w) + ef1 * w + 0.5f);
         }
 
     public:
@@ -103,40 +150,16 @@ namespace hnswdis
                 all_links.push_back(build_links(t));
         }
 
-                size_t estimate_ef2(float cv_score, float conv = 0) const
+        size_t estimate_ef2(float cv_score, float conv = 0) const
         {
             if (tables_ != nullptr && convergence_centers_->size() == tables_->size())
             {
-                int n_centers = convergence_centers_->size();
-                if (n_centers == 1) {
-                    return smoothed_ef((*tables_)[0], all_links[0], cv_score);
-                }
-
-                if (conv <= (*convergence_centers_)[0]) {
-                    return smoothed_ef((*tables_)[0], all_links[0], cv_score);
-                }
-                if (conv >= (*convergence_centers_)[n_centers - 1]) {
-                    return smoothed_ef((*tables_)[n_centers - 1], all_links[n_centers - 1], cv_score);
-                }
-
-                int idx = 0;
-                while (idx < n_centers - 1 && conv > (*convergence_centers_)[idx + 1]) {
-                    idx++;
-                }
-
-                float c0 = (*convergence_centers_)[idx];
-                float c1 = (*convergence_centers_)[idx + 1];
-                float w = (conv - c0) / (c1 - c0);
-
-                size_t ef0 = smoothed_ef((*tables_)[idx], all_links[idx], cv_score);
-                size_t ef1 = smoothed_ef((*tables_)[idx + 1], all_links[idx + 1], cv_score);
-
-                return static_cast<size_t>(ef0 * (1.0f - w) + ef1 * w + 0.5f);
+                return interpolate_conv_buckets(
+                    *tables_, *convergence_centers_, all_links,
+                    cv_score, conv, expected_recall);
             }
             return smoothed_ef(*ef_recall_table_single, all_links[0], cv_score);
         }
-
-
 
         size_t estimate_ef(float score) const
         {

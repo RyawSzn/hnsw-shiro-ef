@@ -16,6 +16,7 @@ struct ExperimentConfig {
     float alpha;
     float gamma;
     float expected_recall;
+    float easy_recall;
     int ef_upper_bound;
     int repeat;
     int sampling_size;
@@ -25,19 +26,19 @@ struct ExperimentConfig {
 };
 
 static std::vector<ExperimentConfig> g_experiments = {
-    // dataset, metric, k, alpha, gamma, expected_recall, ef_upper_bound, repeat, sampling_size, n_rv_buckets, min_q, stats_length
-    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
-    // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"laion_text",                 "cd", 1000, 1.0f, 16.0f, 0.95f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
+    // dataset, metric, k, alpha, gamma, hard_recall, easy_recall, ef_upper_bound, repeat, sampling_size, n_rv_buckets, min_q, stats_length
+    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 0.99f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 0.99f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.99f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
+    // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"laion_text",                 "cd", 1000, 1.0f, 16.0f, 0.95f, 0.99f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -71,12 +72,13 @@ static void train_convergence_buckets(
     const int ef_upper_bound,
     const int n_convergence_buckets,
     const int min_queries_per_score,
-    const std::string &samplings_path = "")
+    const std::string &samplings_path = "",
+    const float easy_recall = 0.99f)
 {
     adapter.init_with_convergence_buckets(
         hnsw, data, k, metric, alpha, gamma, stats_length,
         query_vectors, ground_truth,
-        n_convergence_buckets, min_queries_per_score);
+        n_convergence_buckets, min_queries_per_score, easy_recall);
 
     if (samplings_path != "") {
         size_t num_hard_queries = 0;
@@ -423,7 +425,7 @@ void offline_laion_text2image()
                 k, "cd", alpha, gamma, stats_length,
                 std::make_shared<hnswdis::MatrixXf>(_sq),
                 std::make_shared<hnswdis::MatrixXi>(_sgt),
-        ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
+        ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
         }
         ef_adapter.serialize(ef_adapter_path);
     }
@@ -490,7 +492,7 @@ void process_offline_conf(const ExperimentConfig& conf)
         k, metric, alpha, gamma, stats_length,
         std::make_shared<hnswdis::MatrixXf>(_sq),
         std::make_shared<hnswdis::MatrixXi>(_sgt),
-        ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
+        ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
 
     ef_adapter.serialize(ef_adapter_path);
 }
@@ -563,7 +565,7 @@ void table_build()
         train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length,
                          std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
                          std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                         ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
+                         ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
 
         ef_adapter.serialize(ef_adapter_path);
 
@@ -1400,7 +1402,7 @@ void ablation_study_visited_list_size()
             train_convergence_buckets(ef_adapter, hnsw, data,
                 k, metric, alpha, gamma, stats_length,
                 std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
+                ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
             ef_adapter.serialize(ef_adapter_path);
 
             hnswdis::Sketch sketch = make_sketch(ef_adapter, expected_recall);
@@ -1489,7 +1491,7 @@ void ablation_study_sampling_size()
             train_convergence_buckets(ef_adapter, hnsw, data,
                 k, metric, alpha, gamma, stats_length,
                 std::make_shared<hnswdis::MatrixXf>(pair.first), std::make_shared<hnswdis::MatrixXi>(pair.second),
-                ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
+                ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
             ef_adapter.serialize(ef_adapter_path);
 
             hnswdis::Sketch sketch = make_sketch(ef_adapter, expected_recall);
@@ -1566,7 +1568,7 @@ void ablation_study_weighted_decay_function()
             train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length,
                              std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
                              std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                             ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
+                             ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
 
             std::filesystem::create_directories(root / "ablation_gamma");
             ef_adapter.serialize(ef_adapter_path);
@@ -1646,7 +1648,7 @@ void ablation_study_truncation_ratio()
             train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length,
                              std::make_shared<hnswdis::MatrixXf>(sample_query_vectors),
                              std::make_shared<hnswdis::MatrixXi>(sample_ground_truth),
-                             ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path);
+                             ef_upper_bound, conf.n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
 
             std::filesystem::create_directories(root / "ablation_alpha");
             ef_adapter.serialize(ef_adapter_path);
@@ -1716,7 +1718,7 @@ void ablation_study_n_convergence_buckets()
             std::string ef_adapter_path = (root / "ablation_n_cv" / (dataset + "-ncv-" + std::to_string(n_convergence_buckets) + "-ef.bin")).string();
 
             hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, stats_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
-            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
+            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
 
             std::filesystem::create_directories(root / "ablation_n_cv");
             ef_adapter.serialize(ef_adapter_path);
@@ -1783,7 +1785,7 @@ void ablation_study_min_queries_per_score()
             std::string ef_adapter_path = (root / "ablation_min_q" / (dataset + "-minq-" + std::to_string(min_queries_per_score) + "-ef.bin")).string();
 
             hnswdis::EfAdapter ef_adapter(hnsw, data, k, metric, expected_recall, alpha, gamma, stats_length, samplings_path, ef_upper_bound, sampling_size, min_queries_per_score);
-            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path);
+            train_convergence_buckets(ef_adapter, hnsw, data, k, metric, alpha, gamma, stats_length, std::make_shared<hnswdis::MatrixXf>(sample_query_vectors), std::make_shared<hnswdis::MatrixXi>(sample_ground_truth), ef_upper_bound, n_convergence_buckets, min_queries_per_score, samplings_path, conf.easy_recall);
 
             std::filesystem::create_directories(root / "ablation_min_q");
             ef_adapter.serialize(ef_adapter_path);
