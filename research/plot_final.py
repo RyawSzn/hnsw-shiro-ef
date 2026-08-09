@@ -221,11 +221,7 @@ def generate_plot():
 
         ax.set_xlabel("Avg Latency (ms)", fontsize=16)
         # Adapt Y label dynamically or fix to standard
-        y_label = (
-            "Recall@1000"
-            if "1000" in ds_name or "m" in ds_name.lower()
-            else "Recall@100"
-        )
+        y_label = "Recall@1000" if "msmarco" in ds_name else "Recall@100"
         ax.set_ylabel(y_label, fontsize=16)
 
         # Rotate x labels 90 degrees
