@@ -34,13 +34,15 @@ def generate_plot():
     for i, ds in enumerate(all_datasets):
         print(f"  [{i}] {ds}")
 
-    user_input = input("\nEnter dataset numbers to plot (comma-separated), or press Enter for all: ").strip()
+    user_input = input(
+        "\nEnter dataset numbers to plot (comma-separated), or press Enter for all: "
+    ).strip()
 
-    if not user_input or user_input.lower() == 'all':
+    if not user_input or user_input.lower() == "all":
         datasets = all_datasets
     else:
         selected_indices = []
-        for p in user_input.split(','):
+        for p in user_input.split(","):
             p = p.strip()
             if p.isdigit():
                 idx = int(p)
@@ -50,7 +52,7 @@ def generate_plot():
                     print(f"Warning: Index {idx} out of bounds, skipping.")
             else:
                 print(f"Warning: Invalid input '{p}', skipping.")
-        
+
         # Preserve selection order and remove duplicates
         datasets = [all_datasets[i] for i in dict.fromkeys(selected_indices)]
 
@@ -60,7 +62,7 @@ def generate_plot():
         return
 
     # Setup figure layout dynamically to match reference aspect ratio
-    ncols = min(num_ds, 4)
+    ncols = min(num_ds, 6)
     nrows = math.ceil(num_ds / ncols)
     fig, axes = plt.subplots(nrows, ncols, figsize=(4.5 * ncols, 5.2 * nrows))
 

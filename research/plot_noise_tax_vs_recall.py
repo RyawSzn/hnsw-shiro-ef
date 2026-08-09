@@ -11,6 +11,7 @@ CSV_SHIRO = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_shiro"
 CSV_ADA = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/csv_ada"
 IMG_DIR = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/story"
 
+
 def adaptive_noise_tax(df_base, df_results):
     merged = df_base.merge(
         df_results[["QueryID", "Recall", "Latency(ns)"]],
@@ -31,6 +32,7 @@ def adaptive_noise_tax(df_base, df_results):
     total_ms = df_results["Latency(ns)"].sum() / 1e6
     return max(0.0, total_ms - essential_ms), df_results["Recall"].mean()
 
+
 def generate_plot():
     os.makedirs(IMG_DIR, exist_ok=True)
 
@@ -40,7 +42,7 @@ def generate_plot():
         return
 
     df_tax = pd.read_csv(tax_path)
-    
+
     all_datasets = sorted(df_tax["Dataset"].unique())
 
     if len(all_datasets) == 0:
@@ -51,13 +53,15 @@ def generate_plot():
     for i, ds in enumerate(all_datasets):
         print(f"  [{i}] {ds}")
 
-    user_input = input("\nEnter dataset numbers to plot (comma-separated), or press Enter for all: ").strip()
+    user_input = input(
+        "\nEnter dataset numbers to plot (comma-separated), or press Enter for all: "
+    ).strip()
 
-    if not user_input or user_input.lower() == 'all':
+    if not user_input or user_input.lower() == "all":
         datasets = all_datasets
     else:
         selected_indices = []
-        for p in user_input.split(','):
+        for p in user_input.split(","):
             p = p.strip()
             if p.isdigit():
                 idx = int(p)
@@ -67,7 +71,7 @@ def generate_plot():
                     print(f"Warning: Index {idx} out of bounds, skipping.")
             else:
                 print(f"Warning: Invalid input '{p}', skipping.")
-        
+
         # Preserve selection order and remove duplicates
         datasets = [all_datasets[i] for i in dict.fromkeys(selected_indices)]
 
@@ -77,7 +81,7 @@ def generate_plot():
         return
 
     # Setup figure layout dynamically to match plot_final.py aspect ratio
-    ncols = min(num_ds, 4)
+    ncols = min(num_ds, 6)
     nrows = math.ceil(num_ds / ncols)
     fig, axes = plt.subplots(nrows, ncols, figsize=(4.5 * ncols, 5.2 * nrows))
     fig.patch.set_facecolor("white")
@@ -93,7 +97,7 @@ def generate_plot():
 
     for idx, dataset in enumerate(datasets):
         ax = axes_flat[idx]
-        
+
         base_csv = os.path.join(CSV_SHIRO, f"per_query_baseline_{dataset}.csv")
         shiro_mine_csv = os.path.join(CSV_SHIRO, f"per_query_results_{dataset}.csv")
         ada_mine_csv = os.path.join(CSV_ADA, f"per_query_results_{dataset}.csv")
@@ -127,8 +131,6 @@ def generate_plot():
             color="#e74c3c",
             label="Static EF (Baseline)",
         )
-
-
 
         # Plot Shiro-EF
         ax.scatter(
@@ -166,8 +168,6 @@ def generate_plot():
 
         ax.tick_params(axis="x", labelrotation=90, labelsize=16)
         ax.tick_params(axis="y", labelsize=16)
-        
-        
 
     fig.align_xlabels()
     plt.tight_layout(pad=0.5, w_pad=0.5, h_pad=1.0, rect=(0, 0.10, 1, 0.94))
@@ -175,8 +175,24 @@ def generate_plot():
     # Unified Legend
     legend_handles = [
         Line2D([0], [0], color="#e74c3c", lw=2.5, label="Static EF (Baseline)"),
-        Line2D([0], [0], marker="*", color="w", markerfacecolor="tab:blue", markersize=10, label="Shiro-EF"),
-        Line2D([0], [0], marker="o", color="w", markerfacecolor="tab:orange", markersize=7, label="Ada-EF"),
+        Line2D(
+            [0],
+            [0],
+            marker="*",
+            color="w",
+            markerfacecolor="tab:blue",
+            markersize=10,
+            label="Shiro-EF",
+        ),
+        Line2D(
+            [0],
+            [0],
+            marker="o",
+            color="w",
+            markerfacecolor="tab:orange",
+            markersize=7,
+            label="Ada-EF",
+        ),
     ]
 
     fig.legend(
@@ -195,6 +211,7 @@ def generate_plot():
     out_path = os.path.join(IMG_DIR, "noise_tax_vs_recall_all.png")
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved styled plot to {out_path}")
+
 
 if __name__ == "__main__":
     generate_plot()
