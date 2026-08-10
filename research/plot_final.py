@@ -62,9 +62,11 @@ def generate_plot():
         return
 
     # Setup figure layout dynamically to match reference aspect ratio
-    ncols = min(num_ds, 6)
+    ncols = min(num_ds, 3)
     nrows = math.ceil(num_ds / ncols)
-    fig, axes = plt.subplots(nrows, ncols, figsize=(4.5 * ncols, 5.2 * nrows))
+    fig, axes = plt.subplots(nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows),
+                             constrained_layout=True)
+    fig.get_layout_engine().set(hspace=0.08, wspace=0.08)
 
     if isinstance(axes, np.ndarray):
         axes_flat = axes.flatten()
@@ -218,7 +220,6 @@ def generate_plot():
         # 4. Formatting to match reference image
         ax.set_title(ds_name, fontsize=16)
         ax.set_box_aspect(1)
-
         ax.set_xlabel("Avg Latency (ms)", fontsize=16)
         # Adapt Y label dynamically or fix to standard
         y_label = "Recall@1000" if "msmarco" in ds_name else "Recall@100"
@@ -253,7 +254,6 @@ def generate_plot():
         ax.set_xlim(0, max_time * 1.1)
 
     fig.align_xlabels()
-    plt.tight_layout(pad=0.5, w_pad=0.5, h_pad=1.0, rect=(0, 0.10, 1, 0.94))
 
     # Unified Legend matching the drawn elements
     legend_handles = [
@@ -332,22 +332,20 @@ def generate_plot():
 
     fig.legend(
         handles=legend_handles,
-        loc="upper center",
-        ncol=9,  # Flat arrangement
+        loc="lower center",
+        ncol=5,
         fontsize=11,
         frameon=True,
         fancybox=False,
         edgecolor="black",
-        bbox_to_anchor=(0.5, 0.08),
+        bbox_to_anchor=(0.5, -0.08),
         columnspacing=0.8,
         handletextpad=0.3,
     )
 
     os.makedirs("/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img", exist_ok=True)
-    out_path = (
-        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/visualization_final.png"
-    )
-    plt.savefig(out_path, dpi=300)
+    out_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/visualization_final.png"
+    plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved styled plot to {out_path}")
 
 

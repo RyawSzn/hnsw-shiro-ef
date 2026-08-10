@@ -81,9 +81,11 @@ def generate_plot():
         return
 
     # Setup figure layout dynamically to match plot_final.py aspect ratio
-    ncols = min(num_ds, 6)
+    ncols = min(num_ds, 3)
     nrows = math.ceil(num_ds / ncols)
-    fig, axes = plt.subplots(nrows, ncols, figsize=(4.5 * ncols, 5.2 * nrows))
+    fig, axes = plt.subplots(nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows),
+                             constrained_layout=True)
+    fig.get_layout_engine().set(hspace=0.08, wspace=0.08)
     fig.patch.set_facecolor("white")
 
     if isinstance(axes, np.ndarray):
@@ -162,7 +164,6 @@ def generate_plot():
         # Formatting
         ax.set_title(dataset, fontsize=16)
         ax.set_box_aspect(1)
-
         ax.set_xlabel("Mean Recall", fontsize=16)
         ax.set_ylabel("Noise Tax (ms)", fontsize=16)
 
@@ -170,7 +171,6 @@ def generate_plot():
         ax.tick_params(axis="y", labelsize=16)
 
     fig.align_xlabels()
-    plt.tight_layout(pad=0.5, w_pad=0.5, h_pad=1.0, rect=(0, 0.10, 1, 0.94))
 
     # Unified Legend
     legend_handles = [
@@ -197,13 +197,13 @@ def generate_plot():
 
     fig.legend(
         handles=legend_handles,
-        loc="upper center",
+        loc="lower center",
         ncol=3,
         fontsize=12,
         frameon=True,
         fancybox=False,
         edgecolor="black",
-        bbox_to_anchor=(0.5, 0.08),
+        bbox_to_anchor=(0.5, -0.08),
         columnspacing=1.5,
         handletextpad=0.5,
     )
