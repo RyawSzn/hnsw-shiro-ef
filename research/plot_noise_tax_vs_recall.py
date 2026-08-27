@@ -83,8 +83,9 @@ def generate_plot():
     # Setup figure layout dynamically to match plot_final.py aspect ratio
     ncols = min(num_ds, 3)
     nrows = math.ceil(num_ds / ncols)
-    fig, axes = plt.subplots(nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows),
-                             constrained_layout=True)
+    fig, axes = plt.subplots(
+        nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows), constrained_layout=True
+    )
     fig.get_layout_engine().set(hspace=0.08, wspace=0.08)
     fig.patch.set_facecolor("white")
 

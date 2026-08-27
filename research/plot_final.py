@@ -64,8 +64,9 @@ def generate_plot():
     # Setup figure layout dynamically to match reference aspect ratio
     ncols = min(num_ds, 3)
     nrows = math.ceil(num_ds / ncols)
-    fig, axes = plt.subplots(nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows),
-                             constrained_layout=True)
+    fig, axes = plt.subplots(
+        nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows), constrained_layout=True
+    )
     fig.get_layout_engine().set(hspace=0.08, wspace=0.08)
 
     if isinstance(axes, np.ndarray):
@@ -344,7 +345,9 @@ def generate_plot():
     )
 
     os.makedirs("/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img", exist_ok=True)
-    out_path = "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/visualization_final.png"
+    out_path = (
+        "/home/ryawszn/dev/cpp/hnsw-shiro-ef/research/img/visualization_final.png"
+    )
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     print(f"Saved styled plot to {out_path}")
 
