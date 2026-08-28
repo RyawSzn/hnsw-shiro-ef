@@ -25,7 +25,7 @@ echo "To: $REMOTE_PATH"
 echo "----------------------------------------"
 
 # 4. 执行同步（包含所有忽略项）
-rsync -avnz --progress --delete \
+rsync -avz --progress --delete \
     -e 'ssh -J yc.shea@projgw.cse.cuhk.edu.hk:2241' \
     --exclude='hnswlib.egg-info/' \
     --exclude='build/' \

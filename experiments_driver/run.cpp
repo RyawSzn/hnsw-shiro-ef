@@ -33,8 +33,9 @@ static std::vector<ExperimentConfig> g_experiments = {
     {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"msong-420-euclidean",        "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
     // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
     // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
@@ -1868,7 +1869,7 @@ void per_query_result_exp()
         hnsw->setEf(wae);
 
         adaptive_search_per_query_result(dataset, *hnsw, *query, *data, *ground_truth, score_cal, k, sketch, stats_length, expected_recall, repeat, (size_t)wae);
-        // per_query_baseline_exp(dataset, repeat, *hnsw, *query, *ground_truth, k, ef_upper_bound);
+        per_query_baseline_exp(dataset, repeat, *hnsw, *query, *ground_truth, k, ef_upper_bound);
     }
 }
 
