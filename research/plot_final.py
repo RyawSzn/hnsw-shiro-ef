@@ -231,7 +231,7 @@ def generate_plot():
         ax.tick_params(axis="y", labelsize=16)
         ax.yaxis.set_major_locator(MultipleLocator(0.1))
 
-        ax.set_ylim(bottom=0.7, top=1.02)
+        ax.set_ylim(bottom=0.65, top=1.02)
 
         ax.axhline(0.95, color="lightgray", linestyle="--", zorder=0)
         ax.axhline(0.98, color="lightgray", linestyle="--", zorder=0)

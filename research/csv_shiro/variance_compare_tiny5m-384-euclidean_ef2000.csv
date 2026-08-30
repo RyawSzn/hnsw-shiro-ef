@@ -1,7 +1,0 @@
-metric,baseline,shiro_ef,pct_change
-n_queries,1000,1000,
-recall_mean,0.97692,0.97675,-0.0174
-recall_variance,0.0024223136000000004,0.0018037375,-25.5366
-recall_std,0.04921700519129542,0.04247043089020878,-13.7078
-recall_min,0.18,0.17,
-recall_max,1.0,1.0,
