@@ -27,19 +27,18 @@ struct ExperimentConfig {
 
 static std::vector<ExperimentConfig> g_experiments = {
     // dataset, metric, k, alpha, gamma, hard_recall, easy_recall, ef_upper_bound, repeat, sampling_size, n_rv_buckets, min_q, stats_length
-    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 0.98f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"msong-420-euclidean",        "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 1000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
-    // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32},
-    // {"laion_text",                 "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 5, 2000, 10, 3, 1 + 32 + 31 * 32}
+    {"deep-image-96-angular",      "cd", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"glove-100-angular",          "cd", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"word2vec-300-angular",       "cd", 100,  1.0f, 16.0f, 0.95f, 0.98f, 1000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"sift10m-128-euclidean",      "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 1000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"gist-960-euclidean",         "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"tiny5m-384-euclidean",       "l2", 100,  1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"msmarco",                    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    {"cohere",                     "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_uniform_100d",    "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 1000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"cluster_mg_zipf_100d",       "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32}
+    // {"laion_image",                "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32},
+    // {"laion_text",                 "cd", 1000, 1.0f, 16.0f, 0.95f, 0.98f, 5000, 10, 2000, 10, 3, 1 + 32 + 31 * 32}
 };
 
 static ExperimentConfig get_config(const std::string& dataset) {
@@ -619,8 +618,8 @@ void sensitivity_analysis()
         size_t stats_length = conf.stats_length;
         int sampling_size = conf.sampling_size;
         std::string metric = "cd";
-        float alpha = 0.25f;
-        float gamma = 12.0f;
+        float alpha = conf.alpha;
+        float gamma = conf.gamma;
         std::vector<int> list_k = {1000, 100, 50}; // in descending order so that we can reuse samplings and estimators more effectively
         std::vector<float> expected_recalls = {0.95, 0.97, 0.99};
         int ef_upper_bound = 5000;
