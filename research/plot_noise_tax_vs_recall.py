@@ -81,7 +81,7 @@ def generate_plot():
         return
 
     # Setup figure layout dynamically to match plot_final.py aspect ratio
-    ncols = min(num_ds, 3)
+    ncols = min(num_ds, 4)
     nrows = math.ceil(num_ds / ncols)
     fig, axes = plt.subplots(
         nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows), constrained_layout=True
@@ -162,6 +162,29 @@ def generate_plot():
             ax.axvline(x=ada_recall, color="tab:orange", linestyle=":", alpha=0.5)
             ax.axhline(y=ada_tax_ms, color="tab:orange", linestyle=":", alpha=0.5)
 
+        # Exact numeric summary, tucked in the top-right corner (away from the
+        # dotted crosshair lines through the markers) instead of labeling each
+        # point directly, since the crosshairs already make that area busy.
+        info_lines = [f"SHIRO-EF: R={shiro_recall:.3f}, Tax={shiro_tax_ms:,.1f}ms"]
+        if has_ada:
+            info_lines.append(f"Ada-EF: R={ada_recall:.3f}, Tax={ada_tax_ms:,.1f}ms")
+        ax.text(
+            0.97,
+            0.97,
+            "\n".join(info_lines),
+            transform=ax.transAxes,
+            fontsize=7.5,
+            ha="right",
+            va="top",
+            bbox=dict(
+                facecolor="white",
+                alpha=0.85,
+                edgecolor="gray",
+                boxstyle="round,pad=0.3",
+            ),
+            zorder=8,
+        )
+
         # Formatting
         ax.set_title(dataset, fontsize=16)
         ax.set_box_aspect(1)
@@ -200,7 +223,7 @@ def generate_plot():
         handles=legend_handles,
         loc="lower center",
         ncol=3,
-        fontsize=12,
+        fontsize=18,
         frameon=True,
         fancybox=False,
         edgecolor="black",

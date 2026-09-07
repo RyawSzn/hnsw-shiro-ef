@@ -272,6 +272,22 @@ def plot_dataset(dataset: str, csv_dir: str, ada_dir: str, out_dir: str):
             linewidths=1.5,
             zorder=12,
         )
+        # Exact mean recall, offset further left (outward, away from the
+        # baseline box in the middle) so it doesn't overlap the marker or
+        # the Shiro-EF label dodged to the right.
+        ax.annotate(
+            f"{stats['mean']:.4f}",
+            xy=(draw_x, stats["mean"]),
+            xytext=(-10, 0),
+            textcoords="offset points",
+            ha="right",
+            va="center",
+            fontsize=9,
+            fontweight="bold",
+            color=ADA_COLOR,
+            bbox=dict(facecolor="white", alpha=0.85, edgecolor="none", pad=1),
+            zorder=13,
+        )
 
         legend_handles.append(
             mpatches.Patch(
@@ -315,6 +331,21 @@ def plot_dataset(dataset: str, csv_dir: str, ada_dir: str, out_dir: str):
             edgecolors="white",
             linewidths=1.5,
             zorder=12,
+        )
+        # Dodged to the right, opposite Ada-EF's label, so the two never
+        # collide even when their marker positions are close.
+        ax.annotate(
+            f"{stats['mean']:.4f}",
+            xy=(draw_x, stats["mean"]),
+            xytext=(10, 0),
+            textcoords="offset points",
+            ha="left",
+            va="center",
+            fontsize=9,
+            fontweight="bold",
+            color=SHIRO_COLOR,
+            bbox=dict(facecolor="white", alpha=0.85, edgecolor="none", pad=1),
+            zorder=13,
         )
 
         legend_handles.append(

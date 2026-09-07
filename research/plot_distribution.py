@@ -129,6 +129,25 @@ def create_annotated_plot_with_stats(dataset_name: str, algo: str):
         ax.axvspan(0, t1, color=c1, alpha=0.4)
         ax.axvspan(t1, t2, color=c2, alpha=0.4)
         ax.axvspan(t2, 100, color=c3, alpha=0.4)
+        ax.axvline(t1, color="gray", linestyle=":", linewidth=1, alpha=0.7)
+        ax.axvline(t2, color="gray", linestyle=":", linewidth=1, alpha=0.7)
+
+    # Exact crossover percentile values, pinned just above the x-axis on the
+    # bottom subplot so they don't collide with the region-label boxes above.
+    y_bottom2 = ax2.get_ylim()[0]
+    for t, txt in [(t1, f"{t1:.0f}%"), (t2, f"{t2:.0f}%")]:
+        ax2.annotate(
+            txt,
+            xy=(t, y_bottom2),
+            xytext=(0, 3),
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+            fontsize=9,
+            fontweight="bold",
+            color="dimgray",
+            bbox=dict(facecolor="white", alpha=0.75, edgecolor="none", pad=1),
+        )
 
     bbox_props = dict(boxstyle="round,pad=0.4", fc="white", ec="gray", alpha=0.9)
 

@@ -62,7 +62,7 @@ def generate_plot():
         return
 
     # Setup figure layout dynamically to match reference aspect ratio
-    ncols = min(num_ds, 3)
+    ncols = min(num_ds, 4)
     nrows = math.ceil(num_ds / ncols)
     fig, axes = plt.subplots(
         nrows, ncols, figsize=(5.0 * ncols, 5.0 * nrows), constrained_layout=True

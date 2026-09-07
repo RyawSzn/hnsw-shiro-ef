@@ -73,13 +73,15 @@ for i, dataset in enumerate(df["Dataset"].unique()):
 
     c = colors[i % len(colors)]
 
+    static_min = df_ds["Noise Tax %"].min()
+    static_max = df_ds["Noise Tax %"].max()
     plt.plot(
         df_ds["Global EF (ef)"],
         df_ds["Noise Tax %"],
         marker="o",
         linewidth=2,
         color=c,
-        label=f"{dataset} (Static EF)",
+        label=f"{dataset} (Static EF): {static_min:.1f}\u2013{static_max:.1f}%",
     )
 
     adp_tax = adaptive_metrics[dataset]["noise_tax_pct"]
@@ -89,7 +91,7 @@ for i, dataset in enumerate(df["Dataset"].unique()):
         linestyle="--",
         linewidth=2,
         alpha=0.8,
-        label=f"{dataset} (SHIRO-EF)",
+        label=f"{dataset} (SHIRO-EF): {adp_tax:.1f}%",
     )
 
 plt.title(
@@ -150,6 +152,29 @@ for dataset in df["Dataset"].unique():
         label="Baseline Noise Tax (Wasted)",
     )
     plt.plot(efs, total_lat, color="black", linewidth=2, label="Baseline Total Latency")
+
+    # Exact numbers at the final (largest) EF configuration, placed in the
+    # top-left corner where the stacked areas are thinnest so it never
+    # overlaps the fill or the line.
+    final_total = total_lat[-1]
+    final_tax = tax[-1]
+    final_essential = essential_lat[-1]
+    plt.gca().text(
+        0.02,
+        0.98,
+        (
+            f"At ef={int(efs[-1])}:\n"
+            f"Total: {final_total:,.1f} ms\n"
+            f"Essential: {final_essential:,.1f} ms\n"
+            f"Noise Tax: {final_tax:,.1f} ms"
+        ),
+        transform=plt.gca().transAxes,
+        fontsize=9,
+        fontweight="bold",
+        ha="left",
+        va="top",
+        bbox=dict(facecolor="white", alpha=0.85, edgecolor="black", boxstyle="round,pad=0.4"),
+    )
 
     plt.title(
         f"Compute Breakdown vs. Global EF: {dataset}",

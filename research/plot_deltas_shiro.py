@@ -54,7 +54,7 @@ def generate_delta_plot():
         print("No datasets selected. Exiting.")
         return
 
-    ncols = min(num_ds, 3)
+    ncols = min(num_ds, 4)
     ds_rows = math.ceil(num_ds / ncols)
 
     BANNER = 0.07
@@ -221,6 +221,30 @@ def generate_delta_plot():
             label="Compute Savings (- Latency)",
         )
         ax1.axhline(0, color="black", linewidth=1.5, linestyle="--")
+
+        # Exact value labels at the peak/trough of the smoothed curve, dodging
+        # the ROI text box in the top-right corner of the axes.
+        lat_max_idx = int(np.nanargmax(latency_diff.values))
+        lat_min_idx = int(np.nanargmin(latency_diff.values))
+        for idx, sign in ((lat_max_idx, 1), (lat_min_idx, -1)):
+            xv, yv = x_percentile[idx], latency_diff.values[idx]
+            near_roi_corner = xv > 78 and sign > 0
+            xytext = (-55, 8) if near_roi_corner else (0, 10 if sign > 0 else -12)
+            ha = "right" if near_roi_corner else "center"
+            va = "bottom" if sign > 0 else "top"
+            ax1.annotate(
+                f"{yv:+.1f} ms",
+                xy=(xv, yv),
+                xytext=xytext,
+                textcoords="offset points",
+                ha=ha,
+                va=va,
+                fontsize=8,
+                fontweight="bold",
+                color="#c0392b" if sign > 0 else "#1e8449",
+                bbox=dict(facecolor="white", alpha=0.8, edgecolor="none", pad=1),
+            )
+
         ax1.set_ylabel("Latency Change (ms)", fontsize=12)
         ax1.set_xlim(0, 100)
         ax1.tick_params(axis="x", which="both", bottom=False, labelbottom=False)
@@ -272,6 +296,28 @@ def generate_delta_plot():
             label="Accuracy Dropped (- Recall)",
         )
         ax2.axhline(0, color="black", linewidth=1.5, linestyle="--")
+
+        rec_max_idx = int(np.nanargmax(recall_diff.values))
+        rec_min_idx = int(np.nanargmin(recall_diff.values))
+        for idx, sign in ((rec_max_idx, 1), (rec_min_idx, -1)):
+            xv, yv = x_percentile[idx], recall_diff.values[idx]
+            near_roi_corner = xv > 78 and sign > 0
+            xytext = (-55, 8) if near_roi_corner else (0, 10 if sign > 0 else -12)
+            ha = "right" if near_roi_corner else "center"
+            va = "bottom" if sign > 0 else "top"
+            ax2.annotate(
+                f"{yv:+.3f}",
+                xy=(xv, yv),
+                xytext=xytext,
+                textcoords="offset points",
+                ha=ha,
+                va=va,
+                fontsize=8,
+                fontweight="bold",
+                color="#1e8449" if sign > 0 else "#c0392b",
+                bbox=dict(facecolor="white", alpha=0.8, edgecolor="none", pad=1),
+            )
+
         ax2.set_ylabel("Recall Change", fontsize=12)
         ax2.set_xlabel(
             "Query Recall Percentile (0% = Lowest, 100% = Highest)",

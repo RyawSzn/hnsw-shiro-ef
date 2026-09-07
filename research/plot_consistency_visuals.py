@@ -88,6 +88,24 @@ def create_consistency_plot(dataset_name, base_csv, shiro_csv, ada_csv):
         vp.set_edgecolor("black")
         vp.set_linewidth(1.5)
 
+    # Exact mean value labels (offset to the upper-left of each mean marker so
+    # they don't collide with the "Worst 1% / StdDev" annotations, which sit
+    # to the lower-right).
+    means = [s.mean() for s in data]
+    for i, (m, c) in enumerate(zip(means, colors)):
+        ax1.annotate(
+            f"\u03bc={m:.4f}",
+            xy=(i + 1, m),
+            xytext=(-45, 12),
+            textcoords="offset points",
+            ha="right",
+            va="bottom",
+            fontsize=10,
+            fontweight="bold",
+            color=c,
+            bbox=dict(facecolor="white", alpha=0.85, edgecolor=c, boxstyle="round,pad=0.2"),
+        )
+
     ax1.set_xticks(np.arange(1, len(labels) + 1))
     ax1.set_xticklabels(labels, fontsize=12, fontweight="bold")
     ax1.set_ylabel("Recall Accuracy", fontsize=14, fontweight="bold")

@@ -140,6 +140,31 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
         )
         ax1.axhline(0, color="black", linewidth=1.5, linestyle="--")
 
+        # Exact value labels at the peak (worst investment) and trough (best
+        # savings) of the smoothed curve. The ROI box lives in the top-right
+        # corner (axes fraction ~0.98, 0.95), so if the peak/trough would land
+        # in that same corner we shift the label leftward to avoid it.
+        lat_max_idx = int(np.nanargmax(latency_diff.values))
+        lat_min_idx = int(np.nanargmin(latency_diff.values))
+        for idx, sign in ((lat_max_idx, 1), (lat_min_idx, -1)):
+            xv, yv = x_percentile[idx], latency_diff.values[idx]
+            near_roi_corner = xv > 78 and sign > 0
+            xytext = (-55, 8) if near_roi_corner else (0, 10 if sign > 0 else -12)
+            ha = "right" if near_roi_corner else "center"
+            va = "bottom" if sign > 0 else "top"
+            ax1.annotate(
+                f"{yv:+.1f} ms",
+                xy=(xv, yv),
+                xytext=xytext,
+                textcoords="offset points",
+                ha=ha,
+                va=va,
+                fontsize=9,
+                fontweight="bold",
+                color="#c0392b" if sign > 0 else "#1e8449",
+                bbox=dict(facecolor="white", alpha=0.8, edgecolor="none", pad=1),
+            )
+
         ax1.set_title(
             f"[{algo_name}-ef] Latency Delta vs Baseline EF={best_ef}",
             fontsize=14,
@@ -197,6 +222,27 @@ def create_delta_plot(dataset_name, base_csv, shiro_csv, ada_csv):
             label="Accuracy Dropped (- Recall)",
         )
         ax2.axhline(0, color="black", linewidth=1.5, linestyle="--")
+
+        rec_max_idx = int(np.nanargmax(recall_diff.values))
+        rec_min_idx = int(np.nanargmin(recall_diff.values))
+        for idx, sign in ((rec_max_idx, 1), (rec_min_idx, -1)):
+            xv, yv = x_percentile[idx], recall_diff.values[idx]
+            near_roi_corner = xv > 78 and sign > 0
+            xytext = (-55, 8) if near_roi_corner else (0, 10 if sign > 0 else -12)
+            ha = "right" if near_roi_corner else "center"
+            va = "bottom" if sign > 0 else "top"
+            ax2.annotate(
+                f"{yv:+.3f}",
+                xy=(xv, yv),
+                xytext=xytext,
+                textcoords="offset points",
+                ha=ha,
+                va=va,
+                fontsize=9,
+                fontweight="bold",
+                color="#1e8449" if sign > 0 else "#c0392b",
+                bbox=dict(facecolor="white", alpha=0.8, edgecolor="none", pad=1),
+            )
 
         ax2.set_title(
             f"[{algo_name}-ef] Recall Delta vs Baseline EF={best_ef}",

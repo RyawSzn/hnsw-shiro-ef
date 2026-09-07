@@ -30,6 +30,7 @@ import matplotlib
 
 matplotlib.use("Agg")  # safe for headless / no-display environments
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 
 # --------------------------------------------------------------------------
 # CONFIG - tweak these without touching the parsing/plotting logic below
@@ -208,11 +209,22 @@ def plot_sweep(sweep_name, agg, baseline, keep_only=None, drop=None):
         2,
         1,
         figsize=(8, 6),
+        dpi=150,
         sharex=True,
         gridspec_kw={"height_ratios": [2.2, 1]},
     )
 
     x = range(len(values))
+
+    # Give the price axis headroom that scales with how tight or wide the
+    # data actually is, instead of leaving matplotlib's default limits (which
+    # can put stacked labels right up against the title when all the recall
+    # values are within a fraction of a percent of each other).
+    all_price_vals = avg_idx + p5_idx + p1_idx + [100]
+    y_min, y_max = min(all_price_vals), max(all_price_vals)
+    y_range = (y_max - y_min) or 1.0
+    ax_price.set_ylim(y_min - y_range * 0.15, y_max + y_range * 0.55)
+
     ax_price.axhline(
         100,
         color="#c3c2b7",
@@ -227,9 +239,76 @@ def plot_sweep(sweep_name, agg, baseline, keep_only=None, drop=None):
     ax_price.plot(
         x, p1_idx, marker="o", color="#6250d6", linestyle=":", label="p1 recall"
     )
+    # Exact value (the index number) above each marker for all three recall
+    # series (purple = p1, blue = avg, orange = p5). Fixed rank-based offsets
+    # push every label away from its marker by an increasing amount even when
+    # the three values are already far apart (e.g. p1 jumping well above avg
+    # and p5), which leaves it floating disconnected from its point. Instead,
+    # work in actual screen pixels: only push a label up from its natural
+    # position when it would otherwise collide with the label below it.
+    series = [
+        ("p1", p1_idx, "#6250d6"),
+        ("avg", avg_idx, "#2a78d6"),
+        ("p5", p5_idx, "#eb6834"),
+    ]
+    fig.canvas.draw()  # ensure transData reflects final axes position
+
+    # Measure how tall a rendered label actually is at this fontsize/dpi,
+    # instead of guessing a fixed pixel gap. A guessed constant (e.g. 13px)
+    # can end up smaller than the real text height, which is exactly what
+    # caused labels for close values (like 99.78 vs 99.74) to overlap.
+    renderer = fig.canvas.get_renderer()
+    label_font = FontProperties(size=7.5, weight="bold")
+    _, label_height_px, _ = renderer.get_text_width_height_descent(
+        "100.00", label_font, ismath=False
+    )
+
+    base_pad_px = label_height_px * 0.8  # gap between a marker and its own label
+    min_gap_px = label_height_px * 1.6 + 4  # minimum vertical gap between stacked labels
+    marker_buffer_px = 7  # keep a label clear of any *other* series' marker dot
+
+    for xi in x:
+        pts = [(name, vals[xi], color) for name, vals, color in series]
+        # sort lowest value first so we stack upward from the bottom label
+        pts.sort(key=lambda p: p[1])
+        marker_pixels = [
+            ax_price.transData.transform((xi, val))[1] for _, val, _ in pts
+        ]
+        prev_top_px = None
+        for i, (name, val, color) in enumerate(pts):
+            y_px = marker_pixels[i]
+            natural_px = y_px + base_pad_px
+            target_px = (
+                natural_px
+                if prev_top_px is None
+                else max(natural_px, prev_top_px + min_gap_px)
+            )
+            # A close-by higher marker (e.g. p1's dot sitting just above p5's
+            # label) can land inside this label's vertical span even when it
+            # doesn't collide with another *label*. Push clear of any such
+            # marker too.
+            label_top = target_px + label_height_px
+            for other_y_px in marker_pixels[i + 1 :]:
+                if target_px - marker_buffer_px <= other_y_px <= label_top + marker_buffer_px:
+                    target_px = max(target_px, other_y_px + marker_buffer_px)
+                    label_top = target_px + label_height_px
+            prev_top_px = target_px
+            ax_price.annotate(
+                f"{val:.2f}",
+                xy=(xi, val),
+                xytext=(0, target_px - y_px),
+                textcoords="offset pixels",
+                ha="center",
+                va="bottom",
+                fontsize=7.5,
+                color=color,
+                fontweight="bold",
+            )
     ax_price.set_ylabel(f"recall index ({baseline} = 100)")
     ax_price.set_title(f"{sweep_name}: recall (indexed) and search time (indexed)")
-    ax_price.legend(loc="best", fontsize=8)
+    ax_price.legend(
+        loc="upper left", bbox_to_anchor=(1.02, 1), borderaxespad=0.0, fontsize=8
+    )
     ax_price.grid(True, color="#e1e0d9")
 
     bar_colors = [
@@ -241,6 +320,22 @@ def plot_sweep(sweep_name, agg, baseline, keep_only=None, drop=None):
     time_max = max(time_idx)
     margin = max((time_max - time_min) * 0.2, 1.0)
     ax_vol.set_ylim(bottom=time_min - margin)
+
+    # Exact value above each bar. Extend the top of the axis slightly so the
+    # label for the tallest bar never gets clipped by the plot border.
+    top_headroom = max((time_max - time_min) * 0.12, 2.0)
+    ax_vol.set_ylim(top=time_max + top_headroom)
+    for xi, val in zip(x, time_idx):
+        ax_vol.annotate(
+            f"{val:.2f}",
+            xy=(xi, val),
+            xytext=(0, 3),
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+            fontweight="bold",
+        )
     ax_vol.set_ylabel(f"time index ({baseline} = 100)")
     ax_vol.set_xticks(list(x))
     ax_vol.set_xticklabels(labels)
@@ -249,7 +344,7 @@ def plot_sweep(sweep_name, agg, baseline, keep_only=None, drop=None):
     fig.tight_layout()
     os.makedirs(OUT_DIR, exist_ok=True)
     out_path = os.path.join(OUT_DIR, f"{sweep_name.replace(' ', '_')}.png")
-    fig.savefig(out_path, dpi=150)
+    fig.savefig(out_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"  -> wrote {out_path}")
 

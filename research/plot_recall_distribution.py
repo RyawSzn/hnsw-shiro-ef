@@ -42,6 +42,23 @@ def plot_recall_distribution(dataset: str, ef: int, algo: str = None):
     scale = n.max() / kde_values.max()
     ax.plot(x_range, kde_values * scale, color="steelblue", linewidth=2)
 
+    # Exact count on the tallest bar (the mode of the distribution). Placed
+    # directly above that single bar rather than every bar, so it never
+    # collides with the KDE curve or the other bars.
+    peak_idx = int(np.argmax(n))
+    peak_center = (bins[peak_idx] + bins[peak_idx + 1]) / 2
+    ax.annotate(
+        f"n={int(n[peak_idx])}",
+        xy=(peak_center, n[peak_idx]),
+        xytext=(0, 6),
+        textcoords="offset points",
+        ha="center",
+        va="bottom",
+        fontsize=10,
+        fontweight="bold",
+        bbox=dict(facecolor="white", alpha=0.8, edgecolor="none", pad=1),
+    )
+
     ax.axvline(
         avg_recall,
         color="red",
