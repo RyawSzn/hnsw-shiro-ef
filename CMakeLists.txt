@@ -57,7 +57,17 @@ endif()
 
 # 3. Setup your custom run executable
 add_executable(run experiments_driver/run.cpp)
+add_executable(extract_cv_recall experiments_driver/extract_cv_recall.cpp)
 target_include_directories(run PRIVATE ${HDF5_INCLUDE_DIRS})
+target_include_directories(extract_cv_recall PRIVATE ${HDF5_INCLUDE_DIRS})
+target_link_libraries(extract_cv_recall PRIVATE
+    hnswlib
+    Eigen3::Eigen
+    Boost::boost
+    ${HDF5_CXX_LIBRARIES}
+    ${HDF5_LIBRARIES}
+)
+
 target_link_libraries(run PRIVATE
     hnswlib
     Eigen3::Eigen
