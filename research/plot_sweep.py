@@ -55,7 +55,7 @@ SWEEP_CONFIG = {
         "keep_only": None,
     },
     "Alpha": {
-        "baseline": 0.5,
+        "baseline": 1,
         "keep_only": None,
     },
     "min_queries_per_score": {
@@ -264,7 +264,9 @@ def plot_sweep(sweep_name, agg, baseline, keep_only=None, drop=None):
     )
 
     base_pad_px = label_height_px * 0.8  # gap between a marker and its own label
-    min_gap_px = label_height_px * 1.6 + 4  # minimum vertical gap between stacked labels
+    min_gap_px = (
+        label_height_px * 1.6 + 4
+    )  # minimum vertical gap between stacked labels
     marker_buffer_px = 7  # keep a label clear of any *other* series' marker dot
 
     for xi in x:
@@ -289,7 +291,11 @@ def plot_sweep(sweep_name, agg, baseline, keep_only=None, drop=None):
             # marker too.
             label_top = target_px + label_height_px
             for other_y_px in marker_pixels[i + 1 :]:
-                if target_px - marker_buffer_px <= other_y_px <= label_top + marker_buffer_px:
+                if (
+                    target_px - marker_buffer_px
+                    <= other_y_px
+                    <= label_top + marker_buffer_px
+                ):
                     target_px = max(target_px, other_y_px + marker_buffer_px)
                     label_top = target_px + label_height_px
             prev_top_px = target_px
