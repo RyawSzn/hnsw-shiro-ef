@@ -11,8 +11,8 @@ fi
 DATASET=$1
 
 if [ -z "$DATASET" ]; then
-    echo "Usage: ./extract_and_correlate.sh <dataset_name>"
-    echo "Example: ./extract_and_correlate.sh glove-100-angular"
+    echo "Usage: ./research/extract_and_correlate.sh <dataset_name>"
+    echo "Example: ./research/extract_and_correlate.sh glove-100-angular"
     exit 1
 fi
 

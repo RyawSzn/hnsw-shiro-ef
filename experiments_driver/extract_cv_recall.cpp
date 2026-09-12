@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
         out << j << "," << cv << "," << recall << "\n";
         
         if (j % 1000 == 0) {
-            std::cout << "Processed " << j << "/" << query->rows() << " queries\r" << std::flush;
+            std::cout << "Processed " << j << "/" << query->rows() << " queries" << std::endl;
         }
     }
     std::cout << "\n";
