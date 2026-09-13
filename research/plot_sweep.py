@@ -36,9 +36,7 @@ from matplotlib.font_manager import FontProperties
 # CONFIG - tweak these without touching the parsing/plotting logic below
 # --------------------------------------------------------------------------
 
-LOG_PATH = (
-    sys.argv[1] if len(sys.argv) > 1 else "research/log/output_shiro_sampling_size.log"
-)
+LOG_PATH = sys.argv[1] if len(sys.argv) > 1 else "research/log/output_shiro_cv10.log"
 OUT_DIR = "research/img/sweep_plots"
 
 # For each sweep: which parameter value counts as "current" (indexed to 100),
