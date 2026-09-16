@@ -1418,6 +1418,7 @@ void ablation_study_sampling_size()
         // from larger to smaller, reuse samplings for experiments
         10000,
         5000,
+        4000,
         3000,
         1000,
     };
@@ -1893,7 +1894,7 @@ int main() {
 
     // sensitivity_analysis(); // sensitivity analysis for estimator parameters, including k and recall target
 
-    ablation_study_visited_list_size();       // ablation study on distance list size
+
     ablation_study_sampling_size();           // ablation study on sampling size
     ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
     ablation_study_n_convergence_buckets();   // ablation study on convergence buckets
