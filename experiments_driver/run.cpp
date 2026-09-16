@@ -1896,6 +1896,7 @@ int main() {
 
 
     ablation_study_sampling_size();           // ablation study on sampling size
+    ablation_study_visited_list_size();       // ablation study on distance list size
     ablation_study_weighted_decay_function(); // ablation study on weighted decay functions
     ablation_study_n_convergence_buckets();   // ablation study on convergence buckets
     ablation_study_min_queries_per_score();   // ablation study on truncation ratio
