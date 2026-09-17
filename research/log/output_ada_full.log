@@ -18,39 +18,39 @@ Using AVX Inner Product distance
 Index loaded
 Dimension of space:96
 Data size of space:384
-Mean computation time: 91 ms
+Mean computation time: 93 ms
 Number of threads: 8
 Covariance matrix computation time: 496 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 588 ms
-Mean computation time: 171 ms
+Dataset statistics computing time: 590 ms
+Mean computation time: 137 ms
 Number of threads: 8
-Covariance matrix computation time: 508 ms
+Covariance matrix computation time: 505 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 679 ms
-Mean computation time: 128 ms
+Dataset statistics computing time: 643 ms
+Mean computation time: 144 ms
 Number of threads: 8
-Covariance matrix computation time: 513 ms
+Covariance matrix computation time: 504 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 642 ms
-Distance matrix computed in 7359 ms
-Ground truth computed in 249 ms using 8 threads.
-Sampling computing time: 8069 ms
-Distance matrix computed in 7975 ms
-Ground truth computed in 296 ms using 8 threads.
-Sampling computing time: 8888 ms
-Distance matrix computed in 8444 ms
-Ground truth computed in 264 ms using 8 threads.
-Sampling computing time: 9326 ms
+Dataset statistics computing time: 648 ms
+Distance matrix computed in 7938 ms
+Ground truth computed in 240 ms using 8 threads.
+Sampling computing time: 8713 ms
+Distance matrix computed in 8516 ms
+Ground truth computed in 555 ms using 8 threads.
+Sampling computing time: 9649 ms
+Distance matrix computed in 8475 ms
+Ground truth computed in 1429 ms using 8 threads.
+Sampling computing time: 10490 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 526 ms
+Search time: 524 ms
 Average Recall: 0.8801
 Initial average recall with ef=100: 0.8801
-Search time: 247 ms
+Search time: 299 ms
 Average Recall: 0.923
 Initial average recall with ef=150: 0.923
 Recall diff is too small, break.
@@ -58,16 +58,16 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 242.995
-EF-estimation table computing time: 1219 ms
+EF-estimation table computing time: 1340 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 88 ms
+Search time: 134 ms
 Average Recall: 0.8801
 Initial average recall with ef=100: 0.8801
-Search time: 115 ms
+Search time: 156 ms
 Average Recall: 0.923
 Initial average recall with ef=150: 0.923
 Recall diff is too small, break.
@@ -75,16 +75,16 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 242.995
-EF-estimation table computing time: 411 ms
+EF-estimation table computing time: 592 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 88 ms
+Search time: 123 ms
 Average Recall: 0.8801
 Initial average recall with ef=100: 0.8801
-Search time: 113 ms
+Search time: 145 ms
 Average Recall: 0.923
 Initial average recall with ef=150: 0.923
 Recall diff is too small, break.
@@ -92,7 +92,7 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 242.995
-EF-estimation table computing time: 409 ms
+EF-estimation table computing time: 512 ms
 Dataset: glove-100-angular
 Metric: cd
 Quantile step: 0.001
@@ -106,37 +106,37 @@ Dimension of space:100
 Data size of space:400
 Mean computation time: 86 ms
 Number of threads: 8
-Covariance matrix computation time: 72 ms
+Covariance matrix computation time: 70 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 159 ms
-Mean computation time: 32 ms
+Dataset statistics computing time: 156 ms
+Mean computation time: 30 ms
 Number of threads: 8
-Covariance matrix computation time: 72 ms
+Covariance matrix computation time: 69 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 105 ms
-Mean computation time: 26 ms
+Dataset statistics computing time: 100 ms
+Mean computation time: 22 ms
 Number of threads: 8
-Covariance matrix computation time: 72 ms
+Covariance matrix computation time: 70 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 99 ms
-Distance matrix computed in 849 ms
-Ground truth computed in 55 ms using 8 threads.
-Sampling computing time: 965 ms
-Distance matrix computed in 861 ms
+Dataset statistics computing time: 92 ms
+Distance matrix computed in 845 ms
 Ground truth computed in 32 ms using 8 threads.
-Sampling computing time: 954 ms
-Distance matrix computed in 855 ms
+Sampling computing time: 937 ms
+Distance matrix computed in 844 ms
+Ground truth computed in 56 ms using 8 threads.
+Sampling computing time: 958 ms
+Distance matrix computed in 840 ms
 Ground truth computed in 32 ms using 8 threads.
-Sampling computing time: 948 ms
+Sampling computing time: 931 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 253 ms
+Search time: 87 ms
 Average Recall: 0.7423
 Initial average recall with ef=100: 0.7423
-Search time: 111 ms
+Search time: 182 ms
 Average Recall: 0.78855
 Initial average recall with ef=150: 0.78855
 Recall diff is too small, break.
@@ -149,16 +149,16 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 1539.61
-EF-estimation table computing time: 3342 ms
+EF-estimation table computing time: 3222 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 83 ms
+Search time: 85 ms
 Average Recall: 0.7423
 Initial average recall with ef=100: 0.7423
-Search time: 103 ms
+Search time: 105 ms
 Average Recall: 0.78855
 Initial average recall with ef=150: 0.78855
 Recall diff is too small, break.
@@ -171,16 +171,16 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 1539.61
-EF-estimation table computing time: 3156 ms
+EF-estimation table computing time: 3215 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 83 ms
+Search time: 86 ms
 Average Recall: 0.7423
 Initial average recall with ef=100: 0.7423
-Search time: 103 ms
+Search time: 107 ms
 Average Recall: 0.78855
 Initial average recall with ef=150: 0.78855
 Recall diff is too small, break.
@@ -193,7 +193,7 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 1539.61
-EF-estimation table computing time: 3155 ms
+EF-estimation table computing time: 3180 ms
 Dataset: word2vec-300-angular
 Metric: cd
 Quantile step: 0.001
@@ -205,52 +205,36 @@ Using AVX Inner Product distance
 Index loaded
 Dimension of space:300
 Data size of space:1200
-Mean computation time: 82 ms
+Mean computation time: 73 ms
 Number of threads: 8
-Covariance matrix computation time: 448 ms
+Covariance matrix computation time: 437 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 530 ms
-Mean computation time: 57 ms
+Dataset statistics computing time: 511 ms
+Mean computation time: 36 ms
 Number of threads: 8
-Covariance matrix computation time: 463 ms
+Covariance matrix computation time: 436 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 521 ms
-Mean computation time: 40 ms
+Dataset statistics computing time: 472 ms
+Mean computation time: 35 ms
 Number of threads: 8
-Covariance matrix computation time: 441 ms
+Covariance matrix computation time: 436 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 481 ms
-Distance matrix computed in 1198 ms
+Dataset statistics computing time: 471 ms
+Distance matrix computed in 1187 ms
 Ground truth computed in 28 ms using 8 threads.
-Sampling computing time: 1271 ms
-Distance matrix computed in 1197 ms
+Sampling computing time: 1257 ms
+Distance matrix computed in 1224 ms
 Ground truth computed in 28 ms using 8 threads.
-Sampling computing time: 1270 ms
-Distance matrix computed in 1199 ms
+Sampling computing time: 1295 ms
+Distance matrix computed in 1187 ms
 Ground truth computed in 28 ms using 8 threads.
-Sampling computing time: 1272 ms
+Sampling computing time: 1257 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 261 ms
-Average Recall: 0.8984
-Initial average recall with ef=100: 0.8984
-Search time: 178 ms
-Average Recall: 0.93085
-Initial average recall with ef=150: 0.93085
-Recall diff is too small, break.
-Recall diff is too small, break.
-Recall diff is too small, break.
-Weighted average ef: 264.685
-EF-estimation table computing time: 911 ms
-Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
-Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
-Start creating ApproximatedScoreCalculator
-ApproximatedScoreCalculator created
-Estimator initialized in 0 ms
-Search time: 134 ms
+Search time: 130 ms
 Average Recall: 0.8984
 Initial average recall with ef=100: 0.8984
 Search time: 162 ms
@@ -260,23 +244,39 @@ Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 264.685
-EF-estimation table computing time: 721 ms
+EF-estimation table computing time: 680 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 152 ms
+Search time: 127 ms
 Average Recall: 0.8984
 Initial average recall with ef=100: 0.8984
-Search time: 166 ms
+Search time: 162 ms
 Average Recall: 0.93085
 Initial average recall with ef=150: 0.93085
 Recall diff is too small, break.
 Recall diff is too small, break.
 Recall diff is too small, break.
 Weighted average ef: 264.685
-EF-estimation table computing time: 710 ms
+EF-estimation table computing time: 677 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 127 ms
+Average Recall: 0.8984
+Initial average recall with ef=100: 0.8984
+Search time: 162 ms
+Average Recall: 0.93085
+Initial average recall with ef=150: 0.93085
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 264.685
+EF-estimation table computing time: 698 ms
 Dataset: msmarco
 Metric: cd
 Quantile step: 0.001
@@ -288,69 +288,69 @@ Using AVX Inner Product distance
 Index loaded
 Dimension of space:1536
 Data size of space:6144
-Mean computation time: 2774 ms
+Mean computation time: 2813 ms
 Number of threads: 8
-Covariance matrix computation time: 102098 ms
+Covariance matrix computation time: 118514 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 104872 ms
-Mean computation time: 3967 ms
+Dataset statistics computing time: 121327 ms
+Mean computation time: 4303 ms
 Number of threads: 8
-Covariance matrix computation time: 99702 ms
+Covariance matrix computation time: 102245 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 103670 ms
-Mean computation time: 3939 ms
+Dataset statistics computing time: 106548 ms
+Mean computation time: 4013 ms
 Number of threads: 8
-Covariance matrix computation time: 97328 ms
+Covariance matrix computation time: 102808 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 101267 ms
-Distance matrix computed in 42772 ms
-Ground truth computed in 252 ms using 8 threads.
-Sampling computing time: 43424 ms
-Distance matrix computed in 38192 ms
-Ground truth computed in 286 ms using 8 threads.
-Sampling computing time: 38948 ms
-Distance matrix computed in 38118 ms
-Ground truth computed in 248 ms using 8 threads.
-Sampling computing time: 38837 ms
+Dataset statistics computing time: 106821 ms
+Distance matrix computed in 38535 ms
+Ground truth computed in 419 ms using 8 threads.
+Sampling computing time: 39555 ms
+Distance matrix computed in 35085 ms
+Ground truth computed in 344 ms using 8 threads.
+Sampling computing time: 35907 ms
+Distance matrix computed in 38088 ms
+Ground truth computed in 249 ms using 8 threads.
+Sampling computing time: 38754 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 15131 ms
+Search time: 7307 ms
 Average Recall: 0.976275
 Initial average recall with ef=1000: 0.976275
-Search time: 8859 ms
+Search time: 5096 ms
 Average Recall: 0.987849
 Initial average recall with ef=1500: 0.98785
 Weighted average ef: 1080.97
-EF-estimation table computing time: 24552 ms
+EF-estimation table computing time: 12852 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 2797 ms
+Search time: 2506 ms
 Average Recall: 0.976275
 Initial average recall with ef=1000: 0.976275
-Search time: 3334 ms
+Search time: 3568 ms
 Average Recall: 0.987849
 Initial average recall with ef=1500: 0.98785
 Weighted average ef: 1080.97
-EF-estimation table computing time: 6441 ms
+EF-estimation table computing time: 6442 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 1937 ms
+Search time: 2509 ms
 Average Recall: 0.976275
 Initial average recall with ef=1000: 0.976275
-Search time: 2731 ms
+Search time: 3945 ms
 Average Recall: 0.987849
 Initial average recall with ef=1500: 0.98785
 Weighted average ef: 1080.97
-EF-estimation table computing time: 4968 ms
+EF-estimation table computing time: 6799 ms
 Dataset: cohere
 Metric: cd
 Quantile step: 0.001
@@ -362,69 +362,69 @@ Using AVX Inner Product distance
 Index loaded
 Dimension of space:1024
 Data size of space:4096
-Mean computation time: 4866 ms
+Mean computation time: 4459 ms
 Number of threads: 8
-Covariance matrix computation time: 87256 ms
+Covariance matrix computation time: 111315 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 92123 ms
-Mean computation time: 5644 ms
+Dataset statistics computing time: 115774 ms
+Mean computation time: 5988 ms
 Number of threads: 8
-Covariance matrix computation time: 87677 ms
+Covariance matrix computation time: 100313 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 93321 ms
-Mean computation time: 5537 ms
+Dataset statistics computing time: 106301 ms
+Mean computation time: 5914 ms
 Number of threads: 8
-Covariance matrix computation time: 88050 ms
+Covariance matrix computation time: 100713 ms
 CosineDistanceEstimator created
-Dataset statistics computing time: 93587 ms
-Distance matrix computed in 57534 ms
-Ground truth computed in 636 ms using 8 threads.
-Sampling computing time: 59235 ms
-Distance matrix computed in 60003 ms
-Ground truth computed in 689 ms using 8 threads.
-Sampling computing time: 61674 ms
-Distance matrix computed in 54843 ms
-Ground truth computed in 517 ms using 8 threads.
-Sampling computing time: 56174 ms
+Dataset statistics computing time: 106628 ms
+Distance matrix computed in 60143 ms
+Ground truth computed in 694 ms using 8 threads.
+Sampling computing time: 62018 ms
+Distance matrix computed in 58777 ms
+Ground truth computed in 1243 ms using 8 threads.
+Sampling computing time: 60891 ms
+Distance matrix computed in 61535 ms
+Ground truth computed in 490 ms using 8 threads.
+Sampling computing time: 63015 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 6280 ms
+Search time: 6170 ms
 Average Recall: 0.957965
 Initial average recall with ef=1000: 0.957965
-Search time: 3867 ms
+Search time: 3709 ms
 Average Recall: 0.97736
 Initial average recall with ef=1500: 0.97736
 Weighted average ef: 1230
-EF-estimation table computing time: 11553 ms
+EF-estimation table computing time: 11214 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 1674 ms
+Search time: 1566 ms
 Average Recall: 0.957965
 Initial average recall with ef=1000: 0.957965
-Search time: 2379 ms
+Search time: 2223 ms
 Average Recall: 0.97736
 Initial average recall with ef=1500: 0.97736
 Weighted average ef: 1230
-EF-estimation table computing time: 5047 ms
+EF-estimation table computing time: 4700 ms
 Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
 Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
 Start creating ApproximatedScoreCalculator
 ApproximatedScoreCalculator created
 Estimator initialized in 0 ms
-Search time: 1668 ms
+Search time: 1550 ms
 Average Recall: 0.957965
 Initial average recall with ef=1000: 0.957965
-Search time: 2383 ms
+Search time: 2213 ms
 Average Recall: 0.97736
 Initial average recall with ef=1500: 0.97736
 Weighted average ef: 1230
-EF-estimation table computing time: 5047 ms
+EF-estimation table computing time: 4673 ms
 Starting per-query result experiments...
 
 
@@ -444,25 +444,25 @@ ApproximatedScoreCalculator created
 ****Weighted average ef: 242
 
 === Summary (Iteration 1/3) ===
-Average Latency: 977987 ns
+Average Latency: 987728 ns
 Average Recall: 0.962871
-Total Latency: 9.77987 seconds
+Total Latency: 9.87728 seconds
 
 === Summary (Iteration 2/3) ===
-Average Latency: 978024 ns
+Average Latency: 1.00423e+06 ns
 Average Recall: 0.962871
-Total Latency: 9.78024 seconds
+Total Latency: 10.0423 seconds
 
 === Summary (Iteration 3/3) ===
-Average Latency: 981861 ns
+Average Latency: 1.00663e+06 ns
 Average Recall: 0.962871
-Total Latency: 9.81861 seconds
+Total Latency: 10.0663 seconds
 
 Per-query results (median latency per query) have been written to research/csv/per_query_results_deep-image-96-angular.csv
 
 === Final Summary (Median Iteration) ===
-Average Latency: 957645 ns
-Total Latency: 9.57645 seconds
+Average Latency: 994561 ns
+Total Latency: 9.94561 seconds
 Average Recall: 0.962871
 5th percentile recall: 0.86
 1st percentile recall: 0.79
@@ -477,8 +477,8 @@ Average Recall: 0.858459
 5th percentile recall: 0.6
 1st percentile recall: 0.46
 
-Total Latency: 3.13303 seconds
-Average Latency: 313303 ns
+Total Latency: 3.35607 seconds
+Average Latency: 335607 ns
 
 ======================================
 Testing ef: 200
@@ -489,8 +489,8 @@ Average Recall: 0.935477
 5th percentile recall: 0.76
 1st percentile recall: 0.63
 
-Total Latency: 5.94223 seconds
-Average Latency: 594223 ns
+Total Latency: 5.90855 seconds
+Average Latency: 590855 ns
 
 ======================================
 Testing ef: 300
@@ -501,8 +501,8 @@ Average Recall: 0.961983
 5th percentile recall: 0.84
 1st percentile recall: 0.72
 
-Total Latency: 8.63835 seconds
-Average Latency: 863835 ns
+Total Latency: 8.48961 seconds
+Average Latency: 848961 ns
 
 ======================================
 Testing ef: 400
@@ -513,8 +513,8 @@ Average Recall: 0.974622
 5th percentile recall: 0.88
 1st percentile recall: 0.77
 
-Total Latency: 11.0903 seconds
-Average Latency: 1.10903e+06 ns
+Total Latency: 11.1364 seconds
+Average Latency: 1.11364e+06 ns
 
 ======================================
 Testing ef: 500
@@ -525,8 +525,8 @@ Average Recall: 0.981729
 5th percentile recall: 0.91
 1st percentile recall: 0.82
 
-Total Latency: 13.5909 seconds
-Average Latency: 1.35909e+06 ns
+Total Latency: 13.8908 seconds
+Average Latency: 1.38908e+06 ns
 
 ======================================
 Testing ef: 600
@@ -537,8 +537,8 @@ Average Recall: 0.986145
 5th percentile recall: 0.93
 1st percentile recall: 0.85
 
-Total Latency: 16.3388 seconds
-Average Latency: 1.63388e+06 ns
+Total Latency: 16.0487 seconds
+Average Latency: 1.60487e+06 ns
 
 ======================================
 Testing ef: 700
@@ -549,8 +549,8 @@ Average Recall: 0.989089
 5th percentile recall: 0.94
 1st percentile recall: 0.87
 
-Total Latency: 18.9366 seconds
-Average Latency: 1.89366e+06 ns
+Total Latency: 18.792 seconds
+Average Latency: 1.8792e+06 ns
 
 ======================================
 Testing ef: 800
@@ -561,8 +561,164 @@ Average Recall: 0.991205
 5th percentile recall: 0.95
 1st percentile recall: 0.89
 
-Total Latency: 21.3648 seconds
-Average Latency: 2.13648e+06 ns
+Total Latency: 21.0877 seconds
+Average Latency: 2.10877e+06 ns
+
+======================================
+Testing ef: 1000
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 1000 ===
+Average Recall: 0.993988
+5th percentile recall: 0.97
+1st percentile recall: 0.92
+
+Total Latency: 26.542 seconds
+Average Latency: 2.6542e+06 ns
+
+======================================
+Testing ef: 1200
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 1200 ===
+Average Recall: 0.995624
+5th percentile recall: 0.97
+1st percentile recall: 0.93
+
+Total Latency: 32.1504 seconds
+Average Latency: 3.21504e+06 ns
+
+======================================
+Testing ef: 1400
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 1400 ===
+Average Recall: 0.996625
+5th percentile recall: 0.98
+1st percentile recall: 0.94
+
+Total Latency: 35.8578 seconds
+Average Latency: 3.58578e+06 ns
+
+======================================
+Testing ef: 1600
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 1600 ===
+Average Recall: 0.997364
+5th percentile recall: 0.98
+1st percentile recall: 0.95
+
+Total Latency: 41.2016 seconds
+Average Latency: 4.12016e+06 ns
+
+======================================
+Testing ef: 2000
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 2000 ===
+Average Recall: 0.99822
+5th percentile recall: 0.99
+1st percentile recall: 0.97
+
+Total Latency: 50.3074 seconds
+Average Latency: 5.03074e+06 ns
+
+======================================
+Testing ef: 2400
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 2400 ===
+Average Recall: 0.998738
+5th percentile recall: 0.99
+1st percentile recall: 0.97
+
+Total Latency: 60.1358 seconds
+Average Latency: 6.01358e+06 ns
+
+======================================
+Testing ef: 2800
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 2800 ===
+Average Recall: 0.999036
+5th percentile recall: 0.99
+1st percentile recall: 0.98
+
+Total Latency: 71.037 seconds
+Average Latency: 7.1037e+06 ns
+
+======================================
+Testing ef: 3200
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 3200 ===
+Average Recall: 0.999247
+5th percentile recall: 1
+1st percentile recall: 0.98
+
+Total Latency: 80.1264 seconds
+Average Latency: 8.01264e+06 ns
+
+======================================
+Testing ef: 3600
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 3600 ===
+Average Recall: 0.999395
+5th percentile recall: 1
+1st percentile recall: 0.99
+
+Total Latency: 89.3703 seconds
+Average Latency: 8.93703e+06 ns
+
+======================================
+Testing ef: 4000
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 4000 ===
+Average Recall: 0.999511
+5th percentile recall: 1
+1st percentile recall: 0.99
+
+Total Latency: 98.6776 seconds
+Average Latency: 9.86776e+06 ns
+
+======================================
+Testing ef: 4400
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 4400 ===
+Average Recall: 0.999571
+5th percentile recall: 1
+1st percentile recall: 0.99
+
+Total Latency: 108.115 seconds
+Average Latency: 1.08115e+07 ns
+
+======================================
+Testing ef: 4800
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 4800 ===
+Average Recall: 0.999633
+5th percentile recall: 1
+1st percentile recall: 0.99
+
+Total Latency: 119.094 seconds
+Average Latency: 1.19094e+07 ns
+
+======================================
+Testing ef: 5200
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 5200 ===
+Average Recall: 0.999681
+5th percentile recall: 1
+1st percentile recall: 0.99
+
+Total Latency: 129.281 seconds
+Average Latency: 1.29281e+07 ns
 Experiment finished
 Dataset: glove-100-angular
 Metric: cd
@@ -580,25 +736,25 @@ ApproximatedScoreCalculator created
 ****Weighted average ef: 1539
 
 === Summary (Iteration 1/3) ===
-Average Latency: 5.58428e+06 ns
+Average Latency: 5.46948e+06 ns
 Average Recall: 0.97619
-Total Latency: 55.8428 seconds
+Total Latency: 54.6948 seconds
 
 === Summary (Iteration 2/3) ===
-Average Latency: 5.58024e+06 ns
+Average Latency: 5.4631e+06 ns
 Average Recall: 0.97619
-Total Latency: 55.8024 seconds
+Total Latency: 54.631 seconds
 
 === Summary (Iteration 3/3) ===
-Average Latency: 5.58187e+06 ns
+Average Latency: 5.47248e+06 ns
 Average Recall: 0.97619
-Total Latency: 55.8187 seconds
+Total Latency: 54.7248 seconds
 
 Per-query results (median latency per query) have been written to research/csv/per_query_results_glove-100-angular.csv
 
 === Final Summary (Median Iteration) ===
-Average Latency: 5.55813e+06 ns
-Total Latency: 55.5813 seconds
+Average Latency: 5.43753e+06 ns
+Total Latency: 54.3753 seconds
 Average Recall: 0.97619
 5th percentile recall: 0.9
 1st percentile recall: 0.85
@@ -613,8 +769,8 @@ Average Recall: 0.692471
 5th percentile recall: 0.21
 1st percentile recall: 0.13
 
-Total Latency: 2.85466 seconds
-Average Latency: 285466 ns
+Total Latency: 2.77503 seconds
+Average Latency: 277503 ns
 
 ======================================
 Testing ef: 200
@@ -625,8 +781,8 @@ Average Recall: 0.780586
 5th percentile recall: 0.34
 1st percentile recall: 0.23
 
-Total Latency: 5.2166 seconds
-Average Latency: 521660 ns
+Total Latency: 5.07645 seconds
+Average Latency: 507645 ns
 
 ======================================
 Testing ef: 300
@@ -637,8 +793,8 @@ Average Recall: 0.823567
 5th percentile recall: 0.42
 1st percentile recall: 0.31
 
-Total Latency: 7.53818 seconds
-Average Latency: 753818 ns
+Total Latency: 7.33305 seconds
+Average Latency: 733305 ns
 
 ======================================
 Testing ef: 400
@@ -649,8 +805,8 @@ Average Recall: 0.850391
 5th percentile recall: 0.48
 1st percentile recall: 0.37
 
-Total Latency: 9.82405 seconds
-Average Latency: 982405 ns
+Total Latency: 9.56595 seconds
+Average Latency: 956595 ns
 
 ======================================
 Testing ef: 500
@@ -661,8 +817,8 @@ Average Recall: 0.869853
 5th percentile recall: 0.52
 1st percentile recall: 0.41
 
-Total Latency: 12.0971 seconds
-Average Latency: 1.20971e+06 ns
+Total Latency: 11.7991 seconds
+Average Latency: 1.17991e+06 ns
 
 ======================================
 Testing ef: 600
@@ -673,8 +829,8 @@ Average Recall: 0.884764
 5th percentile recall: 0.56
 1st percentile recall: 0.45
 
-Total Latency: 14.3481 seconds
-Average Latency: 1.43481e+06 ns
+Total Latency: 14.0016 seconds
+Average Latency: 1.40016e+06 ns
 
 ======================================
 Testing ef: 700
@@ -685,8 +841,8 @@ Average Recall: 0.896339
 5th percentile recall: 0.59
 1st percentile recall: 0.49
 
-Total Latency: 16.6027 seconds
-Average Latency: 1.66027e+06 ns
+Total Latency: 16.1993 seconds
+Average Latency: 1.61993e+06 ns
 
 ======================================
 Testing ef: 800
@@ -697,8 +853,8 @@ Average Recall: 0.905889
 5th percentile recall: 0.62
 1st percentile recall: 0.52
 
-Total Latency: 18.9522 seconds
-Average Latency: 1.89522e+06 ns
+Total Latency: 18.3996 seconds
+Average Latency: 1.83996e+06 ns
 
 ======================================
 Testing ef: 1000
@@ -709,8 +865,8 @@ Average Recall: 0.921071
 5th percentile recall: 0.68
 1st percentile recall: 0.57
 
-Total Latency: 23.4041 seconds
-Average Latency: 2.34041e+06 ns
+Total Latency: 22.7742 seconds
+Average Latency: 2.27742e+06 ns
 
 ======================================
 Testing ef: 1200
@@ -721,8 +877,8 @@ Average Recall: 0.932159
 5th percentile recall: 0.72
 1st percentile recall: 0.62
 
-Total Latency: 27.8693 seconds
-Average Latency: 2.78693e+06 ns
+Total Latency: 26.962 seconds
+Average Latency: 2.6962e+06 ns
 
 ======================================
 Testing ef: 1400
@@ -733,8 +889,8 @@ Average Recall: 0.940925
 5th percentile recall: 0.75
 1st percentile recall: 0.65
 
-Total Latency: 32.2868 seconds
-Average Latency: 3.22868e+06 ns
+Total Latency: 31.2503 seconds
+Average Latency: 3.12503e+06 ns
 
 ======================================
 Testing ef: 1600
@@ -745,8 +901,8 @@ Average Recall: 0.947888
 5th percentile recall: 0.77
 1st percentile recall: 0.68
 
-Total Latency: 36.7336 seconds
-Average Latency: 3.67336e+06 ns
+Total Latency: 35.559 seconds
+Average Latency: 3.5559e+06 ns
 
 ======================================
 Testing ef: 2000
@@ -757,8 +913,8 @@ Average Recall: 0.958143
 5th percentile recall: 0.81
 1st percentile recall: 0.73
 
-Total Latency: 45.558 seconds
-Average Latency: 4.5558e+06 ns
+Total Latency: 44.1392 seconds
+Average Latency: 4.41392e+06 ns
 
 ======================================
 Testing ef: 2400
@@ -769,8 +925,8 @@ Average Recall: 0.96557
 5th percentile recall: 0.84
 1st percentile recall: 0.77
 
-Total Latency: 54.3198 seconds
-Average Latency: 5.43198e+06 ns
+Total Latency: 52.6968 seconds
+Average Latency: 5.26968e+06 ns
 
 ======================================
 Testing ef: 2800
@@ -781,8 +937,8 @@ Average Recall: 0.971166
 5th percentile recall: 0.86
 1st percentile recall: 0.8
 
-Total Latency: 63.0484 seconds
-Average Latency: 6.30484e+06 ns
+Total Latency: 61.1228 seconds
+Average Latency: 6.11228e+06 ns
 
 ======================================
 Testing ef: 3200
@@ -793,8 +949,8 @@ Average Recall: 0.975521
 5th percentile recall: 0.88
 1st percentile recall: 0.82
 
-Total Latency: 72.1108 seconds
-Average Latency: 7.21108e+06 ns
+Total Latency: 69.7937 seconds
+Average Latency: 6.97937e+06 ns
 
 ======================================
 Testing ef: 3600
@@ -805,8 +961,8 @@ Average Recall: 0.978893
 5th percentile recall: 0.9
 1st percentile recall: 0.84
 
-Total Latency: 80.9357 seconds
-Average Latency: 8.09357e+06 ns
+Total Latency: 78.4172 seconds
+Average Latency: 7.84172e+06 ns
 
 ======================================
 Testing ef: 4000
@@ -817,8 +973,8 @@ Average Recall: 0.981611
 5th percentile recall: 0.91
 1st percentile recall: 0.86
 
-Total Latency: 89.748 seconds
-Average Latency: 8.9748e+06 ns
+Total Latency: 86.9396 seconds
+Average Latency: 8.69396e+06 ns
 
 ======================================
 Testing ef: 4400
@@ -829,8 +985,8 @@ Average Recall: 0.983885
 5th percentile recall: 0.92
 1st percentile recall: 0.87
 
-Total Latency: 98.4229 seconds
-Average Latency: 9.84229e+06 ns
+Total Latency: 97.515 seconds
+Average Latency: 9.7515e+06 ns
 
 ======================================
 Testing ef: 4800
@@ -841,8 +997,8 @@ Average Recall: 0.985818
 5th percentile recall: 0.93
 1st percentile recall: 0.88
 
-Total Latency: 107.097 seconds
-Average Latency: 1.07097e+07 ns
+Total Latency: 108.005 seconds
+Average Latency: 1.08005e+07 ns
 
 ======================================
 Testing ef: 5200
@@ -853,8 +1009,8 @@ Average Recall: 0.987403
 5th percentile recall: 0.93
 1st percentile recall: 0.89
 
-Total Latency: 115.719 seconds
-Average Latency: 1.15719e+07 ns
+Total Latency: 117.243 seconds
+Average Latency: 1.17243e+07 ns
 Experiment finished
 Dataset: word2vec-300-angular
 Metric: cd
@@ -872,25 +1028,25 @@ ApproximatedScoreCalculator created
 ****Weighted average ef: 264
 
 === Summary (Iteration 1/3) ===
-Average Latency: 1.49091e+06 ns
+Average Latency: 1.50549e+06 ns
 Average Recall: 0.96292
-Total Latency: 1.49091 seconds
+Total Latency: 1.50549 seconds
 
 === Summary (Iteration 2/3) ===
-Average Latency: 1.49661e+06 ns
+Average Latency: 1.50481e+06 ns
 Average Recall: 0.96292
-Total Latency: 1.49661 seconds
+Total Latency: 1.50481 seconds
 
 === Summary (Iteration 3/3) ===
-Average Latency: 1.49002e+06 ns
+Average Latency: 1.50229e+06 ns
 Average Recall: 0.96292
-Total Latency: 1.49002 seconds
+Total Latency: 1.50229 seconds
 
 Per-query results (median latency per query) have been written to research/csv/per_query_results_word2vec-300-angular.csv
 
 === Final Summary (Median Iteration) ===
-Average Latency: 1.49005e+06 ns
-Total Latency: 1.49005 seconds
+Average Latency: 1.50165e+06 ns
+Total Latency: 1.50165 seconds
 Average Recall: 0.96292
 5th percentile recall: 0.85
 1st percentile recall: 0.74
@@ -905,8 +1061,8 @@ Average Recall: 0.86714
 5th percentile recall: 0.59
 1st percentile recall: 0.46
 
-Total Latency: 0.473476 seconds
-Average Latency: 473476 ns
+Total Latency: 0.478334 seconds
+Average Latency: 478334 ns
 
 ======================================
 Testing ef: 200
@@ -917,8 +1073,8 @@ Average Recall: 0.9319
 5th percentile recall: 0.74
 1st percentile recall: 0.6
 
-Total Latency: 0.842966 seconds
-Average Latency: 842966 ns
+Total Latency: 0.848954 seconds
+Average Latency: 848954 ns
 
 ======================================
 Testing ef: 300
@@ -929,8 +1085,8 @@ Average Recall: 0.95406
 5th percentile recall: 0.8
 1st percentile recall: 0.66
 
-Total Latency: 1.19156 seconds
-Average Latency: 1.19156e+06 ns
+Total Latency: 1.20063 seconds
+Average Latency: 1.20063e+06 ns
 
 ======================================
 Testing ef: 400
@@ -941,8 +1097,8 @@ Average Recall: 0.96575
 5th percentile recall: 0.84
 1st percentile recall: 0.72
 
-Total Latency: 1.52427 seconds
-Average Latency: 1.52427e+06 ns
+Total Latency: 1.53296 seconds
+Average Latency: 1.53296e+06 ns
 
 ======================================
 Testing ef: 500
@@ -953,8 +1109,8 @@ Average Recall: 0.97232
 5th percentile recall: 0.86
 1st percentile recall: 0.75
 
-Total Latency: 1.84651 seconds
-Average Latency: 1.84651e+06 ns
+Total Latency: 1.85942 seconds
+Average Latency: 1.85942e+06 ns
 
 ======================================
 Testing ef: 600
@@ -965,8 +1121,8 @@ Average Recall: 0.9767
 5th percentile recall: 0.87
 1st percentile recall: 0.78
 
-Total Latency: 2.16382 seconds
-Average Latency: 2.16382e+06 ns
+Total Latency: 2.17705 seconds
+Average Latency: 2.17705e+06 ns
 
 ======================================
 Testing ef: 700
@@ -977,8 +1133,8 @@ Average Recall: 0.97979
 5th percentile recall: 0.89
 1st percentile recall: 0.79
 
-Total Latency: 2.47299 seconds
-Average Latency: 2.47299e+06 ns
+Total Latency: 2.49185 seconds
+Average Latency: 2.49185e+06 ns
 
 ======================================
 Testing ef: 800
@@ -989,8 +1145,8 @@ Average Recall: 0.98183
 5th percentile recall: 0.9
 1st percentile recall: 0.81
 
-Total Latency: 2.78021 seconds
-Average Latency: 2.78021e+06 ns
+Total Latency: 2.81115 seconds
+Average Latency: 2.81115e+06 ns
 
 ======================================
 Testing ef: 1000
@@ -1001,8 +1157,8 @@ Average Recall: 0.98507
 5th percentile recall: 0.92
 1st percentile recall: 0.84
 
-Total Latency: 3.37364 seconds
-Average Latency: 3.37364e+06 ns
+Total Latency: 3.41291 seconds
+Average Latency: 3.41291e+06 ns
 
 ======================================
 Testing ef: 1200
@@ -1013,8 +1169,8 @@ Average Recall: 0.98723
 5th percentile recall: 0.93
 1st percentile recall: 0.85
 
-Total Latency: 3.95998 seconds
-Average Latency: 3.95998e+06 ns
+Total Latency: 4.00296 seconds
+Average Latency: 4.00296e+06 ns
 Experiment finished
 Dataset: msmarco
 Metric: cd
@@ -1032,25 +1188,25 @@ ApproximatedScoreCalculator created
 ****Weighted average ef: 1080
 
 === Summary (Iteration 1/3) ===
-Average Latency: 1.88109e+07 ns
+Average Latency: 2.64372e+07 ns
 Average Recall: 0.970356
-Total Latency: 131.3 seconds
+Total Latency: 184.532 seconds
 
 === Summary (Iteration 2/3) ===
-Average Latency: 1.87925e+07 ns
+Average Latency: 2.49652e+07 ns
 Average Recall: 0.970356
-Total Latency: 131.171 seconds
+Total Latency: 174.257 seconds
 
 === Summary (Iteration 3/3) ===
-Average Latency: 1.93487e+07 ns
+Average Latency: 2.45706e+07 ns
 Average Recall: 0.970356
-Total Latency: 135.054 seconds
+Total Latency: 171.503 seconds
 
 Per-query results (median latency per query) have been written to research/csv/per_query_results_msmarco.csv
 
 === Final Summary (Median Iteration) ===
-Average Latency: 1.8789e+07 ns
-Total Latency: 131.148 seconds
+Average Latency: 2.5051e+07 ns
+Total Latency: 174.856 seconds
 Average Recall: 0.970356
 5th percentile recall: 0.91
 1st percentile recall: 0.864
@@ -1065,8 +1221,8 @@ Average Recall: 0.947277
 5th percentile recall: 0.808
 1st percentile recall: 0.7
 
-Total Latency: 121.424 seconds
-Average Latency: 1.73961e+07 ns
+Total Latency: 109.81 seconds
+Average Latency: 1.57322e+07 ns
 
 ======================================
 Testing ef: 1200
@@ -1077,8 +1233,8 @@ Average Recall: 0.958146
 5th percentile recall: 0.836
 1st percentile recall: 0.736
 
-Total Latency: 143.471 seconds
-Average Latency: 2.05546e+07 ns
+Total Latency: 131.866 seconds
+Average Latency: 1.8892e+07 ns
 
 ======================================
 Testing ef: 1400
@@ -1089,8 +1245,8 @@ Average Recall: 0.96536
 5th percentile recall: 0.857
 1st percentile recall: 0.763
 
-Total Latency: 166.168 seconds
-Average Latency: 2.38063e+07 ns
+Total Latency: 170.296 seconds
+Average Latency: 2.43977e+07 ns
 
 ======================================
 Testing ef: 1600
@@ -1101,8 +1257,8 @@ Average Recall: 0.970567
 5th percentile recall: 0.873
 1st percentile recall: 0.784
 
-Total Latency: 186.395 seconds
-Average Latency: 2.67042e+07 ns
+Total Latency: 173.714 seconds
+Average Latency: 2.48874e+07 ns
 
 ======================================
 Testing ef: 2000
@@ -1113,8 +1269,8 @@ Average Recall: 0.977447
 5th percentile recall: 0.896
 1st percentile recall: 0.819
 
-Total Latency: 236.807 seconds
-Average Latency: 3.39265e+07 ns
+Total Latency: 211.39 seconds
+Average Latency: 3.02852e+07 ns
 
 ======================================
 Testing ef: 2400
@@ -1125,8 +1281,8 @@ Average Recall: 0.981847
 5th percentile recall: 0.913
 1st percentile recall: 0.843
 
-Total Latency: 272.991 seconds
-Average Latency: 3.91105e+07 ns
+Total Latency: 248.257 seconds
+Average Latency: 3.55668e+07 ns
 
 ======================================
 Testing ef: 2800
@@ -1137,8 +1293,8 @@ Average Recall: 0.98488
 5th percentile recall: 0.926
 1st percentile recall: 0.863
 
-Total Latency: 313.525 seconds
-Average Latency: 4.49176e+07 ns
+Total Latency: 286.764 seconds
+Average Latency: 4.10836e+07 ns
 
 ======================================
 Testing ef: 3200
@@ -1149,8 +1305,8 @@ Average Recall: 0.987058
 5th percentile recall: 0.935
 1st percentile recall: 0.878
 
-Total Latency: 365.859 seconds
-Average Latency: 5.24153e+07 ns
+Total Latency: 328.577 seconds
+Average Latency: 4.7074e+07 ns
 
 ======================================
 Testing ef: 3600
@@ -1161,8 +1317,8 @@ Average Recall: 0.988732
 5th percentile recall: 0.942
 1st percentile recall: 0.891
 
-Total Latency: 400.458 seconds
-Average Latency: 5.73722e+07 ns
+Total Latency: 368.872 seconds
+Average Latency: 5.2847e+07 ns
 
 ======================================
 Testing ef: 4000
@@ -1173,8 +1329,44 @@ Average Recall: 0.990068
 5th percentile recall: 0.949
 1st percentile recall: 0.901
 
-Total Latency: 440.287 seconds
-Average Latency: 6.30784e+07 ns
+Total Latency: 407.713 seconds
+Average Latency: 5.84116e+07 ns
+
+======================================
+Testing ef: 4400
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 4400 ===
+Average Recall: 0.991135
+5th percentile recall: 0.953
+1st percentile recall: 0.909
+
+Total Latency: 449.48 seconds
+Average Latency: 6.43954e+07 ns
+
+======================================
+Testing ef: 4800
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 4800 ===
+Average Recall: 0.991991
+5th percentile recall: 0.958
+1st percentile recall: 0.916
+
+Total Latency: 516.376 seconds
+Average Latency: 7.39794e+07 ns
+
+======================================
+Testing ef: 5200
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 5200 ===
+Average Recall: 0.992692
+5th percentile recall: 0.961
+1st percentile recall: 0.923
+
+Total Latency: 522.427 seconds
+Average Latency: 7.48463e+07 ns
 Experiment finished
 Dataset: cohere
 Metric: cd
@@ -1192,25 +1384,25 @@ ApproximatedScoreCalculator created
 ****Weighted average ef: 1230
 
 === Summary (Iteration 1/3) ===
-Average Latency: 1.13081e+07 ns
+Average Latency: 1.16781e+07 ns
 Average Recall: 0.951457
-Total Latency: 18.9637 seconds
+Total Latency: 19.5843 seconds
 
 === Summary (Iteration 2/3) ===
-Average Latency: 1.41528e+07 ns
+Average Latency: 1.44692e+07 ns
 Average Recall: 0.951457
-Total Latency: 23.7342 seconds
+Total Latency: 24.2649 seconds
 
 === Summary (Iteration 3/3) ===
-Average Latency: 1.95489e+07 ns
+Average Latency: 2.06984e+07 ns
 Average Recall: 0.951457
-Total Latency: 32.7835 seconds
+Total Latency: 34.7113 seconds
 
 Per-query results (median latency per query) have been written to research/csv/per_query_results_cohere.csv
 
 === Final Summary (Median Iteration) ===
-Average Latency: 1.34767e+07 ns
-Total Latency: 22.6004 seconds
+Average Latency: 1.42057e+07 ns
+Total Latency: 23.8229 seconds
 Average Recall: 0.951457
 5th percentile recall: 0.83
 1st percentile recall: 0.627
@@ -1225,8 +1417,8 @@ Average Recall: 0.923758
 5th percentile recall: 0.737
 1st percentile recall: 0.579
 
-Total Latency: 22.9742 seconds
-Average Latency: 1.36996e+07 ns
+Total Latency: 23.5813 seconds
+Average Latency: 1.40616e+07 ns
 
 ======================================
 Testing ef: 1200
@@ -1237,8 +1429,8 @@ Average Recall: 0.938033
 5th percentile recall: 0.766
 1st percentile recall: 0.619
 
-Total Latency: 28.9664 seconds
-Average Latency: 1.72728e+07 ns
+Total Latency: 30.2274 seconds
+Average Latency: 1.80247e+07 ns
 
 ======================================
 Testing ef: 1400
@@ -1249,8 +1441,8 @@ Average Recall: 0.947676
 5th percentile recall: 0.796
 1st percentile recall: 0.649
 
-Total Latency: 34.5759 seconds
-Average Latency: 2.06177e+07 ns
+Total Latency: 36.3437 seconds
+Average Latency: 2.16719e+07 ns
 
 ======================================
 Testing ef: 1600
@@ -1261,8 +1453,8 @@ Average Recall: 0.954849
 5th percentile recall: 0.818
 1st percentile recall: 0.667
 
-Total Latency: 40.0328 seconds
-Average Latency: 2.38717e+07 ns
+Total Latency: 41.4219 seconds
+Average Latency: 2.47e+07 ns
 
 ======================================
 Testing ef: 2000
@@ -1273,8 +1465,8 @@ Average Recall: 0.96445
 5th percentile recall: 0.85
 1st percentile recall: 0.712
 
-Total Latency: 49.3046 seconds
-Average Latency: 2.94005e+07 ns
+Total Latency: 51.145 seconds
+Average Latency: 3.04979e+07 ns
 
 ======================================
 Testing ef: 2400
@@ -1285,8 +1477,8 @@ Average Recall: 0.97057
 5th percentile recall: 0.871
 1st percentile recall: 0.74
 
-Total Latency: 58.2927 seconds
-Average Latency: 3.47601e+07 ns
+Total Latency: 60.6356 seconds
+Average Latency: 3.61572e+07 ns
 
 ======================================
 Testing ef: 2800
@@ -1297,8 +1489,8 @@ Average Recall: 0.974831
 5th percentile recall: 0.885
 1st percentile recall: 0.759
 
-Total Latency: 66.9322 seconds
-Average Latency: 3.99119e+07 ns
+Total Latency: 69.0897 seconds
+Average Latency: 4.11984e+07 ns
 
 ======================================
 Testing ef: 3200
@@ -1309,8 +1501,8 @@ Average Recall: 0.97801
 5th percentile recall: 0.899
 1st percentile recall: 0.773
 
-Total Latency: 75.8515 seconds
-Average Latency: 4.52305e+07 ns
+Total Latency: 78.9361 seconds
+Average Latency: 4.70698e+07 ns
 
 ======================================
 Testing ef: 3600
@@ -1321,8 +1513,8 @@ Average Recall: 0.980622
 5th percentile recall: 0.909
 1st percentile recall: 0.795
 
-Total Latency: 84.8249 seconds
-Average Latency: 5.05813e+07 ns
+Total Latency: 87.9355 seconds
+Average Latency: 5.24362e+07 ns
 
 ======================================
 Testing ef: 4000
@@ -1333,8 +1525,8 @@ Average Recall: 0.982408
 5th percentile recall: 0.918
 1st percentile recall: 0.806
 
-Total Latency: 92.682 seconds
-Average Latency: 5.52666e+07 ns
+Total Latency: 96.4847 seconds
+Average Latency: 5.75341e+07 ns
 
 ======================================
 Testing ef: 4400
@@ -1345,8 +1537,8 @@ Average Recall: 0.983933
 5th percentile recall: 0.925
 1st percentile recall: 0.814
 
-Total Latency: 102.229 seconds
-Average Latency: 6.09597e+07 ns
+Total Latency: 105.507 seconds
+Average Latency: 6.29139e+07 ns
 
 ======================================
 Testing ef: 4800
@@ -1357,8 +1549,8 @@ Average Recall: 0.985215
 5th percentile recall: 0.931
 1st percentile recall: 0.824
 
-Total Latency: 110.522 seconds
-Average Latency: 6.59047e+07 ns
+Total Latency: 114.941 seconds
+Average Latency: 6.85396e+07 ns
 
 ======================================
 Testing ef: 5200
@@ -1369,6 +1561,6 @@ Average Recall: 0.986348
 5th percentile recall: 0.937
 1st percentile recall: 0.835
 
-Total Latency: 118.079 seconds
-Average Latency: 7.04106e+07 ns
+Total Latency: 123.85 seconds
+Average Latency: 7.38519e+07 ns
 Experiment finished
