@@ -1,0 +1,1374 @@
+nohup: ignoring input
+Starting experiments for Ada-ef hnswdis library...
+
+
+EXPERIMENTS_ROOT: /home/yc.shea/experiments/shiro-ef
+Starting offline experiments...
+
+
+
+Dataset: deep-image-96-angular
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 9990000 x 96
+Query vectors dimensions: 10000 x 96
+Neighbors dimensions: 10000 x 100
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:96
+Data size of space:384
+Mean computation time: 91 ms
+Number of threads: 8
+Covariance matrix computation time: 496 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 588 ms
+Mean computation time: 171 ms
+Number of threads: 8
+Covariance matrix computation time: 508 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 679 ms
+Mean computation time: 128 ms
+Number of threads: 8
+Covariance matrix computation time: 513 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 642 ms
+Distance matrix computed in 7359 ms
+Ground truth computed in 249 ms using 8 threads.
+Sampling computing time: 8069 ms
+Distance matrix computed in 7975 ms
+Ground truth computed in 296 ms using 8 threads.
+Sampling computing time: 8888 ms
+Distance matrix computed in 8444 ms
+Ground truth computed in 264 ms using 8 threads.
+Sampling computing time: 9326 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 526 ms
+Average Recall: 0.8801
+Initial average recall with ef=100: 0.8801
+Search time: 247 ms
+Average Recall: 0.923
+Initial average recall with ef=150: 0.923
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 242.995
+EF-estimation table computing time: 1219 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 88 ms
+Average Recall: 0.8801
+Initial average recall with ef=100: 0.8801
+Search time: 115 ms
+Average Recall: 0.923
+Initial average recall with ef=150: 0.923
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 242.995
+EF-estimation table computing time: 411 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/deep-image-96-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 88 ms
+Average Recall: 0.8801
+Initial average recall with ef=100: 0.8801
+Search time: 113 ms
+Average Recall: 0.923
+Initial average recall with ef=150: 0.923
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 242.995
+EF-estimation table computing time: 409 ms
+Dataset: glove-100-angular
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+Mean computation time: 86 ms
+Number of threads: 8
+Covariance matrix computation time: 72 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 159 ms
+Mean computation time: 32 ms
+Number of threads: 8
+Covariance matrix computation time: 72 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 105 ms
+Mean computation time: 26 ms
+Number of threads: 8
+Covariance matrix computation time: 72 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 99 ms
+Distance matrix computed in 849 ms
+Ground truth computed in 55 ms using 8 threads.
+Sampling computing time: 965 ms
+Distance matrix computed in 861 ms
+Ground truth computed in 32 ms using 8 threads.
+Sampling computing time: 954 ms
+Distance matrix computed in 855 ms
+Ground truth computed in 32 ms using 8 threads.
+Sampling computing time: 948 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 253 ms
+Average Recall: 0.7423
+Initial average recall with ef=100: 0.7423
+Search time: 111 ms
+Average Recall: 0.78855
+Initial average recall with ef=150: 0.78855
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 1539.61
+EF-estimation table computing time: 3342 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 83 ms
+Average Recall: 0.7423
+Initial average recall with ef=100: 0.7423
+Search time: 103 ms
+Average Recall: 0.78855
+Initial average recall with ef=150: 0.78855
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 1539.61
+EF-estimation table computing time: 3156 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/glove-100-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 83 ms
+Average Recall: 0.7423
+Initial average recall with ef=100: 0.7423
+Search time: 103 ms
+Average Recall: 0.78855
+Initial average recall with ef=150: 0.78855
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 1539.61
+EF-estimation table computing time: 3155 ms
+Dataset: word2vec-300-angular
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 1000000 x 300
+Query vectors dimensions: 1000 x 300
+Neighbors dimensions: 1000 x 100
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:300
+Data size of space:1200
+Mean computation time: 82 ms
+Number of threads: 8
+Covariance matrix computation time: 448 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 530 ms
+Mean computation time: 57 ms
+Number of threads: 8
+Covariance matrix computation time: 463 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 521 ms
+Mean computation time: 40 ms
+Number of threads: 8
+Covariance matrix computation time: 441 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 481 ms
+Distance matrix computed in 1198 ms
+Ground truth computed in 28 ms using 8 threads.
+Sampling computing time: 1271 ms
+Distance matrix computed in 1197 ms
+Ground truth computed in 28 ms using 8 threads.
+Sampling computing time: 1270 ms
+Distance matrix computed in 1199 ms
+Ground truth computed in 28 ms using 8 threads.
+Sampling computing time: 1272 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 261 ms
+Average Recall: 0.8984
+Initial average recall with ef=100: 0.8984
+Search time: 178 ms
+Average Recall: 0.93085
+Initial average recall with ef=150: 0.93085
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 264.685
+EF-estimation table computing time: 911 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 134 ms
+Average Recall: 0.8984
+Initial average recall with ef=100: 0.8984
+Search time: 162 ms
+Average Recall: 0.93085
+Initial average recall with ef=150: 0.93085
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 264.685
+EF-estimation table computing time: 721 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/word2vec-300-angular-samplings--k100-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 152 ms
+Average Recall: 0.8984
+Initial average recall with ef=100: 0.8984
+Search time: 166 ms
+Average Recall: 0.93085
+Initial average recall with ef=150: 0.93085
+Recall diff is too small, break.
+Recall diff is too small, break.
+Recall diff is too small, break.
+Weighted average ef: 264.685
+EF-estimation table computing time: 710 ms
+Dataset: msmarco
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 8841823 x 1536
+Query vectors dimensions: 6980 x 1536
+Neighbors dimensions: 6980 x 1000
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:1536
+Data size of space:6144
+Mean computation time: 2774 ms
+Number of threads: 8
+Covariance matrix computation time: 102098 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 104872 ms
+Mean computation time: 3967 ms
+Number of threads: 8
+Covariance matrix computation time: 99702 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 103670 ms
+Mean computation time: 3939 ms
+Number of threads: 8
+Covariance matrix computation time: 97328 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 101267 ms
+Distance matrix computed in 42772 ms
+Ground truth computed in 252 ms using 8 threads.
+Sampling computing time: 43424 ms
+Distance matrix computed in 38192 ms
+Ground truth computed in 286 ms using 8 threads.
+Sampling computing time: 38948 ms
+Distance matrix computed in 38118 ms
+Ground truth computed in 248 ms using 8 threads.
+Sampling computing time: 38837 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 15131 ms
+Average Recall: 0.976275
+Initial average recall with ef=1000: 0.976275
+Search time: 8859 ms
+Average Recall: 0.987849
+Initial average recall with ef=1500: 0.98785
+Weighted average ef: 1080.97
+EF-estimation table computing time: 24552 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 2797 ms
+Average Recall: 0.976275
+Initial average recall with ef=1000: 0.976275
+Search time: 3334 ms
+Average Recall: 0.987849
+Initial average recall with ef=1500: 0.98785
+Weighted average ef: 1080.97
+EF-estimation table computing time: 6441 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/msmarco-samplings--k1000-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 1937 ms
+Average Recall: 0.976275
+Initial average recall with ef=1000: 0.976275
+Search time: 2731 ms
+Average Recall: 0.987849
+Initial average recall with ef=1500: 0.98785
+Weighted average ef: 1080.97
+EF-estimation table computing time: 4968 ms
+Dataset: cohere
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 18380565 x 1024
+Query vectors dimensions: 1677 x 1024
+Neighbors dimensions: 1677 x 1000
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:1024
+Data size of space:4096
+Mean computation time: 4866 ms
+Number of threads: 8
+Covariance matrix computation time: 87256 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 92123 ms
+Mean computation time: 5644 ms
+Number of threads: 8
+Covariance matrix computation time: 87677 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 93321 ms
+Mean computation time: 5537 ms
+Number of threads: 8
+Covariance matrix computation time: 88050 ms
+CosineDistanceEstimator created
+Dataset statistics computing time: 93587 ms
+Distance matrix computed in 57534 ms
+Ground truth computed in 636 ms using 8 threads.
+Sampling computing time: 59235 ms
+Distance matrix computed in 60003 ms
+Ground truth computed in 689 ms using 8 threads.
+Sampling computing time: 61674 ms
+Distance matrix computed in 54843 ms
+Ground truth computed in 517 ms using 8 threads.
+Sampling computing time: 56174 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 6280 ms
+Average Recall: 0.957965
+Initial average recall with ef=1000: 0.957965
+Search time: 3867 ms
+Average Recall: 0.97736
+Initial average recall with ef=1500: 0.97736
+Weighted average ef: 1230
+EF-estimation table computing time: 11553 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 1674 ms
+Average Recall: 0.957965
+Initial average recall with ef=1000: 0.957965
+Search time: 2379 ms
+Average Recall: 0.97736
+Initial average recall with ef=1500: 0.97736
+Weighted average ef: 1230
+EF-estimation table computing time: 5047 ms
+Loading samplings from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
+Samplings loaded from /home/yc.shea/experiments/shiro-ef/sampling_ada/cohere-samplings--k1000-ef.bin
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+Estimator initialized in 0 ms
+Search time: 1668 ms
+Average Recall: 0.957965
+Initial average recall with ef=1000: 0.957965
+Search time: 2383 ms
+Average Recall: 0.97736
+Initial average recall with ef=1500: 0.97736
+Weighted average ef: 1230
+EF-estimation table computing time: 5047 ms
+Starting per-query result experiments...
+
+
+Dataset: deep-image-96-angular
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 9990000 x 96
+Query vectors dimensions: 10000 x 96
+Neighbors dimensions: 10000 x 100
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:96
+Data size of space:384
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+****Weighted average ef: 242
+
+=== Summary (Iteration 1/3) ===
+Average Latency: 1.00217e+06 ns
+Average Recall: 0.962871
+Total Latency: 10.0217 seconds
+
+=== Summary (Iteration 2/3) ===
+Average Latency: 1.00221e+06 ns
+Average Recall: 0.962871
+Total Latency: 10.0221 seconds
+
+=== Summary (Iteration 3/3) ===
+Average Latency: 1.00615e+06 ns
+Average Recall: 0.962871
+Total Latency: 10.0615 seconds
+
+Per-query results (median latency per query) have been written to research/csv/per_query_results_deep-image-96-angular.csv
+
+=== Final Summary (Median Iteration) ===
+Average Latency: 981296 ns
+Total Latency: 9.81296 seconds
+Average Recall: 0.962871
+5th percentile recall: 0.86
+1st percentile recall: 0.79
+Experiment finished.
+
+======================================
+Testing ef: 100
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 100 ===
+Average Recall: 0.858459
+5th percentile recall: 0.6
+1st percentile recall: 0.46
+
+Total Latency: 3.19972 seconds
+Average Latency: 319972 ns
+
+======================================
+Testing ef: 200
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 200 ===
+Average Recall: 0.935477
+5th percentile recall: 0.76
+1st percentile recall: 0.63
+
+Total Latency: 6.08296 seconds
+Average Latency: 608296 ns
+
+======================================
+Testing ef: 300
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 300 ===
+Average Recall: 0.961983
+5th percentile recall: 0.84
+1st percentile recall: 0.72
+
+Total Latency: 8.85014 seconds
+Average Latency: 885014 ns
+
+======================================
+Testing ef: 400
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 400 ===
+Average Recall: 0.974622
+5th percentile recall: 0.88
+1st percentile recall: 0.77
+
+Total Latency: 11.3667 seconds
+Average Latency: 1.13667e+06 ns
+
+======================================
+Testing ef: 500
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 500 ===
+Average Recall: 0.981729
+5th percentile recall: 0.91
+1st percentile recall: 0.82
+
+Total Latency: 13.9332 seconds
+Average Latency: 1.39332e+06 ns
+
+======================================
+Testing ef: 600
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 600 ===
+Average Recall: 0.986145
+5th percentile recall: 0.93
+1st percentile recall: 0.85
+
+Total Latency: 16.7535 seconds
+Average Latency: 1.67535e+06 ns
+
+======================================
+Testing ef: 700
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 700 ===
+Average Recall: 0.989089
+5th percentile recall: 0.94
+1st percentile recall: 0.87
+
+Total Latency: 19.4198 seconds
+Average Latency: 1.94198e+06 ns
+
+======================================
+Testing ef: 800
+Per-query results appended to research/csv/per_query_baseline_deep-image-96-angular.csv
+
+=== Summary for ef 800 ===
+Average Recall: 0.991205
+5th percentile recall: 0.95
+1st percentile recall: 0.89
+
+Total Latency: 21.912 seconds
+Average Latency: 2.1912e+06 ns
+Experiment finished
+Dataset: glove-100-angular
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 1183514 x 100
+Query vectors dimensions: 10000 x 100
+Neighbors dimensions: 10000 x 100
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:100
+Data size of space:400
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+****Weighted average ef: 1539
+
+=== Summary (Iteration 1/3) ===
+Average Latency: 5.62707e+06 ns
+Average Recall: 0.97619
+Total Latency: 56.2707 seconds
+
+=== Summary (Iteration 2/3) ===
+Average Latency: 5.62299e+06 ns
+Average Recall: 0.97619
+Total Latency: 56.2299 seconds
+
+=== Summary (Iteration 3/3) ===
+Average Latency: 5.62464e+06 ns
+Average Recall: 0.97619
+Total Latency: 56.2464 seconds
+
+Per-query results (median latency per query) have been written to research/csv/per_query_results_glove-100-angular.csv
+
+=== Final Summary (Median Iteration) ===
+Average Latency: 5.60066e+06 ns
+Total Latency: 56.0066 seconds
+Average Recall: 0.97619
+5th percentile recall: 0.9
+1st percentile recall: 0.85
+Experiment finished.
+
+======================================
+Testing ef: 100
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 100 ===
+Average Recall: 0.692471
+5th percentile recall: 0.21
+1st percentile recall: 0.13
+
+Total Latency: 2.74798 seconds
+Average Latency: 274798 ns
+
+======================================
+Testing ef: 200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 200 ===
+Average Recall: 0.780586
+5th percentile recall: 0.34
+1st percentile recall: 0.23
+
+Total Latency: 5.13375 seconds
+Average Latency: 513375 ns
+
+======================================
+Testing ef: 300
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 300 ===
+Average Recall: 0.823567
+5th percentile recall: 0.42
+1st percentile recall: 0.31
+
+Total Latency: 7.47876 seconds
+Average Latency: 747876 ns
+
+======================================
+Testing ef: 400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 400 ===
+Average Recall: 0.850391
+5th percentile recall: 0.48
+1st percentile recall: 0.37
+
+Total Latency: 9.78769 seconds
+Average Latency: 978769 ns
+
+======================================
+Testing ef: 500
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 500 ===
+Average Recall: 0.869853
+5th percentile recall: 0.52
+1st percentile recall: 0.41
+
+Total Latency: 12.0837 seconds
+Average Latency: 1.20837e+06 ns
+
+======================================
+Testing ef: 600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 600 ===
+Average Recall: 0.884764
+5th percentile recall: 0.56
+1st percentile recall: 0.45
+
+Total Latency: 14.3574 seconds
+Average Latency: 1.43574e+06 ns
+
+======================================
+Testing ef: 700
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 700 ===
+Average Recall: 0.896339
+5th percentile recall: 0.59
+1st percentile recall: 0.49
+
+Total Latency: 16.6347 seconds
+Average Latency: 1.66347e+06 ns
+
+======================================
+Testing ef: 800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 800 ===
+Average Recall: 0.905889
+5th percentile recall: 0.62
+1st percentile recall: 0.52
+
+Total Latency: 19.0079 seconds
+Average Latency: 1.90079e+06 ns
+
+======================================
+Testing ef: 1000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1000 ===
+Average Recall: 0.921071
+5th percentile recall: 0.68
+1st percentile recall: 0.57
+
+Total Latency: 23.5047 seconds
+Average Latency: 2.35047e+06 ns
+
+======================================
+Testing ef: 1200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1200 ===
+Average Recall: 0.932159
+5th percentile recall: 0.72
+1st percentile recall: 0.62
+
+Total Latency: 28.015 seconds
+Average Latency: 2.8015e+06 ns
+
+======================================
+Testing ef: 1400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1400 ===
+Average Recall: 0.940925
+5th percentile recall: 0.75
+1st percentile recall: 0.65
+
+Total Latency: 32.4771 seconds
+Average Latency: 3.24771e+06 ns
+
+======================================
+Testing ef: 1600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 1600 ===
+Average Recall: 0.947888
+5th percentile recall: 0.77
+1st percentile recall: 0.68
+
+Total Latency: 36.9687 seconds
+Average Latency: 3.69687e+06 ns
+
+======================================
+Testing ef: 2000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2000 ===
+Average Recall: 0.958143
+5th percentile recall: 0.81
+1st percentile recall: 0.73
+
+Total Latency: 45.8822 seconds
+Average Latency: 4.58822e+06 ns
+
+======================================
+Testing ef: 2400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2400 ===
+Average Recall: 0.96557
+5th percentile recall: 0.84
+1st percentile recall: 0.77
+
+Total Latency: 54.7324 seconds
+Average Latency: 5.47324e+06 ns
+
+======================================
+Testing ef: 2800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 2800 ===
+Average Recall: 0.971166
+5th percentile recall: 0.86
+1st percentile recall: 0.8
+
+Total Latency: 63.549 seconds
+Average Latency: 6.3549e+06 ns
+
+======================================
+Testing ef: 3200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 3200 ===
+Average Recall: 0.975521
+5th percentile recall: 0.88
+1st percentile recall: 0.82
+
+Total Latency: 72.7029 seconds
+Average Latency: 7.27029e+06 ns
+
+======================================
+Testing ef: 3600
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 3600 ===
+Average Recall: 0.978893
+5th percentile recall: 0.9
+1st percentile recall: 0.84
+
+Total Latency: 81.6168 seconds
+Average Latency: 8.16168e+06 ns
+
+======================================
+Testing ef: 4000
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4000 ===
+Average Recall: 0.981611
+5th percentile recall: 0.91
+1st percentile recall: 0.86
+
+Total Latency: 90.518 seconds
+Average Latency: 9.0518e+06 ns
+
+======================================
+Testing ef: 4400
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4400 ===
+Average Recall: 0.983885
+5th percentile recall: 0.92
+1st percentile recall: 0.87
+
+Total Latency: 99.2804 seconds
+Average Latency: 9.92804e+06 ns
+
+======================================
+Testing ef: 4800
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 4800 ===
+Average Recall: 0.985818
+5th percentile recall: 0.93
+1st percentile recall: 0.88
+
+Total Latency: 108.042 seconds
+Average Latency: 1.08042e+07 ns
+
+======================================
+Testing ef: 5200
+Per-query results appended to research/csv/per_query_baseline_glove-100-angular.csv
+
+=== Summary for ef 5200 ===
+Average Recall: 0.987403
+5th percentile recall: 0.93
+1st percentile recall: 0.89
+
+Total Latency: 116.751 seconds
+Average Latency: 1.16751e+07 ns
+Experiment finished
+Dataset: word2vec-300-angular
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 1000000 x 300
+Query vectors dimensions: 1000 x 300
+Neighbors dimensions: 1000 x 100
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:300
+Data size of space:1200
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+****Weighted average ef: 264
+
+=== Summary (Iteration 1/3) ===
+Average Latency: 1.49602e+06 ns
+Average Recall: 0.96292
+Total Latency: 1.49602 seconds
+
+=== Summary (Iteration 2/3) ===
+Average Latency: 1.50174e+06 ns
+Average Recall: 0.96292
+Total Latency: 1.50174 seconds
+
+=== Summary (Iteration 3/3) ===
+Average Latency: 1.49512e+06 ns
+Average Recall: 0.96292
+Total Latency: 1.49512 seconds
+
+Per-query results (median latency per query) have been written to research/csv/per_query_results_word2vec-300-angular.csv
+
+=== Final Summary (Median Iteration) ===
+Average Latency: 1.49515e+06 ns
+Total Latency: 1.49515 seconds
+Average Recall: 0.96292
+5th percentile recall: 0.85
+1st percentile recall: 0.74
+Experiment finished.
+
+======================================
+Testing ef: 100
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 100 ===
+Average Recall: 0.86714
+5th percentile recall: 0.59
+1st percentile recall: 0.46
+
+Total Latency: 0.473808 seconds
+Average Latency: 473808 ns
+
+======================================
+Testing ef: 200
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 200 ===
+Average Recall: 0.9319
+5th percentile recall: 0.74
+1st percentile recall: 0.6
+
+Total Latency: 0.845032 seconds
+Average Latency: 845032 ns
+
+======================================
+Testing ef: 300
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 300 ===
+Average Recall: 0.95406
+5th percentile recall: 0.8
+1st percentile recall: 0.66
+
+Total Latency: 1.19526 seconds
+Average Latency: 1.19526e+06 ns
+
+======================================
+Testing ef: 400
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 400 ===
+Average Recall: 0.96575
+5th percentile recall: 0.84
+1st percentile recall: 0.72
+
+Total Latency: 1.52953 seconds
+Average Latency: 1.52953e+06 ns
+
+======================================
+Testing ef: 500
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 500 ===
+Average Recall: 0.97232
+5th percentile recall: 0.86
+1st percentile recall: 0.75
+
+Total Latency: 1.85329 seconds
+Average Latency: 1.85329e+06 ns
+
+======================================
+Testing ef: 600
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 600 ===
+Average Recall: 0.9767
+5th percentile recall: 0.87
+1st percentile recall: 0.78
+
+Total Latency: 2.17208 seconds
+Average Latency: 2.17208e+06 ns
+
+======================================
+Testing ef: 700
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 700 ===
+Average Recall: 0.97979
+5th percentile recall: 0.89
+1st percentile recall: 0.79
+
+Total Latency: 2.48271 seconds
+Average Latency: 2.48271e+06 ns
+
+======================================
+Testing ef: 800
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 800 ===
+Average Recall: 0.98183
+5th percentile recall: 0.9
+1st percentile recall: 0.81
+
+Total Latency: 2.79137 seconds
+Average Latency: 2.79137e+06 ns
+
+======================================
+Testing ef: 1000
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 1000 ===
+Average Recall: 0.98507
+5th percentile recall: 0.92
+1st percentile recall: 0.84
+
+Total Latency: 3.38758 seconds
+Average Latency: 3.38758e+06 ns
+
+======================================
+Testing ef: 1200
+Per-query results appended to research/csv/per_query_baseline_word2vec-300-angular.csv
+
+=== Summary for ef 1200 ===
+Average Recall: 0.98723
+5th percentile recall: 0.93
+1st percentile recall: 0.85
+
+Total Latency: 3.97667 seconds
+Average Latency: 3.97667e+06 ns
+Experiment finished
+Dataset: msmarco
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 8841823 x 1536
+Query vectors dimensions: 6980 x 1536
+Neighbors dimensions: 6980 x 1000
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:1536
+Data size of space:6144
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+****Weighted average ef: 1080
+
+=== Summary (Iteration 1/3) ===
+Average Latency: 2.11459e+07 ns
+Average Recall: 0.970356
+Total Latency: 147.598 seconds
+
+=== Summary (Iteration 2/3) ===
+Average Latency: 2.1125e+07 ns
+Average Recall: 0.970356
+Total Latency: 147.453 seconds
+
+=== Summary (Iteration 3/3) ===
+Average Latency: 2.17555e+07 ns
+Average Recall: 0.970356
+Total Latency: 151.853 seconds
+
+Per-query results (median latency per query) have been written to research/csv/per_query_results_msmarco.csv
+
+=== Final Summary (Median Iteration) ===
+Average Latency: 2.11211e+07 ns
+Total Latency: 147.425 seconds
+Average Recall: 0.970356
+5th percentile recall: 0.91
+1st percentile recall: 0.864
+Experiment finished.
+
+======================================
+Testing ef: 1000
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 1000 ===
+Average Recall: 0.947277
+5th percentile recall: 0.808
+1st percentile recall: 0.7
+
+Total Latency: 136.404 seconds
+Average Latency: 1.95422e+07 ns
+
+======================================
+Testing ef: 1200
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 1200 ===
+Average Recall: 0.958146
+5th percentile recall: 0.836
+1st percentile recall: 0.736
+
+Total Latency: 161.394 seconds
+Average Latency: 2.31224e+07 ns
+
+======================================
+Testing ef: 1400
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 1400 ===
+Average Recall: 0.96536
+5th percentile recall: 0.857
+1st percentile recall: 0.763
+
+Total Latency: 187.122 seconds
+Average Latency: 2.68083e+07 ns
+
+======================================
+Testing ef: 1600
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 1600 ===
+Average Recall: 0.970567
+5th percentile recall: 0.873
+1st percentile recall: 0.784
+
+Total Latency: 210.051 seconds
+Average Latency: 3.00932e+07 ns
+
+======================================
+Testing ef: 2000
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 2000 ===
+Average Recall: 0.977447
+5th percentile recall: 0.896
+1st percentile recall: 0.819
+
+Total Latency: 267.194 seconds
+Average Latency: 3.82799e+07 ns
+
+======================================
+Testing ef: 2400
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 2400 ===
+Average Recall: 0.981847
+5th percentile recall: 0.913
+1st percentile recall: 0.843
+
+Total Latency: 308.21 seconds
+Average Latency: 4.41562e+07 ns
+
+======================================
+Testing ef: 2800
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 2800 ===
+Average Recall: 0.98488
+5th percentile recall: 0.926
+1st percentile recall: 0.863
+
+Total Latency: 354.156 seconds
+Average Latency: 5.07387e+07 ns
+
+======================================
+Testing ef: 3200
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 3200 ===
+Average Recall: 0.987058
+5th percentile recall: 0.935
+1st percentile recall: 0.878
+
+Total Latency: 413.479 seconds
+Average Latency: 5.92376e+07 ns
+
+======================================
+Testing ef: 3600
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 3600 ===
+Average Recall: 0.988732
+5th percentile recall: 0.942
+1st percentile recall: 0.891
+
+Total Latency: 452.698 seconds
+Average Latency: 6.48565e+07 ns
+
+======================================
+Testing ef: 4000
+Per-query results appended to research/csv/per_query_baseline_msmarco.csv
+
+=== Summary for ef 4000 ===
+Average Recall: 0.990068
+5th percentile recall: 0.949
+1st percentile recall: 0.901
+
+Total Latency: 497.846 seconds
+Average Latency: 7.13246e+07 ns
+Experiment finished
+Dataset: cohere
+Metric: cd
+Quantile step: 0.001
+Normalize the data vectors
+Data vectors dimensions: 18380565 x 1024
+Query vectors dimensions: 1677 x 1024
+Neighbors dimensions: 1677 x 1000
+Using AVX Inner Product distance
+Index loaded
+Dimension of space:1024
+Data size of space:4096
+Start creating ApproximatedScoreCalculator
+ApproximatedScoreCalculator created
+****Weighted average ef: 1230
+
+=== Summary (Iteration 1/3) ===
+Average Latency: 1.28726e+07 ns
+Average Recall: 0.951457
+Total Latency: 21.5874 seconds
+
+=== Summary (Iteration 2/3) ===
+Average Latency: 1.59434e+07 ns
+Average Recall: 0.951457
+Total Latency: 26.7371 seconds
+
+=== Summary (Iteration 3/3) ===
+Average Latency: 2.17683e+07 ns
+Average Recall: 0.951457
+Total Latency: 36.5055 seconds
+
+Per-query results (median latency per query) have been written to research/csv/per_query_results_cohere.csv
+
+=== Final Summary (Median Iteration) ===
+Average Latency: 1.52136e+07 ns
+Total Latency: 25.5131 seconds
+Average Recall: 0.951457
+5th percentile recall: 0.83
+1st percentile recall: 0.627
+Experiment finished.
+
+======================================
+Testing ef: 1000
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 1000 ===
+Average Recall: 0.923758
+5th percentile recall: 0.737
+1st percentile recall: 0.579
+
+Total Latency: 25.9166 seconds
+Average Latency: 1.54542e+07 ns
+
+======================================
+Testing ef: 1200
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 1200 ===
+Average Recall: 0.938033
+5th percentile recall: 0.766
+1st percentile recall: 0.619
+
+Total Latency: 32.3851 seconds
+Average Latency: 1.93114e+07 ns
+
+======================================
+Testing ef: 1400
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 1400 ===
+Average Recall: 0.947676
+5th percentile recall: 0.796
+1st percentile recall: 0.649
+
+Total Latency: 38.4403 seconds
+Average Latency: 2.29221e+07 ns
+
+======================================
+Testing ef: 1600
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 1600 ===
+Average Recall: 0.954849
+5th percentile recall: 0.818
+1st percentile recall: 0.667
+
+Total Latency: 44.331 seconds
+Average Latency: 2.64347e+07 ns
+
+======================================
+Testing ef: 2000
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 2000 ===
+Average Recall: 0.96445
+5th percentile recall: 0.85
+1st percentile recall: 0.712
+
+Total Latency: 54.3397 seconds
+Average Latency: 3.24029e+07 ns
+
+======================================
+Testing ef: 2400
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 2400 ===
+Average Recall: 0.97057
+5th percentile recall: 0.871
+1st percentile recall: 0.74
+
+Total Latency: 64.042 seconds
+Average Latency: 3.81885e+07 ns
+
+======================================
+Testing ef: 2800
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 2800 ===
+Average Recall: 0.974831
+5th percentile recall: 0.885
+1st percentile recall: 0.759
+
+Total Latency: 73.3682 seconds
+Average Latency: 4.37497e+07 ns
+
+======================================
+Testing ef: 3200
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 3200 ===
+Average Recall: 0.97801
+5th percentile recall: 0.899
+1st percentile recall: 0.773
+
+Total Latency: 82.9964 seconds
+Average Latency: 4.9491e+07 ns
+
+======================================
+Testing ef: 3600
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 3600 ===
+Average Recall: 0.980622
+5th percentile recall: 0.909
+1st percentile recall: 0.795
+
+Total Latency: 92.6828 seconds
+Average Latency: 5.52671e+07 ns
+
+======================================
+Testing ef: 4000
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 4000 ===
+Average Recall: 0.982408
+5th percentile recall: 0.918
+1st percentile recall: 0.806
+
+Total Latency: 101.165 seconds
+Average Latency: 6.03247e+07 ns
+
+======================================
+Testing ef: 4400
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 4400 ===
+Average Recall: 0.983933
+5th percentile recall: 0.925
+1st percentile recall: 0.814
+
+Total Latency: 111.471 seconds
+Average Latency: 6.64703e+07 ns
+
+======================================
+Testing ef: 4800
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 4800 ===
+Average Recall: 0.985215
+5th percentile recall: 0.931
+1st percentile recall: 0.824
+
+Total Latency: 120.422 seconds
+Average Latency: 7.18083e+07 ns
+
+======================================
+Testing ef: 5200
+Per-query results appended to research/csv/per_query_baseline_cohere.csv
+
+=== Summary for ef 5200 ===
+Average Recall: 0.986348
+5th percentile recall: 0.937
+1st percentile recall: 0.835
+
+Total Latency: 128.579 seconds
+Average Latency: 7.66723e+07 ns
+Experiment finished

@@ -59,9 +59,9 @@ import statistics
 
 from parse_logs import parse_log
 
-ADA_LOG = "log/output_ada_full.log"
-SHIRO_LOG = "log/output_shiro_full.log"
-OUT_LOG = "log/output_ada_full_AFFINED.log"
+ADA_LOG = "research/log/output_ada_full.log"
+SHIRO_LOG = "research/log/output_shiro_full.log"
+OUT_LOG = "research/log/output_ada_full_AFFINED.log"
 
 
 # ----------------------------------------------------------------------
@@ -133,13 +133,13 @@ def build_dataset_fits():
         }
     )
 
-    with open("csv/affine_fit_parameters.csv", "w", newline="") as f:
+    with open("research/csv/affine_fit_parameters.csv", "w", newline="") as f:
         w = csv.DictWriter(
             f, fieldnames=["dataset", "n_matched_ef", "a_intercept_ns", "b_slope", "r2"]
         )
         w.writeheader()
         w.writerows(rows)
-    print("Wrote: csv/affine_fit_parameters.csv\n")
+    print("Wrote: research/csv/affine_fit_parameters.csv\n")
 
     return fits, (a_pool, b_pool, r2_pool)
 
@@ -273,11 +273,11 @@ def compare_methods(fits, pooled_fit):
             f"{(s['avg_recall'] if s else float('nan')):13.4f}"
         )
 
-    with open("csv/affine_method_comparison.csv", "w", newline="") as f:
+    with open("research/csv/affine_method_comparison.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         w.writeheader()
         w.writerows(rows)
-    print("\nWrote: csv/affine_method_comparison.csv")
+    print("\nWrote: research/csv/affine_method_comparison.csv")
 
 
 def main():
@@ -436,8 +436,8 @@ def make_plots(fits, pooled_fit):
         fontsize=13,
     )
     fig.tight_layout(rect=[0, 0, 1, 0.96])
-    fig.savefig("img/affine_calibration_plots.png", dpi=150)
-    print("Wrote: img/affine/affine_calibration_plots.png")
+    fig.savefig("research/img/affine/affine_calibration_plots.png", dpi=150)
+    print("Wrote: research/img/affine/affine_calibration_plots.png")
 
 
 if __name__ == "__main__":
